@@ -30,7 +30,7 @@ def get_context(context):
 	context.content = frappe.get_doc(content_type, content).as_dict()
 
 	if content_type == 'Article':
-		content_md = md_to_html(content.content)
+		content_md = md_to_html(context.content.content)
 	else:
 		content_md = ''
 
