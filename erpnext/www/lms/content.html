@@ -120,8 +120,7 @@
 	</div>
 </div>
 <div class="lms-content">
-	<h1>TEST</h1>
-	{{ content.content|safe }}
+	{{ content.content|markdown }}
 </div>
 {% endmacro %}
 
