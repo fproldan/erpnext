@@ -27,13 +27,12 @@ def get_context(context):
 		raise frappe.Redirect
 
 	# Set context for content to be displayer
-	content = frappe.get_doc(content_type, content).as_dict()
+	context.content = frappe.get_doc(content_type, content).as_dict()
 
 	if content_type == 'Article':
-		content.content = md_to_html(content.content)
-		context.content = content
+		content_md = md_to_html(content.content)
 	else:
-		context.content = content
+		content_md = ''
 
 	context.content_type = content_type
 	context.program = program
