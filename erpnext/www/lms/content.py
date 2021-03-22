@@ -26,12 +26,11 @@ def get_context(context):
 		frappe.local.flags.redirect_location = '/lms'
 		raise frappe.Redirect
 
-
 	# Set context for content to be displayer
 	content = frappe.get_doc(content_type, content).as_dict()
 
 	if content_type == 'Article':
-		content.content = md_to_html(content.get('content'))
+		content.content = md_to_html(content.content)
 		context.content = content
 	else:
 		context.content = content

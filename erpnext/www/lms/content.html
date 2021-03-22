@@ -100,11 +100,7 @@
 </div>
 <div id="player" data-plyr-provider="{{ content.provider|lower }}" data-plyr-embed-id="{{ content.url }}"></div>
 <div class="my-5 lms-content">
-	{% if description %}
-		{{ description }}
-	{% else %}
-		{{ content.description }}
-	{% endif %}
+	{{ content.description }}
 </div>
 {% endmacro %}
 
