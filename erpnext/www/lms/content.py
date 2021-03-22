@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 import erpnext.education.utils as utils
+from frappe.website.utils import get_html_content_based_on_type
 import frappe
 
 no_cache = 1
@@ -28,6 +29,12 @@ def get_context(context):
 
 	# Set context for content to be displayer
 	context.content = frappe.get_doc(content_type, content).as_dict()
+
+	if content_type == 'Article':
+		context.description = get_html_content_based_on_type(context.content, 'description', 'Markdown')
+	else:
+		context.description = ''
+
 	context.content_type = content_type
 	context.program = program
 	context.course = course
