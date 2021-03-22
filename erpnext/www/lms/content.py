@@ -31,7 +31,7 @@ def get_context(context):
 	context.content = frappe.get_doc(content_type, content).as_dict()
 
 	if content_type == 'Article':
-		context.description = get_html_content_based_on_type(context.content, 'description', 'Markdown')
+		context.description = get_html_content_based_on_type(context.content, 'content', 'Markdown')
 	else:
 		context.description = ''
 
