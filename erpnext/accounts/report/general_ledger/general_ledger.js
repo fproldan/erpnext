@@ -171,6 +171,11 @@ frappe.query_reports["General Ledger"] = {
 			"fieldname": "show_net_values_in_party_account",
 			"label": __("Show Net Values in Party Account"),
 			"fieldtype": "Check"
+		},
+		{
+			"fieldname": "excluir_asientos_ajuste_inflacion",
+			"label": __("Excluir asientos de Ajuste por Inflación"),
+			"fieldtype": "Check"
 		}
 	]
 }

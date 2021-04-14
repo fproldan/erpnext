@@ -244,6 +244,9 @@ def get_conditions(filters):
 	if not filters.get("show_cancelled_entries"):
 		conditions.append("is_cancelled = 0")
 
+	if filters.get("excluir_asientos_ajuste_inflacion"):
+		conditions.append("remarks != 'Ajuste por Inflación'")
+
 	from frappe.desk.reportview import build_match_conditions
 	match_conditions = build_match_conditions("GL Entry")
 
