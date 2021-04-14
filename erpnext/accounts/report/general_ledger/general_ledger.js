@@ -166,6 +166,11 @@ frappe.query_reports["General Ledger"] = {
 			"fieldname": "show_cancelled_entries",
 			"label": __("Show Cancelled Entries"),
 			"fieldtype": "Check"
+		},
+		{
+			"fieldname": "excluir_asientos_ajuste_inflacion",
+			"label": __("Excluir asientos de Ajuste por Inflación"),
+			"fieldtype": "Check"
 		}
 	]
 }
