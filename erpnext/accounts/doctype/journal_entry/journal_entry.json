@@ -84,7 +84,7 @@
    "label": "Entry Type",
    "oldfieldname": "voucher_type",
    "oldfieldtype": "Select",
-   "options": "Journal Entry\nInter Company Journal Entry\nBank Entry\nCash Entry\nCredit Card Entry\nDebit Note\nCredit Note\nContra Entry\nExcise Entry\nWrite Off Entry\nOpening Entry\nDepreciation Entry\nExchange Rate Revaluation\nDeferred Revenue\nDeferred Expense",
+   "options": "Journal Entry\nInter Company Journal Entry\nBank Entry\nCash Entry\nCredit Card Entry\nDebit Note\nCredit Note\nContra Entry\nExcise Entry\nWrite Off Entry\nOpening Entry\nDepreciation Entry\nExchange Rate Revaluation\nDeferred Revenue\nDeferred Expense\nAjuste por Inflacion",
    "reqd": 1,
    "search_index": 1
   },
@@ -504,7 +504,7 @@
  "idx": 176,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-10-30 13:56:01.121995",
+ "modified": "2021-04-14 14:22:03.657628",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Journal Entry",
