@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 import erpnext.education.utils as utils
+from frappe.utils import md_to_html
 import frappe
 
 no_cache = 1
@@ -25,9 +26,14 @@ def get_context(context):
 		frappe.local.flags.redirect_location = '/lms'
 		raise frappe.Redirect
 
-
 	# Set context for content to be displayer
 	context.content = frappe.get_doc(content_type, content).as_dict()
+
+	if content_type == 'Article':
+		context.content_md = md_to_html(context.content.content)
+	else:
+		context.content_md = ''
+
 	context.content_type = content_type
 	context.program = program
 	context.course = course
