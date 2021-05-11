@@ -26,7 +26,7 @@
   }
  ],
  "links": [],
- "modified": "2020-04-26 02:23:53.990322",
+ "modified": "2021-05-11 14:39:20.140775",
  "modified_by": "Administrator",
  "module": "Projects",
  "name": "Project Template",
@@ -46,6 +46,7 @@
   }
  ],
  "quick_entry": 1,
+ "restrict_to_domain": "Projects",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

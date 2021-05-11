@@ -147,7 +147,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-03-31 22:35:08.940087",
+ "modified": "2021-05-11 14:39:56.491076",
  "modified_by": "Administrator",
  "module": "Payroll",
  "name": "Employee Benefit Application",
@@ -212,6 +212,7 @@
   }
  ],
  "quick_entry": 1,
+ "restrict_to_domain": "Payroll",
  "sort_field": "modified",
  "sort_order": "DESC",
  "title_field": "employee_name",

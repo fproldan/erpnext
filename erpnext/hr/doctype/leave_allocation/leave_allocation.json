@@ -235,7 +235,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-04-14 15:28:26.335104",
+ "modified": "2021-05-11 14:39:41.334014",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Leave Allocation",
@@ -272,6 +272,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "HR",
  "search_fields": "employee,employee_name,leave_type,total_leaves_allocated",
  "show_name_in_global_search": 1,
  "sort_field": "modified",

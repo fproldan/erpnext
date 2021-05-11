@@ -371,7 +371,7 @@
  "idx": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-09-18 17:26:09.703215",
+ "modified": "2021-05-11 14:39:34.615140",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Expense Claim",
@@ -432,6 +432,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "HR",
  "search_fields": "employee,employee_name",
  "show_name_in_global_search": 1,
  "sort_field": "modified",

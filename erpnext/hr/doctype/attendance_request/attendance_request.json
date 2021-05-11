@@ -119,7 +119,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2019-12-16 11:49:26.943173",
+ "modified": "2021-05-11 14:39:34.364476",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Attendance Request",
@@ -183,6 +183,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "HR",
  "sort_field": "modified",
  "sort_order": "DESC",
  "title_field": "employee_name",

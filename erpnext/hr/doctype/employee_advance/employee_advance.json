@@ -200,7 +200,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-03-31 22:31:53.746659",
+ "modified": "2021-05-11 14:39:40.822511",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Employee Advance",
@@ -233,6 +233,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "HR",
  "search_fields": "employee,employee_name",
  "sort_field": "modified",
  "sort_order": "DESC",

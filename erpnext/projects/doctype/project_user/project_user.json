@@ -77,12 +77,13 @@
  ],
  "istable": 1,
  "links": [],
- "modified": "2020-02-09 23:26:50.321417",
+ "modified": "2021-05-11 14:39:21.175515",
  "modified_by": "Administrator",
  "module": "Projects",
  "name": "Project User",
  "owner": "Administrator",
  "permissions": [],
+ "restrict_to_domain": "Projects",
  "sort_field": "modified",
  "sort_order": "DESC"
 }

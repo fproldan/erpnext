@@ -32,6 +32,21 @@ def install(country=None):
 		{ 'doctype': 'Domain', 'domain': 'Agriculture'},
 		{ 'doctype': 'Domain', 'domain': 'Non Profit'},
 
+		# Dominios Modulo Diamo
+		{'doctype': 'Domain', 'domain': 'CRM'},
+		{'doctype': 'Domain', 'domain': 'Projects'},
+		{'doctype': 'Domain', 'domain': 'HR'},
+		{'doctype': 'Domain', 'domain': 'Support'},
+		{'doctype': 'Domain', 'domain': 'Assets'},
+		{'doctype': 'Domain', 'domain': 'Maintenance'},
+		{'doctype': 'Domain', 'domain': 'Integrations'},
+		{'doctype': 'Domain', 'domain': 'Quality'},
+		{'doctype': 'Domain', 'domain': 'Loan'},
+		{'doctype': 'Domain', 'domain': 'Payroll'},
+		{'doctype': 'Domain', 'domain': 'Website'},
+		{'doctype': 'Domain', 'domain': 'Shopping Cart'},
+		{'doctype': 'Domain', 'domain': 'Tools'},
+
 		# ensure at least an empty Address Template exists for this Country
 		{'doctype':"Address Template", "country": country},
 

@@ -216,7 +216,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2019-12-12 18:42:26.451359",
+ "modified": "2021-05-11 14:39:27.997324",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Travel Request",
@@ -235,6 +235,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "HR",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

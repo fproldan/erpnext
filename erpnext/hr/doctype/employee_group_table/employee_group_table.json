@@ -1,4 +1,5 @@
 {
+ "actions": [],
  "creation": "2018-11-19 12:39:46.153061",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -32,13 +33,15 @@
   }
  ],
  "istable": 1,
- "modified": "2019-06-06 10:41:20.313756",
+ "links": [],
+ "modified": "2021-05-11 14:39:33.204462",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Employee Group Table",
  "owner": "Administrator",
  "permissions": [],
  "quick_entry": 1,
+ "restrict_to_domain": "HR",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

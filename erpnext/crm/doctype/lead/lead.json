@@ -460,7 +460,7 @@
  "idx": 5,
  "image_field": "image",
  "links": [],
- "modified": "2021-01-06 19:39:58.748978",
+ "modified": "2021-05-11 14:39:18.414833",
  "modified_by": "Administrator",
  "module": "CRM",
  "name": "Lead",
@@ -519,6 +519,7 @@
    "role": "Sales User"
   }
  ],
+ "restrict_to_domain": "CRM",
  "search_fields": "lead_name,lead_owner,status",
  "sender_field": "email_id",
  "show_name_in_global_search": 1,
