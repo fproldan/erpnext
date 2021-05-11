@@ -147,7 +147,7 @@
   }
  ],
  "links": [],
- "modified": "2020-06-25 10:53:44.205774",
+ "modified": "2021-05-11 15:21:01.875561",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Subscription Plan",
@@ -190,6 +190,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "Subscription",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

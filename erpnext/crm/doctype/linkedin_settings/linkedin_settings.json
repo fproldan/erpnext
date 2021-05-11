@@ -87,7 +87,7 @@
  ],
  "issingle": 1,
  "links": [],
- "modified": "2021-05-11 14:39:17.271696",
+ "modified": "2021-05-11 15:21:00.036644",
  "modified_by": "Administrator",
  "module": "CRM",
  "name": "LinkedIn Settings",
@@ -105,7 +105,7 @@
   }
  ],
  "quick_entry": 1,
- "restrict_to_domain": "CRM",
+ "restrict_to_domain": "Campaigns",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

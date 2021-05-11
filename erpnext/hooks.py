@@ -93,6 +93,9 @@ domains = {
 	'WMS': 'erpnext.domains.wms',
 	'Serie y Lote': 'erpnext.domains.serie_lote',
 	'Vendedores y Socios': 'erpnext.domains.vendedores_socios',
+	'Subscription': 'erpnext.domains.subscription',
+	'Supplier Scorecard': 'erpnext.domains.supplier_scorecard',
+	'Campaigns': 'erpnext.domains.campaigns',
 }
 
 website_generators = ["Item Group", "Item", "BOM", "Sales Partner",

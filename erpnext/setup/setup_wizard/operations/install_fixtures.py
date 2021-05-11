@@ -52,6 +52,9 @@ def install(country=None):
 		{'doctype': 'Domain', 'domain': 'WMS'},
 		{'doctype': 'Domain', 'domain': 'Serie y Lote'},
 		{'doctype': 'Domain', 'domain': 'Vendedores y Socios'},
+		{'doctype': 'Domain', 'domain': 'Subscription'},
+		{'doctype': 'Domain', 'domain': 'Supplier Scorecard'},
+		{'doctype': 'Domain', 'domain': 'Campaigns'},
 
 		# ensure at least an empty Address Template exists for this Country
 		{'doctype':"Address Template", "country": country},

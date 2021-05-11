@@ -32,7 +32,7 @@
  ],
  "issingle": 1,
  "links": [],
- "modified": "2020-06-23 09:13:44.292792",
+ "modified": "2021-05-11 15:21:02.588511",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Subscription Settings",
@@ -70,6 +70,7 @@
   }
  ],
  "quick_entry": 1,
+ "restrict_to_domain": "Subscription",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1
