@@ -87,6 +87,12 @@ domains = {
 	'Website': 'erpnext.domains.website',
 	'Shopping Cart': 'erpnext.domains.shopping_cart',
 	'Tools': 'erpnext.domains.tools',
+
+	# Subdominios Diamo
+	'Contabilidad Avanzada': 'erpnext.domains.contabilidad_avanzada',
+	'WMS': 'erpnext.domains.wms',
+	'Serie y Lote': 'erpnext.domains.serie_lote',
+	'Vendedores y Socios': 'erpnext.domains.vendedores_socios',
 }
 
 website_generators = ["Item Group", "Item", "BOM", "Sales Partner",

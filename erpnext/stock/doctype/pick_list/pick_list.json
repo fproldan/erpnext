@@ -114,7 +114,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-03-17 11:38:41.932875",
+ "modified": "2021-05-11 15:12:45.292706",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Pick List",
@@ -181,6 +181,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "WMS",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

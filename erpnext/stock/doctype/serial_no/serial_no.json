@@ -427,7 +427,7 @@
  "icon": "fa fa-barcode",
  "idx": 1,
  "links": [],
- "modified": "2020-07-20 20:50:16.660433",
+ "modified": "2021-05-11 15:12:45.799308",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Serial No",
@@ -465,6 +465,7 @@
    "role": "Stock User"
   }
  ],
+ "restrict_to_domain": "Serie y Lote",
  "search_fields": "item_code",
  "show_name_in_global_search": 1,
  "sort_field": "modified",

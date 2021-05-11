@@ -195,7 +195,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2020-10-06 15:13:54.055854",
+ "modified": "2021-05-11 15:12:44.183395",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Budget",
@@ -218,6 +218,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "Contabilidad Avanzada",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

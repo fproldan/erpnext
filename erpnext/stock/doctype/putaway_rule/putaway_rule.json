@@ -111,7 +111,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2020-11-25 20:39:19.973437",
+ "modified": "2021-05-11 15:12:45.540418",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Putaway Rule",
@@ -153,6 +153,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "WMS",
  "sort_field": "modified",
  "sort_order": "DESC",
  "title_field": "item_code",

@@ -47,6 +47,12 @@ def install(country=None):
 		{'doctype': 'Domain', 'domain': 'Shopping Cart'},
 		{'doctype': 'Domain', 'domain': 'Tools'},
 
+		# Subdominios Diamo
+		{'doctype': 'Domain', 'domain': 'Contabilidad Avanzada'},
+		{'doctype': 'Domain', 'domain': 'WMS'},
+		{'doctype': 'Domain', 'domain': 'Serie y Lote'},
+		{'doctype': 'Domain', 'domain': 'Vendedores y Socios'},
+
 		# ensure at least an empty Address Template exists for this Country
 		{'doctype':"Address Template", "country": country},
 
