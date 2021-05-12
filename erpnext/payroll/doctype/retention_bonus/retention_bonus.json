@@ -105,7 +105,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-03-31 22:43:28.363644",
+ "modified": "2021-05-12 20:00:06.313705",
  "modified_by": "Administrator",
  "module": "Payroll",
  "name": "Retention Bonus",
@@ -163,6 +163,7 @@
    "share": 1
   }
  ],
+ "restrict_to_domain": "Payroll",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

@@ -410,7 +410,7 @@
  "icon": "fa fa-ticket",
  "idx": 7,
  "links": [],
- "modified": "2020-08-11 18:49:07.574769",
+ "modified": "2021-05-12 19:59:33.947711",
  "modified_by": "Administrator",
  "module": "Support",
  "name": "Issue",
@@ -429,6 +429,7 @@
   }
  ],
  "quick_entry": 1,
+ "restrict_to_domain": "Support",
  "search_fields": "status,customer,subject,raised_by",
  "sender_field": "raised_by",
  "sort_field": "modified",

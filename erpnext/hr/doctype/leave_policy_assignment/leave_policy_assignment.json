@@ -113,7 +113,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-03-01 17:54:01.014509",
+ "modified": "2021-05-12 19:59:10.997369",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Leave Policy Assignment",
@@ -162,6 +162,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "HR",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

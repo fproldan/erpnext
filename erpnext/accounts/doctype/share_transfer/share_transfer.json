@@ -1,4 +1,5 @@
 {
+ "actions": [],
  "autoname": "ACC-SHT-.YYYY.-.#####",
  "creation": "2017-12-25 17:18:03.143726",
  "doctype": "DocType",
@@ -188,7 +189,8 @@
   }
  ],
  "is_submittable": 1,
- "modified": "2019-12-20 14:48:01.990600",
+ "links": [],
+ "modified": "2021-05-12 20:01:41.697874",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Share Transfer",
@@ -236,6 +238,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "Contabilidad Avanzada",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

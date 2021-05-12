@@ -98,7 +98,7 @@
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-04-01 08:13:43.263772",
+ "modified": "2021-05-12 20:00:01.755658",
  "modified_by": "Administrator",
  "module": "Loan Management",
  "name": "Loan Security Shortfall",
@@ -130,6 +130,7 @@
   }
  ],
  "quick_entry": 1,
+ "restrict_to_domain": "Loan Management",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

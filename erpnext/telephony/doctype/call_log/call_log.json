@@ -139,7 +139,7 @@
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-02-08 14:23:28.744844",
+ "modified": "2021-05-12 20:00:37.673779",
  "modified_by": "Administrator",
  "module": "Telephony",
  "name": "Call Log",
@@ -162,6 +162,7 @@
    "role": "Employee"
   }
  ],
+ "restrict_to_domain": "Telephony",
  "sort_field": "creation",
  "sort_order": "DESC",
  "title_field": "from",

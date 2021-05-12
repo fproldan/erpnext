@@ -61,7 +61,7 @@
    "link_fieldname": "feedback"
   }
  ],
- "modified": "2020-10-27 16:20:10.918544",
+ "modified": "2021-05-12 19:59:55.912995",
  "modified_by": "Administrator",
  "module": "Quality Management",
  "name": "Quality Feedback",
@@ -92,6 +92,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "Quality Management",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

@@ -149,7 +149,7 @@
  "idx": 1,
  "issingle": 1,
  "links": [],
- "modified": "2021-03-14 02:04:22.907159",
+ "modified": "2021-05-12 19:59:10.283954",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "HR Settings",
@@ -165,6 +165,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "HR",
  "sort_field": "modified",
  "sort_order": "ASC",
  "track_changes": 1

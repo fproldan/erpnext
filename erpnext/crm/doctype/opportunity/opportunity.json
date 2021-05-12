@@ -431,7 +431,7 @@
  "icon": "fa fa-info-sign",
  "idx": 195,
  "links": [],
- "modified": "2021-01-06 19:42:46.190051",
+ "modified": "2021-05-12 19:58:59.886388",
  "modified_by": "Administrator",
  "module": "CRM",
  "name": "Opportunity",
@@ -462,6 +462,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "CRM",
  "search_fields": "status,transaction_date,party_name,opportunity_type,territory,company",
  "sender_field": "contact_email",
  "show_name_in_global_search": 1,
