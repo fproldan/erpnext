@@ -160,7 +160,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-05-11 14:39:25.452234",
+ "modified": "2021-05-12 08:30:47.349409",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Job Offer",
@@ -183,7 +183,7 @@
    "write": 1
   }
  ],
- "restrict_to_domain": "HR",
+ "restrict_to_domain": "HR Reclutamiento, Capacitacion y Gastos",
  "show_name_in_global_search": 1,
  "sort_field": "modified",
  "sort_order": "DESC",

@@ -180,7 +180,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-05-11 15:12:44.972049",
+ "modified": "2021-05-12 08:30:40.206015",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Delivery Trip",
@@ -217,7 +217,7 @@
    "write": 1
   }
  ],
- "restrict_to_domain": "WMS",
+ "restrict_to_domain": "Hoja de Ruta",
  "sort_field": "modified",
  "sort_order": "DESC",
  "title_field": "driver_name"

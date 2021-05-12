@@ -36,7 +36,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-05-11 14:39:26.273046",
+ "modified": "2021-05-12 08:30:43.635805",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Leave Policy",
@@ -88,7 +88,7 @@
    "write": 1
   }
  ],
- "restrict_to_domain": "HR",
+ "restrict_to_domain": "HR Asistencia y Vacaciones",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

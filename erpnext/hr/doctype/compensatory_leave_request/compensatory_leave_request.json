@@ -114,7 +114,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-05-11 14:39:29.691699",
+ "modified": "2021-05-12 08:30:44.021624",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Compensatory Leave Request",
@@ -172,7 +172,7 @@
    "write": 1
   }
  ],
- "restrict_to_domain": "HR",
+ "restrict_to_domain": "HR Asistencia y Vacaciones",
  "sort_field": "modified",
  "sort_order": "DESC",
  "title_field": "employee_name",

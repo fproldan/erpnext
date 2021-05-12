@@ -96,6 +96,12 @@ domains = {
 	'Subscription': 'erpnext.domains.subscription',
 	'Supplier Scorecard': 'erpnext.domains.supplier_scorecard',
 	'Campaigns': 'erpnext.domains.campaigns',
+	'Hoja de Ruta': 'erpnext.domains.hoja_de_ruta',
+	'SLA y RMA': 'erpnext.domains.sla_rma',
+	'Retail Avanzado': 'erpnext.domains.retail_avanzado',
+	'Servicios Google': 'erpnext.domains.servicios_google',
+	'HR Asistencia y Vacaciones': 'erpnext.domains.hr_asistencia_vacaciones',
+	'HR Reclutamiento, Capacitacion y Gastos': 'erpnext.domains.hr_reclutamiento_capacitacion_gastos',
 }
 
 website_generators = ["Item Group", "Item", "BOM", "Sales Partner",

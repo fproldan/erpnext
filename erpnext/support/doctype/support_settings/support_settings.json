@@ -156,7 +156,7 @@
  ],
  "issingle": 1,
  "links": [],
- "modified": "2021-05-11 14:39:41.593216",
+ "modified": "2021-05-12 08:30:41.004915",
  "modified_by": "Administrator",
  "module": "Support",
  "name": "Support Settings",
@@ -174,7 +174,7 @@
   }
  ],
  "quick_entry": 1,
- "restrict_to_domain": "Support",
+ "restrict_to_domain": "SLA y RMA",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

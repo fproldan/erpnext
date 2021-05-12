@@ -63,7 +63,7 @@
  "issingle": 1,
  "links": [],
  "max_attachments": 1,
- "modified": "2021-05-11 14:39:38.423128",
+ "modified": "2021-05-12 08:30:45.397259",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Upload Attendance",
@@ -82,7 +82,7 @@
    "write": 1
   }
  ],
- "restrict_to_domain": "HR",
+ "restrict_to_domain": "HR Asistencia y Vacaciones",
  "sort_field": "modified",
  "sort_order": "DESC"
 }

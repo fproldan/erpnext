@@ -55,6 +55,12 @@ def install(country=None):
 		{'doctype': 'Domain', 'domain': 'Subscription'},
 		{'doctype': 'Domain', 'domain': 'Supplier Scorecard'},
 		{'doctype': 'Domain', 'domain': 'Campaigns'},
+		{'doctype': 'Domain', 'domain': 'Hoja de Ruta'},
+		{'doctype': 'Domain', 'domain': 'SLA y RMA'},
+		{'doctype': 'Domain', 'domain': 'Retail Avanzado'},
+		{'doctype': 'Domain', 'domain': 'Servicios Google'},
+		{'doctype': 'Domain', 'domain': 'HR Asistencia y Vacaciones'},
+		{'doctype': 'Domain', 'domain': 'HR Reclutamiento, Capacitacion y Gastos'},
 
 		# ensure at least an empty Address Template exists for this Country
 		{'doctype':"Address Template", "country": country},

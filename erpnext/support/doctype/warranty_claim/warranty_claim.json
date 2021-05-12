@@ -364,7 +364,7 @@
  "icon": "fa fa-bug",
  "idx": 1,
  "links": [],
- "modified": "2021-05-11 14:39:43.619119",
+ "modified": "2021-05-12 08:30:40.699657",
  "modified_by": "Administrator",
  "module": "Support",
  "name": "Warranty Claim",
@@ -382,7 +382,7 @@
    "write": 1
   }
  ],
- "restrict_to_domain": "Support",
+ "restrict_to_domain": "SLA y RMA",
  "search_fields": "status,customer,customer_name,territory",
  "show_name_in_global_search": 1,
  "sort_field": "modified",

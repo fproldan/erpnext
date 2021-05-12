@@ -46,7 +46,7 @@
  "icon": "icon-file-text",
  "idx": 1,
  "links": [],
- "modified": "2021-05-11 14:39:37.846009",
+ "modified": "2021-05-12 08:30:49.028191",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Appraisal Template",
@@ -67,7 +67,7 @@
    "role": "Employee"
   }
  ],
- "restrict_to_domain": "HR",
+ "restrict_to_domain": "HR Reclutamiento, Capacitacion y Gastos",
  "sort_field": "modified",
  "sort_order": "DESC"
 }
