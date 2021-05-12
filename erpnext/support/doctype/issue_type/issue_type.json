@@ -1,4 +1,5 @@
 {
+ "actions": [],
  "allow_import": 1,
  "allow_rename": 1,
  "autoname": "Prompt",
@@ -17,7 +18,8 @@
    "label": "Description"
   }
  ],
- "modified": "2019-06-26 16:56:39.863392",
+ "links": [],
+ "modified": "2021-05-12 19:59:35.484361",
  "modified_by": "Administrator",
  "module": "Support",
  "name": "Issue Type",
@@ -50,6 +52,7 @@
   }
  ],
  "quick_entry": 1,
+ "restrict_to_domain": "Support",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

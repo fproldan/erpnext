@@ -248,7 +248,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-04-19 18:10:00.935364",
+ "modified": "2021-05-12 20:00:01.050003",
  "modified_by": "Administrator",
  "module": "Loan Management",
  "name": "Loan Repayment",
@@ -285,6 +285,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "Loan Management",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

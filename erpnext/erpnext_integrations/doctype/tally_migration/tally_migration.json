@@ -254,7 +254,7 @@
   }
  ],
  "links": [],
- "modified": "2020-04-28 00:29:18.039826",
+ "modified": "2021-05-12 19:59:50.372653",
  "modified_by": "Administrator",
  "module": "ERPNext Integrations",
  "name": "Tally Migration",
@@ -273,6 +273,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "ERPNext Integrations",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

@@ -270,7 +270,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-02-22 00:03:34.215633",
+ "modified": "2021-05-12 20:00:39.301339",
  "modified_by": "Administrator",
  "module": "Regional",
  "name": "Tax Exemption 80G Certificate",
@@ -289,6 +289,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "Regional",
  "search_fields": "member, member_name",
  "sort_field": "modified",
  "sort_order": "DESC",

@@ -315,6 +315,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "Maintenance",
  "search_fields": "status,maintenance_type,customer,customer_name,mntc_date,company",
  "show_name_in_global_search": 1,
  "sort_field": "modified",

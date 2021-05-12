@@ -257,6 +257,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "Maintenance",
  "search_fields": "status,customer,customer_name",
  "sort_field": "modified",
  "sort_order": "DESC",

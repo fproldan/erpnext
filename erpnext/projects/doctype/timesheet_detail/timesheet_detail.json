@@ -274,6 +274,7 @@
  "owner": "Administrator",
  "permissions": [],
  "quick_entry": 1,
+ "restrict_to_domain": "Projects",
  "sort_field": "modified",
  "sort_order": "ASC"
 }

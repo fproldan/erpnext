@@ -213,7 +213,7 @@
  ],
  "issingle": 1,
  "links": [],
- "modified": "2020-04-07 14:26:20.174848",
+ "modified": "2021-05-12 19:59:51.363677",
  "modified_by": "Administrator",
  "module": "ERPNext Integrations",
  "name": "Amazon MWS Settings",
@@ -231,6 +231,7 @@
   }
  ],
  "quick_entry": 1,
+ "restrict_to_domain": "ERPNext Integrations",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

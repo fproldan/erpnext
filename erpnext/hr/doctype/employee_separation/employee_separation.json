@@ -147,7 +147,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-04-28 15:58:36.020196",
+ "modified": "2021-05-12 19:59:21.508191",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Employee Separation",
@@ -170,6 +170,7 @@
   }
  ],
  "quick_entry": 1,
+ "restrict_to_domain": "HR",
  "sort_field": "modified",
  "sort_order": "DESC",
  "title_field": "employee_name",

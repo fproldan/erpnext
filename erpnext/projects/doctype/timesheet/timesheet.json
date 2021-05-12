@@ -319,7 +319,7 @@
  "idx": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-05-18 16:10:08.249619",
+ "modified": "2021-05-12 19:59:05.625096",
  "modified_by": "Administrator",
  "module": "Projects",
  "name": "Timesheet",
@@ -394,6 +394,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "Projects",
  "sort_field": "modified",
  "sort_order": "ASC",
  "title_field": "title"

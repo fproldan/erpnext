@@ -131,6 +131,7 @@
  "name": "Maintenance Schedule Detail",
  "owner": "Administrator",
  "permissions": [],
+ "restrict_to_domain": "Maintenance",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

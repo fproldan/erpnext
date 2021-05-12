@@ -155,6 +155,7 @@
  "name": "Maintenance Schedule Item",
  "owner": "Administrator",
  "permissions": [],
+ "restrict_to_domain": "Maintenance",
  "sort_field": "modified",
  "sort_order": "DESC"
 }

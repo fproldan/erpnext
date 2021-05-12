@@ -1,4 +1,5 @@
 {
+ "actions": [],
  "creation": "2018-04-13 18:04:20.978931",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -66,13 +67,15 @@
   }
  ],
  "istable": 1,
- "modified": "2019-06-24 18:40:37.140178",
+ "links": [],
+ "modified": "2021-05-12 19:59:22.431643",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Staffing Plan Detail",
  "owner": "Administrator",
  "permissions": [],
  "quick_entry": 1,
+ "restrict_to_domain": "HR",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

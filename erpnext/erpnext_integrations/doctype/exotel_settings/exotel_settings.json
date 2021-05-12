@@ -1,4 +1,5 @@
 {
+ "actions": [],
  "creation": "2019-05-21 07:41:53.536536",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -11,6 +12,7 @@
  ],
  "fields": [
   {
+   "default": "0",
    "fieldname": "enabled",
    "fieldtype": "Check",
    "label": "Enabled"
@@ -37,7 +39,8 @@
   }
  ],
  "issingle": 1,
- "modified": "2019-05-22 06:25:18.026997",
+ "links": [],
+ "modified": "2021-05-12 19:59:53.110774",
  "modified_by": "Administrator",
  "module": "ERPNext Integrations",
  "name": "Exotel Settings",
@@ -55,6 +58,7 @@
   }
  ],
  "quick_entry": 1,
+ "restrict_to_domain": "ERPNext Integrations",
  "sort_field": "modified",
  "sort_order": "ASC",
  "track_changes": 1

@@ -264,7 +264,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-04-19 15:24:27.550797",
+ "modified": "2021-05-12 20:01:48.651678",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Subscription",
@@ -307,6 +307,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "Subscription",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

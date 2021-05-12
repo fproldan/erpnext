@@ -461,6 +461,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "CRM",
  "search_fields": "status,transaction_date,party_name,opportunity_type,territory,company",
  "sender_field": "contact_email",
  "show_name_in_global_search": 1,

@@ -67,7 +67,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2020-10-26 07:34:48.601766",
+ "modified": "2021-05-12 20:00:03.894135",
  "modified_by": "Administrator",
  "module": "Loan Management",
  "name": "Loan Security",
@@ -98,6 +98,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "Loan Management",
  "search_fields": "loan_security_code",
  "sort_field": "modified",
  "sort_order": "DESC",

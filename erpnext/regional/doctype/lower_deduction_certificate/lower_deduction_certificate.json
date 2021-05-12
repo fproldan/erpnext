@@ -126,12 +126,13 @@
   }
  ],
  "links": [],
- "modified": "2020-04-23 23:04:41.203721",
+ "modified": "2021-05-12 20:00:41.175890",
  "modified_by": "Administrator",
  "module": "Regional",
  "name": "Lower Deduction Certificate",
  "owner": "Administrator",
  "permissions": [],
+ "restrict_to_domain": "Regional",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1
