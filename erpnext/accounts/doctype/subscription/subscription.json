@@ -36,6 +36,7 @@
   "additional_discount_percentage",
   "additional_discount_amount",
   "sb_3",
+  "submit_invoice",
   "invoices",
   "accounting_dimensions_section",
   "cost_center",
@@ -253,6 +254,12 @@
    "fieldtype": "Link",
    "label": "Company",
    "options": "Company"
+  },
+  {
+   "default": "1",
+   "fieldname": "submit_invoice",
+   "fieldtype": "Check",
+   "label": "Submit Invoice Automatically"
   }
  ],
  "index_web_pages_for_search": 1,
