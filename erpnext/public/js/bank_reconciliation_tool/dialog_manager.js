@@ -142,7 +142,6 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 	make_dialog() {
 		const me = this;
 		me.selected_payment = null;
-
 		const fields = [
 			{
 				label: __("Action"),
@@ -236,6 +235,13 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				depends_on: "eval:doc.action!='Match Against Voucher'",
 			},
 			{
+				label: "Cheque",
+				fieldname: "cheque",
+				fieldtype: "Link",
+				options: "Cheque",
+				depends_on: "eval:doc.action=='Create Voucher' && doc.document_type=='Journal Entry' && (doc.journal_entry_type=='Cheque Depositado' || doc.journal_entry_type=='Cheque Rechazado' || doc.journal_entry_type=='Cheque Cobrado')",
+			},
+			{
 				fieldname: "reference_number",
 				fieldtype: "Data",
 				label: "Reference Number",
@@ -284,7 +290,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				fieldtype: "Select",
 				label: "Journal Entry Type",
 				options:
-					"Journal Entry\nInter Company Journal Entry\nBank Entry\nCash Entry\nCredit Card Entry\nDebit Note\nCredit Note\nContra Entry\nExcise Entry\nWrite Off Entry\nOpening Entry\nDepreciation Entry\nExchange Rate Revaluation\nDeferred Revenue\nDeferred Expense",
+					"Journal Entry\nInter Company Journal Entry\nBank Entry\nCash Entry\nCredit Card Entry\nDebit Note\nCredit Note\nContra Entry\nExcise Entry\nWrite Off Entry\nOpening Entry\nDepreciation Entry\nExchange Rate Revaluation\nDeferred Revenue\nDeferred Expense\nAjuste por Inflacion\nCheque Rechazado\nCheque Depositado\nCheque Cobrado",
 				depends_on:
 					"eval:doc.action=='Create Voucher' &&  doc.document_type=='Journal Entry'",
 				mandatory_depends_on:
