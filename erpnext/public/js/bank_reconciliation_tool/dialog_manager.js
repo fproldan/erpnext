@@ -142,7 +142,6 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 	make_dialog() {
 		const me = this;
 		me.selected_payment = null;
-
 		const fields = [
 			{
 				label: __("Action"),
@@ -236,6 +235,28 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				depends_on: "eval:doc.action!='Match Against Voucher'",
 			},
 			{
+				label: "Cheque",
+				fieldname: "cheque",
+				fieldtype: "Link",
+				options: "Cheque",
+				depends_on: "eval:doc.action=='Create Voucher' && doc.document_type=='Journal Entry' && (doc.journal_entry_type=='Cheque Depositado' || doc.journal_entry_type=='Cheque Rechazado' || doc.journal_entry_type=='Cheque Cobrado')",
+				get_query: () => {
+					var journal_entry_type = this.dialog.fields_dict.journal_entry_type.value;
+					
+					if (journal_entry_type == 'Cheque Depositado') {
+						var estados = ['En Mano'];
+					} else if (journal_entry_type == 'Cheque Cobrado') {
+						var estados = ['En Mano', 'Vencido'];
+					} else if (journal_entry_type == 'Cheque Rechazado') {
+						var estados = ['Vencido', 'Depositado', 'Entregado', 'Cobrado'];
+					}
+
+					return {
+						filters: [["estado", "in", estados]]
+					};
+				},
+			},
+			{
 				fieldname: "reference_number",
 				fieldtype: "Data",
 				label: "Reference Number",
@@ -284,11 +305,12 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				fieldtype: "Select",
 				label: "Journal Entry Type",
 				options:
-					"Journal Entry\nInter Company Journal Entry\nBank Entry\nCash Entry\nCredit Card Entry\nDebit Note\nCredit Note\nContra Entry\nExcise Entry\nWrite Off Entry\nOpening Entry\nDepreciation Entry\nExchange Rate Revaluation\nDeferred Revenue\nDeferred Expense",
+					"Journal Entry\nInter Company Journal Entry\nBank Entry\nCash Entry\nCredit Card Entry\nDebit Note\nCredit Note\nContra Entry\nExcise Entry\nWrite Off Entry\nOpening Entry\nDepreciation Entry\nExchange Rate Revaluation\nDeferred Revenue\nDeferred Expense\nAjuste por Inflacion\nCheque Rechazado\nCheque Depositado\nCheque Cobrado",
 				depends_on:
 					"eval:doc.action=='Create Voucher' &&  doc.document_type=='Journal Entry'",
 				mandatory_depends_on:
 					"eval:doc.action=='Create Voucher' &&  doc.document_type=='Journal Entry'",
+				onchange: () => this.clean_cheque_add_account(),
 			},
 			{
 				fieldname: "second_account",
@@ -419,6 +441,38 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 		this.get_linked_vouchers(selected_attributes);
 	}
 
+	clean_cheque_add_account() {
+		var me = this;
+		
+		me.dialog.fields_dict.cheque.value = null;
+		me.dialog.get_field("cheque").refresh();
+
+		var journal_entry_type = me.dialog.fields_dict.journal_entry_type.input.value;
+
+		if (journal_entry_type == 'Cheque Depositado' || journal_entry_type == 'Cheque Cobrado' || journal_entry_type == 'Cheque Rechazado')  {
+			frappe.call({
+		    	method:"erpnext_argentina.cheques.get_cuentas_cheque",
+			    args: {
+			    	company: me.company
+			   	}, 
+			    callback: function(r) {
+			        if (r.message) {
+			        	if (journal_entry_type == 'Cheque Depositado') {
+			        		var cuenta = r.message["cuenta_depositos"];
+			        	} else if (journal_entry_type == 'Cheque Cobrado') {
+			                var cuenta = r.message["cuenta_cobros"];
+			            } else if (journal_entry_type == 'Cheque Rechazado') {
+			        		var cuenta = r.message["cuenta_rechazados"];
+			        	}
+
+			        	me.dialog.fields_dict.second_account.value = cuenta;
+						me.dialog.get_field("second_account").refresh();
+					}
+				}
+			});
+		}
+	}
+
 	reconciliation_dialog_primary_action(values) {
 		if (values.action == "Match Against Voucher") this.match(values);
 		if (
@@ -509,6 +563,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				mode_of_payment: values.mode_of_payment,
 				entry_type: values.journal_entry_type,
 				second_account: values.second_account,
+				cheque: values.cheque,
 			},
 			callback: (response) => {
 				const alert_string =
@@ -581,6 +636,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 					mode_of_payment: values.mode_of_payment,
 					entry_type: values.journal_entry_type,
 					second_account: values.second_account,
+					cheque: values.cheque,
 					allow_edit: true
 				},
 				callback: (r) => {

@@ -86,7 +86,7 @@ def update_bank_transaction(bank_transaction_name, reference_number, party_type=
 
 @frappe.whitelist()
 def create_journal_entry_bts( bank_transaction_name, reference_number=None, reference_date=None, posting_date=None, entry_type=None,
-	second_account=None, mode_of_payment=None, party_type=None, party=None, allow_edit=None):
+	second_account=None, mode_of_payment=None, party_type=None, party=None, cheque=None, allow_edit=None):
 	# Create a new journal entry based on the bank transaction
 	bank_transaction = frappe.db.get_values(
 		"Bank Transaction", bank_transaction_name,
@@ -131,7 +131,8 @@ def create_journal_entry_bts( bank_transaction_name, reference_number=None, refe
 		"posting_date" : posting_date,
 		"cheque_date" : reference_date,
 		"cheque_no" : reference_number,
-		"mode_of_payment" : mode_of_payment
+		"mode_of_payment" : mode_of_payment,
+		"cheque": cheque,
 	}
 	journal_entry = frappe.new_doc('Journal Entry')
 	journal_entry.update(journal_entry_dict)
