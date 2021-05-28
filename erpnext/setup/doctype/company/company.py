@@ -414,7 +414,7 @@ class Company(NestedSet):
 		if self.is_new():
 			total_companies += 1
 
-		if total_companies >= limits.companies:
+		if total_companies > limits.companies:
 			frappe.throw(_("Sorry. You have reached the maximum company limit for your subscription. You can either disable an existing user or buy a higher subscription plan."), MaxCompaniesReachedError)
 
 
