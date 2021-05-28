@@ -170,6 +170,7 @@ def add_non_standard_user_types():
 		create_user_type(user_type, data)
 
 def get_user_types_data():
+	return {}
 	return {
 		'Employee Self Service': {
 			'role': 'Employee Self Service',
