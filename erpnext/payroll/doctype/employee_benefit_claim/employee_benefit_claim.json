@@ -144,7 +144,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-03-31 22:37:21.024625",
+ "modified": "2021-05-12 20:00:08.022122",
  "modified_by": "Administrator",
  "module": "Payroll",
  "name": "Employee Benefit Claim",
@@ -208,6 +208,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "Payroll",
  "sort_field": "modified",
  "sort_order": "DESC",
  "title_field": "employee_name",

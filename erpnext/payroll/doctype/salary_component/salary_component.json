@@ -244,7 +244,7 @@
  "icon": "fa fa-flag",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2020-10-07 20:38:33.795853",
+ "modified": "2021-05-12 20:00:12.949816",
  "modified_by": "Administrator",
  "module": "Payroll",
  "name": "Salary Component",
@@ -267,6 +267,7 @@
    "role": "Employee"
   }
  ],
+ "restrict_to_domain": "Payroll",
  "sort_field": "modified",
  "sort_order": "DESC"
 }

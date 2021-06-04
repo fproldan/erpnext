@@ -397,7 +397,7 @@
  "is_tree": 1,
  "links": [],
  "max_attachments": 5,
- "modified": "2021-04-16 12:46:51.556741",
+ "modified": "2021-05-12 19:59:05.058548",
  "modified_by": "Administrator",
  "module": "Projects",
  "name": "Task",
@@ -416,6 +416,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "Projects",
  "search_fields": "subject",
  "show_name_in_global_search": 1,
  "show_preview_popup": 1,

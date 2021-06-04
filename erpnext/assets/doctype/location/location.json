@@ -141,7 +141,7 @@
  ],
  "is_tree": 1,
  "links": [],
- "modified": "2020-05-08 16:11:11.375701",
+ "modified": "2021-05-12 19:59:39.144869",
  "modified_by": "Administrator",
  "module": "Assets",
  "name": "Location",
@@ -221,6 +221,7 @@
   }
  ],
  "quick_entry": 1,
+ "restrict_to_domain": "Assets",
  "show_name_in_global_search": 1,
  "sort_field": "modified",
  "sort_order": "DESC",

@@ -1,4 +1,5 @@
 {
+ "actions": [],
  "autoname": "Prompt",
  "creation": "2019-05-20 15:14:21.604447",
  "doctype": "DocType",
@@ -13,7 +14,8 @@
    "label": "Description"
   }
  ],
- "modified": "2019-05-20 17:06:38.095647",
+ "links": [],
+ "modified": "2021-05-12 19:59:35.680101",
  "modified_by": "Administrator",
  "module": "Support",
  "name": "Issue Priority",
@@ -33,6 +35,7 @@
   }
  ],
  "quick_entry": 1,
+ "restrict_to_domain": "Support",
  "sort_field": "modified",
  "sort_order": "ASC",
  "track_changes": 1

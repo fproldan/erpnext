@@ -103,7 +103,7 @@
   }
  ],
  "links": [],
- "modified": "2020-05-28 20:28:32.993823",
+ "modified": "2021-05-12 19:59:38.883176",
  "modified_by": "Administrator",
  "module": "Assets",
  "name": "Asset Maintenance",
@@ -134,6 +134,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "Assets",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

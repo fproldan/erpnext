@@ -120,12 +120,13 @@
  "idx": 1,
  "istable": 1,
  "links": [],
- "modified": "2020-09-18 17:26:09.703215",
+ "modified": "2021-05-12 19:59:15.012823",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Expense Claim Detail",
  "owner": "Administrator",
  "permissions": [],
+ "restrict_to_domain": "HR",
  "sort_field": "modified",
  "sort_order": "DESC"
 }

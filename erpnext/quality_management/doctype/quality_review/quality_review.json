@@ -84,7 +84,7 @@
    "link_fieldname": "review"
   }
  ],
- "modified": "2020-10-21 12:56:47.046172",
+ "modified": "2021-05-12 19:59:57.667017",
  "modified_by": "Administrator",
  "module": "Quality Management",
  "name": "Quality Review",
@@ -127,6 +127,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "Quality Management",
  "sort_field": "modified",
  "sort_order": "DESC",
  "title_field": "goal",

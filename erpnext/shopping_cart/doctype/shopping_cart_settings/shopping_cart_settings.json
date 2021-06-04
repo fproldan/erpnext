@@ -190,7 +190,7 @@
  "idx": 1,
  "issingle": 1,
  "links": [],
- "modified": "2021-03-02 17:34:57.642565",
+ "modified": "2021-05-12 20:01:39.584385",
  "modified_by": "Administrator",
  "module": "Shopping Cart",
  "name": "Shopping Cart Settings",
@@ -206,6 +206,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "Shopping Cart",
  "sort_field": "modified",
  "sort_order": "ASC",
  "track_changes": 1
