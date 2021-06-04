@@ -19,6 +19,11 @@ import functools
 from erpnext.accounts.doctype.account.account import get_account_currency
 from erpnext.setup.setup_wizard.operations.taxes_setup import setup_taxes_and_charges
 
+
+class MaxCompaniesReachedError(frappe.ValidationError):
+	pass
+
+
 class Company(NestedSet):
 	nsm_parent_field = 'parent_company'
 
@@ -101,6 +106,7 @@ class Company(NestedSet):
 				frappe.throw(_("Cannot change company's default currency, because there are existing transactions. Transactions must be cancelled to change the default currency."))
 
 	def on_update(self):
+		self.validate_company_limit()
 		NestedSet.on_update(self)
 		if not frappe.db.sql("""select name from tabAccount
 				where company=%s and docstatus<2 limit 1""", self.name):
@@ -392,6 +398,25 @@ class Company(NestedSet):
 		frappe.db.sql("delete from `tabSales Taxes and Charges Template` where company=%s", self.name)
 		frappe.db.sql("delete from `tabPurchase Taxes and Charges Template` where company=%s", self.name)
 		frappe.db.sql("delete from `tabItem Tax Template` where company=%s", self.name)
+
+	def validate_company_limit(self):
+		'''
+		Validate if company limit has been reached.
+		'''
+		from frappe.limits import get_limits
+		limits = get_limits()
+
+		if not limits.companies:
+			return
+
+		total_companies = len(frappe.db.get_all('Company',filters={}))
+
+		if self.is_new():
+			total_companies += 1
+
+		if total_companies > limits.companies:
+			frappe.throw('Lo sentimos, ha alcanzado el límite máximo de <b>empresas</b> para su suscripción. Puede contactar a <a href="https://diamo.com.ar" target="_blank">soporte</a> para descubrir cómo añadir más <b>empresas</b>.', MaxCompaniesReachedError)
+
 
 @frappe.whitelist()
 def enqueue_replace_abbr(company, old, new):
