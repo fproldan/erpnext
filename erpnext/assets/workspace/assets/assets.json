@@ -160,11 +160,10 @@
    "type": "Link"
   }
  ],
- "modified": "2020-12-01 13:38:37.977119",
+ "modified": "2021-06-12 13:38:37.977119",
  "modified_by": "Administrator",
  "module": "Assets",
  "name": "Assets",
- "onboarding": "Assets",
  "owner": "Administrator",
  "pin_to_bottom": 0,
  "pin_to_top": 0,
