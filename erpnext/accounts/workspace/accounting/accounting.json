@@ -1052,11 +1052,10 @@
    "type": "Link"
   }
  ],
- "modified": "2021-05-12 11:48:01.905144",
+ "modified": "2021-06-12 11:48:01.905144",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Accounting",
- "onboarding": "Accounts",
  "owner": "Administrator",
  "pin_to_bottom": 0,
  "pin_to_top": 0,

@@ -363,11 +363,10 @@
    "type": "Link"
   }
  ],
- "modified": "2020-12-01 13:38:36.871352",
+ "modified": "2021-06-12 13:38:36.871352",
  "modified_by": "Administrator",
  "module": "CRM",
  "name": "CRM",
- "onboarding": "CRM",
  "owner": "Administrator",
  "pin_to_bottom": 0,
  "pin_to_top": 0,
