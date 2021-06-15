@@ -8,10 +8,11 @@
  "field_order": [
   "activity_type",
   "from_time",
+  "description",
   "section_break_3",
   "expected_hours",
-  "hours",
   "to_time",
+  "hours",
   "completed",
   "section_break_7",
   "completed_qty",
@@ -21,20 +22,24 @@
   "operation_id",
   "project_details",
   "project",
+  "project_name",
   "column_break_2",
   "task",
   "section_break_6",
-  "billable",
+  "is_billable",
+  "sales_invoice",
   "column_break_8",
   "billing_hours",
   "section_break_11",
+  "base_billing_rate",
+  "base_billing_amount",
+  "base_costing_rate",
+  "base_costing_amount",
+  "column_break_14",
   "billing_rate",
   "billing_amount",
-  "column_break_14",
   "costing_rate",
-  "costing_amount",
-  "reference",
-  "sales_invoice"
+  "costing_amount"
  ],
  "fields": [
   {
@@ -125,7 +130,8 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Project",
-   "options": "Project"
+   "options": "Project",
+   "read_only_depends_on": "eval: parent.parent_project"
   },
   {
    "fieldname": "column_break_2",
@@ -143,29 +149,19 @@
    "fieldtype": "Section Break"
   },
   {
-   "allow_on_submit": 1,
-   "columns": 1,
-   "default": "0",
-   "fieldname": "billable",
-   "fieldtype": "Check",
-   "in_list_view": 1,
-   "label": "Bill",
-   "print_hide": 1
-  },
-  {
    "fieldname": "column_break_8",
    "fieldtype": "Column Break"
   },
   {
    "allow_on_submit": 1,
-   "depends_on": "billable",
+   "depends_on": "is_billable",
    "fieldname": "billing_hours",
    "fieldtype": "Float",
    "label": "Billing Hours",
    "permlevel": 1
   },
   {
-   "depends_on": "billable",
+   "depends_on": "is_billable",
    "fieldname": "section_break_11",
    "fieldtype": "Section Break"
   },
@@ -173,6 +169,7 @@
    "fieldname": "billing_rate",
    "fieldtype": "Currency",
    "label": "Billing Rate",
+   "options": "currency",
    "permlevel": 1
   },
   {
@@ -181,6 +178,7 @@
    "fieldname": "billing_amount",
    "fieldtype": "Currency",
    "label": "Billing Amount",
+   "options": "currency",
    "permlevel": 1,
    "read_only": 1
   },
@@ -192,6 +190,7 @@
    "fieldname": "costing_rate",
    "fieldtype": "Currency",
    "label": "Costing Rate",
+   "options": "currency",
    "permlevel": 1
   },
   {
@@ -200,13 +199,9 @@
    "fieldname": "costing_amount",
    "fieldtype": "Currency",
    "label": "Costing Amount",
+   "options": "currency",
    "permlevel": 1,
    "read_only": 1
-  },
-  {
-   "fieldname": "reference",
-   "fieldtype": "Section Break",
-   "label": "Reference"
   },
   {
    "allow_on_submit": 1,
@@ -217,12 +212,62 @@
    "options": "Sales Invoice",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "columns": 1,
+   "default": "0",
+   "fieldname": "is_billable",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Is Billable",
+   "print_hide": 1
+  },
+  {
+   "fetch_from": "project.project_name",
+   "fieldname": "project_name",
+   "fieldtype": "Data",
+   "label": "Project Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "base_billing_rate",
+   "fieldtype": "Currency",
+   "label": "Billing Rate",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "base_billing_amount",
+   "fieldtype": "Currency",
+   "label": "Billing Amount",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "base_costing_rate",
+   "fieldtype": "Currency",
+   "label": "Costing Rate",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "base_costing_amount",
+   "fieldtype": "Currency",
+   "label": "Costing Amount",
+   "print_hide": 1,
+   "read_only": 1
   }
  ],
  "idx": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-05-12 19:59:07.570774",
+ "modified": "2021-05-20 12:19:33.205940",
  "modified_by": "Administrator",
  "module": "Projects",
  "name": "Timesheet Detail",

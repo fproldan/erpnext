@@ -44,7 +44,7 @@
  "icon": "fa fa-bookmark",
  "idx": 1,
  "links": [],
- "modified": "2021-05-12 19:59:23.822425",
+ "modified": "2021-05-13 19:59:23.822425",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Designation",
@@ -60,11 +60,17 @@
    "role": "HR User",
    "share": 1,
    "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Sales User"
   }
  ],
  "quick_entry": 1,
  "restrict_to_domain": "HR",
  "show_name_in_global_search": 1,
- "sort_field": "modified",
- "sort_order": "ASC"
+ "sort_order": "ASC",
+ "track_changes": 0,
+ "track_seen": 0,
+ "track_views": 0
 }

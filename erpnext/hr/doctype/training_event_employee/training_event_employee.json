@@ -10,7 +10,8 @@
   "department",
   "column_break_3",
   "status",
-  "attendance"
+  "attendance",
+  "is_mandatory"
  ],
  "fields": [
   {
@@ -53,12 +54,21 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Attendance",
-   "options": "Mandatory\nOptional"
+   "options": "Present\nAbsent"
+  },
+  {
+   "columns": 2,
+   "default": "1",
+   "fieldname": "is_mandatory",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Is Mandatory"
   }
  ],
+ "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-05-12 19:59:24.409736",
+ "modified": "2021-05-22 12:41:59.336237",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Training Event Employee",
