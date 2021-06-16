@@ -28,6 +28,12 @@ def get_context(context):
 
 	# Set context for content to be displayer
 	context.content = frappe.get_doc(content_type, content).as_dict()
+
+	if content_type == 'Article':
+		context.content_md = md_to_html(context.content.content)
+	else:
+		context.content_md = ''
+
 	context.content_type = content_type
 	context.program = program
 	context.course = course
