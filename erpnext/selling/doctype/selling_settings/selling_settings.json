@@ -13,6 +13,7 @@
   "selling_price_list",
   "close_opportunity_after_days",
   "default_valid_till",
+  "canal_de_venta",
   "column_break_5",
   "so_required",
   "dn_required",
@@ -152,6 +153,13 @@
    "fieldtype": "Link",
    "label": "Role Allowed to Override Stop Action",
    "options": "Role"
+  },
+  {
+   "fieldname": "canal_de_venta",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Canal de Venta por Defecto",
+   "options": "Canal de Venta"
   }
  ],
  "icon": "fa fa-cog",
@@ -159,7 +167,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2021-04-04 20:18:12.814624",
+ "modified": "2021-06-18 11:54:02.925131",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Selling Settings",

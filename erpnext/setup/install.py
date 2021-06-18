@@ -32,6 +32,7 @@ def after_install():
 	add_standard_navbar_items()
 	add_app_name()
 	add_non_standard_user_types()
+	add_canal_de_venta()
 	frappe.db.commit()
 
 
@@ -234,3 +235,9 @@ def update_select_perm_after_install():
 		doc.save()
 
 	frappe.flags.update_select_perm_after_migrate = False
+
+def add_canal_de_venta():
+	for canal in ['Sitio Web', 'Local', 'Mayorista']:
+		doc = frappe.new_doc('Canal de Venta')
+		doc.nombre = canal
+		doc.save()
