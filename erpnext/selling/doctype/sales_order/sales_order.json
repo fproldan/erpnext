@@ -16,6 +16,7 @@
   "customer",
   "customer_name",
   "order_type",
+  "canal_de_venta",
   "skip_delivery_note",
   "column_break1",
   "amended_from",
@@ -216,6 +217,7 @@
    "default": "Sales",
    "fieldname": "order_type",
    "fieldtype": "Select",
+   "hidden": 1,
    "hide_days": 1,
    "hide_seconds": 1,
    "label": "Order Type",
@@ -1486,13 +1488,19 @@
    "fieldname": "disable_rounded_total",
    "fieldtype": "Check",
    "label": "Disable Rounded Total"
+  },
+  {
+   "fieldname": "canal_de_venta",
+   "fieldtype": "Link",
+   "label": "Canal de Venta",
+   "options": "Canal de Venta"
   }
  ],
  "icon": "fa fa-file-text",
  "idx": 105,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-04-15 23:55:13.439068",
+ "modified": "2021-06-18 11:45:54.689704",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Sales Order",
