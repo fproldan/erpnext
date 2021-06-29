@@ -170,13 +170,13 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 			},
 			{
 				fieldtype: "Check",
-				label: "Payment Entry",
+				label: __("Payment Entry"),
 				fieldname: "payment_entry",
 				onchange: () => this.update_options(),
 			},
 			{
 				fieldtype: "Check",
-				label: "Journal Entry",
+				label: __("Journal Entry"),
 				fieldname: "journal_entry",
 				onchange: () => this.update_options(),
 			},
@@ -186,14 +186,14 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 			},
 			{
 				fieldtype: "Check",
-				label: "Sales Invoice",
+				label: __("Sales Invoice"),
 				fieldname: "sales_invoice",
 				onchange: () => this.update_options(),
 			},
 
 			{
 				fieldtype: "Check",
-				label: "Purchase Invoice",
+				label: __("Purchase Invoice"),
 				fieldname: "purchase_invoice",
 				onchange: () => this.update_options(),
 			},
@@ -203,13 +203,13 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 			},
 			{
 				fieldtype: "Check",
-				label: "Expense Claim",
+				label: __("Expense Claim"),
 				fieldname: "expense_claim",
 				onchange: () => this.update_options(),
 			},
 			{
 				fieldtype: "Check",
-				label: "Show Only Exact Amount",
+				label: __("Show Only Exact Amount"),
 				fieldname: "exact_match",
 				onchange: () => this.update_options(),
 			},
@@ -231,7 +231,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 			{
 				fieldtype: "Section Break",
 				fieldname: "details",
-				label: "Details",
+				label: __("Details"),
 				depends_on: "eval:doc.action!='Match Against Voucher'",
 			},
 			{
@@ -259,21 +259,21 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 			{
 				fieldname: "reference_number",
 				fieldtype: "Data",
-				label: "Reference Number",
+				label: __("Reference Number"),
 				mandatory_depends_on: "eval:doc.action=='Create Voucher'",
 			},
 			{
 				default: "Today",
 				fieldname: "posting_date",
 				fieldtype: "Date",
-				label: "Posting Date",
+				label: __("Posting Date"),
 				reqd: 1,
 				depends_on: "eval:doc.action=='Create Voucher'",
 			},
 			{
 				fieldname: "reference_date",
 				fieldtype: "Date",
-				label: "Cheque/Reference Date",
+				label: __("Cheque/Reference Date"),
 				mandatory_depends_on: "eval:doc.action=='Create Voucher'",
 				depends_on: "eval:doc.action=='Create Voucher'",
 				reqd: 1,
@@ -281,14 +281,14 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 			{
 				fieldname: "mode_of_payment",
 				fieldtype: "Link",
-				label: "Mode of Payment",
+				label: __("Mode of Payment"),
 				options: "Mode of Payment",
 				depends_on: "eval:doc.action=='Create Voucher'",
 			},
 			{
 				fieldname: "edit_in_full_page",
 				fieldtype: "Button",
-				label: "Edit in Full Page",
+				label: __("Edit in Full Page"),
 				click: () => {
 					this.edit_in_full_page();
 				},
@@ -303,7 +303,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				default: "Journal Entry Type",
 				fieldname: "journal_entry_type",
 				fieldtype: "Select",
-				label: "Journal Entry Type",
+				label: __("Journal Entry Type"),
 				options:
 					"Journal Entry\nInter Company Journal Entry\nBank Entry\nCash Entry\nCredit Card Entry\nDebit Note\nCredit Note\nContra Entry\nExcise Entry\nWrite Off Entry\nOpening Entry\nDepreciation Entry\nExchange Rate Revaluation\nDeferred Revenue\nDeferred Expense\nAjuste por Inflacion\nCheque Rechazado\nCheque Depositado\nCheque Cobrado",
 				depends_on:
@@ -315,7 +315,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 			{
 				fieldname: "second_account",
 				fieldtype: "Link",
-				label: "Account",
+				label: __("Account"),
 				options: "Account",
 				depends_on:
 					"eval:doc.action=='Create Voucher' &&  doc.document_type=='Journal Entry'",
@@ -333,7 +333,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 			{
 				fieldname: "party_type",
 				fieldtype: "Link",
-				label: "Party Type",
+				label: __("Party Type"),
 				options: "DocType",
 				mandatory_depends_on:
 				"eval:doc.action=='Create Voucher' &&  doc.document_type=='Payment Entry'",
@@ -351,7 +351,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 			{
 				fieldname: "party",
 				fieldtype: "Dynamic Link",
-				label: "Party",
+				label: __("Party"),
 				options: "party_type",
 				mandatory_depends_on:
 					"eval:doc.action=='Create Voucher' && doc.document_type=='Payment Entry'",
@@ -359,7 +359,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 			{
 				fieldname: "project",
 				fieldtype: "Link",
-				label: "Project",
+				label: __("Project"),
 				options: "Project",
 				depends_on:
 					"eval:doc.action=='Create Voucher' && doc.document_type=='Payment Entry'",
@@ -367,7 +367,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 			{
 				fieldname: "cost_center",
 				fieldtype: "Link",
-				label: "Cost Center",
+				label: __("Cost Center"),
 				options: "Cost Center",
 				depends_on:
 					"eval:doc.action=='Create Voucher' && doc.document_type=='Payment Entry'",
@@ -375,25 +375,25 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 			{
 				fieldtype: "Section Break",
 				fieldname: "details_section",
-				label: "Transaction Details",
+				label: __("Transaction Details"),
 				collapsible: 1,
 			},
 			{
 				fieldname: "deposit",
 				fieldtype: "Currency",
-				label: "Deposit",
+				label: __("Deposit"),
 				read_only: 1,
 			},
 			{
 				fieldname: "withdrawal",
 				fieldtype: "Currency",
-				label: "Withdrawal",
+				label: __("Withdrawal"),
 				read_only: 1,
 			},
 			{
 				fieldname: "description",
 				fieldtype: "Small Text",
-				label: "Description",
+				label: __("Description"),
 				read_only: 1,
 			},
 			{
@@ -404,14 +404,14 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 			{
 				fieldname: "allocated_amount",
 				fieldtype: "Currency",
-				label: "Allocated Amount",
+				label: __("Allocated Amount"),
 				read_only: 1,
 			},
 
 			{
 				fieldname: "unallocated_amount",
 				fieldtype: "Currency",
-				label: "Unallocated Amount",
+				label: __("Unallocated Amount"),
 				read_only: 1,
 			},
 		];
