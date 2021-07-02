@@ -55,7 +55,7 @@ class NamingSeries(Document):
 		return options
 
 	@frappe.whitelist()
-	def update_series(self, arg=None):
+	def update_series(self, arg=None, show_message=True):
 		"""update series list"""
 		self.validate_series_set()
 		self.check_duplicate()
@@ -67,7 +67,8 @@ class NamingSeries(Document):
 		# create series
 		map(self.insert_series, [d.split('.')[0] for d in series_list if d.strip()])
 
-		msgprint(_("Series Updated"))
+		if show_message:
+			msgprint(_("Series Updated"))
 
 		return self.get_transactions()
 
