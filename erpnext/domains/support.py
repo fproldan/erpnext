@@ -4,4 +4,7 @@ data = {
     'modules': [
         'Support'
     ],
+    'restricted_roles': [
+        'Support Team',
+    ],
 }

@@ -4,4 +4,7 @@ data = {
     'modules': [
         'WMS'
     ],
+    'restricted_roles': [
+        'Fulfillment User',
+    ],
 }

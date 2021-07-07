@@ -4,4 +4,8 @@ data = {
     'modules': [
         'Projects'
     ],
+    'restricted_roles': [
+        'Projects Manager',
+        'Projects User'
+    ],
 }

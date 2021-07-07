@@ -4,4 +4,9 @@ data = {
     'modules': [
         'Build'
     ],
+    'restricted_roles': [
+        'Dashboard Manager',
+        'Script Manager',
+        'Translator'
+    ],
 }

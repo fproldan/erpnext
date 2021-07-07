@@ -4,4 +4,7 @@ data = {
     'modules': [
         'Loan Management'
     ],
+    'restricted_roles': [
+        'Loan Manager',
+    ],
 }

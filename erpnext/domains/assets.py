@@ -4,4 +4,8 @@ data = {
     'modules': [
         'Assets'
     ],
+    'restricted_roles': [
+        'Maintenance User',
+        'Maintenance Manager'
+    ],
 }

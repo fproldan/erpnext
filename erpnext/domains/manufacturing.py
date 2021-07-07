@@ -13,7 +13,11 @@ data = {
 		'Accounts',
 		'HR',
 		'ToDo'
-	 ],
+	],
+	'restricted_roles': [
+        'Manufacturing Manager',
+        'Manufacturing User'
+    ],
 	'properties': [
 		{'doctype': 'Item', 'fieldname': 'manufacturing', 'property': 'collapsible_depends_on', 'value': 'is_stock_item'},
 	],

@@ -19,7 +19,8 @@ data = {
 		'Student',
 		'Instructor',
 		'Academics User',
-		'Education Manager'
+		'Education Manager',
+		'LMS User'
 	],
 	'modules': [
 		'Education'

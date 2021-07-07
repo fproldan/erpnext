@@ -4,4 +4,7 @@ data = {
     'modules': [
         'Quality Management'
     ],
+    'restricted_roles': [
+        'Quality Manager',
+    ],
 }

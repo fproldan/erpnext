@@ -4,4 +4,7 @@ data = {
     'modules': [
         'Campaigns'
     ],
+    'restricted_roles': [
+        'Newsletter Manager'
+    ],
 }

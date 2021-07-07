@@ -4,4 +4,10 @@ data = {
     'modules': [
         'Website'
     ],
+    'restricted_roles': [
+        'Website Manager',
+        'Knowledge Base Contributor',
+        'Knowledge Base Editor',
+        'Blogger'
+    ],
 }
