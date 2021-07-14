@@ -22,8 +22,10 @@ class Supplier(TransactionBase):
 
 	def before_save(self):
 		if not self.on_hold:
-			self.hold_type = ''
-			self.release_date = ''
+			if self.hold_type:
+				self.hold_type = ''
+			if self.release_date:
+				self.release_date = ''
 		elif self.on_hold and not self.hold_type:
 			self.hold_type = 'All'
 
