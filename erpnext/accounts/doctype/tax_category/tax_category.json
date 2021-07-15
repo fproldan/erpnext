@@ -22,7 +22,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-03-03 11:50:38.748872",
+ "modified": "2021-07-15 11:52:31.540711",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Tax Category",
@@ -63,6 +63,7 @@
   }
  ],
  "quick_entry": 1,
+ "restrict_to_domain": "Regional",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1
