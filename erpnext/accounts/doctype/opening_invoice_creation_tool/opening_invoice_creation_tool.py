@@ -122,6 +122,14 @@ class OpeningInvoiceCreationTool(Document):
 		party_doc.flags.ignore_mandatory = True
 		party_doc.save(ignore_permissions=True)
 
+	def get_opening_naming_series(self, doctype):
+		abbr = frappe.get_cached_value('Company', self.company,  "abbr")
+		series = {
+			'Purchase Invoice': '{company}-APERTURA-COMPRA-'.format(company=abbr),
+        	'Sales Invoice': '{company}-APERTURA-VENTA-'.format(company=abbr),
+		}
+		return series.get(doctype)
+
 	def get_invoice_dict(self, row=None):
 		def get_item_dict():
 			cost_center = row.get('cost_center') or frappe.get_cached_value('Company', self.company,  "cost_center")
@@ -145,6 +153,8 @@ class OpeningInvoiceCreationTool(Document):
 
 		item = get_item_dict()
 
+		doctype = "Sales Invoice" if self.invoice_type == "Sales" else "Purchase Invoice"
+
 		invoice = frappe._dict({
 			"items": [item],
 			"is_opening": "Yes",
@@ -155,8 +165,10 @@ class OpeningInvoiceCreationTool(Document):
 			"posting_date": row.posting_date,
 			frappe.scrub(row.party_type): row.party,
 			"is_pos": 0,
-			"doctype": "Sales Invoice" if self.invoice_type == "Sales" else "Purchase Invoice",
-			"update_stock": 0
+			"doctype": doctype,
+			"update_stock": 0,
+			"punto_de_venta": "",
+			"naming_series": self.get_opening_naming_series(doctype)
 		})
 
 		accounting_dimension = get_accounting_dimensions()
