@@ -133,7 +133,7 @@
    "options": "Role"
   },
   {
-   "default": "1",
+   "default": "0",
    "fieldname": "send_leave_notification",
    "fieldtype": "Check",
    "label": "Send Leave Notification"
@@ -148,7 +148,7 @@
  "idx": 1,
  "issingle": 1,
  "links": [],
- "modified": "2021-05-12 19:59:10.283954",
+ "modified": "2021-07-20 11:03:07.216330",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "HR Settings",
