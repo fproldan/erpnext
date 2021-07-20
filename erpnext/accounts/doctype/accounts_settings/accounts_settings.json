@@ -81,7 +81,7 @@
    "options": "Role"
   },
   {
-   "default": "0",
+   "default": "1",
    "fieldname": "check_supplier_invoice_uniqueness",
    "fieldtype": "Check",
    "label": "Check Supplier Invoice Number Uniqueness"
@@ -170,7 +170,7 @@
    "label": "Use Custom Cash Flow Format"
   },
   {
-   "default": "0",
+   "default": "1",
    "fieldname": "automatically_fetch_payment_terms",
    "fieldtype": "Check",
    "label": "Automatically Fetch Payment Terms"
@@ -249,6 +249,7 @@
   {
    "fieldname": "tax_settings_section",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Tax Settings"
   },
   {
@@ -267,7 +268,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2021-05-25 12:34:05.858669",
+ "modified": "2021-07-20 10:27:37.473184",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Accounts Settings",
