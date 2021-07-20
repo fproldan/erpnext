@@ -21,6 +21,7 @@
   "transaction_date",
   "valid_till",
   "order_type",
+  "canal_de_venta",
   "contact_section",
   "customer_address",
   "address_display",
@@ -226,7 +227,7 @@
    "default": "Sales",
    "fieldname": "order_type",
    "fieldtype": "Select",
-   "in_standard_filter": 1,
+   "hidden": 1,
    "label": "Order Type",
    "oldfieldname": "order_type",
    "oldfieldtype": "Select",
@@ -926,6 +927,12 @@
    "label": "Lost Reasons",
    "options": "Quotation Lost Reason Detail",
    "read_only": 1
+  },
+  {
+   "fieldname": "canal_de_venta",
+   "fieldtype": "Link",
+   "label": "Canal de Venta",
+   "options": "Canal de Venta"
   }
  ],
  "icon": "fa fa-shopping-cart",
@@ -933,7 +940,7 @@
  "is_submittable": 1,
  "links": [],
  "max_attachments": 1,
- "modified": "2020-10-30 13:58:59.212060",
+ "modified": "2021-07-20 10:16:32.228826",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Quotation",
