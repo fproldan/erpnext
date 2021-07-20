@@ -296,20 +296,20 @@ def install(country=None):
 
 	records += [{'doctype': 'Sales Partner Type', 'sales_partner_type': _(d)} for d in default_sales_partner_type]
 
-	base_path = frappe.get_app_path("erpnext", "hr", "doctype")
-	response = frappe.read_file(os.path.join(base_path, "leave_application/leave_application_email_template.html"))
+	# base_path = frappe.get_app_path("erpnext", "hr", "doctype")
+	# response = frappe.read_file(os.path.join(base_path, "leave_application/leave_application_email_template.html"))
 
-	records += [{'doctype': 'Email Template', 'name': _("Leave Approval Notification"), 'response': response,\
-		'subject': _("Leave Approval Notification"), 'owner': frappe.session.user}]
+	# records += [{'doctype': 'Email Template', 'name': _("Leave Approval Notification"), 'response': response,\
+	# 	'subject': _("Leave Approval Notification"), 'owner': frappe.session.user}]
 
-	records += [{'doctype': 'Email Template', 'name': _("Leave Status Notification"), 'response': response,\
-		'subject': _("Leave Status Notification"), 'owner': frappe.session.user}]
+	# records += [{'doctype': 'Email Template', 'name': _("Leave Status Notification"), 'response': response,\
+	# 	'subject': _("Leave Status Notification"), 'owner': frappe.session.user}]
 
-	base_path = frappe.get_app_path("erpnext", "stock", "doctype")
-	response = frappe.read_file(os.path.join(base_path, "delivery_trip/dispatch_notification_template.html"))
+	# base_path = frappe.get_app_path("erpnext", "stock", "doctype")
+	# response = frappe.read_file(os.path.join(base_path, "delivery_trip/dispatch_notification_template.html"))
 
-	records += [{'doctype': 'Email Template', 'name': _("Dispatch Notification"), 'response': response,\
-		'subject': _("Your order is out for delivery!"), 'owner': frappe.session.user}]
+	# records += [{'doctype': 'Email Template', 'name': _("Dispatch Notification"), 'response': response,\
+	# 	'subject': _("Your order is out for delivery!"), 'owner': frappe.session.user}]
 
 	# Records for the Supplier Scorecard
 	from erpnext.buying.doctype.supplier_scorecard.supplier_scorecard import make_default_records
