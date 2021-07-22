@@ -26,7 +26,11 @@
   "reference_doctype",
   "reference_name",
   "section_break_7",
-  "description"
+  "description",
+  "manufacturing_section",
+  "qty_to_produce",
+  "column_break_23",
+  "produced_qty"
  ],
  "fields": [
   {
@@ -161,6 +165,27 @@
    "label": "Batch UOM",
    "options": "UOM",
    "read_only": 1
+  },
+  {
+   "fieldname": "manufacturing_section",
+   "fieldtype": "Section Break",
+   "label": "Manufacturing"
+  },
+  {
+   "fieldname": "qty_to_produce",
+   "fieldtype": "Float",
+   "label": "Qty To Produce",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_23",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "produced_qty",
+   "fieldtype": "Float",
+   "label": "Produced Qty",
+   "read_only": 1
   }
  ],
  "icon": "fa fa-archive",
@@ -168,7 +193,7 @@
  "image_field": "image",
  "links": [],
  "max_attachments": 5,
- "modified": "2021-05-12 20:01:43.449575",
+ "modified": "2021-07-08 16:22:01.343105",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Batch",
@@ -193,5 +218,6 @@
  "restrict_to_domain": "Serie y Lote",
  "sort_field": "modified",
  "sort_order": "DESC",
- "title_field": "batch_id"
+ "title_field": "batch_id",
+ "track_changes": 1
 }
