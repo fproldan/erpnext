@@ -8,9 +8,9 @@
  "field_order": [
   "customer_section",
   "title",
-  "naming_series",
   "customer",
   "customer_name",
+  "naming_series",
   "tax_id",
   "pos_profile",
   "is_pos",
@@ -264,6 +264,7 @@
   {
    "fieldname": "project",
    "fieldtype": "Link",
+   "hidden": 1,
    "hide_days": 1,
    "hide_seconds": 1,
    "in_global_search": 1,
@@ -752,6 +753,7 @@
    "depends_on": "eval: !doc.is_return",
    "fieldname": "time_sheet_list",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "hide_days": 1,
    "hide_seconds": 1,
    "label": "Time Sheet List"
@@ -964,6 +966,7 @@
    "collapsible": 1,
    "fieldname": "loyalty_points_redemption",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "hide_days": 1,
    "hide_seconds": 1,
    "label": "Loyalty Points Redemption"
@@ -1822,6 +1825,7 @@
    "collapsible": 1,
    "fieldname": "subscription_section",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "hide_days": 1,
    "hide_seconds": 1,
    "label": "Subscription Section"
@@ -1978,7 +1982,7 @@
    "link_fieldname": "consolidated_invoice"
   }
  ],
- "modified": "2021-05-20 22:48:33.988881",
+ "modified": "2021-07-25 14:42:31.876795",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Sales Invoice",

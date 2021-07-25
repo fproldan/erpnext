@@ -582,6 +582,7 @@
   {
    "fieldname": "coupon_code",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Coupon Code",
    "options": "Coupon Code"
   },
@@ -940,7 +941,7 @@
  "is_submittable": 1,
  "links": [],
  "max_attachments": 1,
- "modified": "2021-07-20 10:16:32.228826",
+ "modified": "2021-07-25 14:35:26.065599",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Quotation",

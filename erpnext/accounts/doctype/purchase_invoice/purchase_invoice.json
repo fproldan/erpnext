@@ -1244,6 +1244,7 @@
    "collapsible": 1,
    "fieldname": "subscription_section",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Subscription Section",
    "print_hide": 1
   },
@@ -1326,6 +1327,7 @@
   {
    "fieldname": "project",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Project",
    "options": "Project"
   },
@@ -1383,7 +1385,7 @@
  "idx": 204,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-06-15 18:20:56.806195",
+ "modified": "2021-07-25 14:30:57.116749",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Purchase Invoice",
