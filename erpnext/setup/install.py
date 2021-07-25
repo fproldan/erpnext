@@ -19,7 +19,7 @@ default_mail_footer = """<div style="padding: 7px; text-align: right; color: #88
 
 
 def after_install():
-	frappe.get_doc({'doctype': "Role", "role_name": "Analytics"}).insert()
+	frappe.get_doc({'doctype': "Role", "role_name": "Herramientas Sistema"}).insert()
 	set_single_defaults()
 	create_compact_item_print_custom_field()
 	create_print_uom_after_qty_custom_field()
