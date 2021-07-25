@@ -14,8 +14,8 @@ from frappe.custom.doctype.custom_field.custom_field import create_custom_field
 from erpnext.setup.default_energy_point_rules import get_default_energy_point_rules
 from six import iteritems
 
-default_mail_footer = """<div style="padding: 7px; text-align: right; color: #888"><small>Sent via
-	<a style="color: #888" href="http://erpnext.org">ERPNext</a></div>"""
+default_mail_footer = """<div style="padding: 7px; text-align: right; color: #888"><small>Enviado por
+	<a style="color: #888" href="https://diamo.com.ar">DiamoERP</a></div>"""
 
 
 def after_install():
