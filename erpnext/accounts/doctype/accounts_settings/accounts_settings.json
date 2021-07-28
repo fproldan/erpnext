@@ -220,7 +220,7 @@
    "options": "Days\nMonths"
   },
   {
-   "default": "0",
+   "default": "1",
    "fieldname": "delete_linked_ledger_entries",
    "fieldtype": "Check",
    "label": "Delete Accounting and Stock Ledger Entries on deletion of Transaction"
@@ -258,10 +258,9 @@
   },
   {
    "default": "1",
-   "description": "If enabled, ledger entries will be posted for change amount in POS transactions",
    "fieldname": "post_change_gl_entries",
    "fieldtype": "Check",
-   "label": "Create Ledger Entries for Change Amount"
+   "label": "Post Ledger Entries for Given Change"
   }
  ],
  "icon": "icon-cog",
@@ -269,7 +268,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2021-07-20 10:27:37.473184",
+ "modified": "2021-07-28 08:48:44.612767",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Accounts Settings",
