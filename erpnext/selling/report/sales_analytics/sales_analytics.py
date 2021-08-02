@@ -35,10 +35,10 @@ class Analytics(object):
 	def get_columns(self):
 		self.columns = [{
 				"label": _(self.filters.tree_type),
-				"options": self.filters.tree_type if self.filters.tree_type != "Order Type" else "",
+				"options": self.filters.tree_type if self.filters.tree_type != "Canal de Venta" else "",
 				"fieldname": "entity",
-				"fieldtype": "Link" if self.filters.tree_type != "Order Type" else "Data",
-				"width": 140 if self.filters.tree_type != "Order Type" else 200
+				"fieldtype": "Link" if self.filters.tree_type != "Canal de Venta" else "Data",
+				"width": 140 if self.filters.tree_type != "Canal de Venta" else 200
 			}]
 		if self.filters.tree_type in ["Customer", "Supplier", "Item"]:
 			self.columns.append({
@@ -90,30 +90,54 @@ class Analytics(object):
 			self.get_sales_transactions_based_on_item_group()
 			self.get_rows_by_group()
 
-		elif self.filters.tree_type == "Order Type":
-			if self.filters.doc_type != "Sales Order":
+		elif self.filters.tree_type == "Canal de Venta":
+			if self.filters.doc_type not in ["Sales Order", "Sales Invoice"]:
 				self.data = []
 				return
-			self.get_sales_transactions_based_on_order_type()
+			self.get_sales_transactions_based_on_canal_de_venta()
 			self.get_rows_by_group()
 
 		elif self.filters.tree_type == "Project":
 			self.get_sales_transactions_based_on_project()
 			self.get_rows()
 
-	def get_sales_transactions_based_on_order_type(self):
+	def get_sales_transactions_based_on_canal_de_venta(self):
 		if self.filters["value_quantity"] == 'Value':
 			value_field = "base_net_total"
 		else:
 			value_field = "total_qty"
 
-		self.entries = frappe.db.sql(""" select s.order_type as entity, s.{value_field} as value_field, s.{date_field}
-			from `tab{doctype}` s where s.docstatus = 1 and s.company = %s and s.{date_field} between %s and %s
-			and ifnull(s.order_type, '') != '' order by s.order_type
-		"""
-		.format(date_field=self.date_field, value_field=value_field, doctype=self.filters.doc_type),
-		(self.filters.company, self.filters.from_date, self.filters.to_date), as_dict=1)
+		self.sep = " - "
 
+		if self.filters.doc_type == "Sales Invoice":
+			query = """
+					SELECT * from (
+						select s.canal_de_venta as entity, s.{value_field} as value_field, s.{date_field}
+						from `tab{doctype}` s
+						where s.docstatus = 1 and s.company = '{compa}'
+						and s.{date_field} between '{f_date}' and '{t_date}'
+						and ifnull(s.canal_de_venta, "") != ""
+						union all
+						select concat(s.canal_de_venta, '{sep}', s.punto_de_venta) as entity, s.{value_field} as value_field, s.{date_field}
+						from `tab{doctype}` s
+						where s.docstatus = 1 and s.company = '{compa}'
+						and s.{date_field} between '{f_date}' and '{t_date}'
+						and ifnull(s.canal_de_venta, "") != "") as b
+					order by b.entity
+				""".format(date_field=self.date_field, value_field=value_field, doctype=self.filters.doc_type, compa=self.filters.company, f_date=self.filters.from_date, t_date=self.filters.to_date, sep=self.sep)
+		else:
+			query = """
+					SELECT s.canal_de_venta as entity, s.{value_field} as value_field, s.{date_field}
+						from `tab{doctype}` s
+						where s.docstatus = 1 and s.company = '{compa}'
+						and s.{date_field} between '{f_date}' and '{t_date}'
+						and ifnull(s.canal_de_venta, "") != ""
+					order by s.canal_de_venta
+				""".format(date_field=self.date_field, value_field=value_field, doctype=self.filters.doc_type, compa=self.filters.company, f_date=self.filters.from_date, t_date=self.filters.to_date, sep=self.sep)
+
+		self.entries = frappe.db.sql(query, as_dict=1)
+		print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+		print(self.entries)
 		self.get_teams()
 
 	def get_sales_transactions_based_on_customers_or_suppliers(self):
@@ -257,7 +281,7 @@ class Analytics(object):
 				period = self.get_period(end_date)
 				amount = flt(self.entity_periodic_data.get(d.name, {}).get(period, 0.0))
 				row[scrub(period)] = amount
-				if d.parent and (self.filters.tree_type != "Order Type" or d.parent == "Order Types"):
+				if d.parent and (self.filters.tree_type != "Canal de Venta" or d.parent == "Canales de Venta"):
 					self.entity_periodic_data.setdefault(d.parent, frappe._dict()).setdefault(period, 0.0)
 					self.entity_periodic_data[d.parent][period] += amount
 				total += amount
@@ -349,13 +373,33 @@ class Analytics(object):
 				self.depth_map.setdefault(d.name, 0)
 
 	def get_teams(self):
+
 		self.depth_map = frappe._dict()
 
-		self.group_entries = frappe.db.sql(""" select * from (select "Order Types" as name, 0 as lft,
-			2 as rgt, '' as parent union select distinct order_type as name, 1 as lft, 1 as rgt, "Order Types" as parent
-			from `tab{doctype}` where ifnull(order_type, '') != '') as b order by lft, name
-		"""
-		.format(doctype=self.filters.doc_type), as_dict=1)
+		if self.filters.doc_type == "Sales Invoice":
+			query = """
+					select * from (
+						select "Canales de venta" as name, 0 as lft, 2 as rgt, '' as parent
+						union
+						select distinct concat(canal_de_venta, '{sep}', punto_de_venta) as name, 2 as lft, 0 as rgt, canal_de_venta as parent
+						from `tab{doctype}`
+						where ifnull(canal_de_venta, "") != ""
+						union
+						select distinct canal_de_venta as name, 1 as lft, 1 as rgt, "Canales de venta" as parent
+						from `tab{doctype}`
+						where ifnull(canal_de_venta, "") != "") as b
+					order by name, lft""".format(doctype=self.filters.doc_type, sep=self.sep)
+		else:
+			query = """
+					select * from (
+						select "Canales de venta" as name, 0 as lft, 2 as rgt, '' as parent
+						union
+						select distinct canal_de_venta as name, 1 as lft, 1 as rgt, "Canales de venta" as parent
+						from `tab{doctype}`
+						where ifnull(canal_de_venta, "") != "") as b
+					order by name, lft""".format(doctype=self.filters.doc_type, sep=self.sep)
+
+		self.group_entries = frappe.db.sql(query, as_dict=1)
 
 		for d in self.group_entries:
 			if d.parent:
