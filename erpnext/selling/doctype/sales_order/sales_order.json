@@ -828,15 +828,17 @@
    "fieldtype": "Section Break",
    "hide_days": 1,
    "hide_seconds": 1,
-   "label": "Additional Discount and Coupon Code"
+   "label": "Additional Discount"
   },
   {
    "fieldname": "coupon_code",
    "fieldtype": "Link",
+   "hidden": 1,
    "hide_days": 1,
    "hide_seconds": 1,
    "label": "Coupon Code",
-   "options": "Coupon Code"
+   "options": "Coupon Code",
+   "read_only": 1
   },
   {
    "default": "Grand Total",
@@ -1501,7 +1503,7 @@
  "idx": 105,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-07-25 14:38:20.827452",
+ "modified": "2021-08-03 08:52:47.360969",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Sales Order",

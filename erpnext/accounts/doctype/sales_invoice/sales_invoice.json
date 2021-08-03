@@ -28,9 +28,9 @@
   "return_against",
   "amended_from",
   "accounting_dimensions_section",
-  "project",
-  "dimension_col_break",
   "cost_center",
+  "dimension_col_break",
+  "project",
   "customer_po_details",
   "po_no",
   "column_break_23",
@@ -1982,7 +1982,7 @@
    "link_fieldname": "consolidated_invoice"
   }
  ],
- "modified": "2021-07-25 14:42:31.876795",
+ "modified": "2021-08-03 08:56:46.383694",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Sales Invoice",

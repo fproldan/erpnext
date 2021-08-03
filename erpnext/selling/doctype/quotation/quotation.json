@@ -577,7 +577,7 @@
    "collapsible_depends_on": "discount_amount",
    "fieldname": "section_break_44",
    "fieldtype": "Section Break",
-   "label": "Additional Discount and Coupon Code"
+   "label": "Additional Discount"
   },
   {
    "fieldname": "coupon_code",
@@ -941,7 +941,7 @@
  "is_submittable": 1,
  "links": [],
  "max_attachments": 1,
- "modified": "2021-07-25 14:35:26.065599",
+ "modified": "2021-08-03 08:49:53.318703",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Quotation",
