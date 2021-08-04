@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 import erpnext.education.utils as utils
 import frappe
+from frappe.utils import md_to_html
 
 no_cache = 1
 
