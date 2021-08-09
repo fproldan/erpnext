@@ -590,6 +590,9 @@ class Subscription(Document):
 		if invoice:
 			return invoice.precision('grand_total')
 
+	def error(self):
+		print("Error")
+
 def get_calendar_months(billing_interval):
 	calendar_months = []
 	start = 0
@@ -639,6 +642,7 @@ def process(data):
 			frappe.db.rollback()
 			frappe.db.begin()
 			frappe.log_error(frappe.get_traceback())
+			subscription.run_trigger("error")
 			frappe.db.commit()
 
 
