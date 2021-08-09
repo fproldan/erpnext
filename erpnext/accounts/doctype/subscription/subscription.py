@@ -307,6 +307,7 @@ class Subscription(Document):
 		doctype = 'Sales Invoice' if self.party_type == 'Customer' else 'Purchase Invoice'
 
 		invoice = frappe.new_doc(doctype)
+		invoice.subscription = self.name
 
 		# For backward compatibility
 		# Earlier subscription didn't had any company field
