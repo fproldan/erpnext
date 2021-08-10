@@ -164,7 +164,7 @@
    "options": "Lead Source"
   },
   {
-   "depends_on": "eval:doc.source == 'Cliente Existente'",
+   "depends_on": "eval:doc.source == 'Cliente Existente' || doc.source == 'Existing Customer'",
    "fieldname": "customer",
    "fieldtype": "Link",
    "label": "From Customer",
