@@ -1552,7 +1552,7 @@
  "icon": "fa fa-file-text",
  "is_submittable": 1,
  "links": [],
- "modified": "2021-02-01 15:03:33.800707",
+ "modified": "2021-08-10 11:10:42.730582",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "POS Invoice",
@@ -1597,8 +1597,9 @@
    "role": "All"
   }
  ],
+ "read_only": 1,
+ "restrict_to_domain": "Retail",
  "search_fields": "posting_date, due_date, customer, base_grand_total, outstanding_amount",
- "show_name_in_global_search": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "timeline_field": "customer",
