@@ -590,8 +590,6 @@ class Subscription(Document):
 		if invoice:
 			return invoice.precision('grand_total')
 
-	def error(self):
-		print("Error")
 
 def get_calendar_months(billing_interval):
 	calendar_months = []
