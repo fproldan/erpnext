@@ -286,7 +286,8 @@ def install(country=None):
 		{"doctype": "Sales Stage", "stage_name": _("Negotiation/Review")},
 
 		# Warehouse Type
-		{'doctype': 'Warehouse Type', 'name': 'Transit'},
+		{'doctype': 'Warehouse Type', 'name': 'Interno'},
+		{'doctype': 'Warehouse Type', 'name': 'Externo'},
 	]
 
 	from erpnext.setup.setup_wizard.data.industry_type import get_industry_types
