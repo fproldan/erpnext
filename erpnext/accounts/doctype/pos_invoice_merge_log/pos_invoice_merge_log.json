@@ -93,7 +93,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-08-10 11:09:40.895790",
+ "modified": "2021-08-10 11:12:28.259095",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "POS Invoice Merge Log",
@@ -155,6 +155,7 @@
   }
  ],
  "read_only": 1,
+ "restrict_to_domain": "Retail",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

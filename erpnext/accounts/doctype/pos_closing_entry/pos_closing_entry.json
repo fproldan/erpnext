@@ -229,7 +229,7 @@
    "link_fieldname": "pos_closing_entry"
   }
  ],
- "modified": "2021-05-05 16:59:49.723261",
+ "modified": "2021-08-10 11:12:22.540578",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "POS Closing Entry",
@@ -277,6 +277,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "Retail",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1
