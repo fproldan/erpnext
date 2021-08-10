@@ -14,12 +14,9 @@ from erpnext.accounts.doctype.account.account import RootNotEditable
 from erpnext.regional.address_template.setup import set_up_address_templates
 from frappe.utils.nestedset import rebuild_tree
 
-default_lead_sources = ["Existing Customer", "Reference", "Advertisement",
-	"Cold Calling", "Exhibition", "Supplier Reference", "Mass Mailing",
-	"Customer's Vendor", "Campaign", "Walk In"]
+default_lead_sources = ["Cliente Existente", "Referencia", "Publicidad", "Llamadas en frio", "Exhibición", "Referencia de proveedor", "Mailing", "Vendedores", "Campaña", "Otros"]
 
-default_sales_partner_type = ["Channel Partner", "Distributor", "Dealer", "Agent",
-	"Retailer", "Implementation Partner", "Reseller"]
+default_sales_partner_type = ["Canal de Socio", "Distribuidor", "Revendedor", "Agente", "Minorista", "Reseller"]
 
 def install(country=None):
 	records = [
@@ -242,9 +239,9 @@ def install(country=None):
 		{'doctype': "Opportunity Type", "name": _("Support")},
 		{'doctype': "Opportunity Type", "name": _("Maintenance")},
 
-		{'doctype': "Project Type", "project_type": "Internal"},
-		{'doctype': "Project Type", "project_type": "External"},
-		{'doctype': "Project Type", "project_type": "Other"},
+		{'doctype': "Project Type", "project_type": _("Internal")},
+		{'doctype': "Project Type", "project_type": _("External")},
+		{'doctype': "Project Type", "project_type": _("Other")},
 
 		{"doctype": "Offer Term", "offer_term": _("Date of Joining")},
 		{"doctype": "Offer Term", "offer_term": _("Annual Salary")},
@@ -286,8 +283,8 @@ def install(country=None):
 		{"doctype": "Sales Stage", "stage_name": _("Negotiation/Review")},
 
 		# Warehouse Type
-		{'doctype': 'Warehouse Type', 'name': 'Interno'},
-		{'doctype': 'Warehouse Type', 'name': 'Externo'},
+		{'doctype': 'Warehouse Type', 'name': _('Interno')},
+		{'doctype': 'Warehouse Type', 'name': _('Externo')},
 	]
 
 	from erpnext.setup.setup_wizard.data.industry_type import get_industry_types

@@ -164,7 +164,7 @@
    "options": "Lead Source"
   },
   {
-   "depends_on": "eval:doc.source == 'Existing Customer'",
+   "depends_on": "eval:doc.source == 'Cliente Existente'",
    "fieldname": "customer",
    "fieldtype": "Link",
    "label": "From Customer",
@@ -462,7 +462,7 @@
  "idx": 5,
  "image_field": "image",
  "links": [],
- "modified": "2021-08-04 09:13:52.437059",
+ "modified": "2021-08-09 09:13:52.437059",
  "modified_by": "Administrator",
  "module": "CRM",
  "name": "Lead",
