@@ -68,9 +68,9 @@
   "get_current_stock",
   "supplied_items",
   "taxes_charges_section",
-  "tax_category",
-  "shipping_col",
   "shipping_rule",
+  "shipping_col",
+  "tax_category",
   "taxes_section",
   "taxes_and_charges",
   "taxes",
@@ -586,6 +586,7 @@
   {
    "fieldname": "tax_category",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Tax Category",
    "options": "Tax Category",
    "print_hide": 1
@@ -1148,7 +1149,7 @@
  "idx": 261,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-05-25 00:15:12.239017",
+ "modified": "2021-08-11 11:21:48.479647",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Purchase Receipt",

@@ -77,9 +77,9 @@
   "total",
   "net_total",
   "taxes_section",
-  "tax_category",
-  "column_break_49",
   "shipping_rule",
+  "column_break_49",
+  "tax_category",
   "section_break_51",
   "taxes_and_charges",
   "taxes",
@@ -664,6 +664,7 @@
   {
    "fieldname": "tax_category",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Tax Category",
    "options": "Tax Category",
    "print_hide": 1
@@ -1385,7 +1386,7 @@
  "idx": 204,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-08-03 09:00:11.863508",
+ "modified": "2021-08-11 11:08:54.780158",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Purchase Invoice",

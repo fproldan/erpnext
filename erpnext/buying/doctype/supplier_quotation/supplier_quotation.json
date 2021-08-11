@@ -46,9 +46,9 @@
   "net_total",
   "total_net_weight",
   "taxes_section",
-  "tax_category",
-  "column_break_36",
   "shipping_rule",
+  "column_break_36",
+  "tax_category",
   "section_break_38",
   "taxes_and_charges",
   "taxes",
@@ -411,6 +411,7 @@
   {
    "fieldname": "shipping_rule",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Shipping Rule",
    "options": "Shipping Rule"
   },
@@ -805,7 +806,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-07-25 14:32:22.732387",
+ "modified": "2021-08-11 11:16:30.539579",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Supplier Quotation",

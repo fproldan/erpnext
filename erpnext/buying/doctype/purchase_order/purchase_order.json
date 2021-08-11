@@ -75,9 +75,9 @@
   "set_reserve_warehouse",
   "supplied_items",
   "taxes_section",
-  "tax_category",
-  "column_break_50",
   "shipping_rule",
+  "column_break_50",
+  "tax_category",
   "section_break_52",
   "taxes_and_charges",
   "taxes",
@@ -1071,6 +1071,7 @@
   {
    "fieldname": "tax_category",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Tax Category",
    "options": "Tax Category"
   },
@@ -1144,7 +1145,7 @@
  "idx": 105,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-07-25 14:28:11.822944",
+ "modified": "2021-08-11 11:12:06.793704",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Purchase Order",

@@ -8,8 +8,8 @@
  "field_order": [
   "customer_section",
   "title",
-  "customer",
   "customer_name",
+  "customer",
   "naming_series",
   "tax_id",
   "pos_profile",
@@ -887,6 +887,7 @@
   {
    "fieldname": "tax_category",
    "fieldtype": "Link",
+   "hidden": 1,
    "hide_days": 1,
    "hide_seconds": 1,
    "label": "Tax Category",
@@ -1982,7 +1983,7 @@
    "link_fieldname": "consolidated_invoice"
   }
  ],
- "modified": "2021-08-03 08:56:46.383694",
+ "modified": "2021-08-11 11:10:15.136591",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Sales Invoice",

@@ -71,9 +71,9 @@
   "total",
   "net_total",
   "taxes_section",
-  "tax_category",
-  "column_break_39",
   "shipping_rule",
+  "column_break_39",
+  "tax_category",
   "section_break_41",
   "taxes_and_charges",
   "taxes",
@@ -628,6 +628,7 @@
   {
    "fieldname": "tax_category",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Tax Category",
    "options": "Tax Category",
    "print_hide": 1
@@ -1288,7 +1289,7 @@
  "idx": 146,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-06-11 19:27:30.901112",
+ "modified": "2021-08-11 11:20:01.069241",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Delivery Note",

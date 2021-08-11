@@ -108,6 +108,7 @@
   {
    "fieldname": "tax_category",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Tax Category",
    "options": "Tax Category"
   },
@@ -390,7 +391,7 @@
    "link_fieldname": "supplier"
   }
  ],
- "modified": "2021-05-18 15:10:11.087191",
+ "modified": "2021-08-11 11:13:34.963077",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Supplier",
