@@ -127,6 +127,7 @@
    "description": "Use Google Maps Direction API to calculate estimated arrival times",
    "fieldname": "calculate_arrival_time",
    "fieldtype": "Button",
+   "hidden": 1,
    "label": "Calculate Estimated Arrival Times"
   },
   {
@@ -134,7 +135,8 @@
    "description": "Use Google Maps Direction API to optimize route",
    "fieldname": "optimize_route",
    "fieldtype": "Button",
-   "label": "Optimize Route"
+   "label": "Optimize Route",
+   "hidden": 1
   },
   {
    "allow_on_submit": 1,
@@ -189,7 +191,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-04-30 21:21:36.610142",
+ "modified": "2021-08-10 21:21:36.610142",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Delivery Trip",
