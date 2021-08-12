@@ -1963,6 +1963,7 @@
    "default": "0",
    "fieldname": "is_debit_note",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Is Debit Note"
   },
   {
@@ -1983,7 +1984,7 @@
    "link_fieldname": "consolidated_invoice"
   }
  ],
- "modified": "2021-08-11 11:10:15.136591",
+ "modified": "2021-08-12 08:55:10.202109",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Sales Invoice",
