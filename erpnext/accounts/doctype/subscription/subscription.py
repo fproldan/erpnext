@@ -313,7 +313,10 @@ class Subscription(Document):
 		if len(self.plans) == 1:
 			price_list = frappe.get_value("Subscription Plan", self.plans[0].plan, 'price_list')
 			if price_list:
-				invoice.selling_price_list = price_list
+				if doctype == "Sales Invoice":
+					invoice.selling_price_list = price_list
+				else:
+					invoice.buying_price_list = price_list
 
 		# For backward compatibility
 		# Earlier subscription didn't had any company field
