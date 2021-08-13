@@ -309,6 +309,12 @@ class Subscription(Document):
 		invoice = frappe.new_doc(doctype)
 		invoice.subscription = self.name
 
+		# Si solo tiene un plan aplicamos esa lista de precios a la factura
+		if len(self.plans) == 1:
+			price_list = frappe.get_value("Subscription Plan", self.plans[0].plan, 'price_list')
+			if price_list:
+				invoice.selling_price_list = price_list
+
 		# For backward compatibility
 		# Earlier subscription didn't had any company field
 		company = self.get('company') or get_default_company()
