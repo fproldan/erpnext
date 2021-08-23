@@ -68,6 +68,7 @@ def install(country=None):
 		{'doctype': 'Domain', 'domain': 'HR Asistencia y Vacaciones'},
 		{'doctype': 'Domain', 'domain': 'HR Reclutamiento, Capacitacion y Gastos'},
 		{'doctype': 'Domain', 'domain': 'Build'},
+		{'doctype': 'Domain', 'domain': 'Pagos360'},
 
 		# ensure at least an empty Address Template exists for this Country
 		{'doctype':"Address Template", "country": country},

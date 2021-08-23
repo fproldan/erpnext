@@ -599,6 +599,15 @@ class Subscription(Document):
 		if invoice:
 			return invoice.precision('grand_total')
 
+	def get_payment_gateway(self):
+		for subscription_plan in self.plans:
+			payment_gateway_account_name = frappe.get_value("Subscription Plan", subscription_plan.plan, "payment_gateway")
+			if payment_gateway_account_name:
+				payment_gateway_name = frappe.get_value("Payment Gateway Account", payment_gateway_account_name, "payment_gateway")
+				return frappe.get_doc("Payment Gateway", payment_gateway_name)
+
+		return None
+
 
 def get_calendar_months(billing_interval):
 	calendar_months = []

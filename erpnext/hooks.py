@@ -111,6 +111,7 @@ domains = {
 	'HR Asistencia y Vacaciones': 'erpnext.domains.hr_asistencia_vacaciones',
 	'HR Reclutamiento, Capacitacion y Gastos': 'erpnext.domains.hr_reclutamiento_capacitacion_gastos',
 	'Build': 'erpnext.domains.build',
+	'Pagos360': 'erpnext.domains.pagos360',
 }
 
 website_generators = ["Item Group", "Item", "BOM", "Sales Partner",
