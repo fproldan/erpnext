@@ -10,6 +10,8 @@
   "campaign_naming_by",
   "customer_group",
   "territory",
+  "condicion_de_iva",
+  "tipo_de_documento",
   "selling_price_list",
   "close_opportunity_after_days",
   "default_valid_till",
@@ -158,8 +160,22 @@
    "fieldname": "canal_de_venta",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Canal de Venta por Defecto",
+   "label": "Canal de Venta predeterminado",
    "options": "Canal de Venta"
+  },
+  {
+   "fieldname": "tipo_de_documento",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Tipo de documento predeterminado",
+   "options": "Tipo de Documento"
+  },
+  {
+   "fieldname": "condicion_de_iva",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Condici\u00f3n de iva predeterminada",
+   "options": "Condicion de IVA"
   }
  ],
  "icon": "fa fa-cog",
@@ -167,7 +183,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2021-06-18 11:54:02.925131",
+ "modified": "2021-08-30 11:11:33.292610",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Selling Settings",

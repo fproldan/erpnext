@@ -7,6 +7,10 @@ frappe.ui.form.CustomerQuickEntryForm = frappe.ui.form.QuickEntryForm.extend({
 	},
 
 	render_dialog: function() {
+		// Set tax_id in second place
+		var tax_id = this.mandatory.splice(3, 1);
+		this.mandatory.splice(1, 0, tax_id[0]);
+
 		this.mandatory = this.mandatory.concat(this.get_variant_fields());
 		this._super();
 	},
@@ -59,9 +63,10 @@ frappe.ui.form.CustomerQuickEntryForm = frappe.ui.form.QuickEntryForm.extend({
 			fieldtype: "Data"
 		},
 		{
-			label: __("State"),
-			fieldname: "state",
-			fieldtype: "Data"
+			label: __("Jurisdicción"),
+			fieldname: "jurisdiccion",
+			fieldtype: "Link",
+			options: "Jurisdiccion"
 		},
 		{
 			label: __("Country"),

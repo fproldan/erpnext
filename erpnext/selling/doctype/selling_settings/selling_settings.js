@@ -3,6 +3,17 @@
 
 frappe.ui.form.on('Selling Settings', {
 	refresh: function(frm) {
+		frm.fields_dict["tipo_de_documento"].get_query = function(doc){
+            return {
+                filters: {'activo': 1}
+            }
+        }
+
+        frm.fields_dict["condicion_de_iva"].get_query = function(doc){
+            return {
+                filters: {'activo': 1}
+            }
+        }
 
 	}
 });
