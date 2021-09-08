@@ -10,8 +10,6 @@
   "campaign_naming_by",
   "customer_group",
   "territory",
-  "condicion_de_iva",
-  "tipo_de_documento",
   "selling_price_list",
   "close_opportunity_after_days",
   "default_valid_till",
@@ -27,7 +25,11 @@
   "allow_multiple_items",
   "allow_against_multiple_purchase_orders",
   "validate_selling_price",
-  "hide_tax_id"
+  "hide_tax_id",
+  "condiciones_contables_section",
+  "condicion_de_iva",
+  "column_break_23",
+  "tipo_de_documento"
  ],
  "fields": [
   {
@@ -176,6 +178,15 @@
    "in_list_view": 1,
    "label": "Condici\u00f3n de iva predeterminada",
    "options": "Condicion de IVA"
+  },
+  {
+   "fieldname": "condiciones_contables_section",
+   "fieldtype": "Section Break",
+   "label": "Condiciones Contables"
+  },
+  {
+   "fieldname": "column_break_23",
+   "fieldtype": "Column Break"
   }
  ],
  "icon": "fa fa-cog",
@@ -183,7 +194,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2021-08-30 11:11:33.292610",
+ "modified": "2021-09-08 08:29:34.029022",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Selling Settings",
