@@ -6,30 +6,36 @@
  "document_type": "Other",
  "engine": "InnoDB",
  "field_order": [
+  "customer_defaults_section",
   "cust_master_name",
-  "campaign_naming_by",
+  "tipo_de_documento",
   "customer_group",
+  "column_break_4",
   "territory",
-  "selling_price_list",
-  "close_opportunity_after_days",
+  "condicion_de_iva",
+  "crm_settings_section",
+  "campaign_naming_by",
   "default_valid_till",
+  "column_break_9",
+  "close_opportunity_after_days",
   "canal_de_venta",
-  "column_break_5",
+  "item_price_settings_section",
+  "selling_price_list",
+  "maintain_same_rate_action",
+  "role_to_override_stop_action",
+  "column_break_15",
+  "maintain_same_sales_rate",
+  "editable_price_list_rate",
+  "validate_selling_price",
+  "editable_bundle_item_rates",
+  "transaction_settings_section",
   "so_required",
   "dn_required",
   "sales_update_frequency",
-  "maintain_same_sales_rate",
-  "maintain_same_rate_action",
-  "role_to_override_stop_action",
-  "editable_price_list_rate",
+  "column_break_5",
   "allow_multiple_items",
   "allow_against_multiple_purchase_orders",
-  "validate_selling_price",
-  "hide_tax_id",
-  "condiciones_contables_section",
-  "condicion_de_iva",
-  "column_break_23",
-  "tipo_de_documento"
+  "hide_tax_id"
  ],
  "fields": [
   {
@@ -79,10 +85,6 @@
    "fieldname": "default_valid_till",
    "fieldtype": "Data",
    "label": "Default Quotation Validity Days"
-  },
-  {
-   "fieldname": "column_break_5",
-   "fieldtype": "Column Break"
   },
   {
    "fieldname": "so_required",
@@ -159,34 +161,67 @@
    "options": "Role"
   },
   {
+   "fieldname": "column_break_15",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "editable_bundle_item_rates",
+   "fieldtype": "Check",
+   "label": "Calculate Product Bundle Price based on Child Items' Rates"
+  },
+  {
+   "fieldname": "customer_defaults_section",
+   "fieldtype": "Section Break",
+   "label": "Customer Defaults"
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "crm_settings_section",
+   "fieldtype": "Section Break",
+   "label": "CRM Settings"
+  },
+  {
+   "fieldname": "column_break_9",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "item_price_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Item Price Settings"
+  },
+  {
+   "fieldname": "transaction_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Transaction Settings"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
    "fieldname": "canal_de_venta",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Canal de Venta predeterminado",
+   "label": "Canal de Venta Predeterminado",
    "options": "Canal de Venta"
-  },
-  {
-   "fieldname": "tipo_de_documento",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Tipo de documento predeterminado",
-   "options": "Tipo de Documento"
   },
   {
    "fieldname": "condicion_de_iva",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Condici\u00f3n de iva predeterminada",
+   "label": "Condici\u00f3n de IVA Predeterminada",
    "options": "Condicion de IVA"
   },
   {
-   "fieldname": "condiciones_contables_section",
-   "fieldtype": "Section Break",
-   "label": "Condiciones Contables"
-  },
-  {
-   "fieldname": "column_break_23",
-   "fieldtype": "Column Break"
+   "fieldname": "tipo_de_documento",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Tipo de Documento Predeterminado",
+   "options": "Tipo de Documento"
   }
  ],
  "icon": "fa fa-cog",
@@ -194,7 +229,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2021-09-08 08:29:34.029022",
+ "modified": "2021-09-16 09:54:05.507226",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Selling Settings",
