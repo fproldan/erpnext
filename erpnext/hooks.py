@@ -98,6 +98,8 @@ domains = {
 	'Hub Node': 'erpnext.domains.hub_node',
 	'Telephony': 'erpnext.domains.telephony',
 	'Regional': 'erpnext.domains.regional',
+	'Ecommerce': 'erpnext.domains.ecommerce',
+	'Thrash': 'erpnext.domains.thrash',
 
 	# Subdominios Diamo
 	'Contabilidad Avanzada': 'erpnext.domains.contabilidad_avanzada',
@@ -114,6 +116,8 @@ domains = {
 	'HR Reclutamiento, Capacitacion y Gastos': 'erpnext.domains.hr_reclutamiento_capacitacion_gastos',
 	'Build': 'erpnext.domains.build',
 	'Pagos360': 'erpnext.domains.pagos360',
+	'Mercadolibre': 'erpnext.domains.mercadolibre',
+	'Shopify': 'erpnext.domains.shopify',
 }
 
 website_generators = ["Item Group", "Website Item", "BOM", "Sales Partner",

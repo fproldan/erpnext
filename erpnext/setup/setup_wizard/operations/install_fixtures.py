@@ -57,6 +57,8 @@ def install(country=None):
 		{'doctype': 'Domain', 'domain': 'Hub Node'},
 		{'doctype': 'Domain', 'domain': 'Telephony'},
 		{'doctype': 'Domain', 'domain': 'Regional'},
+		{'doctype': 'Domain', 'domain': 'Ecommerce'},
+		{'doctype': 'Domain', 'domain': 'Thrash'},
 
 		# Subdominios Diamo
 		{'doctype': 'Domain', 'domain': 'Contabilidad Avanzada'},
@@ -73,6 +75,8 @@ def install(country=None):
 		{'doctype': 'Domain', 'domain': 'HR Reclutamiento, Capacitacion y Gastos'},
 		{'doctype': 'Domain', 'domain': 'Build'},
 		{'doctype': 'Domain', 'domain': 'Pagos360'},
+		{'doctype': 'Domain', 'domain': 'Mercadolibre'},
+		{'doctype': 'Domain', 'domain': 'Shopify'},
 
 		# ensure at least an empty Address Template exists for this Country
 		{'doctype':"Address Template", "country": country},
