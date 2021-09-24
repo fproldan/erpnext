@@ -16,7 +16,7 @@ frappe.ui.form.on("Delivery Note", {
 			'Installation Note': 'Installation Note',
 			'Sales Invoice': 'Sales Invoice',
 			'Stock Entry': 'Return',
-			'Shipment': 'Shipment'
+			//'Shipment': 'Shipment'
 		},
 		frm.set_indicator_formatter('item_code',
 			function(doc) {
@@ -167,10 +167,10 @@ erpnext.stock.DeliveryNoteController = erpnext.selling.SellingController.extend(
 		}
 
 		if (!doc.is_return && doc.status!="Closed") {
-			if(doc.docstatus == 1) {
-				this.frm.add_custom_button(__('Shipment'), function() {
-					me.make_shipment() }, __('Create'));
-			}
+			//if(doc.docstatus == 1) {
+			//	this.frm.add_custom_button(__('Shipment'), function() {
+			//		me.make_shipment() }, __('Create'));
+			//}
 
 			if(flt(doc.per_installed, 2) < 100 && doc.docstatus==1)
 				this.frm.add_custom_button(__('Installation Note'), function() {
