@@ -442,8 +442,7 @@
   {
    "fieldname": "sec_warehouse",
    "fieldtype": "Section Break",
-   "hidden": 1,
-   "label": "Subcontracting"
+   "label": "Subcontrataci\u00f3n"
   },
   {
    "description": "Sets 'Warehouse' in each row of the Items table.",
@@ -1030,8 +1029,7 @@
    "collapsible": 1,
    "fieldname": "subscription_section",
    "fieldtype": "Section Break",
-   "hidden": 1,
-   "label": "Subscription Section"
+   "label": "Secci\u00f3n de Repetici\u00f3n Autom\u00e1tica"
   },
   {
    "allow_on_submit": 1,
@@ -1146,7 +1144,7 @@
  "idx": 105,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-08-30 20:03:14.008804",
+ "modified": "2021-09-27 09:50:14.595597",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Purchase Order",
