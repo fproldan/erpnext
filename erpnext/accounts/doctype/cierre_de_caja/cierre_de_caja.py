@@ -5,90 +5,47 @@
 from __future__ import unicode_literals
 
 import frappe
-from frappe import _
-from frappe.utils import flt, get_datetime
-
-from erpnext.accounts.doctype.pos_invoice_merge_log.pos_invoice_merge_log import (
-    consolidate_pos_invoices,
-    unconsolidate_pos_invoices,
-)
 from erpnext.controllers.status_updater import StatusUpdater
 
 
 class CierredeCaja(StatusUpdater):
     def validate(self):
-        if frappe.db.get_value("POS Opening Entry", self.pos_opening_entry, "status") != "Open":
-            frappe.throw(_("Selected POS Opening Entry should be open."), title=_("Invalid Opening Entry"))
-
-        self.validate_pos_invoices()
-
-    def validate_pos_invoices(self):
-        invalid_rows = []
-        for d in self.pos_transactions:
-            invalid_row = {'idx': d.idx}
-            pos_invoice = frappe.db.get_values("POS Invoice", d.pos_invoice, ["consolidated_invoice", "pos_profile", "docstatus", "owner"], as_dict=1)[0]
-            if pos_invoice.consolidated_invoice:
-                invalid_row.setdefault('msg', []).append(_('POS Invoice is {}').format(frappe.bold("already consolidated")))
-                invalid_rows.append(invalid_row)
-                continue
-            if pos_invoice.pos_profile != self.pos_profile:
-                invalid_row.setdefault('msg', []).append(_("POS Profile doesn't matches {}").format(frappe.bold(self.pos_profile)))
-            if pos_invoice.docstatus != 1:
-                invalid_row.setdefault('msg', []).append(_('POS Invoice is not {}').format(frappe.bold("submitted")))
-            if pos_invoice.owner != self.user:
-                invalid_row.setdefault('msg', []).append(_("POS Invoice isn't created by user {}").format(frappe.bold(self.owner)))
-
-            if invalid_row.get('msg'):
-                invalid_rows.append(invalid_row)
-
-        if not invalid_rows:
-            return
-
-        error_list = []
-        for row in invalid_rows:
-            for msg in row.get('msg'):
-                error_list.append(_("Row #{}: {}").format(row.get('idx'), msg))
-
-        frappe.throw(error_list, title=_("Invalid POS Invoices"), as_list=True)
+        if frappe.db.get_value("Apertura de Caja", self.apertura_de_caja, "status") != "Open":
+            frappe.throw("La Apertura de Caja seleccionada debe estar Abierta", title="Apertura de Caja inválida")
 
     @frappe.whitelist()
     def get_payment_reconciliation_details(self):
         currency = frappe.get_cached_value('Company', self.company, "default_currency")
         return frappe.render_template("erpnext/accounts/doctype/pos_closing_entry/closing_voucher_details.html", {"data": self, "currency": currency})
 
-    def on_submit(self):
-        consolidate_pos_invoices(closing_entry=self)
-
-    def on_cancel(self):
-        unconsolidate_pos_invoices(closing_entry=self)
-
-    @frappe.whitelist()
-    def retry(self):
-        consolidate_pos_invoices(closing_entry=self)
-
     def update_opening_entry(self, for_cancel=False):
-        opening_entry = frappe.get_doc("POS Opening Entry", self.pos_opening_entry)
-        opening_entry.pos_closing_entry = self.name if not for_cancel else None
-        opening_entry.set_status()
-        opening_entry.save()
+        apertura_de_caja = frappe.get_doc("Apertura de Caja", self.apertura_de_caja)
+        apertura_de_caja.cierre_de_caja = self.name if not for_cancel else None
+        apertura_de_caja.set_status()
+        apertura_de_caja.save()
+
+
+def get_payment_entries(cierre_de_caja):
+    for payment_reconciliation in cierre_de_caja.payment_reconciliation:
+        payment_entries = frappe.db.get_all("Payment Entry", filters=[['creation', '>=', cierre_de_caja.period_start_date], ['creation', '<=', cierre_de_caja.period_end_date], ['mode_of_payment', '=', payment_reconciliation.mode_of_payment]], fields=["total_allocated_amount"])
+        total_allocated_amount = 0
+        if payment_entries:
+            total_allocated_amount = [pe.get("total_allocated_amount", 0) for pe in payment_entries][0]
+
+        print(total_allocated_amount)
 
 
 def make_closing_entry_from_opening(opening_entry):
-    closing_entry = frappe.new_doc("POS Closing Entry")
+    closing_entry = frappe.new_doc("Cierre de Caja")
     closing_entry.pos_opening_entry = opening_entry.name
     closing_entry.period_start_date = opening_entry.period_start_date
     closing_entry.period_end_date = frappe.utils.get_datetime()
-    closing_entry.pos_profile = opening_entry.pos_profile
     closing_entry.user = opening_entry.user
     closing_entry.company = opening_entry.company
     closing_entry.grand_total = 0
     closing_entry.net_total = 0
     closing_entry.total_quantity = 0
 
-    invoices = get_pos_invoices(closing_entry.period_start_date, closing_entry.period_end_date, closing_entry.pos_profile, closing_entry.user)
-
-    pos_transactions = []
-    taxes = []
     payments = []
     for detail in opening_entry.balance_details:
         payments.append(frappe._dict({
@@ -97,41 +54,5 @@ def make_closing_entry_from_opening(opening_entry):
             'expected_amount': detail.opening_amount
         }))
 
-    for d in invoices:
-        pos_transactions.append(frappe._dict({
-            'pos_invoice': d.name,
-            'posting_date': d.posting_date,
-            'grand_total': d.grand_total,
-            'customer': d.customer
-        }))
-        closing_entry.grand_total += flt(d.grand_total)
-        closing_entry.net_total += flt(d.net_total)
-        closing_entry.total_quantity += flt(d.total_qty)
-
-        for t in d.taxes:
-            existing_tax = [tx for tx in taxes if tx.account_head == t.account_head and tx.rate == t.rate]
-            if existing_tax:
-                existing_tax[0].amount += flt(t.tax_amount)
-            else:
-                taxes.append(frappe._dict({
-                    'account_head': t.account_head,
-                    'rate': t.rate,
-                    'amount': t.tax_amount
-                }))
-
-        for p in d.payments:
-            existing_pay = [pay for pay in payments if pay.mode_of_payment == p.mode_of_payment]
-            if existing_pay:
-                existing_pay[0].expected_amount += flt(p.amount)
-            else:
-                payments.append(frappe._dict({
-                    'mode_of_payment': p.mode_of_payment,
-                    'opening_amount': 0,
-                    'expected_amount': p.amount
-                }))
-
-    closing_entry.set("pos_transactions", pos_transactions)
     closing_entry.set("payment_reconciliation", payments)
-    closing_entry.set("taxes", taxes)
-
     return closing_entry

@@ -99,41 +99,6 @@ frappe.ui.form.on('Cierre de Caja Detail', {
 })
 
 
-function refresh_payments(d, frm) {
-	d.payments.forEach(p => {
-		const payment = frm.doc.payment_reconciliation.find(pay => pay.mode_of_payment === p.mode_of_payment);
-		if (p.account == d.account_for_change_amount) {
-			p.amount -= flt(d.change_amount);
-		}
-		if (payment) {
-			payment.expected_amount += flt(p.amount);
-			payment.difference = payment.closing_amount - payment.expected_amount;
-		} else {
-			frm.add_child("payment_reconciliation", {
-				mode_of_payment: p.mode_of_payment,
-				opening_amount: 0,
-				expected_amount: p.amount,
-				closing_amount: 0
-			})
-		}
-	})
-}
-
-function refresh_taxes(d, frm) {
-	d.taxes.forEach(t => {
-		const tax = frm.doc.taxes.find(tx => tx.account_head === t.account_head && tx.rate === t.rate);
-		if (tax) {
-			tax.amount += flt(t.tax_amount);
-		} else {
-			frm.add_child("taxes", {
-				account_head: t.account_head,
-				rate: t.rate,
-				amount: t.tax_amount
-			})
-		}
-	})
-}
-
 function reset_values(frm) {
 	frm.set_value("payment_reconciliation", []);
 	frm.set_value("taxes", []);

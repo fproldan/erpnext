@@ -25,8 +25,6 @@
   "grand_total",
   "net_total",
   "total_quantity",
-  "column_break_16",
-  "taxes",
   "failure_description_section",
   "error_message",
   "section_break_14",
@@ -159,17 +157,6 @@
    "read_only": 1
   },
   {
-   "fieldname": "column_break_16",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "taxes",
-   "fieldtype": "Table",
-   "label": "Taxes",
-   "options": "Cierre de Caja Taxes",
-   "read_only": 1
-  },
-  {
    "collapsible": 1,
    "collapsible_depends_on": "error_message",
    "depends_on": "error_message",
@@ -214,7 +201,7 @@
    "link_fieldname": "pos_closing_entry"
   }
  ],
- "modified": "2021-09-27 11:57:10.395994",
+ "modified": "2021-09-27 12:31:59.244215",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Cierre de Caja",

@@ -14,7 +14,7 @@
   "set_posting_date",
   "section_break_5",
   "company",
-  "pos_closing_entry",
+  "cierre_de_caja",
   "column_break_7",
   "user",
   "opening_balance_details_section",
@@ -77,13 +77,6 @@
    "reqd": 1
   },
   {
-   "allow_on_submit": 1,
-   "fieldname": "pos_closing_entry",
-   "fieldtype": "Data",
-   "label": "POS Closing Entry",
-   "read_only": 1
-  },
-  {
    "fieldname": "column_break_7",
    "fieldtype": "Column Break"
   },
@@ -127,11 +120,18 @@
    "options": "Apertura de Caja",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "cierre_de_caja",
+   "fieldtype": "Data",
+   "label": "Cierre de Caja",
+   "read_only": 1
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-09-27 11:20:31.696060",
+ "modified": "2021-09-27 12:08:23.069622",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Apertura de Caja",
