@@ -178,7 +178,7 @@ class PaymentRequest(Document):
 			"payer_email": self.email_to or frappe.session.user,
 			"payer_name": frappe.safe_encode(data.customer_name),
 			"order_id": self.name,
-			"currency": self.currency
+			"currency":self.currency.encode("utf-8")
 		})
 
 	def set_as_paid(self):
