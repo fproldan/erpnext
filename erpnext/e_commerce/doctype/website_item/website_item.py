@@ -38,6 +38,8 @@ class WebsiteItem(WebsiteGenerator):
 		from frappe.model.naming import make_autoname
 		from erpnext.setup.doctype.naming_series.naming_series import get_default_naming_series
 
+		from erpnext.setup.doctype.naming_series.naming_series import get_default_naming_series
+
 		naming_series = get_default_naming_series("Website Item")
 		if not self.name and naming_series:
 			self.name = make_autoname(naming_series, doc=self)
