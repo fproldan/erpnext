@@ -239,6 +239,8 @@ class PaymentRequest(Document):
 
 	def send_email(self):
 		"""send email with payment link"""
+		if not self.email_to:
+			return
 		email_args = {
 			"recipients": self.email_to,
 			"sender": None,
