@@ -110,15 +110,13 @@ status_map = {
 	],
 	"Apertura de Caja": [
 		["Draft", None],
-		["Open", "eval:self.docstatus == 1 and not self.pos_closing_entry"],
-		["Closed", "eval:self.docstatus == 1 and self.pos_closing_entry"],
+		["Open", "eval:self.docstatus == 1 and not self.cierre_de_caja"],
+		["Closed", "eval:self.docstatus == 1 and self.cierre_de_caja"],
 		["Cancelled", "eval:self.docstatus == 2"],
 	],
 	"Cierre de Caja": [
 		["Draft", None],
 		["Submitted", "eval:self.docstatus == 1"],
-		["Queued", "eval:self.status == 'Queued'"],
-		["Failed", "eval:self.status == 'Failed'"],
 		["Cancelled", "eval:self.docstatus == 2"],
 	],
 }

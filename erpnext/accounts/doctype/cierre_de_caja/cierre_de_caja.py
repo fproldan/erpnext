@@ -18,21 +18,65 @@ class CierredeCaja(StatusUpdater):
         currency = frappe.get_cached_value('Company', self.company, "default_currency")
         return frappe.render_template("erpnext/accounts/doctype/pos_closing_entry/closing_voucher_details.html", {"data": self, "currency": currency})
 
+    @frappe.whitelist()
+    def get_totals(self):
+        totals = {}
+
+        sales_invoices = frappe.db.get_all("Sales Invoice", filters=[['creation', '>=', self.period_start_date], ['creation', '<=', self.period_end_date], ['docstatus', '=', '1']], fields=["grand_total"])
+        totals["bill_total"] = sum(sales_invoice['grand_total'] for sales_invoice in sales_invoices)
+
+        modes = []
+
+        cash_cheque_modes = [mp["name"] for mp in frappe.get_all("Mode of Payment", filters=[["type", "in", ("Cash", "Cheque")]])]
+
+        for payment_reconciliation in self.payment_reconciliation:
+            if payment_reconciliation.mode_of_payment in cash_cheque_modes:
+                modes.append(payment_reconciliation.mode_of_payment)
+
+        filters = [['creation', '>=', self.period_start_date], ['creation', '<=', self.period_end_date], ['mode_of_payment', 'in', modes], ['docstatus', '=', '1']]
+        payment_entries = frappe.db.get_all("Payment Entry", filters=filters, fields=["total_allocated_amount"])
+        total_cash_cheque = sum(payment_entry['total_allocated_amount'] for payment_entry in payment_entries)
+
+        totals['total_cash_cheque'] = total_cash_cheque
+        return totals
+
     def update_opening_entry(self, for_cancel=False):
         apertura_de_caja = frappe.get_doc("Apertura de Caja", self.apertura_de_caja)
         apertura_de_caja.cierre_de_caja = self.name if not for_cancel else None
         apertura_de_caja.set_status()
         apertura_de_caja.save()
 
+    def on_submit(self):
+        self.set_status(update=True, status='Submitted')
+        self.update_opening_entry()
 
-def get_payment_entries(cierre_de_caja):
-    for payment_reconciliation in cierre_de_caja.payment_reconciliation:
-        payment_entries = frappe.db.get_all("Payment Entry", filters=[['creation', '>=', cierre_de_caja.period_start_date], ['creation', '<=', cierre_de_caja.period_end_date], ['mode_of_payment', '=', payment_reconciliation.mode_of_payment]], fields=["total_allocated_amount"])
-        total_allocated_amount = 0
-        if payment_entries:
-            total_allocated_amount = [pe.get("total_allocated_amount", 0) for pe in payment_entries][0]
+    def on_cancel(self):
+        self.set_status(update=True, status='Cancelled')
+        self.update_opening_entry(for_cancel=True)
 
-        print(total_allocated_amount)
+
+def get_expected_amount(mode_of_payment, period_start_date, period_end_date):
+
+    filters = [['creation', '>=', period_start_date], ['creation', '<=', period_end_date], ['mode_of_payment', '=', mode_of_payment], ['docstatus', '=', '1']]
+    payment_entries = frappe.db.get_all("Payment Entry", filters=filters, fields=["total_allocated_amount"])
+    return sum(payment_entry['total_allocated_amount'] for payment_entry in payment_entries)
+
+
+@frappe.whitelist()
+def get_payment_reconciliation(apertura_de_caja, period_start_date, period_end_date):
+    apertura_de_caja = frappe.get_doc("Apertura de Caja", apertura_de_caja)
+
+    payment_reconciliations = []
+
+    for balance_detail in apertura_de_caja.balance_details:
+
+        payment_reconciliations.append({
+            "mode_of_payment": balance_detail.mode_of_payment,
+            "opening_amount": balance_detail.opening_amount,
+            "expected_amount": balance_detail.opening_amount + get_expected_amount(balance_detail.mode_of_payment, period_start_date, period_end_date)
+        })
+
+    return payment_reconciliations
 
 
 def make_closing_entry_from_opening(opening_entry):

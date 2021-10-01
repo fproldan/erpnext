@@ -18,15 +18,11 @@
   "column_break_7",
   "user",
   "section_break_9",
-  "payment_reconciliation_details",
   "section_break_11",
   "payment_reconciliation",
   "section_break_13",
-  "grand_total",
-  "net_total",
-  "total_quantity",
-  "failure_description_section",
-  "error_message",
+  "bill_total",
+  "total_cash_cheque",
   "section_break_14",
   "amended_from"
  ],
@@ -114,11 +110,6 @@
    "read_only": 1
   },
   {
-   "depends_on": "eval:doc.docstatus==1",
-   "fieldname": "payment_reconciliation_details",
-   "fieldtype": "HTML"
-  },
-  {
    "fieldname": "section_break_11",
    "fieldtype": "Section Break",
    "label": "Modes of Payment"
@@ -127,7 +118,7 @@
    "fieldname": "payment_reconciliation",
    "fieldtype": "Table",
    "label": "Payment Reconciliation",
-   "options": "Cierra de Caja Detail"
+   "options": "Cierre de Caja Detail"
   },
   {
    "collapsible": 1,
@@ -135,41 +126,6 @@
    "fieldname": "section_break_13",
    "fieldtype": "Section Break",
    "label": "Totals"
-  },
-  {
-   "default": "0",
-   "fieldname": "grand_total",
-   "fieldtype": "Currency",
-   "label": "Grand Total",
-   "read_only": 1
-  },
-  {
-   "default": "0",
-   "fieldname": "net_total",
-   "fieldtype": "Currency",
-   "label": "Net Total",
-   "read_only": 1
-  },
-  {
-   "fieldname": "total_quantity",
-   "fieldtype": "Float",
-   "label": "Total Quantity",
-   "read_only": 1
-  },
-  {
-   "collapsible": 1,
-   "collapsible_depends_on": "error_message",
-   "depends_on": "error_message",
-   "fieldname": "failure_description_section",
-   "fieldtype": "Section Break",
-   "label": "Failure Description"
-  },
-  {
-   "depends_on": "error_message",
-   "fieldname": "error_message",
-   "fieldtype": "Small Text",
-   "label": "Error",
-   "read_only": 1
   },
   {
    "fieldname": "section_break_14",
@@ -192,16 +148,23 @@
    "options": "Cierre de Caja",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "bill_total",
+   "fieldtype": "Currency",
+   "label": "Total Facturado",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_cash_cheque",
+   "fieldtype": "Currency",
+   "label": "Total Efectivo/Cheque",
+   "read_only": 1
   }
  ],
  "is_submittable": 1,
- "links": [
-  {
-   "link_doctype": "POS Invoice Merge Log",
-   "link_fieldname": "pos_closing_entry"
-  }
- ],
- "modified": "2021-09-27 12:31:59.244215",
+ "links": [],
+ "modified": "2021-10-01 12:36:07.316545",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Cierre de Caja",
