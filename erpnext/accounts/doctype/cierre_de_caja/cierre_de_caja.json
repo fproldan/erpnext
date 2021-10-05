@@ -169,7 +169,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-10-05 09:47:34.765617",
+ "modified": "2021-10-05 09:59:11.150474",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Cierre de Caja",
@@ -231,7 +231,6 @@
    "write": 1
   }
  ],
- "restrict_to_domain": "Retail",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1
