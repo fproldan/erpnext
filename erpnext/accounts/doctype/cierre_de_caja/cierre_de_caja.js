@@ -15,16 +15,21 @@ frappe.ui.form.on('Cierre de Caja', {
 
 		if (frm.doc.docstatus === 0 && !frm.doc.amended_from) frm.set_value("period_end_date", frappe.datetime.now_datetime());
 
+		blind_closing_entry(frm);
+
 		set_html_data(frm);
 	},
 
 	refresh: function(frm) {
-		if (frm.doc.docstatus == 1) {
+		if (frm.doc.docstatus == 1 && has_admin_perms(frm)) {
 
 			frm.add_custom_button('Mostrar Comprobantes', function () {
 				
 			});
+			
 		}
+
+		blind_closing_entry(frm);
 	},
 
 	apertura_de_caja(frm) {
@@ -48,6 +53,7 @@ frappe.ui.form.on('Cierre de Caja', {
 							expected_amount: detail.expected_amount
 						});
 					});
+					blind_closing_entry(frm);
 					frm.refresh_field("payment_reconciliation");
 	        	}
 	        }
@@ -65,6 +71,7 @@ frappe.ui.form.on('Cierre de Caja', {
 				if (r.message) {
 					frm.set_value("bill_total", r.message["bill_total"]);
 					frm.set_value("total_cash_cheque", r.message["total_cash_cheque"]);
+					blind_closing_entry(frm);
 				}
 			}
 		});
@@ -103,4 +110,35 @@ function set_html_data(frm) {
 			}
 		});
 	}
+}
+
+
+function has_admin_perms(frm) {
+	let admin_user = frappe.user.has_role('System Manager') || frappe.user.has_role('Accounts Manager') || frappe.user.has_role('Administrator');
+	return admin_user
+}
+
+function blind_closing_entry(frm) {
+	if (has_admin_perms(frm)) {
+		return;
+	}
+
+	frappe.call({
+		method: "frappe.client.get_value",
+		args: {
+			doctype: "Accounts Settings",
+			fieldname: "blind_closing_entry"
+		},
+		callback: function(r){
+			if (r.message) {
+				if (r.message['blind_closing_entry']) {
+					cur_frm.fields_dict.payment_reconciliation.grid.set_column_disp('expected_amount', false);
+					cur_frm.refresh_fields();
+					frm.fields_dict["totals_section"].df.hidden = 1;
+					frm.refresh_field('totals_section');
+				}
+			}
+		}
+	});
+
 }

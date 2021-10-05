@@ -18,9 +18,10 @@
   "column_break_7",
   "user",
   "section_break_9",
+  "payment_reconciliation_details",
   "section_break_11",
   "payment_reconciliation",
-  "section_break_13",
+  "totals_section",
   "bill_total",
   "total_cash_cheque",
   "section_break_14",
@@ -121,13 +122,6 @@
    "options": "Cierre de Caja Detail"
   },
   {
-   "collapsible": 1,
-   "collapsible_depends_on": "eval:doc.docstatus==0",
-   "fieldname": "section_break_13",
-   "fieldtype": "Section Break",
-   "label": "Totals"
-  },
-  {
    "fieldname": "section_break_14",
    "fieldtype": "Section Break"
   },
@@ -160,11 +154,22 @@
    "fieldtype": "Currency",
    "label": "Total Efectivo/Cheque",
    "read_only": 1
+  },
+  {
+   "collapsible": 1,
+   "collapsible_depends_on": "eval:doc.docstatus==0",
+   "fieldname": "totals_section",
+   "fieldtype": "Section Break",
+   "label": "Totals"
+  },
+  {
+   "fieldname": "payment_reconciliation_details",
+   "fieldtype": "HTML"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-10-01 15:16:22.538632",
+ "modified": "2021-10-05 09:47:34.765617",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Cierre de Caja",
