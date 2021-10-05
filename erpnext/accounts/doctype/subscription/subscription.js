@@ -62,8 +62,28 @@ frappe.ui.form.on('Subscription', {
 
 	renew_this_subscription: function(frm) {
 		const doc = frm.doc;
+		var msg = __('You will lose records of previously generated invoices. Are you sure you want to restart this subscription?');
+
+		if (doc.adhesion_pagos360) {
+			frappe.call({
+				method: "frappe.client.get_value",
+				async: false,
+				args: {
+					doctype: "Adhesion Pagos360",
+					fieldname: "estado"
+				},
+				callback: function(r){
+					if (r.message) {
+						if (r.message['estado'] == 'signed') {
+							var msg = "Perderá registros de facturas generadas previamente. La suscripción tiene una adhesión de Pagos360 Activa, y le debitará al Cliente al generarse la siguiente factura. ¿Seguro que quieres reiniciar esta suscripción?"
+						}
+					}
+				}
+			});
+		}
+
 		frappe.confirm(
-			__('You will lose records of previously generated invoices. Are you sure you want to restart this subscription?'),
+			msg,
 			function() {
 				frappe.call({
 					method:
