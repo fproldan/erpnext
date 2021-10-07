@@ -17,7 +17,7 @@ frappe.ui.form.on('Cierre de Caja', {
 
 		blind_closing_entry(frm);
 
-		// set_html_data(frm);
+		set_html_data(frm);
 	},
 
 	refresh: function(frm) {
@@ -129,13 +129,16 @@ function blind_closing_entry(frm) {
 			doctype: "Accounts Settings",
 			fieldname: "blind_closing_entry"
 		},
-		callback: function(r){
+		callback: function(r) {
 			if (r.message) {
 				if (r.message['blind_closing_entry']) {
 					cur_frm.fields_dict.payment_reconciliation.grid.set_column_disp('expected_amount', false);
+					cur_frm.fields_dict.payment_reconciliation.grid.set_column_disp('difference', false);
 					cur_frm.refresh_fields();
 					frm.fields_dict["totals_section"].df.hidden = 1;
+					frm.fields_dict["payment_reconciliation_details"].df.hidden = 1;
 					frm.refresh_field('totals_section');
+					frm.refresh_field('payment_reconciliation_details');
 				}
 			}
 		}

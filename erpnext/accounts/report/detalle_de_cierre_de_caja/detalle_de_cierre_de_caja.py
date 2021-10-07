@@ -39,7 +39,8 @@ def get_sales_payment_data(filters):
             row = [inv.creation, inv.owner, " ", inv.grand_total, 0, '']
             data.append(row)
             for mop_detail in mode_of_payment_details.get(owner_posting_date, []):
-                row = [inv.creation, inv.owner, mop_detail[0], 0, 0, mop_detail[1], 0]
+                print(mop_detail)
+                row = [inv.creation, inv.owner, mop_detail[0], 0, mop_detail[1], '']
                 data.append(row)
         else:
             total_payment = 0

@@ -16,13 +16,13 @@ class CierredeCaja(StatusUpdater):
     @frappe.whitelist()
     def get_payment_reconciliation_details(self):
         currency = frappe.get_cached_value('Company', self.company, "default_currency")
-        return frappe.render_template("erpnext/accounts/doctype/pos_closing_entry/closing_voucher_details.html", {"data": self, "currency": currency})
+        return frappe.render_template("erpnext/accounts/doctype/cierre_de_caja/cierre_de_caja_details.html", {"data": self, "currency": currency})
 
     @frappe.whitelist()
     def get_totals(self):
         totals = {}
 
-        sales_invoices = frappe.db.get_all("Sales Invoice", filters=[['creation', '>=', self.period_start_date], ['creation', '<=', self.period_end_date], ['docstatus', '=', '1']], fields=["grand_total"])
+        sales_invoices = frappe.db.get_all("Sales Invoice", filters=[['creation', '>=', self.period_start_date], ['creation', '<=', self.period_end_date], ['docstatus', '=', '1'], ['owner', '=', self.user]], fields=["grand_total"])
         totals["bill_total"] = sum(sales_invoice['grand_total'] for sales_invoice in sales_invoices)
 
         modes = []
@@ -33,7 +33,7 @@ class CierredeCaja(StatusUpdater):
             if payment_reconciliation.mode_of_payment in cash_cheque_modes:
                 modes.append(payment_reconciliation.mode_of_payment)
 
-        filters = [['creation', '>=', self.period_start_date], ['creation', '<=', self.period_end_date], ['mode_of_payment', 'in', modes], ['docstatus', '=', '1']]
+        filters = [['creation', '>=', self.period_start_date], ['creation', '<=', self.period_end_date], ['mode_of_payment', 'in', modes], ['docstatus', '=', '1'], ['owner', '=', self.user]]
         payment_entries = frappe.db.get_all("Payment Entry", filters=filters, fields=["total_allocated_amount"])
         total_cash_cheque = sum(payment_entry['total_allocated_amount'] for payment_entry in payment_entries)
 
@@ -55,9 +55,9 @@ class CierredeCaja(StatusUpdater):
         self.update_opening_entry(for_cancel=True)
 
 
-def get_expected_amount(mode_of_payment, period_start_date, period_end_date):
+def get_expected_amount(mode_of_payment, period_start_date, period_end_date, owner):
 
-    filters = [['creation', '>=', period_start_date], ['creation', '<=', period_end_date], ['mode_of_payment', '=', mode_of_payment], ['docstatus', '=', '1']]
+    filters = [['creation', '>=', period_start_date], ['creation', '<=', period_end_date], ['mode_of_payment', '=', mode_of_payment], ['docstatus', '=', '1'], ['owner', '=', owner]]
     payment_entries = frappe.db.get_all("Payment Entry", filters=filters, fields=["total_allocated_amount"])
     return sum(payment_entry['total_allocated_amount'] for payment_entry in payment_entries)
 
@@ -73,7 +73,7 @@ def get_payment_reconciliation(apertura_de_caja, period_start_date, period_end_d
         payment_reconciliations.append({
             "mode_of_payment": balance_detail.mode_of_payment,
             "opening_amount": balance_detail.opening_amount,
-            "expected_amount": balance_detail.opening_amount + get_expected_amount(balance_detail.mode_of_payment, period_start_date, period_end_date)
+            "expected_amount": balance_detail.opening_amount + get_expected_amount(balance_detail.mode_of_payment, period_start_date, period_end_date, apertura_de_caja.user)
         })
 
     return payment_reconciliations
