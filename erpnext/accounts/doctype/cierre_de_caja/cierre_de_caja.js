@@ -17,14 +17,14 @@ frappe.ui.form.on('Cierre de Caja', {
 
 		blind_closing_entry(frm);
 
-		set_html_data(frm);
+		// set_html_data(frm);
 	},
 
 	refresh: function(frm) {
 		if (frm.doc.docstatus == 1 && has_admin_perms(frm)) {
 
 			frm.add_custom_button('Mostrar Comprobantes', function () {
-				
+				frappe.set_route('query-report', 'Detalle de Cierre de Caja', {from_date: frm.doc.period_start_date, to_date: frm.doc.period_end_date, 'company': frm.doc.company, 'owner': frm.doc.user});
 			});
 			
 		}
