@@ -5,7 +5,7 @@ frappe.query_reports["Sales Payment Summary"] = {
 		{
 			"fieldname":"from_date",
 			"label": __("From Date"),
-			"fieldtype": "Datetime",
+			"fieldtype": "Date",
 			"default": frappe.datetime.get_today(),
 			"reqd": 1,
 			"width": "80"
@@ -13,7 +13,7 @@ frappe.query_reports["Sales Payment Summary"] = {
 		{
 			"fieldname":"to_date",
 			"label": __("To Date"),
-			"fieldtype": "Datetime",
+			"fieldtype": "Date",
 			"reqd": 1,
 			"default": frappe.datetime.get_today()
 		},
@@ -32,15 +32,9 @@ frappe.query_reports["Sales Payment Summary"] = {
 			"defaults": user
 		},
 		{
-			"fieldname":"mede_of_payment",
-			"label": __("Mode of Payment"),
-			"fieldtype": "MultiSelectList",
-			"options": "Mode of Payment",
-			get_data: function(txt) {
-				return frappe.db.get_link_options('Mode of Payment', txt, {
-					company: frappe.query_report.get_filter_value("company")
-				});
-			}
+			"fieldname":"is_pos",
+			"label": __("Show only POS"),
+			"fieldtype": "Check"
 		},
 		{
 			"fieldname":"payment_detail",
