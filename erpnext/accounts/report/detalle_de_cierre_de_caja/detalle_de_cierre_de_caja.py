@@ -92,8 +92,7 @@ def get_mode_of_payments(filters):
             AND b.docstatus = 1
             AND a.name IN ({invoice_list_names})
             UNION
-            SELECT a.owner, a.creation,
-            ifnull(a.voucher_type,'') AS mode_of_payment
+            SELECT a.owner, a.creation, ifnull(a.voucher_type,'') AS mode_of_payment
             FROM `tabJournal Entry` a, `tabJournal Entry Account` b
             WHERE a.name = b.parent
             AND a.docstatus = 1
@@ -102,6 +101,7 @@ def get_mode_of_payments(filters):
             """.format(invoice_list_names=invoice_list_names), as_dict=1)
         for d in inv_mop:
             mode_of_payments.setdefault(d["owner"] + cstr(d["creation"]), []).append(d.mode_of_payment)
+
     return mode_of_payments
 
 
@@ -120,8 +120,7 @@ def get_mode_of_payment_details(filters):
     invoice_list_names = ",".join('"' + invoice['name'] + '"' for invoice in invoice_list)
     if invoice_list:
         inv_mop_detail = frappe.db.sql("""
-            SELECT a.owner,a.creation,
-            ifnull(b.mode_of_payment, '') AS mode_of_payment, sum(b.base_paid_amount) AS paid_amount
+            SELECT a.owner,a.creation, ifnull(b.mode_of_payment, '') AS mode_of_payment, sum(b.base_paid_amount) AS paid_amount
             FROM `tabSales Invoice` a, `tabPayment Entry` b,`tabPayment Entry Reference` c
             WHERE a.name = c.reference_name
             AND b.name = c.parent
@@ -129,8 +128,7 @@ def get_mode_of_payment_details(filters):
             AND a.name IN ({invoice_list_names})
             GROUP BY a.owner, a.creation, mode_of_payment
             UNION
-            SELECT a.owner, a.creation,
-            ifnull(a.voucher_type,'') AS mode_of_payment, sum(b.credit)
+            SELECT a.owner, a.creation, ifnull(a.voucher_type,'') AS mode_of_payment, sum(b.credit)
             FROM `tabJournal Entry` a, `tabJournal Entry Account` b
             WHERE a.name = b.parent
             AND a.docstatus = 1
@@ -141,5 +139,4 @@ def get_mode_of_payment_details(filters):
 
         for d in inv_mop_detail:
             mode_of_payment_details.setdefault(d["owner"] + cstr(d["creation"]), []).append((d.mode_of_payment, d.paid_amount))
-
     return mode_of_payment_details
