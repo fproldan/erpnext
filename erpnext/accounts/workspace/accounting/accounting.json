@@ -395,6 +395,15 @@
   },
   {
    "hidden": 0,
+   "is_query_report": 1,
+   "label": "Detalle de Cierre de Caja",
+   "link_to": "Detalle de Cierre de Caja",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
    "is_query_report": 0,
    "label": "Reports",
    "onboard": 0,
@@ -1108,7 +1117,7 @@
    "type": "Link"
   }
  ],
- "modified": "2021-09-27 11:06:05.223764",
+ "modified": "2021-10-07 09:31:26.950686",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Accounting",

@@ -1,11 +1,11 @@
 // Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
 // License: GNU General Public License v3. See license.txt
-frappe.query_reports["Sales Payment Summary"] = {
+frappe.query_reports["Detalle de Cierre de Caja"] = {
 	"filters": [
 		{
 			"fieldname":"from_date",
 			"label": __("From Date"),
-			"fieldtype": "Date",
+			"fieldtype": "Datetime",
 			"default": frappe.datetime.get_today(),
 			"reqd": 1,
 			"width": "80"
@@ -13,7 +13,7 @@ frappe.query_reports["Sales Payment Summary"] = {
 		{
 			"fieldname":"to_date",
 			"label": __("To Date"),
-			"fieldtype": "Date",
+			"fieldtype": "Datetime",
 			"reqd": 1,
 			"default": frappe.datetime.get_today()
 		},
@@ -32,9 +32,15 @@ frappe.query_reports["Sales Payment Summary"] = {
 			"defaults": user
 		},
 		{
-			"fieldname":"is_pos",
-			"label": __("Show only POS"),
-			"fieldtype": "Check"
+			"fieldname":"mede_of_payment",
+			"label": __("Mode of Payment"),
+			"fieldtype": "MultiSelectList",
+			"options": "Mode of Payment",
+			get_data: function(txt) {
+				return frappe.db.get_link_options('Mode of Payment', txt, {
+					company: frappe.query_report.get_filter_value("company")
+				});
+			}
 		},
 		{
 			"fieldname":"payment_detail",
