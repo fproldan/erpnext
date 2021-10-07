@@ -19,5 +19,8 @@ frappe.listview_settings['Payment Request'] = {
 		else if(doc.status == "Cancelled") {
 			return [__("Cancelled"), "red", "status,=,Cancelled"];
 		}
+		else if(doc.status == "Expired") {
+			return [__("Expired"), "red", "status,=,Expired"];
+		}
 	}
 }
