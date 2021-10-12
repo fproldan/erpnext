@@ -56,7 +56,6 @@ class CierredeCaja(StatusUpdater):
 
 
 def get_expected_amount(mode_of_payment, period_start_date, period_end_date, owner):
-
     filters = [['creation', '>=', period_start_date], ['creation', '<=', period_end_date], ['mode_of_payment', '=', mode_of_payment], ['docstatus', '=', '1'], ['owner', '=', owner]]
     payment_entries = frappe.db.get_all("Payment Entry", filters=filters, fields=["total_allocated_amount"])
     return sum(payment_entry['total_allocated_amount'] for payment_entry in payment_entries)
@@ -69,7 +68,6 @@ def get_payment_reconciliation(apertura_de_caja, period_start_date, period_end_d
     payment_reconciliations = []
 
     for balance_detail in apertura_de_caja.balance_details:
-
         payment_reconciliations.append({
             "mode_of_payment": balance_detail.mode_of_payment,
             "opening_amount": balance_detail.opening_amount,
@@ -77,26 +75,3 @@ def get_payment_reconciliation(apertura_de_caja, period_start_date, period_end_d
         })
 
     return payment_reconciliations
-
-
-def make_closing_entry_from_opening(opening_entry):
-    closing_entry = frappe.new_doc("Cierre de Caja")
-    closing_entry.pos_opening_entry = opening_entry.name
-    closing_entry.period_start_date = opening_entry.period_start_date
-    closing_entry.period_end_date = frappe.utils.get_datetime()
-    closing_entry.user = opening_entry.user
-    closing_entry.company = opening_entry.company
-    closing_entry.grand_total = 0
-    closing_entry.net_total = 0
-    closing_entry.total_quantity = 0
-
-    payments = []
-    for detail in opening_entry.balance_details:
-        payments.append(frappe._dict({
-            'mode_of_payment': detail.mode_of_payment,
-            'opening_amount': detail.opening_amount,
-            'expected_amount': detail.opening_amount
-        }))
-
-    closing_entry.set("payment_reconciliation", payments)
-    return closing_entry

@@ -9,7 +9,6 @@ frappe.listview_settings['Apertura de Caja'] = {
 			"Open": "orange",
 			"Closed": "green",
 			"Cancelled": "red"
-
 		};
 		return [__(doc.status), status_color[doc.status], "status,=,"+doc.status];
 	}
