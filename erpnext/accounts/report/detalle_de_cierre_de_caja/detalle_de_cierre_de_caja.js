@@ -32,7 +32,7 @@ frappe.query_reports["Detalle de Cierre de Caja"] = {
 			"defaults": user
 		},
 		{
-			"fieldname":"mede_of_payment",
+			"fieldname":"mode_of_payment",
 			"label": __("Mode of Payment"),
 			"fieldtype": "MultiSelectList",
 			"options": "Mode of Payment",
@@ -42,5 +42,16 @@ frappe.query_reports["Detalle de Cierre de Caja"] = {
 				});
 			}
 		},
-	]
+	],
+	"formatter": function (value, row, column, data, default_formatter) {
+		value = default_formatter(value, row, column, data);
+
+		if (column.fieldname == 'payments') {
+			if (data !== undefined && data[column.fieldname] !== null && data[column.fieldname] < 0) {
+				value = "<span style='color:red'>" + value + "</span>";
+			}
+		}
+
+		return value;
+	}
 };
