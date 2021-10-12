@@ -13,9 +13,9 @@ def execute(filters=None):
 
 def get_columns():
     return [
-        _("Date") + ":Datetime:200",
+        _("Date") + ":Datetime:155",
         _("Owner") + ":Data:200",
-        _("Payment Mode") + ":Data:240",
+        _("Payment Mode") + ":Data:150",
         _("Facturado") + ":Currency/currency:120",
         _("Payments") + ":Currency/currency:120",
         _("Referencia") + ":Data:120",
@@ -28,26 +28,13 @@ def get_sales_payment_data(filters):
     mode_of_payments = get_mode_of_payments(filters)
     mode_of_payment_details = get_mode_of_payment_details(filters)
 
-    if filters.get("payment_detail"):
-        show_payment_detail = True
-    else:
-        show_payment_detail = False
-
     for inv in sales_invoice_data:
         owner_posting_date = inv["owner"] + cstr(inv["creation"])
-        if show_payment_detail:
-            row = [inv.creation, inv.owner, " ", inv.grand_total, 0, '']
-            data.append(row)
-            for mop_detail in mode_of_payment_details.get(owner_posting_date, []):
-                print(mop_detail)
-                row = [inv.creation, inv.owner, mop_detail[0], 0, mop_detail[1], '']
-                data.append(row)
-        else:
-            total_payment = 0
-            for mop_detail in mode_of_payment_details.get(owner_posting_date, []):
-                total_payment = total_payment + mop_detail[1]
-            row = [inv.creation, inv.owner, ", ".join(mode_of_payments.get(owner_posting_date, [])), inv.grand_total, total_payment, '']
-            data.append(row)
+        total_payment = 0
+        for mop_detail in mode_of_payment_details.get(owner_posting_date, []):
+            total_payment = total_payment + mop_detail[1]
+        row = [inv.creation, inv.owner, ", ".join(mode_of_payments.get(owner_posting_date, [])), inv.grand_total, total_payment, '']
+        data.append(row)
     return data
 
 

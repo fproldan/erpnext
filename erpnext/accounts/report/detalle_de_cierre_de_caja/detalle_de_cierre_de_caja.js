@@ -42,10 +42,5 @@ frappe.query_reports["Detalle de Cierre de Caja"] = {
 				});
 			}
 		},
-		{
-			"fieldname":"payment_detail",
-			"label": __("Show Payment Details"),
-			"fieldtype": "Check"
-		},
 	]
 };

@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 
 import frappe
 from frappe import _
-from frappe.utils import get_link_to_form
+from frappe.utils import cint, get_link_to_form
 
 from erpnext.controllers.status_updater import StatusUpdater
 
@@ -14,6 +14,7 @@ from erpnext.controllers.status_updater import StatusUpdater
 class AperturadeCaja(StatusUpdater):
     def validate(self):
         self.validate_payment_method_account()
+        self.validate_cashier()
         self.set_status()
 
     def validate_payment_method_account(self):
@@ -30,6 +31,10 @@ class AperturadeCaja(StatusUpdater):
             else:
                 msg = _("Please set default Cash or Bank account in Mode of Payments {}")
             frappe.throw(msg.format(", ".join(invalid_modes)), title=_("Missing Account"))
+
+    def validate_cashier(self):
+        if not cint(frappe.db.get_value("User", self.user, "enabled")):
+            frappe.throw(_("User {} is disabled. Please select valid user/cashier").format(self.user))
 
     def on_submit(self):
         self.set_status(update=True)
