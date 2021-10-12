@@ -74,7 +74,6 @@ frappe.ui.form.on('Subscription', {
 				},
 				callback: function(r){
 					if (r.message) {
-						console.log(r.message)
 						if (r.message['estado'] == 'signed') {
 							msg = "Perderá registros de facturas generadas previamente. La suscripción tiene una adhesión de Pagos360 Activa, y le debitará al Cliente al generarse la siguiente factura. ¿Seguro que quieres reiniciar esta suscripción?"
 						}
