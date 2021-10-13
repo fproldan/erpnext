@@ -22,6 +22,7 @@ frappe.query_reports["Detalle de Cierre de Caja"] = {
 			"label": __("Company"),
 			"fieldtype": "Link",
 			"options": "Company",
+			"reqd": 1,
 			"default": frappe.defaults.get_user_default("Company")
 		},
 		{
