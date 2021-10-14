@@ -45,7 +45,7 @@
   }
  ],
  "links": [],
- "modified": "2021-05-12 19:59:54.039687",
+ "modified": "2021-10-14 14:05:14.895445",
  "modified_by": "Administrator",
  "module": "ERPNext Integrations",
  "name": "GoCardless Settings",
@@ -65,7 +65,7 @@
   }
  ],
  "quick_entry": 1,
- "restrict_to_domain": "ERPNext Integrations",
+ "restrict_to_domain": "Thrash",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

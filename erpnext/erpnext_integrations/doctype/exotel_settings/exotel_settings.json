@@ -40,7 +40,7 @@
  ],
  "issingle": 1,
  "links": [],
- "modified": "2021-05-12 19:59:53.110774",
+ "modified": "2021-10-14 14:07:33.223862",
  "modified_by": "Administrator",
  "module": "ERPNext Integrations",
  "name": "Exotel Settings",
@@ -58,7 +58,7 @@
   }
  ],
  "quick_entry": 1,
- "restrict_to_domain": "ERPNext Integrations",
+ "restrict_to_domain": "Thrash",
  "sort_field": "modified",
  "sort_order": "ASC",
  "track_changes": 1

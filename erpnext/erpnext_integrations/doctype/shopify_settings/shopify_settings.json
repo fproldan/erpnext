@@ -330,7 +330,7 @@
  ],
  "issingle": 1,
  "links": [],
- "modified": "2021-05-12 19:59:49.037682",
+ "modified": "2021-10-14 14:04:37.183557",
  "modified_by": "Administrator",
  "module": "ERPNext Integrations",
  "name": "Shopify Settings",
@@ -347,7 +347,7 @@
    "write": 1
   }
  ],
- "restrict_to_domain": "ERPNext Integrations",
+ "restrict_to_domain": "Thrash",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1
