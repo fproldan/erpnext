@@ -9,7 +9,7 @@ frappe.ui.form.on('Apertura de Caja', {
 			frm.set_value('user', frappe.session.user);
 			frm.refresh_field("user");
 
-			if (has_admin_perms) {
+			if (!has_admin_perms()) {
 				frm.set_df_property('user', 'hidden', 1);
 				frm.set_df_property('user', 'read_only', 1);
 				frm.refresh_field("user");
