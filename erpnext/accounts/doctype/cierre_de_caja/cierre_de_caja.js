@@ -4,9 +4,7 @@
 frappe.ui.form.on('Cierre de Caja', {
 	onload: function(frm) {
 		frm.set_query("user", function(doc) {
-			return {
-				filters: {"enabled": 1, "user_type": "System User"}
-			};
+			return { filters: {"enabled": 1, "user_type": "System User"} };
 		});
 
 		frm.set_query("apertura_de_caja", function(doc) {
@@ -24,11 +22,9 @@ frappe.ui.form.on('Cierre de Caja', {
 
 	refresh: function(frm) {
 		if (frm.doc.docstatus == 1 && has_admin_perms(frm)) {
-
 			frm.add_custom_button('Mostrar Comprobantes', function () {
 				frappe.set_route('query-report', 'Detalle de Cierre de Caja', {from_date: frm.doc.period_start_date, to_date: frm.doc.period_end_date, 'company': frm.doc.company, 'owner': frm.doc.user});
 			});
-			
 		}
 
 		blind_closing_entry(frm);
@@ -122,7 +118,7 @@ function has_admin_perms(frm) {
 
 function blind_closing_entry(frm) {
 	if (has_admin_perms(frm)) {
-		return;
+	    return;
 	}
 
 	frappe.call({
@@ -134,9 +130,10 @@ function blind_closing_entry(frm) {
 		callback: function(r) {
 			if (r.message) {
 				if (r.message['blind_closing_entry']) {
-					cur_frm.fields_dict.payment_reconciliation.grid.set_column_disp('expected_amount', false);
-					cur_frm.fields_dict.payment_reconciliation.grid.set_column_disp('difference', false);
-					cur_frm.refresh_fields();
+					console.log("qweqwe")
+					frm.fields_dict.payment_reconciliation.grid.set_column_disp('expected_amount', false);
+					frm.fields_dict.payment_reconciliation.grid.set_column_disp('difference', false);
+					frm.refresh_fields();
 					frm.fields_dict["totals_section"].df.hidden = 1;
 					frm.fields_dict["payment_reconciliation_details"].df.hidden = 1;
 					frm.refresh_field('totals_section');
@@ -145,5 +142,4 @@ function blind_closing_entry(frm) {
 			}
 		}
 	});
-
 }

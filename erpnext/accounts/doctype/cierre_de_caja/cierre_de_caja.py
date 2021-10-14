@@ -58,7 +58,6 @@ class CierredeCaja(StatusUpdater):
 
 
 def get_expected_amount(mode_of_payment, period_start_date, period_end_date, owner, company):
-    # Payment Entries
     account = frappe.db.get_value("Mode of Payment Account", {"parent": mode_of_payment, "company": company}, "default_account")
     positive_entries_filter = [['creation', '>=', period_start_date], ['creation', '<=', period_end_date], ['paid_to', '=', account], ['docstatus', '=', '1']]
     negative_entries_filter = [['creation', '>=', period_start_date], ['creation', '<=', period_end_date], ['paid_from', '=', account], ['docstatus', '=', '1']]
