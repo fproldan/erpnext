@@ -19,7 +19,9 @@ frappe.ui.form.on('Cierre de Caja', {
 		blind_closing_entry(frm);
 		set_html_data(frm);
 	},
-
+	setup(frm) {
+		blind_closing_entry(frm);
+	},
 	refresh: function(frm) {
 		if (frm.doc.docstatus == 1 && has_admin_perms(frm)) {
 			frm.add_custom_button('Mostrar Comprobantes', function () {
@@ -30,14 +32,12 @@ frappe.ui.form.on('Cierre de Caja', {
 		blind_closing_entry(frm);
 		set_html_data(frm);
 	},
-
 	apertura_de_caja(frm) {
 		if (frm.doc.apertura_de_caja && frm.doc.period_start_date && frm.doc.period_end_date && frm.doc.user) {
 			reset_values(frm);
 			frm.trigger("set_opening_amounts");
 		}
 	},
-
 	set_opening_amounts(frm) {
 		frappe.call({
 	        method: "erpnext.accounts.doctype.cierre_de_caja.cierre_de_caja.get_payment_reconciliation",
@@ -58,7 +58,6 @@ frappe.ui.form.on('Cierre de Caja', {
 	        }
 	    });
 	},
-
 	before_save: function(frm) {
 		frm.set_value("bill_total", 0);
 		frm.set_value("total_cash_cheque", 0);
@@ -75,7 +74,6 @@ frappe.ui.form.on('Cierre de Caja', {
 			}
 		});
 	}
-
 });
 
 frappe.ui.form.on('Cierre de Caja Detail', {
@@ -123,19 +121,20 @@ function blind_closing_entry(frm) {
 
 	frappe.call({
 		method: "frappe.client.get_value",
+		async: false,
 		args: {
 			doctype: "Accounts Settings",
 			fieldname: "blind_closing_entry"
 		},
 		callback: function(r) {
 			if (r.message) {
-				if (r.message['blind_closing_entry']) {
-					console.log("qweqwe")
+				if (r.message['blind_closing_entry'] == '1') {
 					frm.fields_dict.payment_reconciliation.grid.set_column_disp('expected_amount', false);
 					frm.fields_dict.payment_reconciliation.grid.set_column_disp('difference', false);
-					frm.refresh_fields();
 					frm.fields_dict["totals_section"].df.hidden = 1;
 					frm.fields_dict["payment_reconciliation_details"].df.hidden = 1;
+					frm.refresh_fields();
+					frm.refresh_field('payment_reconciliation');
 					frm.refresh_field('totals_section');
 					frm.refresh_field('payment_reconciliation_details');
 				}
