@@ -114,8 +114,7 @@ function set_html_data(frm) {
 
 
 function has_admin_perms(frm) {
-	let admin_user = frappe.user.has_role('System Manager') || frappe.user.has_role('Accounts Manager') || frappe.user.has_role('Administrator');
-	return admin_user
+	return frappe.user.has_role('System Manager') || frappe.user.has_role('Accounts Manager') || frappe.user.has_role('Administrator');
 }
 
 function blind_closing_entry(frm) {

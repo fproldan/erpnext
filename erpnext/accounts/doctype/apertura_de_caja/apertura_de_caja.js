@@ -7,6 +7,13 @@ frappe.ui.form.on('Apertura de Caja', {
 			frm.trigger('set_posting_date_read_only');
 			frm.set_value('period_start_date', frappe.datetime.now_datetime());
 			frm.set_value('user', frappe.session.user);
+			frm.refresh_field("user");
+
+			if (!has_admin_perms(frm)) {
+				frm.set_df_property('user', 'hidden', 1);
+				frm.set_df_property('user', 'read_only', 1);
+				frm.refresh_field("user");
+			}
 		}
 
 		frm.set_query("user", function(doc) {
@@ -42,3 +49,8 @@ frappe.ui.form.on('Apertura de Caja', {
 	},
 	
 });
+
+
+function has_admin_perms(frm) {
+	return frappe.user.has_role('System Manager') || frappe.user.has_role('Accounts Manager') || frappe.user.has_role('Administrator');
+}
