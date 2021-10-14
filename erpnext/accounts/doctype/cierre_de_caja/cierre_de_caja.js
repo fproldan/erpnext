@@ -15,8 +15,10 @@ frappe.ui.form.on('Cierre de Caja', {
 
 		if (frm.doc.docstatus === 0 && !frm.doc.amended_from) frm.set_value("period_end_date", frappe.datetime.now_datetime());
 
-		blind_closing_entry(frm);
+		frm.set_df_property('user', 'read_only', 1);
+		frm.refresh_field("user");
 
+		blind_closing_entry(frm);
 		set_html_data(frm);
 	},
 
@@ -30,6 +32,7 @@ frappe.ui.form.on('Cierre de Caja', {
 		}
 
 		blind_closing_entry(frm);
+		set_html_data(frm);
 	},
 
 	apertura_de_caja(frm) {
@@ -107,11 +110,11 @@ function set_html_data(frm) {
 			doc: frm.doc,
 			callback: (r) => {
 				frm.get_field("payment_reconciliation_details").$wrapper.html(r.message);
+				frm.refresh_field('payment_reconciliation_details');
 			}
 		});
 	}
 }
-
 
 function has_admin_perms(frm) {
 	return frappe.user.has_role('System Manager') || frappe.user.has_role('Accounts Manager') || frappe.user.has_role('Administrator');
