@@ -16,11 +16,7 @@ frappe.ui.form.on('Cierre de Caja', {
 		frm.set_df_property('user', 'read_only', 1);
 		frm.refresh_field("user");
 
-		blind_closing_entry(frm);
 		set_html_data(frm);
-	},
-	setup(frm) {
-		blind_closing_entry(frm);
 	},
 	refresh: function(frm) {
 		if (frm.doc.docstatus == 1 && has_admin_perms(frm)) {
@@ -29,12 +25,14 @@ frappe.ui.form.on('Cierre de Caja', {
 			});
 		}
 
-		blind_closing_entry(frm);
+		frm.trigger('blind_closing_entry');
 		set_html_data(frm);
 	},
 	apertura_de_caja(frm) {
 		if (frm.doc.apertura_de_caja && frm.doc.period_start_date && frm.doc.period_end_date && frm.doc.user) {
-			reset_values(frm);
+			frm.set_value("payment_reconciliation", []);
+			frm.set_value("bill_total", 0);
+			frm.set_value("total_cash_cheque", 0);
 			frm.trigger("set_opening_amounts");
 		}
 	},
@@ -52,7 +50,7 @@ frappe.ui.form.on('Cierre de Caja', {
 							expected_amount: detail.expected_amount
 						});
 					});
-					blind_closing_entry(frm);
+					frm.trigger('blind_closing_entry');
 					frm.refresh_field("payment_reconciliation");
 	        	}
 	        }
@@ -69,7 +67,33 @@ frappe.ui.form.on('Cierre de Caja', {
 				if (r.message) {
 					frm.set_value("bill_total", r.message["bill_total"]);
 					frm.set_value("total_cash_cheque", r.message["total_cash_cheque"]);
-					blind_closing_entry(frm);
+					frm.refresh_field("bill_total");
+					frm.refresh_field("total_cash_cheque");
+					frm.trigger('blind_closing_entry');
+				}
+			}
+		});
+	},
+	blind_closing_entry: function(frm) {
+		if (has_admin_perms(frm)) {
+		    return;
+		}
+
+		frappe.call({
+			method: "frappe.client.get_value",
+			args: {
+				doctype: "Accounts Settings",
+				fieldname: "blind_closing_entry"
+			},
+			callback: function(r) {
+				if (r.message) {
+					if (r.message['blind_closing_entry'] == '1') {
+						frm.fields_dict['payment_reconciliation'].grid.set_column_disp(['difference', 'expected_amount'], false);
+						frm.refresh_field("payment_reconciliation");
+						frm.fields_dict["totals_section"].df.hidden = 1;
+						frm.fields_dict["payment_reconciliation_details"].df.hidden = 1;
+						frm.refresh_fields();
+					}
 				}
 			}
 		});
@@ -83,19 +107,6 @@ frappe.ui.form.on('Cierre de Caja Detail', {
 		frm.refresh_field("payment_reconciliation");
 	}
 })
-
-
-function reset_values(frm) {
-	frm.set_value("payment_reconciliation", []);
-	frm.set_value("bill_total", 0);
-	frm.set_value("total_cash_cheque", 0);
-}
-
-function refresh_fields(frm) {
-	frm.refresh_field("payment_reconciliation");
-	frm.refresh_field("bill_total");
-	frm.refresh_field("total_cash_cheque");
-}
 
 function set_html_data(frm) {
 	if (frm.doc.docstatus === 1 && frm.doc.status == 'Submitted') {
@@ -114,31 +125,3 @@ function has_admin_perms(frm) {
 	return frappe.user.has_role('System Manager') || frappe.user.has_role('Accounts Manager') || frappe.user.has_role('Administrator');
 }
 
-function blind_closing_entry(frm) {
-	if (has_admin_perms(frm)) {
-	    return;
-	}
-
-	frappe.call({
-		method: "frappe.client.get_value",
-		async: false,
-		args: {
-			doctype: "Accounts Settings",
-			fieldname: "blind_closing_entry"
-		},
-		callback: function(r) {
-			if (r.message) {
-				if (r.message['blind_closing_entry'] == '1') {
-					frm.fields_dict.payment_reconciliation.grid.set_column_disp('expected_amount', false);
-					frm.fields_dict.payment_reconciliation.grid.set_column_disp('difference', false);
-					frm.fields_dict["totals_section"].df.hidden = 1;
-					frm.fields_dict["payment_reconciliation_details"].df.hidden = 1;
-					frm.refresh_fields();
-					frm.refresh_field('payment_reconciliation');
-					frm.refresh_field('totals_section');
-					frm.refresh_field('payment_reconciliation_details');
-				}
-			}
-		}
-	});
-}
