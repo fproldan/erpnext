@@ -19,13 +19,14 @@ frappe.ui.form.on('Cierre de Caja', {
 		set_html_data(frm);
 	},
 	refresh: function(frm) {
+		frm.trigger('blind_closing_entry');
+
 		if (frm.doc.docstatus == 1 && has_admin_perms(frm)) {
 			frm.add_custom_button('Mostrar Comprobantes', function () {
 				frappe.set_route('query-report', 'Detalle de Cierre de Caja', {from_date: frm.doc.period_start_date, to_date: frm.doc.period_end_date, 'company': frm.doc.company, 'owner': frm.doc.user});
 			});
 		}
 
-		frm.trigger('blind_closing_entry');
 		set_html_data(frm);
 	},
 	apertura_de_caja(frm) {
@@ -89,10 +90,9 @@ frappe.ui.form.on('Cierre de Caja', {
 				if (r.message) {
 					if (r.message['blind_closing_entry'] == '1') {
 						frm.fields_dict['payment_reconciliation'].grid.set_column_disp(['difference', 'expected_amount'], false);
-						frm.refresh_field("payment_reconciliation");
 						frm.fields_dict["totals_section"].df.hidden = 1;
 						frm.fields_dict["payment_reconciliation_details"].df.hidden = 1;
-						frm.refresh_fields();
+						frm.refresh_fields(["totals_section", "payment_reconciliation_details"]);
 					}
 				}
 			}
