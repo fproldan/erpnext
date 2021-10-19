@@ -5,7 +5,6 @@ data = {
         'Assets'
     ],
     'restricted_roles': [
-        'Maintenance User',
         'Maintenance Manager'
     ],
 }

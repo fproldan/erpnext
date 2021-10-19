@@ -4,4 +4,7 @@ data = {
     'modules': [
         'RMA'
     ],
+    'restricted_roles': [
+        'Maintenance User'
+    ]
 }
