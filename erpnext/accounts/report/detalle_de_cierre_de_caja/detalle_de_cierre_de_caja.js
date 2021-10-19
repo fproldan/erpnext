@@ -30,7 +30,6 @@ frappe.query_reports["Detalle de Cierre de Caja"] = {
 			"label": __("Mode of Payment"),
 			"fieldtype": "MultiSelectList",
 			"options": "Mode of Payment",
-			"reqd": 1,
 			get_data: function(txt) {
 				return frappe.db.get_link_options('Mode of Payment', txt, {
 					company: frappe.query_report.get_filter_value("company")
@@ -42,7 +41,6 @@ frappe.query_reports["Detalle de Cierre de Caja"] = {
 		value = default_formatter(value, row, column, data);
 
 		if (column.fieldname == 'payments') {
-			console.log(data)
 			if (data !== undefined && data[column.fieldname] !== null && data['signo'] < 0) {
 				return "<span style='color:red'>" + value + "</span>";
 			}
