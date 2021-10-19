@@ -23,7 +23,13 @@ frappe.ui.form.on('Cierre de Caja', {
 
 		if (frm.doc.docstatus == 1 && has_admin_perms(frm)) {
 			frm.add_custom_button('Mostrar Comprobantes', function () {
-				frappe.set_route('query-report', 'Detalle de Cierre de Caja', {from_date: frm.doc.period_start_date, to_date: frm.doc.period_end_date, 'company': frm.doc.company, 'owner': frm.doc.user});
+
+				var mode_of_payments = [];
+				$.each(frm.doc.payment_reconciliation, (key, value) => {
+  					mode_of_payments.push(value['mode_of_payment']);
+   				});
+
+				frappe.set_route('query-report', 'Detalle de Cierre de Caja', {from_date: frm.doc.period_start_date, to_date: frm.doc.period_end_date, 'company': frm.doc.company, "mode_of_payment": mode_of_payments});
 			});
 		}
 

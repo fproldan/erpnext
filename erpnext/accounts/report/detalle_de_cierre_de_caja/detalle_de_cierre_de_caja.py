@@ -37,15 +37,13 @@ def get_conditions(filters):
         conditions += " and a.creation <= %(to_date)s"
     if filters.get("company"):
         conditions += " and a.company=%(company)s"
-    if filters.get("owner"):
-        conditions += " and a.owner = %(owner)s"
     if filters.get("mode_of_payment"):
         accounts = []
         for mode in filters.get("mode_of_payment"):
             accounts.append(frappe.db.get_value("Mode of Payment Account", {"parent": mode, "company": filters.get("company")}, "default_account"))
 
         filters["accounts"] = accounts
-        conditions += " and a.mode_of_payment in %(mode_of_payment)s or a.paid_to in %(accounts)s or a.paid_from in %(accounts)s"
+        conditions += " and a.paid_to in %(accounts)s or a.paid_from in %(accounts)s"
     return conditions
 
 
