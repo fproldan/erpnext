@@ -42,8 +42,9 @@ frappe.query_reports["Detalle de Cierre de Caja"] = {
 		value = default_formatter(value, row, column, data);
 
 		if (column.fieldname == 'payments') {
-			if (data !== undefined && data[column.fieldname] !== null && data[column.fieldname] < 0) {
-				value = "<span style='color:red'>" + value + "</span>";
+			console.log(data)
+			if (data !== undefined && data[column.fieldname] !== null && data['signo'] < 0) {
+				return "<span style='color:red'>" + value + "</span>";
 			}
 		}
 

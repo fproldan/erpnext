@@ -24,8 +24,15 @@ def get_columns():
 def get_sales_payment_data(filters):
     data = []
     for payment_entry in get_payment_entries(filters):
-        row = [payment_entry.creation, payment_entry.owner, payment_entry.name, payment_entry.mode_of_payment, payment_entry.paid_amount, payment_entry.reference_no]
-        data.append(row)
+        data.append({
+            'date': payment_entry.creation,
+            'owner': payment_entry.owner,
+            'name': payment_entry.name,
+            'payment_mode': payment_entry.mode_of_payment,
+            'payments': payment_entry.paid_amount,
+            'referencia': payment_entry.reference_no,
+            'signo': payment_entry.signo,
+        })
     return data
 
 
@@ -36,18 +43,14 @@ def get_conditions(filters):
     if filters.get("to_date"):
         conditions += " and a.creation <= %(to_date)s"
     if filters.get("company"):
-        conditions += " and a.company=%(company)s"
+        conditions += " and a.company=%(company)s "
     if filters.get("mode_of_payment"):
-        accounts = []
-        for mode in filters.get("mode_of_payment"):
-            accounts.append(frappe.db.get_value("Mode of Payment Account", {"parent": mode, "company": filters.get("company")}, "default_account"))
-
-        filters["accounts"] = accounts
-        conditions += " and a.paid_to in %(accounts)s or a.paid_from in %(accounts)s"
+        filters["accounts"] = [frappe.db.get_value("Mode of Payment Account", {"parent": mode, "company": filters.get("company")}, "default_account") for mode in filters.get("mode_of_payment")]
+        # conditions += " and a.paid_to in %(accounts)s or a.paid_from in %(accounts)s"
     return conditions
 
 
-def get_payment_entries(filters):
+def get_payment_entries_(filters):
     conditions = get_conditions(filters)
     return frappe.db.sql("""
         SELECT a.name, a.creation, a.owner, a.paid_amount, a.reference_no, a.mode_of_payment, a.reference_no
@@ -56,3 +59,29 @@ def get_payment_entries(filters):
         AND {conditions}
         ORDER BY a.creation
     """.format(conditions=conditions), filters, as_dict=1)
+
+
+def get_payment_entries(filters):
+    conditions = get_conditions(filters)
+    accounts = str(tuple(filters.get("accounts")))
+
+    return frappe.db.sql("""
+        SELECT *
+        FROM
+            (
+                SELECT a.name, a.creation, a.owner, a.paid_amount, a.reference_no, a.mode_of_payment, 1 AS signo
+                FROM `tabPayment Entry` a
+                WHERE a.docstatus = 1
+                AND {conditions}
+                AND a.paid_to in {accounts}
+
+                UNION
+
+                SELECT a.name, a.creation, a.owner, a.paid_amount, a.reference_no, a.mode_of_payment, -1 AS signo
+                FROM `tabPayment Entry` a
+                WHERE a.docstatus = 1
+                AND {conditions}
+                AND a.paid_from in {accounts}
+            ) results
+        ORDER BY creation
+    """.format(conditions=conditions, accounts=accounts), filters, as_dict=1)
