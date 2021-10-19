@@ -109,7 +109,7 @@ domains = {
 	'Subscription': 'erpnext.domains.subscription',
 	'Supplier Scorecard': 'erpnext.domains.supplier_scorecard',
 	'Campaigns': 'erpnext.domains.campaigns',
-	'SLA y RMA': 'erpnext.domains.sla_rma',
+	'RMA': 'erpnext.domains.rma',
 	'Retail Avanzado': 'erpnext.domains.retail_avanzado',
 	'Servicios Google': 'erpnext.domains.servicios_google',
 	'HR Asistencia y Vacaciones': 'erpnext.domains.hr_asistencia_vacaciones',

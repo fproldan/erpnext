@@ -6,5 +6,6 @@ data = {
     ],
     'restricted_roles': [
         'Support Team',
+        'Support Manager',
     ],
 }

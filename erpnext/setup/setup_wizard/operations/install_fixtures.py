@@ -68,7 +68,7 @@ def install(country=None):
 		{'doctype': 'Domain', 'domain': 'Subscription'},
 		{'doctype': 'Domain', 'domain': 'Supplier Scorecard'},
 		{'doctype': 'Domain', 'domain': 'Campaigns'},
-		{'doctype': 'Domain', 'domain': 'SLA y RMA'},
+		{'doctype': 'Domain', 'domain': 'RMA'},
 		{'doctype': 'Domain', 'domain': 'Retail Avanzado'},
 		{'doctype': 'Domain', 'domain': 'Servicios Google'},
 		{'doctype': 'Domain', 'domain': 'HR Asistencia y Vacaciones'},

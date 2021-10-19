@@ -236,7 +236,7 @@
    "link_fieldname": "maintenance_schedule"
   }
  ],
- "modified": "2021-05-27 16:05:10.746465",
+ "modified": "2021-05-28 16:05:10.746465",
  "modified_by": "Administrator",
  "module": "Maintenance",
  "name": "Maintenance Schedule",
@@ -257,7 +257,7 @@
    "write": 1
   }
  ],
- "restrict_to_domain": "Maintenance",
+ "restrict_to_domain": "Thrash",
  "search_fields": "status,customer,customer_name",
  "sort_field": "modified",
  "sort_order": "DESC",
