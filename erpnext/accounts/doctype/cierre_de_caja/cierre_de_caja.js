@@ -8,9 +8,7 @@ frappe.ui.form.on('Cierre de Caja', {
 		});
 
 		frm.set_query("apertura_de_caja", function(doc) {
-			if (has_admin_perms(frm)) { return { filters: { 'status': 'Open', 'docstatus': 1 } }; }
-			return { filters: { 'status': 'Open', 'docstatus': 1, 'user': frappe.session.user } };
-			
+			return { filters: { 'status': 'Open', 'docstatus': 1 } };
 		});
 
 		if (frm.doc.docstatus === 0 && !frm.doc.amended_from) frm.set_value("period_end_date", frappe.datetime.now_datetime());
