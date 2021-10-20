@@ -8,8 +8,11 @@ import frappe
 
 def execute():
     if frappe.db.exists("Domain", "SLA y RMA"):
-        if frappe.db.exists("Domain", "RMA"):
-            frappe.db.delete("Domain", "SLA y RMA")
-        else:
-            frappe.db.set_value("Domain", "SLA y RMA", "domain", "RMA")
-            frappe.db.set_value("Domain", "SLA y RMA", "name", "RMA")
+        frappe.db.delete("Domain", "SLA y RMA")
+
+    if not frappe.db.exists("Domain", "RMA"):
+        d = frappe.new_doc('Domain')
+        d.name = 'RMA'
+        d.domain = 'RMA'
+        d.save()
+        frappe.db.commit()
