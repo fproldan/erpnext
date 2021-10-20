@@ -60,7 +60,7 @@ def get_sales_payment_data(filters):
             'owner': payment_entry.owner,
             'name': payment_entry.name,
             'payment_mode': payment_entry.mode_of_payment,
-            'payments': payment_entry.paid_amount,
+            'payments': payment_entry.paid_amount * payment_entry.signo,
             'referencia': payment_entry.reference_no,
             'signo': payment_entry.signo,
         })
