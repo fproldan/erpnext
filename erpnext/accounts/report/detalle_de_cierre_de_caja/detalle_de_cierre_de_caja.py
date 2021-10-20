@@ -12,12 +12,43 @@ def execute(filters=None):
 
 def get_columns():
     return [
-        _("Date") + ":Datetime:155",
-        _("Owner") + ":Data:200",
-        _("name") + ":Link/Payment Entry:200",
-        _("Payment Mode") + ":Data:150",
-        _("Payments") + ":Currency/currency:120",
-        _("Referencia") + ":Data:250",
+        {
+            "fieldname": "date",
+            "label": _("Date"),
+            "fieldtype": "Datetime",
+            "width": 155
+        },
+        {
+            "fieldname": "owner",
+            "label": _("Owner"),
+            "fieldtype": "Data",
+            "width": 200
+        },
+        {
+            "fieldname": "name",
+            "label": _("Name"),
+            "fieldtype": "Link",
+            "options": "Payment Entry",
+            "width": 200
+        },
+        {
+            "fieldname": "payment_mode",
+            "label": _("Payment Mode"),
+            "fieldtype": "Data",
+            "width": 150
+        },
+        {
+            "fieldname": "payments",
+            "label": _("Payments"),
+            "fieldtype": "Currency",
+            "width": 120
+        },
+        {
+            "fieldname": "referencia",
+            "label": _("Referencia"),
+            "fieldtype": "Data",
+            "width": 250
+        },
     ]
 
 
