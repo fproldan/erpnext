@@ -8,4 +8,5 @@ data = {
         'Support Team',
         'Support Manager',
     ],
+    'on_setup': 'erpnext.support.setup.setup_support'
 }
