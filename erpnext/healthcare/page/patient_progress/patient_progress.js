@@ -525,9 +525,7 @@ class PatientProgress {
 			$(null_state).show();
 		} else {
 			null_state = $(
-				`<div class="chart-empty-state text-muted text-center" style="margin-bottom: 20px;">${__(
-					"No Data..."
-				)}</div>`
+				`<div class="chart-empty-state text-muted text-center" style="margin-bottom: 20px;">${__("No Data...")}</div>`
 			);
 			$(parent).append(null_state);
 		}

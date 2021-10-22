@@ -84,8 +84,8 @@ frappe.ui.form.on("Issue", {
 			frm.dashboard.clear_headline();
 
 			let agreement_status = (frm.doc.agreement_status == "Fulfilled") ?
-				{ "indicator": "green", "msg": "Service Level Agreement has been fulfilled" } :
-				{ "indicator": "red", "msg": "Service Level Agreement Failed" };
+				{ "indicator": "green", "msg": __("Service Level Agreement has been fulfilled") } :
+				{ "indicator": "red", "msg": __("Service Level Agreement Failed") };
 
 			frm.dashboard.set_headline_alert(
 				'<div class="row">' +
