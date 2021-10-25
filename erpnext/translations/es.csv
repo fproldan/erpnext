@@ -124,6 +124,31 @@ You can use <a href=""https://jinja.palletsprojects.com/en/2.11.x/"" target=""_b
 <!-- {% endraw %} -->",
 "<div class=""columnHeading"">Other Details</div>","<div class=""columnHeading"">Other Details</div>",
 "<div class=""text-muted text-center"">No Matching Bank Transactions Found</div>","<div class=""text-muted text-center"">No Matching Bank Transactions Found</div>",
+"<div class=""well"">
+Edite la lista de Series en el siguiente campo. Reglas:
+<ul>
+<li>Cada Prefijo debe estar en una nueva línea.</li>
+<li>Se permiten caracteres especiales ""/"" y ""-"".</li>
+<li>Se puede definir la cantidad de dígitos que tendrán los números de serie usando un punto '.' seguido por numerales '#'. Por ejemplo, "".####"" significa que la serie tendrá cuatro dígitos (por defecto tienen cinco).</li>
+</ul>
+Ejemplos:<br>
+INV-<br>
+INV-10-<br>
+INVK-<br>
+INV-.####<br>
+</div>","<div class=""well"">
+Edite la lista de Series en el siguiente campo. Reglas:
+<ul>
+<li>Cada Prefijo debe estar en una nueva línea.</li>
+<li>Se permiten caracteres especiales ""/"" y ""-"".</li>
+<li>Se puede definir la cantidad de dígitos que tendrán los números de serie usando un punto '.' seguido por numerales '#'. Por ejemplo, "".####"" significa que la serie tendrá cuatro dígitos (por defecto tienen cinco).</li>
+</ul>
+Ejemplos:<br>
+INV-<br>
+INV-10-<br>
+INVK-<br>
+INV-.####<br>
+</div>",
 "<div>
 <h3> All dimensions in centimeter only </h3>
 </div>","<div>
@@ -310,7 +335,7 @@ Accounting Dimension <b>{0}</b> is required for 'Balance Sheet' account {1}.,La 
 Accounting Dimension <b>{0}</b> is required for 'Profit and Loss' account {1}.,La dimensión contable <b>{0}</b> es necesaria para la cuenta &#39;Ganancias y pérdidas&#39; {1}.,
 Accounting Dimension Detail,Detalle de dimensión contable,
 Accounting Dimension Filter,Filtro de Dimensiones contables,
-Accounting Dimensions,Dimensiones Contables,
+Accounting Dimensions,Accounting Dimensions,
 Accounting Entries,Asientos contables,
 Accounting Entry for Asset,Entrada Contable para Activos,
 Accounting Entry for Service,Entrada contable para servicio,
@@ -477,7 +502,7 @@ Additional Discount Account,Cuenta de descuento adicional,
 Additional Discount Amount,Cantidad de descuento adicional,
 Additional Discount Amount (Company Currency),Monto adicional de descuento (Divisa por defecto),
 Additional Discount Percentage,Porcentaje de descuento adicional,
-Additional Information,Additional Information,
+Additional Information,Información adicional,
 Additional Notes,Notas adicionales,
 Additional Operating Cost,Costos adicionales de operación,
 Additional PF,PF adicional,
@@ -2340,7 +2365,7 @@ Daily Work Summary Replies,Respuestas Diarias del Resumen del Trabajo,
 Data,Datos,
 Data Import Configuration,Configuración de importación de datos,
 "Data exported from Tally that consists of the Chart of Accounts, Customers, Suppliers, Addresses, Items and UOMs","Datos exportados de Tally que consisten en el plan de cuentas, clientes, proveedores, direcciones, artículos y unidades de medida",
-Date,Date,
+Date,Fecha,
 Date Based On,Fecha basada en,
 Date Fieldname,Date Fieldname,
 Date Of Retirement,Fecha de jubilación,
@@ -2601,7 +2626,7 @@ Depreciation Row {0}: Expected value after useful life must be greater than or e
 Depreciation Row {0}: Next Depreciation Date cannot be before Available-for-use Date,Fila de depreciación {0}: la siguiente fecha de depreciación no puede ser anterior Fecha disponible para usar,
 Depreciation Row {0}: Next Depreciation Date cannot be before Purchase Date,Fila de depreciación {0}: la siguiente fecha de depreciación no puede ser anterior a la fecha de compra,
 Depreciation Schedule,Cronograma de Depreciación,
-Description,Description,
+Description,Descripción,
 Description of Content,Description of Content,
 Description of a Job Opening,Descripción de la oferta de trabajo,
 Descriptive,Descriptivo,
@@ -2747,7 +2772,7 @@ Doctype,Doctype,
 Document ID Too Long,Document ID Too Long,
 Document Name,Nombre de Documento,
 Document Status,Estado del Documento,
-Document Type,Document Type,
+Document Type,Tipo de documento,
 Document Type already used as a dimension,Document Type already used as a dimension,
 "Document name should only contain alphanumeric values, dash(-) and slash(/) characters as per GST rules. Please change the naming series.","Document name should only contain alphanumeric values, dash(-) and slash(/) characters as per GST rules. Please change the naming series.",
 Document {0} successfully uncleared,El documento {0} no se ha borrado correctamente,
@@ -3167,7 +3192,7 @@ Error while reposting item valuation,Error while reposting item valuation,
 Error! Failed to get access token.,¡Error! No se pudo obtener el token de acceso.,
 Error! Failed to get request token.,¡Error! No se pudo obtener el token de solicitud.,
 Error: Not a valid id?,Error: ¿No es un ID válido?,
-Error: {0} is mandatory field,Error: {0} es un campo obligatorio, 
+Error: {0} is mandatory field,Error: {0} is mandatory field, 
 Estimated Arrival,Llegada Estimada,
 Estimated Cost,Costo estimado,
 Estimated Cost Per Position,Costo Estimado por Posición,
@@ -4571,7 +4596,7 @@ Item Variant {0} already exists with same attributes,Artículo Variant {0} ya ex
 Item Variants updated,Variantes del artículo actualizadas,
 Item Website Specification,Especificación del producto en la WEB,
 Item Weight Details,Detalles del peso del Producto,
-Item Wise Tax Detail,Item Wise Tax Detail,
+Item Wise Tax Detail,Detalle de impuestos por producto,
 Item and Warehouse,Item and Warehouse,
 Item and Warranty Details,Producto y detalles de garantía,
 Item for row {0} does not match Material Request,El artículo de la fila {0} no coincide con la solicitud de material,
@@ -4896,7 +4921,7 @@ Loading import file...,Cargando archivo de importación ...,
 Loading...,Cargando ...,
 Loam,Marga,
 Loamy Sand,Arena Arcillosa,
-Loan,Préstamo,
+Loan,Pŕestamo,
 Loan  Details,Detalles del préstamo,
 Loan Account,Cuenta de Préstamo,
 Loan Account and Payment Account cannot be same,La cuenta de préstamo y la cuenta de pago no pueden ser iguales,
@@ -6696,7 +6721,7 @@ Please set the series to be used.,"Por favor, configure la serie que se utilizar
 Please set the {0} for company {1},Please set the {0} for company {1},
 Please set up the Campaign Schedule in the Campaign {0},Configure la programación de la campaña en la campaña {0},
 Please set valid GSTIN No. in Company Address {} for company {},Please set valid GSTIN No. in Company Address {} for company {},
-Please set {0},Por favor establezca {0},customer
+Please set {0},Please set {0},customer
 "Please set {0} for Batched Item {1}, which is used to set {2} on Submit.","Configure {0} para el artículo por lotes {1}, que se utiliza para configurar {2} en Enviar.",
 Please set {0} for address {1},Establezca {0} para la dirección {1},
 Please set {0} for the Employee: {1},Please set {0} for the Employee: {1},
@@ -6711,7 +6736,7 @@ Please specify Company,"Por favor, especifique la compañía",
 Please specify Company to proceed,"Por favor, especifique la compañía para continuar",
 Please specify a valid 'From Case No.',"Por favor, especifique un numero de caso válido",
 Please specify a valid Row ID for row {0} in table {1},"Por favor, especifique un ID de fila válida para la línea {0} en la tabla {1}",
-Please specify a {0},"Por favor, especifique un {0}",lead
+Please specify a {0},Please specify a {0},lead
 Please specify at least one attribute in the Attributes table,"Por favor, especifique al menos un atributo en la tabla",
 Please specify either Quantity or Valuation Rate or both,"Por favor indique la Cantidad o el Tipo de Valoración, o ambos",
 Please specify from/to range,"Por favor, especifique el rango (desde / hasta)",
@@ -7581,7 +7606,7 @@ Resolved,Resuelto,
 Resolved By,Resuelto por,
 Respiratory rate,Frecuencia Respiratoria,
 Respiratory/Pulse Rate,Respiratory/Pulse Rate,
-Response,Respuesta,
+Response,Response,
 Response By,Respuesta por,
 Response By Variance,Respuesta por varianza,
 Response Details,Detalles de respuesta,
@@ -7970,7 +7995,7 @@ Sales Orders,Ordenes de venta,
 Sales Orders Required,Órdenes de venta requeridas,
 Sales Orders to Bill,Ordenes de venta por facturar,
 Sales Orders to Deliver,Órdenes de Ventas para Enviar,
-Sales Partner,Sales Partner,
+Sales Partner,Socio de ventas,
 Sales Partner Commission Summary,Resumen de la comisión del socio de ventas,
 Sales Partner Item,Sales Partner Item,
 Sales Partner Name,Nombre de socio de ventas,
@@ -8086,8 +8111,7 @@ Scorecard Actions,Acciones de Calificación de Proveedores,
 {period_number} (the number of periods to present day)
 ","Se pueden usar variables de calificación como:
 {total_score} (the total score from that period),
-{period_number} (the number of periods to present day)
-",
+{period_number} (the number of periods to present day)",
 Scorecards,Tarjetas de Puntuación,
 Scoring Criteria,Criterios de Calificación,
 Scoring Setup,Configuración de Calificación,
