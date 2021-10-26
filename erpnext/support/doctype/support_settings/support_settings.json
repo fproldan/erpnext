@@ -156,7 +156,7 @@
  ],
  "issingle": 1,
  "links": [],
- "modified": "2021-05-12 20:01:50.043975",
+ "modified": "2021-05-13 20:01:50.043975",
  "modified_by": "Administrator",
  "module": "Support",
  "name": "Support Settings",
@@ -171,10 +171,20 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Support Manager",
+   "share": 1,
+   "write": 1
   }
  ],
  "quick_entry": 1,
- "restrict_to_domain": "SLA y RMA",
+ "restrict_to_domain": "Support",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

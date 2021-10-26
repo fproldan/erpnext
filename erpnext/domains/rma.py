@@ -2,6 +2,9 @@ from __future__ import unicode_literals
 
 data = {
     'modules': [
-        'SLA y RMA'
+        'RMA'
     ],
+    'restricted_roles': [
+        'Maintenance User'
+    ]
 }
