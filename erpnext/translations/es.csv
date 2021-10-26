@@ -160,7 +160,7 @@ INV-.####<br>
 <code>Condition: date_of_birth&gt;date(1937, 12, 31) and date_of_birth&lt;date(1958, 01, 01)</code></li><br><li>Applying tax by employee gender<br>
 <code>Condition: gender==""Male""</code></li><br>
 <li>Applying tax by Salary Component<br>
-<code>Condition: base &gt; 10000</code></li></ol>","<h4>Condition Examples</h4>
+<code>Condition: base &gt; 10000</code></li></ol>","<h4>Ejemplos de condiciones</h4>
 <ol>
 <li>Applying tax if employee born between 31-12-1937 and 01-01-1958 (Employees aged 60 to 80)<br>
 <code>Condition: date_of_birth&gt;date(1937, 12, 31) and date_of_birth&lt;date(1958, 01, 01)</code></li><br><li>Applying tax by employee gender<br>
@@ -173,7 +173,7 @@ INV-.####<br>
 "<label class=""control-label"" style=""margin-bottom: 0px;"">Date Settings</label>","<label class=""control-label"" style=""margin-bottom: 0px;"">Ajustes de fecha</label>",
 "<p><strong>Condition Examples:</strong></p>
 <pre>doc.status==""Open""<br>doc.due_date==nowdate()<br>doc.total &gt; 40000
-</pre>","<p><strong>Condition Examples:</strong></p>
+</pre>","<p><strong>Ejemplos de condiciones:</strong></p>
 <pre>doc.status==""Open""<br>doc.due_date==nowdate()<br>doc.total &gt; 40000
 </pre>",
 A BOM with name {0} already exists for item {1}.,Ya existe una lista de materiales con el nombre {0} para el artículo {1}.,
@@ -5303,6 +5303,7 @@ Merge with existing,Combinar con existente,
 "Merging is only possible if following properties are same in both records. Is Group, Root Type, Company","La fusión sólo es posible si las propiedades son las mismas en ambos registros. Es Grupo, Tipo Raíz, Compañía",
 Message,Mensaje,
 Message Examples,Ejemplos de Mensaje,
+Message Example,Ejemplo de Mensaje,
 Message Sent,Mensaje enviado,
 Message for Supplier,Mensaje para los Proveedores,
 Message to show,Mensaje a mostrar,
