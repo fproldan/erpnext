@@ -775,7 +775,6 @@
    "default": "No",
    "fieldname": "is_subcontracted",
    "fieldtype": "Select",
-   "hidden": 1,
    "label": "Is Subcontracted",
    "options": "\nYes\nNo",
    "print_hide": 1
@@ -806,7 +805,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-08-11 11:16:30.539579",
+ "modified": "2021-09-27 09:56:20.979616",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Supplier Quotation",
