@@ -54,7 +54,8 @@ frappe.ui.form.on('Cierre de Caja', {
 						frm.add_child("payment_reconciliation", {
 							mode_of_payment: detail.mode_of_payment,
 							opening_amount: detail.opening_amount,
-							expected_amount: detail.expected_amount
+							expected_amount: detail.expected_amount,
+							difference: detail.expected_amount
 						});
 					});
 					frm.trigger('blind_closing_entry');
