@@ -2134,7 +2134,7 @@ erpnext.TransactionController = erpnext.taxes_and_totals.extend({
 						me.frm.set_value("payment_schedule", r.message);
 						const company_currency = me.get_company_currency();
 						me.update_payment_schedule_grid_labels(company_currency);
-						me.update_discount_by_payment_terms_template(company_currency);
+						me.update_discount_by_payment_terms_template();
 					}
 				}
 			})
