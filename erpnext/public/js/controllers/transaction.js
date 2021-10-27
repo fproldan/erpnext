@@ -2154,6 +2154,8 @@ erpnext.TransactionController = erpnext.taxes_and_totals.extend({
 			callback:function(r) {
 				if (r && r.message) {
 					me.frm.set_value("apply_discount_on", r.message.apply_discount_on);
+					me.frm.trigger("apply_discount_on");
+					me.frm.trigger("additional_discount_percentage");
 					me.frm.set_value("additional_discount_percentage", r.message.additional_discount_percentage);
 				}
 			}
