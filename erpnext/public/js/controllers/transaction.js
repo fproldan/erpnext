@@ -2134,10 +2134,30 @@ erpnext.TransactionController = erpnext.taxes_and_totals.extend({
 						me.frm.set_value("payment_schedule", r.message);
 						const company_currency = me.get_company_currency();
 						me.update_payment_schedule_grid_labels(company_currency);
+						me.update_discount_by_payment_terms_template(company_currency);
 					}
 				}
 			})
 		}
+	},
+
+	update_discount_by_payment_terms_template: function() {
+		var me = this;
+		const doc = this.frm.doc;
+		frappe.call({
+			method: "frappe.client.get_value",
+			args:{
+				doctype: "Payment Terms Template",
+				filters: {"name": doc.payment_terms_template},
+				fieldname:['apply_discount_on', 'additional_discount_percentage']
+			},
+			callback:function(r) {
+				if (r && r.message) {
+					me.frm.set_value("apply_discount_on", r.message.apply_discount_on);
+					me.frm.set_value("additional_discount_percentage", r.message.additional_discount_percentage);
+				}
+			}
+		});
 	},
 
 	payment_term: function(doc, cdt, cdn) {
