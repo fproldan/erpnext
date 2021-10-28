@@ -2138,6 +2138,12 @@ erpnext.TransactionController = erpnext.taxes_and_totals.extend({
 					}
 				}
 			})
+		} else {
+			if (doc.additional_discount_percentage || doc.discount_amount) {
+				me.frm.set_value("discount_amount", null);
+				me.frm.set_value("additional_discount_percentage", null);
+				me.frm.set_value("apply_discount_on", "Total");
+			}
 		}
 	},
 
