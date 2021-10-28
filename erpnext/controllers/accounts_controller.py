@@ -1312,21 +1312,11 @@ class AccountsController(TransactionBase):
 			self.due_date = max(due_dates)
 
 	def validate_payment_schedule_dates(self):
-		dates = []
-		li = []
-
 		if self.doctype == 'Sales Invoice' and self.is_pos: return
 
 		for d in self.get("payment_schedule"):
 			if self.doctype == "Sales Order" and getdate(d.due_date) < getdate(self.transaction_date):
 				frappe.throw(_("Row {0}: Due Date in the Payment Terms table cannot be before Posting Date").format(d.idx))
-			elif d.due_date in dates:
-				li.append(_("{0} in row {1}").format(d.due_date, d.idx))
-			dates.append(d.due_date)
-
-		if li:
-			duplicates = '<br>' + '<br>'.join(li)
-			frappe.throw(_("Rows with duplicate due dates in other rows were found: {0}").format(duplicates))
 
 	def validate_payment_schedule_amount(self):
 		if self.doctype == 'Sales Invoice' and self.is_pos: return
