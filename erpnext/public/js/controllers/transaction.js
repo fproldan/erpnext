@@ -2138,7 +2138,9 @@ erpnext.TransactionController = erpnext.taxes_and_totals.extend({
 					}
 				}
 			})
-		} else {
+		} 
+
+		if(!doc.payment_terms_template && doc.doctype !== 'Delivery Note') {
 			if (doc.additional_discount_percentage || doc.discount_amount) {
 				me.frm.set_value("discount_amount", null);
 				me.frm.set_value("additional_discount_percentage", null);
