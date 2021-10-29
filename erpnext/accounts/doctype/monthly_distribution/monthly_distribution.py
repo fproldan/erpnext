@@ -12,8 +12,7 @@ from frappe.utils import add_months, flt
 class MonthlyDistribution(Document):
 	@frappe.whitelist()
 	def get_months(self):
-		month_list = ['January','February','March','April','May','June','July','August','September',
-		'October','November','December']
+		month_list = [_('January'), _('February'), _('March'), _('April'), _('May'), _('June'), _('July'), _('August'), _('September'), _('October'), _('November'), _('December')]
 		idx =1
 		for m in month_list:
 			mnth = self.append('percentages')
