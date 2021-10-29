@@ -3,6 +3,7 @@
  "creation": "2015-12-23 21:31:52.699821",
  "doctype": "DocType",
  "editable_grid": 1,
+ "engine": "InnoDB",
  "field_order": [
   "payment_gateway",
   "payment_channel",
@@ -62,7 +63,7 @@
    "fieldname": "message_examples",
    "fieldtype": "HTML",
    "label": "Message Examples",
-   "options": "<pre><h5>Message Example</h5>\n\n&lt;p&gt; Thank You for being a part of {{ doc.company }}! We hope you are enjoying the service.&lt;/p&gt;\n\n&lt;p&gt; Please find enclosed the E Bill statement. The outstanding amount is {{ doc.grand_total }}.&lt;/p&gt;\n\n&lt;p&gt; We don't want you to be spending time running around in order to pay for your Bill.<br>After all, life is beautiful and the time you have in hand should be spent to enjoy it!<br>So here are our little ways to help you get more time for life! &lt;/p&gt;\n\n&lt;a href=\"{{ payment_url }}\"&gt; click here to pay &lt;/a&gt;\n\n</pre>\n"
+   "options": "<pre><h5>Mensaje de ejemplo</h5>\n\n&lt;p&gt; \u00a1Gracias por ser parte de {{ doc.company }}! Esperamos que disfrute del servicio.&lt;/p&gt;\n\n&lt;p&gt; En este correo se encuentra adjunta la factura. El importe es de  {{ doc.grand_total }}.&lt;/p&gt;\n\n&lt;a href=\"{{ payment_url }}\"&gt; Hacer click aqu\u00ed para realizar el pago &lt;/a&gt;\n\n</pre>\n"
   },
   {
    "default": "Email",
@@ -74,7 +75,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2020-09-20 13:30:27.722852",
+ "modified": "2021-10-29 11:14:38.936467",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Payment Gateway Account",
