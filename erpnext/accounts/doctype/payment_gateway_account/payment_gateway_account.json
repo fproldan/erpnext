@@ -54,7 +54,7 @@
    "fieldtype": "Section Break"
   },
   {
-   "default": "Please click on the link below to make your payment",
+   "default": "Haga click en el enlace para realizar el pago",
    "fieldname": "message",
    "fieldtype": "Small Text",
    "label": "Default Payment Request Message"
@@ -75,7 +75,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-10-29 11:14:38.936467",
+ "modified": "2021-10-30 11:14:38.936467",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Payment Gateway Account",
