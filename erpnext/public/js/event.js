@@ -12,23 +12,23 @@ frappe.ui.form.on("Event", {
 			};
 		});
 
-		frm.add_custom_button(__('Add Leads'), function() {
+		frm.add_custom_button('Añadir Iniciativas', function() {
 			new frappe.desk.eventParticipants(frm, "Lead");
 		}, __("Add Participants"));
 
-		frm.add_custom_button(__('Add Customers'), function() {
+		frm.add_custom_button('Añadir Clientes', function() {
 			new frappe.desk.eventParticipants(frm, "Customer");
 		}, __("Add Participants"));
 
-		frm.add_custom_button(__('Add Suppliers'), function() {
+		frm.add_custom_button('Añadir Proveedores', function() {
 			new frappe.desk.eventParticipants(frm, "Supplier");
 		}, __("Add Participants"));
 
-		frm.add_custom_button(__('Add Employees'), function() {
+		frm.add_custom_button('Añadir Empleados', function() {
 			new frappe.desk.eventParticipants(frm, "Employee");
 		}, __("Add Participants"));
 
-		frm.add_custom_button(__('Add Sales Partners'), function() {
+		frm.add_custom_button('Añadir Socios de ventas', function() {
 			new frappe.desk.eventParticipants(frm, "Sales Partners");
 		}, __("Add Participants"));
 	}
