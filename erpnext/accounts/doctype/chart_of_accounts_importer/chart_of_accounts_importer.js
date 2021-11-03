@@ -1,3 +1,4 @@
+// __('Template Type')
 frappe.ui.form.on('Chart of Accounts Importer', {
 	onload: function (frm) {
 		frm.set_value("company", "");

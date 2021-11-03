@@ -28,7 +28,7 @@
 
 		let btn = document.getElementById('enroll');
 		btn.disbaled = true;
-		btn.innerText = __('Enrolling...')
+		btn.innerText = 'Inscribiendo...'
 
 		let opts = {
 			method: 'erpnext.education.utils.enroll_in_program',
@@ -39,12 +39,12 @@
 
 		frappe.call(opts).then(res => {
 			let success_dialog = new frappe.ui.Dialog({
-				title: __('Success'),
+				title: 'Éxito',
 				secondary_action: function() {
 					window.location.reload()
 				}
 			})
-			success_dialog.set_message(__('You have successfully enrolled for the program '));
+			success_dialog.set_message('Te inscribiste con éxito en el programa');
 			success_dialog.$message.show()
 			success_dialog.show();
 			btn.disbaled = false;
