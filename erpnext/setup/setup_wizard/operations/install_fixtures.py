@@ -74,6 +74,7 @@ def install(country=None):
 		{'doctype': 'Domain', 'domain': 'HR Asistencia y Vacaciones'},
 		{'doctype': 'Domain', 'domain': 'HR Reclutamiento, Capacitacion y Gastos'},
 		{'doctype': 'Domain', 'domain': 'Build'},
+		{'doctype': 'Domain', 'domain': 'Pagos360'},
 		{'doctype': 'Domain', 'domain': 'Mercadolibre'},
 		{'doctype': 'Domain', 'domain': 'Shopify'},
 
