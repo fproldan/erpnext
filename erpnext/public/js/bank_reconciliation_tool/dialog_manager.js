@@ -226,7 +226,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 			{
 				fieldtype: "HTML",
 				fieldname: "no_matching_vouchers",
-				options: "<div class='text-muted text-center'>No Matching Vouchers Found</div>"
+				options: __("<div class='text-muted text-center'>No Matching Vouchers Found</div>")
 			},
 			{
 				fieldtype: "Section Break",
