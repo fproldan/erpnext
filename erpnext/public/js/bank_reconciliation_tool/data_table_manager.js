@@ -118,7 +118,7 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 			row["reference_number"],
 			`
 			<Button class="btn btn-primary btn-xs center"  data-name = ${row["name"]} >
-				Actions
+				Acciones
 			</a>
 			`,
 		];
