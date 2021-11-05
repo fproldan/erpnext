@@ -2,9 +2,6 @@
  "allow_roles": [
   {
    "role": "Accounts User"
-  },
-  {
-   "role": "Maintenance User"
   }
  ],
  "creation": "2020-05-08 15:10:45.571457",

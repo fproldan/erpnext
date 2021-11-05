@@ -294,7 +294,7 @@
  "idx": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-05-27 16:06:17.352572",
+ "modified": "2021-05-28 16:06:17.352572",
  "modified_by": "Administrator",
  "module": "Maintenance",
  "name": "Maintenance Visit",
@@ -315,7 +315,7 @@
    "write": 1
   }
  ],
- "restrict_to_domain": "Maintenance",
+ "restrict_to_domain": "Thrash",
  "search_fields": "status,maintenance_type,customer,customer_name,mntc_date,company",
  "show_name_in_global_search": 1,
  "sort_field": "modified",

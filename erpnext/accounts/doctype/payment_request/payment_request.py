@@ -178,7 +178,7 @@ class PaymentRequest(Document):
 			"payer_email": self.email_to or frappe.session.user,
 			"payer_name": frappe.safe_encode(data.customer_name),
 			"order_id": self.name,
-			"currency": self.currency
+			"currency":self.currency.encode("utf-8")
 		})
 
 	def set_as_paid(self):
@@ -239,6 +239,8 @@ class PaymentRequest(Document):
 
 	def send_email(self):
 		"""send email with payment link"""
+		if not self.email_to:
+			return
 		email_args = {
 			"recipients": self.email_to,
 			"sender": None,
@@ -365,7 +367,7 @@ def make_payment_request(**args):
 			"currency": ref_doc.currency,
 			"grand_total": grand_total,
 			"mode_of_payment": args.mode_of_payment,
-			"email_to": args.recipient_id or ref_doc.owner,
+			"email_to": args.recipient_id,
 			"subject": _("Payment Request for {0}").format(args.dn),
 			"message": gateway_account.get("message") or get_dummy_message(ref_doc),
 			"reference_doctype": args.dt,
