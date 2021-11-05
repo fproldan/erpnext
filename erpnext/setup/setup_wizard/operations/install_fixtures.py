@@ -20,7 +20,7 @@ from erpnext.regional.address_template.setup import set_up_address_templates
 
 default_lead_sources = ["Cliente Existente", "Referencia", "Publicidad", "Llamadas en frio", "Exhibición", "Referencia de proveedor", "Mailing", "Vendedores", "Campaña", "Otros"]
 
-default_sales_partner_type = ["Canal de Socio", "Distribuidor", "Revendedor", "Agente", "Minorista", "Reseller"]
+default_sales_partner_type = ["Canal de Socio", "Distribuidor", "Revendedor", "Agente", "Minorista"]
 
 def install(country=None):
 	records = [

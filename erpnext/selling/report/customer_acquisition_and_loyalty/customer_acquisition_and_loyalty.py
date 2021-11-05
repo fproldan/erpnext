@@ -96,7 +96,7 @@ def get_data_by_time(filters, common_columns):
 			repeat = data['repeat'] if data else [0, 0.0]
 			out.append({
 				'year': cstr(year),
-				'month': calendar.month_name[month],
+				'month': _(calendar.month_name[month]),
 				'new_customers': new[0],
 				'repeat_customers': repeat[0],
 				'total': new[0] + repeat[0],

@@ -953,7 +953,7 @@ def get_valuation_rate(item_code, warehouse, voucher_type, voucher_no,
 		message = _("Valuation Rate for the Item {0}, is required to do accounting entries for {1} {2}.").format(form_link, voucher_type, voucher_no)
 		message += "<br><br>" + _("Here are the options to proceed:")
 		solutions = "<li>" + _("If the item is transacting as a Zero Valuation Rate item in this entry, please enable 'Allow Zero Valuation Rate' in the {0} Item table.").format(voucher_type) + "</li>"
-		solutions += "<li>" + _("If not, you can Cancel / Submit this entry") + " {0} ".format(frappe.bold("after")) + _("performing either one below:") + "</li>"
+		solutions += "<li>" + _("If not, you can Cancel / Submit this entry") + " {0} ".format(frappe.bold(_("after"))) + _("performing either one below:") + "</li>"
 		sub_solutions = "<ul><li>" + _("Create an incoming stock transaction for the Item.") + "</li>"
 		sub_solutions += "<li>" + _("Mention Valuation Rate in the Item master.") + "</li></ul>"
 		msg = message + solutions + sub_solutions + "</li>"

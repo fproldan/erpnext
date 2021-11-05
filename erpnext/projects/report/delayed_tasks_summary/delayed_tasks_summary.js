@@ -1,7 +1,7 @@
 // Copyright (c) 2016, Frappe Technologies Pvt. Ltd. and contributors
 // For license information, please see license.txt
 /* eslint-disable */
-
+// __('Delayed Tasks Summary')
 frappe.query_reports["Delayed Tasks Summary"] = {
 	"filters": [
 		{

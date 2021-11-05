@@ -1,3 +1,4 @@
+// __('Template Type')
 frappe.ui.form.on('Chart of Accounts Importer', {
 	onload: function (frm) {
 		frm.set_value("company", "");
@@ -35,18 +36,16 @@ frappe.ui.form.on('Chart of Accounts Importer', {
 					fieldname: "template_type",
 					fieldtype: "Select",
 					reqd: 1,
-					options: ["Sample Template", "Blank Template"],
+					options: ["Plantilla de Muestra", "Blank Template"],
 					change: () => {
 						let template_type = d.get_value('template_type');
 
-						if (template_type === "Sample Template") {
+						if (template_type === "Plantilla de Muestra") {
 							d.set_df_property('template_type', 'description',
-								`The Sample Template contains all the required accounts pre filled in the  template.
-								You can add more accounts or change existing accounts in the template as per your choice.`);
+								`La Plantilla de muestra contiene todas las cuentas requeridas. Se pueden agregar más cuentas o cambiar las existentes en la plantilla.`);
 						} else {
 							d.set_df_property('template_type', 'description',
-								`The Blank Template contains just the account type and root type required to build the Chart
-								of Accounts. Please enter the account names and add more rows as per your requirement.`);
+								`La Plantilla en blanco contiene el tipo de cuenta y el tipo de root requeridos para generar el Plan de cuentas. Se pueden agregar más cuentas o cambiar las existentes en la plantilla.`);
 						}
 					}
 				}

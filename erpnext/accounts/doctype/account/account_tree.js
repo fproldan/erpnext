@@ -80,7 +80,7 @@ frappe.treeview_settings["Account"] = {
 			return treeview.page.fields_dict.company.get_value();
 		}
 
-		// tools
+		// tools __("Cash Flow Statement")
 		treeview.page.add_inner_button(__("Chart of Cost Centers"), function() {
 			frappe.set_route('Tree', 'Cost Center', {company: get_company()});
 		}, __('View'));

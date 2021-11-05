@@ -7,7 +7,7 @@ frappe.query_reports["Customer Acquisition and Loyalty"] = {
 			"fieldname": "view_type",
 			"label": __("View Type"),
 			"fieldtype": "Select",
-			"options": ["Monthly", "Territory Wise"],
+			"options": ["Monthly", __("Territory Wise")],
 			"default": "Monthly",
 			"reqd": 1
 		},

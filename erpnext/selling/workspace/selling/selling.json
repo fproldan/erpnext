@@ -16,6 +16,7 @@
  "hide_custom": 1,
  "icon": "sell",
  "idx": 0,
+ "is_default": 0,
  "is_standard": 1,
  "label": "Selling",
  "links": [
@@ -508,14 +509,14 @@
    "dependencies": "Sales Order",
    "hidden": 0,
    "is_query_report": 1,
-   "label": "Sales Partner Target Variance Based On Item Group",
+   "label": "Desviaci\u00f3n del objetivo del Socio de ventas en base al grupo de art\u00edculos",
    "link_to": "Sales Partner Target Variance based on Item Group",
    "link_type": "Report",
    "onboard": 0,
    "type": "Link"
   }
  ],
- "modified": "2021-06-12 13:38:35.971277",
+ "modified": "2021-10-27 11:33:37.707494",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Selling",

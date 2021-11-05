@@ -50,12 +50,12 @@ frappe.ui.form.on('Opening Invoice Creation Tool', {
 				btn: $(btn_primary),
 				method: "make_invoices",
 				freeze: 1,
-				freeze_message: __("Creating {0} Invoice", [frm.doc.invoice_type]),
+				freeze_message: __("Creating Invoice"),
 				callback: function(r) {
 					if (r.message.length == 1) {
-						frappe.msgprint(__("{0} Invoice created successfully.", [frm.doc.invoice_type]));
+						frappe.msgprint(__("Invoice created successfully."));
 					} else if (r.message.length < 50) {
-						frappe.msgprint(__("{0} Invoices created successfully.", [frm.doc.invoice_type]));
+						frappe.msgprint(__("Invoices created successfully."));
 					}
 				}
 			});

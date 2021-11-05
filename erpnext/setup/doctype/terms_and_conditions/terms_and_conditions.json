@@ -50,7 +50,7 @@
    "fieldname": "terms_and_conditions_help",
    "fieldtype": "HTML",
    "label": "Terms and Conditions Help",
-   "options": "<h4>Standard Terms and Conditions Example</h4>\n\n<pre>Delivery Terms for Order number {{ name }}\n\n-Order Date : {{ transaction_date }} \n-Expected Delivery Date : {{ delivery_date }}\n</pre>\n\n<h4>How to get fieldnames</h4>\n\n<p>The fieldnames you can use in your email template are the fields in the document from which you are sending the email. You can find out the fields of any documents via Setup &gt; Customize Form View and selecting the document type (e.g. Sales Invoice)</p>\n\n<h4>Templating</h4>\n\n<p>Templates are compiled using the Jinja Templating Language. To learn more about Jinja, <a class=\"strong\" href=\"http://jinja.pocoo.org/docs/dev/templates/\">read this documentation.</a></p>"
+   "options": "<h4>T\u00e9rminos y condiciones est\u00e1ndar</h4>\n\n<pre>T\u00e9rminos de entrega para la orden {{ name }}\n\n-Fecha de la orden: {{ transaction_date }} \n-Fecha de entrega: {{ delivery_date }}\n</pre>\n\n<h4>Obtenci\u00f3n del nombre de los campos</h4>\n\n<p>El fieldname que se puede usar en la plantilla son los campos del documento sobre el cual se est\u00e1 trabajando.</p>\n\n<h4>Plantillas</h4>\n\n<p>Las plantillas son generadas usando el lenguaje Jinja. Leer la <a class=\"strong\" href=\"http://jinja.pocoo.org/docs/dev/templates/\">documentaci\u00f3n</a> para saber m\u00e1s al respecto.</p>"
   },
   {
    "fieldname": "applicable_modules_section",
@@ -83,7 +83,7 @@
  "icon": "icon-legal",
  "idx": 1,
  "links": [],
- "modified": "2020-06-16 22:54:38.094844",
+ "modified": "2021-11-02 11:06:06.626673",
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Terms and Conditions",
