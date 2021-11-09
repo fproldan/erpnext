@@ -410,6 +410,7 @@
    "print_hide": 1
   },
   {
+   "fetch_from": "operation.quality_inspection_template",
    "fieldname": "quality_inspection_template",
    "fieldtype": "Link",
    "label": "Quality Inspection Template",
