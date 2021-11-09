@@ -278,10 +278,10 @@ erpnext.taxes_and_totals = erpnext.payments.extend({
 
 	calculate_shipping_charges: function() {
 		frappe.model.round_floats_in(this.frm.doc, ["total", "base_total", "net_total", "base_net_total"]);
-		if (frappe.meta.get_docfield(this.frm.doc.doctype, "shipping_rule", this.frm.doc.name)) {
-			this.shipping_rule();
+		if(frappe.meta.get_docfield(this.frm.doc.doctype,"shipping_rule",this.frm.doc.name)) {
+			this.shipping_rule()
 		}
-	},
+	}
 
 	add_taxes_from_item_tax_template: function(item_tax_map) {
 		let me = this;
