@@ -719,7 +719,10 @@ erpnext.utils.map_current_doc = function(opts) {
 					return;
 				}
 				opts.source_name = values;
-				opts.args = args;
+				if (opts.allow_child_item_selection) {
+					// args contains filtered child docnames
+					opts.args = args;
+				}
 				d.dialog.hide();
 				_map();
 			},
