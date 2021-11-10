@@ -48,7 +48,14 @@ def get_conditions(filters):
 		conditions += " and po.name = %(purchase_order)s"
 
 	if filters.get("status"):
-		conditions += " and po.status in %(status)s"
+		status_map = {
+			_("To Bill"): "To Bill",
+			_("To Receive"): "To Receive",
+			_("To Receive and Bill"): "To Receive and Bill",
+			_("Completed"): "Completed",
+		}
+		filters['status_filter'] = [status_map[filter_status] for filter_status in filters.get("status")]
+		conditions += " and po.status in %(status_filter)s"
 
 	return conditions
 
@@ -96,6 +103,7 @@ def prepare_data(data, filters):
 		# sum data for chart
 		completed += row[completed_field]
 		pending += row[pending_field]
+		row["status"] = _(row["status"])
 
 		# prepare data for report view
 		row["qty_to_bill"] = flt(row["qty"]) - flt(row["billed_qty"])
@@ -129,7 +137,7 @@ def prepare_data(data, filters):
 	return data, chart_data
 
 def prepare_chart_data(pending, completed):
-	labels = ["Amount to Bill", "Billed Amount"]
+	labels = [_("Amount to Bill"), _("Billed Amount")]
 
 	return {
 		"data" : {
