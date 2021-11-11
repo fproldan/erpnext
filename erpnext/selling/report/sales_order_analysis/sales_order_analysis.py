@@ -53,7 +53,7 @@ def get_conditions(filters):
 			_("To Deliver and Bill"): "To Deliver and Bill",
 			_("Completed"): "Completed",
 		}
-		filters['status_filter'] = [status_map.get('filter_status', filter_status) for filter_status in filters.get("status")]
+		filters['status_filter'] = [status_map.get(filter_status, filter_status) for filter_status in filters.get("status")]
 		conditions += " and so.status in %(status_filter)s"
 
 	return conditions
