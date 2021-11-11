@@ -15,6 +15,7 @@ def add_custom_roles_for_reports():
                 report=report,
                 roles=[
                     dict(role='Support Team'),
+                    dict(role='Support Manager'),
                     dict(role='System Manager')
                 ]
             )).insert()
