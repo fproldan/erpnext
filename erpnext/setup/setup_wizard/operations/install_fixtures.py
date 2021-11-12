@@ -368,34 +368,36 @@ def update_item_variant_settings():
 	doc.save()
 
 def add_uom_data():
-	# add UOMs
-	uoms = json.loads(open(frappe.get_app_path("erpnext", "setup", "setup_wizard", "data", "uom_data.json")).read())
-	for d in uoms:
-		if not frappe.db.exists('UOM', _(d.get("uom_name"))):
-			uom_doc = frappe.get_doc({
-				"doctype": "UOM",
-				"uom_name": _(d.get("uom_name")),
-				"name": _(d.get("uom_name")),
-				"must_be_whole_number": d.get("must_be_whole_number")
-			}).db_insert()
+	UNIDADES = {
+		_("Nos"): '',
+		'Kilogramos': '1',
+		'Metros': '2',
+		'Metros Cuadrados': '3',
+		'Metros Cúbicos': '4',
+		'Litros': '5',
+		'Unidades': '7',
+		'Docenas': '9',
+		'Gramos': '14',
+		'Milimetros': '15',
+		'MM Cúbicos': '16',
+		'Kilómetros': '17',
+		'Hectolitros': '18',
+		'Centímetros': '20',
+		'CM Cúbicos': '27',
+		'Toneladas': '29',
+		'Hm Cúbicos': '31',
+		'Km Cúbicos': '32',
+		'Miligramos': '41',
+		'Mililitros': '47',
+		'Otras Unidades': '98',
+	}
 
-	# bootstrap uom conversion factors
-	uom_conversions = json.loads(open(frappe.get_app_path("erpnext", "setup", "setup_wizard", "data", "uom_conversion_data.json")).read())
-	for d in uom_conversions:
-		if not frappe.db.exists("UOM Category", _(d.get("category"))):
-			frappe.get_doc({
-				"doctype": "UOM Category",
-				"category_name": _(d.get("category"))
-			}).db_insert()
-
-		if not frappe.db.exists("UOM Conversion Factor", {"from_uom": _(d.get("from_uom")), "to_uom": _(d.get("to_uom"))}):
-			uom_conversion = frappe.get_doc({
-				"doctype": "UOM Conversion Factor",
-				"category": _(d.get("category")),
-				"from_uom": _(d.get("from_uom")),
-				"to_uom": _(d.get("to_uom")),
-				"value": d.get("value")
-			}).insert(ignore_permissions=True)
+	for unidad, codigo in UNIDADES.items():
+		uom = frappe.new_doc('UOM')
+		uom.uom_name = unidad
+		uom.codigo = codigo
+		uom.save()
+	frappe.db.commit()
 
 def add_market_segments():
 	records = [
