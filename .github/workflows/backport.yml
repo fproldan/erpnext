@@ -1,25 +1,16 @@
 name: Backport
 on:
-  pull_request_target:
+  pull_request:
     types:
       - closed
       - labeled
 
 jobs:
-  main:
-    runs-on: ubuntu-latest
+  backport:
+    runs-on: ubuntu-18.04
+    name: Backport
     steps:
-      - name: Checkout Actions
-        uses: actions/checkout@v2
+      - name: Backport
+        uses: tibdex/backport@v1
         with:
-          repository: "frappe/backport"
-          path: ./actions
-          ref: develop
-      - name: Install Actions
-        run: npm install --production --prefix ./actions
-      - name: Run backport
-        uses: ./actions/backport
-        with:
-          token: ${{secrets.BACKPORT_BOT_TOKEN}}
-          labelsToAdd: "backport"
-          title: "{{originalTitle}}"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
