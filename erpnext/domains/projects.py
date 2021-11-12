@@ -8,4 +8,5 @@ data = {
         'Projects Manager',
         'Projects User'
     ],
+    'on_setup': 'erpnext.projects.setup.setup_projects'
 }
