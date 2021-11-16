@@ -81,11 +81,7 @@ erpnext.taxes_and_totals = erpnext.payments.extend({
 		this.initialize_taxes();
 		this.determine_exclusive_rate();
 		this.calculate_net_total();
-<<<<<<< HEAD
 		this.calculate_shipping_charges();
-=======
-		calculate_shipping_charges();
->>>>>>> 9e1fd09a64 (fix: fixed tests, separated a  method for shipping charges)
 		this.calculate_taxes();
 		this.calculate_item_commission();
 		this.manipulate_grand_total_for_inclusive_tax();
@@ -278,7 +274,6 @@ erpnext.taxes_and_totals = erpnext.payments.extend({
 			me.frm.doc.net_total += item.net_amount;
 			me.frm.doc.base_net_total += item.base_net_amount;
 			});
-		}
 	},
 
 	calculate_shipping_charges: function() {
