@@ -261,7 +261,7 @@
    "fieldname": "help_text",
    "fieldtype": "HTML",
    "label": "Help Text",
-   "options": "<br>\n<h4>Note</h4>\n<ul>\n<li>\nYou can use <a href=\"https://jinja.palletsprojects.com/en/2.11.x/\" target=\"_blank\">Jinja tags</a> in <b>Subject</b> and <b>Body</b> fields for dynamic values.\n</li><li>\n    All fields in this doctype are available under the <b>doc</b> object and all fields for the customer to whom the mail will go to is available under the  <b>customer</b> object.\n</li></ul>\n<h4> Examples</h4>\n<!-- {% raw %} -->\n<ul>\n    <li><b>Subject</b>:<br><br><pre><code>Statement Of Accounts for {{ customer.name }}</code></pre><br></li>\n    <li><b>Body</b>: <br><br>\n<pre><code>Hello {{ customer.name }},<br>PFA your Statement Of Accounts from {{ doc.from_date }} to {{ doc.to_date }}.</code> </pre></li>\n</ul>\n<!-- {% endraw %} -->"
+   "options": "<br>\n<h4>Nota</h4>\n<ul>\n<li>\nSe puede utilizar <a href=\"https://jinja.palletsprojects.com/en/2.11.x/\" target=\"_blank\">etiquetas Jinja</a> en el <b>Asunto</b> y <b>Cuerpo</b> para insertar valores din\u00e1micos.\n</li><li>\n    Todos los campos de este doctype est\u00e1n disponibles bajo el objeto doc, y todos los campos del Cliente al cual se env\u00eda el correo est\u00e1n disponibles dentro del objeto <b>customer</b>.\n</li></ul>\n<h4> Ejemplo</h4>\n<!-- {% raw %} -->\n<ul>\n    <li><b>Asunto</b>:<br><br><pre><code>Estado de cuentas de {{ customer.name }}</code></pre><br></li>\n    <li><b>Cuerpo</b>: <br><br>\n<pre><code>Hola {{ customer.name }},<br>Su estado de cuentas desde {{ doc.from_date }} hasta {{ doc.to_date }}.</code> </pre></li>\n</ul>\n<!-- {% endraw %} -->"
   },
   {
    "fieldname": "subject",
@@ -287,7 +287,7 @@
   }
  ],
  "links": [],
- "modified": "2021-09-06 21:00:45.732505",
+ "modified": "2021-11-16 09:22:30.606688",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Process Statement Of Accounts",
