@@ -10506,7 +10506,7 @@ you must select Capital Work in Progress Account in accounts table,debe seleccio
 {0} Coupon used are {1}. Allowed quantity is exhausted,Los cupones {0} utilizados son {1}. La cantidad permitida se agota,
 {0} Created,{0} Creado,
 {0} Digest,{0} Resumen,
-{0} Fields,{0} Campos,
+{0} Fields,Campos de {0},
 Invoice created successfully.,Factura creada exitosamente.,
 Invoices created successfully.,Facturas creadas exitosamente.,
 {0} Name,{0} Nombre,
