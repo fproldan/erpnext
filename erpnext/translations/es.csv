@@ -7757,7 +7757,7 @@ Row #{0}: Dates overlapping with other row,Row #{0}: Dates overlapping with othe
 Row #{0}: Document Type {1} is not submittable.,Row #{0}: Document Type {1} is not submittable.,
 Row #{0}: Duplicate entry in References {1} {2},Fila #{0}: Entrada duplicada en Referencias {1} {2},
 Row #{0}: Expected Delivery Date cannot be before Purchase Order Date,Fila #{0}: La fecha de entrega esperada no puede ser anterior a la fecha de la orden de compra,
-Row #{0}: Expense Account not set for the Item {1}. {2},Row #{0}: Expense Account not set for the Item {1}. {2},
+Row #{0}: Expense Account not set for the Item {1}. {2},Fila #{0}: no se encuentra especificada la Cuenta de gastos para el Producto {1}. {2},
 Row #{0}: Field {1} in Document Type {2} is not a Date / Datetime field.,Row #{0}: Field {1} in Document Type {2} is not a Date / Datetime field.,
 "Row #{0}: For {1}, you can select reference document only if account gets credited","Row #{0}: For {1}, you can select reference document only if account gets credited",
 "Row #{0}: For {1}, you can select reference document only if account gets debited","Row #{0}: For {1}, you can select reference document only if account gets debited",
