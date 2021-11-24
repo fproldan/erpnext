@@ -40,7 +40,7 @@ frappe.ui.form.on('Chart of Accounts Importer', {
 					fieldname: "template_type",
 					fieldtype: "Select",
 					reqd: 1,
-					options: ["Plantilla de Muestra", "Blank Template"],
+					options: ["Plantilla de Muestra", __('Blank Template')],
 					change: () => {
 						let template_type = d.get_value('template_type');
 

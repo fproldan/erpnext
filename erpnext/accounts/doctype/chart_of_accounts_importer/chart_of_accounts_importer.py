@@ -272,7 +272,7 @@ def get_template(template_type):
 	writer = UnicodeWriter()
 	writer.writerow(fields)
 
-	if template_type == 'Blank Template':
+	if template_type == __('Blank Template'):
 		for root_type in  get_root_types():
 			writer.writerow(['', '', '', 1, '', root_type])
 
