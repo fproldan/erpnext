@@ -6693,7 +6693,7 @@ Please set a default company address,Establezca una dirección de empresa predet
 Please set a valid Service Unit Capacity to enable Overlapping Appointments,Please set a valid Service Unit Capacity to enable Overlapping Appointments,
 Please set account in Salary Component {0},Please set account in Salary Component {0},
 Please set account in Warehouse {0},Configura la Cuenta en Almacén {0},
-Please set an Expense Account in the Items table,Please set an Expense Account in the Items table,
+Please set an Expense Account in the Items table,Ingrese dicha cuenta en la tabla de Productos,
 Please set an active menu for Restaurant {0},Configura un menú activo para Restaurant {0},
 Please set an email id for the Lead {0},Configure una identificación de correo electrónico para el Cliente potencial {0},
 Please set associated account in Tax Withholding Category {0} against Company {1},"Por favor, establezca una cuenta asociada en la categoría de retención de impuestos {0} contra la compañía {1}",
