@@ -7,4 +7,5 @@ data = {
     'restricted_roles': [
         'Maintenance Manager'
     ],
+    'on_setup': 'erpnext.assets.setup.setup_assets'
 }
