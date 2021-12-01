@@ -2,8 +2,8 @@
  "category": "Modules",
  "charts": [
   {
-   "chart_name": "Asset Value Analytics",
-   "label": "Asset Value Analytics"
+   "chart_name": "Análisis de valor de activos",
+   "label": "Análisis de valor de activos"
   }
  ],
  "creation": "2020-03-02 15:43:27.634865",
@@ -160,7 +160,7 @@
    "type": "Link"
   }
  ],
- "modified": "2021-06-13 13:38:37.977119",
+ "modified": "2021-06-14 13:38:37.977119",
  "modified_by": "Administrator",
  "module": "Assets",
  "name": "Assets",

@@ -2,8 +2,8 @@
  "category": "Modules",
  "charts": [
   {
-   "chart_name": "Sales Order Trends",
-   "label": "Sales Order Trends"
+   "chart_name": "Tendencias de Ordenes de ventas",
+   "label": "Tendencias de Ordenes de ventas"
   }
  ],
  "charts_label": "Selling ",
@@ -516,7 +516,7 @@
    "type": "Link"
   }
  ],
- "modified": "2021-10-28 11:33:37.707494",
+ "modified": "2021-10-28 11:34:37.707494",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Selling",
