@@ -2,7 +2,7 @@
  "category": "Modules",
  "charts": [
   {
-   "chart_name": "Territory Wise Sales"
+   "chart_name": "Ventas por territorio"
   }
  ],
  "creation": "2020-01-23 14:48:30.183272",
@@ -363,7 +363,7 @@
    "type": "Link"
   }
  ],
- "modified": "2021-06-12 13:38:36.871352",
+ "modified": "2021-06-13 13:38:36.871352",
  "modified_by": "Administrator",
  "module": "CRM",
  "name": "CRM",
