@@ -13,7 +13,7 @@
  "modified": "2020-07-23 13:06:20.237689",
  "modified_by": "Administrator",
  "module": "Accounts",
- "name": "Total Incoming Payment",
+ "name": "Total de Ingresos a Cobrar",
  "owner": "Administrator",
  "show_percentage_stats": 1,
  "stats_time_interval": "Monthly",

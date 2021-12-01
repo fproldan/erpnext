@@ -1,5 +1,5 @@
 {
- "chart_name": "Accounts Receivable Ageing",
+ "chart_name": "Antigüedad de Cuentas por Cobrar",
  "chart_type": "Report",
  "creation": "2020-07-17 11:25:34.535388",
  "docstatus": 0,
@@ -12,7 +12,7 @@
  "modified": "2020-07-22 12:28:42.743551",
  "modified_by": "Administrator",
  "module": "Accounts",
- "name": "Accounts Receivable Ageing",
+ "name": "Antigüedad de Cuentas por Cobrar",
  "number_of_groups": 0,
  "owner": "Administrator",
  "report_name": "Accounts Receivable",
