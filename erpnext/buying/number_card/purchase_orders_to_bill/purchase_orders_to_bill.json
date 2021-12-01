@@ -13,7 +13,7 @@
  "modified": "2020-07-24 12:48:10.300711",
  "modified_by": "Administrator",
  "module": "Buying",
- "name": "Purchase Orders to Bill",
+ "name": "Ordenes de Compra por Facturar",
  "owner": "Administrator",
  "show_percentage_stats": 1,
  "stats_time_interval": "Weekly",

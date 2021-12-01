@@ -467,7 +467,7 @@
    "type": "Link"
   }
  ],
- "modified": "2021-06-12 13:38:38.615167",
+ "modified": "2021-06-13 13:38:38.615167",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Buying",
@@ -511,7 +511,7 @@
   },
   {
    "label": "Dashboard",
-   "link_to": "Buying",
+   "link_to": "Compras",
    "type": "Dashboard"
   }
  ],

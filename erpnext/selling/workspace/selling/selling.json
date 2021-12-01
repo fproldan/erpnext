@@ -516,7 +516,7 @@
    "type": "Link"
   }
  ],
- "modified": "2021-10-27 11:33:37.707494",
+ "modified": "2021-10-28 11:33:37.707494",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Selling",
@@ -555,7 +555,7 @@
   },
   {
    "label": "Dashboard",
-   "link_to": "Selling",
+   "link_to": "Ventas",
    "type": "Dashboard"
   }
  ],

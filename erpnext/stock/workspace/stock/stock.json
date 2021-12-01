@@ -665,7 +665,7 @@
    "type": "Link"
   }
  ],
- "modified": "2021-08-30 09:50:43.468001",
+ "modified": "2021-08-30 10:50:43.468001",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Stock",
@@ -722,7 +722,7 @@
   },
   {
    "label": "Dashboard",
-   "link_to": "Stock",
+   "link_to": "Almacén",
    "type": "Dashboard"
   }
  ],

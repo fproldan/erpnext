@@ -1,5 +1,5 @@
 {
- "chart_name": "Warehouse wise Stock Value",
+ "chart_name": "Inventario por almacén",
  "chart_type": "Custom",
  "creation": "2020-07-20 21:01:04.296157",
  "docstatus": 0,
@@ -11,7 +11,7 @@
  "modified": "2020-07-22 13:01:01.815123",
  "modified_by": "Administrator",
  "module": "Stock",
- "name": "Warehouse wise Stock Value",
+ "name": "Inventario por almacén",
  "number_of_groups": 0,
  "owner": "Administrator",
  "source": "Warehouse wise Stock Value",
