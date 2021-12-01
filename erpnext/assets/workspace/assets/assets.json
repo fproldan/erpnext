@@ -160,7 +160,7 @@
    "type": "Link"
   }
  ],
- "modified": "2021-06-12 13:38:37.977119",
+ "modified": "2021-06-13 13:38:37.977119",
  "modified_by": "Administrator",
  "module": "Assets",
  "name": "Assets",
@@ -185,7 +185,7 @@
   },
   {
    "label": "Dashboard",
-   "link_to": "Asset",
+   "link_to": "Activos",
    "type": "Dashboard"
   }
  ]
