@@ -1,39 +1,39 @@
 {
  "cards": [
   {
-   "card": "Total Active Items"
+   "card": "Total de Productos Activos"
   },
   {
-   "card": "Total Warehouses"
+   "card": "Total de Almacenes"
   },
   {
-   "card": "Total Stock Value"
+   "card": "Valor del Stock Total"
   }
  ],
  "charts": [
   {
-   "chart": "Warehouse wise Stock Value",
+   "chart": "   Inventario por almacén",
    "width": "Full"
   },
   {
-   "chart": "Purchase Receipt Trends",
+   "chart": "Tendencias de recibos de compra",
    "width": "Half"
   },
   {
-   "chart": "Delivery Trends",
+   "chart": "Tendencias de Entrega",
    "width": "Half"
   },
   {
-   "chart": "Oldest Items",
+   "chart": "Antigüedad de Productos",
    "width": "Half"
   },
   {
-   "chart": "Item Shortage Summary",
+   "chart": "Artículos por debajo de los niveles recomendados",
    "width": "Half"
   }
  ],
  "creation": "2020-07-20 21:01:04.549136",
- "dashboard_name": "Stock",
+ "dashboard_name": "Almacén",
  "docstatus": 0,
  "doctype": "Dashboard",
  "idx": 0,
@@ -42,6 +42,6 @@
  "modified": "2020-07-22 13:09:33.096694",
  "modified_by": "Administrator",
  "module": "Stock",
- "name": "Stock",
+ "name": "Almacén",
  "owner": "Administrator"
 }

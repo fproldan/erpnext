@@ -1,38 +1,38 @@
 {
  "cards": [
   {
-   "card": "Annual Purchase"
+   "card": "Compras Anuales"
   },
   {
-   "card": "Purchase Orders to Receive"
+   "card": "Ordenes de Compra por Recibir"
   },
   {
-   "card": "Purchase Orders to Bill"
+   "card": "Ordenes de Compra por Facturar"
   },
   {
-   "card": "Active Suppliers"
+   "card": "Proveedores Activos"
   }
  ],
  "charts": [
   {
-   "chart": "Purchase Order Trends",
+   "chart": "Tendencias de ordenes de compra",
    "width": "Full"
   },
   {
-   "chart": "Material Request Analysis",
+   "chart": "Análisis de Solicitudes de Materiale",
    "width": "Half"
   },
   {
-   "chart": "Purchase Order Analysis",
+   "chart": "Análisis de órdenes de compra",
    "width": "Half"
   },
   {
-   "chart": "Top Suppliers",
+   "chart": "Principales Proveedores",
    "width": "Full"
   }
  ],
  "creation": "2020-07-20 21:01:02.541065",
- "dashboard_name": "Buying",
+ "dashboard_name": "Compras",
  "docstatus": 0,
  "doctype": "Dashboard",
  "idx": 0,
@@ -41,6 +41,6 @@
  "modified": "2020-07-22 12:48:38.112744",
  "modified_by": "Administrator",
  "module": "Buying",
- "name": "Buying",
+ "name": "Compras",
  "owner": "Administrator"
 }
