@@ -12,11 +12,12 @@ def add_dashboard():
     frappe.db.delete("Number Card", {"module": 'Asset'})
     frappe.db.delete("Dashboard Chart", {"module": 'Asset'})
     frappe.db.delete("Dashboard Chart Link", {"parent": ('in', ('Activos', 'Asset'))})
+    frappe.db.delete("Number Card Link", {"parent": ('in', ('Activos', 'Asset'))})
     frappe.db.commit()
 
     dashboard_charts_and_number_cards = [
         {
-            "chart_name": "Análisis de valor de activoss",
+            "chart_name": "Análisis de valor de activos",
             "chart_type": "Report",
             "custom_options": "{\"type\": \"bar\", \"barOptions\": {\"stacked\": 1}, \"axisOptions\": {\"shortenYAxisNumbers\": 1}, \"tooltipOptions\": {}}",
             "docstatus": 0,
@@ -26,7 +27,7 @@ def add_dashboard():
             "group_by_type": "Count",
             "idx": 0,
             "is_public": 0,
-            "is_standard": 1,
+            "is_standard": 0,
             "module": "Assets",
             "name": "Análisis de valor de activos",
             "number_of_groups": 0,
@@ -49,7 +50,7 @@ def add_dashboard():
             "filters_json": "{\"status\":\"In Location\",\"group_by\":\"Asset Category\",\"is_existing_asset\":0}",
             "idx": 0,
             "is_public": 0,
-            "is_standard": 1,
+            "is_standard": 0,
             "module": "Assets",
             "name": "Valor de los activos por categoría",
             "number_of_groups": 0,
@@ -75,7 +76,7 @@ def add_dashboard():
             "filters_json": "{\"status\":\"In Location\",\"group_by\":\"Location\",\"is_existing_asset\":0}",
             "idx": 0,
             "is_public": 0,
-            "is_standard": 1,
+            "is_standard": 0,
             "module": "Assets",
             "name": "Valor de los activos por ubicación",
             "number_of_groups": 0,
@@ -100,7 +101,7 @@ def add_dashboard():
             "function": "Sum",
             "idx": 0,
             "is_public": 0,
-            "is_standard": 1,
+            "is_standard": 0,
             "label": "Valor del activo",
             "module": "Assets",
             "name": "Valor del activo",
@@ -117,7 +118,7 @@ def add_dashboard():
             "function": "Count",
             "idx": 0,
             "is_public": 0,
-            "is_standard": 1,
+            "is_standard": 0,
             "label": "Nuevos activos (este año)",
             "module": "Assets",
             "name": "Nuevos activos (este año)",
@@ -134,7 +135,7 @@ def add_dashboard():
             "function": "Count",
             "idx": 0,
             "is_public": 0,
-            "is_standard": 1,
+            "is_standard": 0,
             "label": "Activos totales",
             "module": "Assets",
             "name": "Activos totales",
