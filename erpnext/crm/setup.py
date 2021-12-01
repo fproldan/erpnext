@@ -12,6 +12,7 @@ def add_dashboard():
     frappe.db.delete("Number Card", {"module": 'CRM'})
     frappe.db.delete("Dashboard Chart", {"module": 'CRM'})
     frappe.db.delete("Dashboard Chart Link", {"parent": 'CRM'})
+    frappe.db.delete("Number Card Link", {"parent": 'CRM'})
     frappe.db.commit()
 
     dashboard_charts_and_number_cards = [
@@ -77,7 +78,7 @@ def add_dashboard():
             "group_by_type": "Count",
             "idx": 0,
             "is_public": 1,
-            "is_standard": 1,
+            "is_standard": 0,
             "last_synced_on": "2020-07-22 15:45:32.572011",
             "module": "CRM",
             "name": "Oportunidades por Campaña",
@@ -100,7 +101,7 @@ def add_dashboard():
             "filters_json": "[]",
             "idx": 0,
             "is_public": 1,
-            "is_standard": 10,
+            "is_standard": 0,
             "last_synced_on": "2020-07-22 15:45:32.590967",
             "module": "CRM",
             "name": "Oportunidades",

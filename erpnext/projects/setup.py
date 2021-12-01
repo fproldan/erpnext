@@ -26,6 +26,7 @@ def add_dashboard():
     frappe.db.delete("Number Card", {"module": 'Projects'})
     frappe.db.delete("Dashboard Chart", {"module": 'Projects'})
     frappe.db.delete("Dashboard Chart Link", {"parent": ('in', ('Project', 'Proyecto'))})
+    frappe.db.delete("Number Card Link", {"parent": ('in', ('Project', 'Proyecto'))})
     frappe.db.commit()
 
     dashboard_charts_and_number_cards = [{
