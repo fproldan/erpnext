@@ -4,4 +4,5 @@ data = {
     'modules': [
         'CRM'
     ],
+    'on_setup': 'erpnext.crm.setup.setup_crm'
 }
