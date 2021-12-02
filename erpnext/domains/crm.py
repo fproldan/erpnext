@@ -4,5 +4,6 @@ data = {
     'modules': [
         'CRM'
     ],
-    'on_setup': 'erpnext.crm.setup.setup_crm'
+    'on_setup': 'erpnext.crm.setup.setup_crm',
+    'remove_dashboard': 'erpnext.crm.setup.remove_dashboard'
 }

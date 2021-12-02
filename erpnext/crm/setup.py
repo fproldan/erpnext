@@ -7,13 +7,17 @@ def setup_crm():
     add_dashboard()
 
 
-def add_dashboard():
+def remove_dashboard():
     frappe.db.delete("Dashboard", {"module": 'CRM'})
     frappe.db.delete("Number Card", {"module": 'CRM'})
     frappe.db.delete("Dashboard Chart", {"module": 'CRM'})
     frappe.db.delete("Dashboard Chart Link", {"parent": 'CRM'})
     frappe.db.delete("Number Card Link", {"parent": 'CRM'})
     frappe.db.commit()
+
+
+def add_dashboard():
+    remove_dashboard()
 
     dashboard_charts_and_number_cards = [
         {
@@ -312,7 +316,10 @@ def add_dashboard():
     for widget in dashboard_charts_and_number_cards:
         doc = frappe.new_doc(widget['doctype'])
         doc.update(widget)
-        doc.insert()
+        try:
+            doc.insert()
+        except Exception:
+            continue
 
     doc = frappe.new_doc(dashboard['doctype'])
     doc.update(dashboard)

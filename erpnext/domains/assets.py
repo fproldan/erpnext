@@ -7,5 +7,6 @@ data = {
     'restricted_roles': [
         'Maintenance Manager'
     ],
-    'on_setup': 'erpnext.assets.setup.setup_assets'
+    'on_setup': 'erpnext.assets.setup.setup_assets',
+    'remove_dashboard': 'erpnext.assets.setup.remove_dashboard'
 }

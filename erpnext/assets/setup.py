@@ -7,13 +7,17 @@ def setup_assets():
     add_dashboard()
 
 
-def add_dashboard():
-    frappe.db.delete("Dashboard", {"module": 'Asset'})
-    frappe.db.delete("Number Card", {"module": 'Asset'})
-    frappe.db.delete("Dashboard Chart", {"module": 'Asset'})
-    frappe.db.delete("Dashboard Chart Link", {"parent": ('in', ('Activos', 'Asset'))})
-    frappe.db.delete("Number Card Link", {"parent": ('in', ('Activos', 'Asset'))})
+def remove_dashboard():
+    frappe.db.delete("Dashboard", {"module": 'Assets'})
+    frappe.db.delete("Number Card", {"module": 'Assets'})
+    frappe.db.delete("Dashboard Chart", {"module": 'Assets'})
+    frappe.db.delete("Dashboard Chart Link", {"parent": ('in', ('Activos', 'Assets'))})
+    frappe.db.delete("Number Card Link", {"parent": ('in', ('Activos', 'Assets'))})
     frappe.db.commit()
+
+
+def add_dashboard():
+    remove_dashboard()
 
     dashboard_charts_and_number_cards = [
         {
@@ -186,7 +190,10 @@ def add_dashboard():
     for widget in dashboard_charts_and_number_cards:
         doc = frappe.new_doc(widget['doctype'])
         doc.update(widget)
-        doc.insert()
+        try:
+            doc.insert()
+        except Exception:
+            continue
 
     doc = frappe.new_doc(dashboard['doctype'])
     doc.update(dashboard)
