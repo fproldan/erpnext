@@ -8,6 +8,15 @@ def setup_projects():
     add_dashboard()
 
 
+def remove_dashboard():
+    frappe.db.delete("Dashboard", {"module": 'Projects'})
+    frappe.db.delete("Number Card", {"module": 'Projects'})
+    frappe.db.delete("Dashboard Chart", {"module": 'Projects'})
+    frappe.db.delete("Dashboard Chart Link", {"parent": ('in', ('Project', 'Proyecto'))})
+    frappe.db.delete("Number Card Link", {"parent": ('in', ('Project', 'Proyecto'))})
+    frappe.db.commit()
+
+
 def add_custom_roles_for_reports():
     for report in ['Delayed Tasks Summary', 'Project wise Stock Tracking', 'Employee Hours Utilization Based On Timesheet']:
         if not frappe.db.get_value('Custom Role', dict(report=report)):
@@ -22,12 +31,7 @@ def add_custom_roles_for_reports():
 
 
 def add_dashboard():
-    frappe.db.delete("Dashboard", {"module": 'Projects'})
-    frappe.db.delete("Number Card", {"module": 'Projects'})
-    frappe.db.delete("Dashboard Chart", {"module": 'Projects'})
-    frappe.db.delete("Dashboard Chart Link", {"parent": ('in', ('Project', 'Proyecto'))})
-    frappe.db.delete("Number Card Link", {"parent": ('in', ('Project', 'Proyecto'))})
-    frappe.db.commit()
+    remove_dashboard()
 
     dashboard_charts_and_number_cards = [{
         "chart_name": "Resumen del proyecto",
@@ -73,7 +77,10 @@ def add_dashboard():
     for widget in dashboard_charts_and_number_cards:
         doc = frappe.new_doc(widget['doctype'])
         doc.update(widget)
-        doc.insert()
+        try:
+            doc.insert()
+        except Exception:
+            continue
 
     doc = frappe.new_doc(dashboard['doctype'])
     doc.update(dashboard)
