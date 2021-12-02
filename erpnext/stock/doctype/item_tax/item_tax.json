@@ -35,18 +35,21 @@
   {
    "fieldname": "valid_from",
    "fieldtype": "Date",
+   "hidden": 1,
    "in_list_view": 1,
    "label": "Valid From"
   },
   {
    "fieldname": "maximum_net_rate",
    "fieldtype": "Float",
+   "hidden": 1,
    "in_list_view": 1,
    "label": "Maximum Net Rate"
   },
   {
    "fieldname": "minimum_net_rate",
    "fieldtype": "Float",
+   "hidden": 1,
    "in_list_view": 1,
    "label": "Minimum Net Rate"
   }
@@ -54,7 +57,7 @@
  "idx": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-08-11 11:20:49.203622",
+ "modified": "2021-11-24 09:11:24.254105",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Item Tax",
