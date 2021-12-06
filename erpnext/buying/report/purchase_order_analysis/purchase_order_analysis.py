@@ -41,8 +41,9 @@ def get_conditions(filters):
 	if filters.get("from_date") and filters.get("to_date"):
 		conditions += " and po.transaction_date between %(from_date)s and %(to_date)s"
 
-	if filters.get("company"):
-		conditions += " and po.company = %(company)s"
+	for field in ['company', 'name', 'status']:
+		if filters.get(field):
+			conditions += f" and po.{field} = %({field})s"
 
 	if filters.get("purchase_order"):
 		conditions += " and po.name = %(purchase_order)s"
@@ -57,6 +58,10 @@ def get_conditions(filters):
 		filters['status_filter'] = [status_map.get(filter_status, filter_status) for filter_status in filters.get("status")]
 		conditions += " and po.status in %(status_filter)s"
 
+	if filters.get('project'):
+		conditions += " and poi.project = %(project)s"
+
+
 	return conditions
 
 def get_data(conditions, filters):
@@ -64,6 +69,7 @@ def get_data(conditions, filters):
 		SELECT
 			po.transaction_date as date,
 			poi.schedule_date as required_date,
+			poi.project,
 			po.name as purchase_order,
 			po.status, po.supplier, poi.item_code,
 			poi.qty, poi.received_qty,
@@ -182,6 +188,12 @@ def get_columns(filters):
 			"fieldname": "supplier",
 			"fieldtype": "Link",
 			"options": "Supplier",
+			"width": 130
+		},{
+			"label": _("Project"),
+			"fieldname": "project",
+			"fieldtype": "Link",
+			"options": "Project",
 			"width": 130
 		}]
 
