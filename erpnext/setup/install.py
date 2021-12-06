@@ -130,7 +130,7 @@ def add_standard_navbar_items():
 		{
 			'item_label': 'Documentación',
 			'item_type': 'Route',
-			'route': 'https://docs.diamo.com.ar',
+			'route': 'https://diamo.com.ar/doc',
 			'is_standard': 1
 		},
 	]
