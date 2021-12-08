@@ -324,3 +324,5 @@ erpnext.patches.v13_0.shopping_cart_to_ecommerce
 erpnext.patches.v13_0.set_status_in_maintenance_schedule_table
 erpnext.patches.v13_0.update_docs_route
 erpnext.patches.v13_0.manage_dashboards
+erpnext.patches.v13_0.delete_web_forms
+erpnext.patches.v13_0.delete_portal_menu
