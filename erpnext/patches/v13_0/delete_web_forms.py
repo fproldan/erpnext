@@ -7,6 +7,6 @@ import frappe
 
 
 def execute():
-    for name in ["student-applicant", "lab-test", "patient-registration", "prescription", "patient-appointments", "personal-details", "certification-application-usd", "certification-application", "grant-application"]:
+    for name in ["request-to-delete-data", "request-data", "student-applicant", "lab-test", "patient-registration", "prescription", "patient-appointments", "personal-details", "certification-application-usd", "certification-application", "grant-application"]:
         frappe.db.delete("Web Form", name)
     frappe.db.commit()
