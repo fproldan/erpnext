@@ -19,7 +19,7 @@
    "width": "Full"
   },
   {
-   "chart": "Análisis de Solicitudes de Materiale",
+   "chart": "Análisis de Solicitudes de Materiales",
    "width": "Half"
   },
   {
@@ -31,7 +31,7 @@
    "width": "Full"
   }
  ],
- "creation": "2020-07-20 21:01:02.541065",
+ "creation": "2020-07-20 22:01:02.541065",
  "dashboard_name": "Compras",
  "docstatus": 0,
  "doctype": "Dashboard",

@@ -12,7 +12,7 @@
  ],
  "charts": [
   {
-   "chart": "   Inventario por almacén",
+   "chart": "Inventario por almacén",
    "width": "Full"
   },
   {
@@ -32,7 +32,7 @@
    "width": "Half"
   }
  ],
- "creation": "2020-07-20 21:01:04.549136",
+ "creation": "2020-07-20 22:01:04.549136",
  "dashboard_name": "Almacén",
  "docstatus": 0,
  "doctype": "Dashboard",
