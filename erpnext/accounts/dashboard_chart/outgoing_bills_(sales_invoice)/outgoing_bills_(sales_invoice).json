@@ -1,6 +1,6 @@
 {
  "based_on": "posting_date",
- "chart_name": "Outgoing Bills (Sales Invoice)",
+ "chart_name": "Facturas de Venta",
  "chart_type": "Sum",
  "color": "#7b933d",
  "creation": "2020-07-17 11:25:34.507547",
@@ -15,7 +15,7 @@
  "modified": "2020-07-21 17:52:03.970530",
  "modified_by": "Administrator",
  "module": "Accounts",
- "name": "Outgoing Bills (Sales Invoice)",
+ "name": "Facturas de Venta",
  "number_of_groups": 0,
  "owner": "Administrator",
  "time_interval": "Monthly",

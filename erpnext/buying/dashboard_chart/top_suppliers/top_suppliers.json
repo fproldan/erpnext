@@ -1,5 +1,5 @@
 {
- "chart_name": "Top Suppliers",
+ "chart_name": "Principales Proveedores",
  "chart_type": "Report",
  "creation": "2020-07-20 21:01:02.329519",
  "docstatus": 0,
@@ -12,7 +12,7 @@
  "modified": "2020-07-22 12:43:40.829652",
  "modified_by": "Administrator",
  "module": "Buying",
- "name": "Top Suppliers",
+ "name": "Principales Proveedores",
  "number_of_groups": 0,
  "owner": "Administrator",
  "report_name": "Purchase Receipt Trends",
