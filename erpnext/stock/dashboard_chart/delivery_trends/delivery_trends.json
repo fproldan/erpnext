@@ -1,6 +1,6 @@
 {
  "based_on": "posting_date",
- "chart_name": "Delivery Trends",
+ "chart_name": "Tendencias de Entrega",
  "chart_type": "Sum",
  "color": "#4d4da8",
  "creation": "2020-07-20 21:01:04.255291",
@@ -14,7 +14,7 @@
  "modified": "2020-07-22 13:03:24.937045",
  "modified_by": "Administrator",
  "module": "Stock",
- "name": "Delivery Trends",
+ "name": "Tendencias de Entrega",
  "number_of_groups": 0,
  "owner": "Administrator",
  "time_interval": "Monthly",
