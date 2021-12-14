@@ -7,7 +7,7 @@
  "doctype": "Report", 
  "idx": 3, 
  "is_standard": "Yes", 
- "modified": "2018-02-22 01:28:14.928929", 
+ "modified": "2018-02-23 01:28:14.928929", 
  "modified_by": "Administrator", 
  "module": "Selling", 
  "name": "Quotation Trends", 
@@ -26,7 +26,7 @@
    "role": "Asset Maintenance Manager"
   }, 
   {
-   "role": "Maintenance User"
+   "role": "RMA Maintenance User"
   }
  ]
 }
