@@ -1,5 +1,5 @@
 {
- "chart_name": "Accounts Payable Ageing",
+ "chart_name": "Antigüedad de Cuentas por Pagar",
  "chart_type": "Report",
  "creation": "2020-07-17 11:25:34.564015",
  "docstatus": 0,
@@ -12,7 +12,7 @@
  "modified": "2020-07-22 12:29:33.584419",
  "modified_by": "Administrator",
  "module": "Accounts",
- "name": "Accounts Payable Ageing",
+ "name": "Antigüedad de Cuentas por Pagar",
  "number_of_groups": 0,
  "owner": "Administrator",
  "report_name": "Accounts Payable",

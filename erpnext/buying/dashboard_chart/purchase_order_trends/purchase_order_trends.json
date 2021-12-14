@@ -1,5 +1,5 @@
 {
- "chart_name": "Purchase Order Trends",
+ "chart_name": "Tendencias de ordenes de compra",
  "chart_type": "Report",
  "creation": "2020-07-20 21:01:02.295012",
  "custom_options": "{\"type\": \"line\", \"axisOptions\": {\"shortenYAxisNumbers\": 1}, \"tooltipOptions\": {}, \"lineOptions\": {\"regionFill\": 1}}",
@@ -13,7 +13,7 @@
  "modified": "2020-07-21 16:13:25.092287",
  "modified_by": "Administrator",
  "module": "Buying",
- "name": "Purchase Order Trends",
+ "name": "Tendencias de ordenes de compra",
  "number_of_groups": 0,
  "owner": "Administrator",
  "report_name": "Purchase Order Trends",

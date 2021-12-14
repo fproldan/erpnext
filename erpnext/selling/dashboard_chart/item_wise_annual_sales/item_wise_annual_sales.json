@@ -1,5 +1,5 @@
 {
- "chart_name": "Item-wise Annual Sales",
+ "chart_name": "Ventas Anuales por Artículo",
  "chart_type": "Report",
  "creation": "2020-07-20 20:17:16.474566",
  "custom_options": "",
@@ -13,7 +13,7 @@
  "modified": "2020-07-22 14:42:25.512675",
  "modified_by": "Administrator",
  "module": "Selling",
- "name": "Item-wise Annual Sales",
+ "name": "Ventas Anuales por Artículo",
  "number_of_groups": 0,
  "owner": "Administrator",
  "report_name": "Item-wise Sales History",
