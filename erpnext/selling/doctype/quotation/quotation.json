@@ -962,7 +962,7 @@
  "is_submittable": 1,
  "links": [],
  "max_attachments": 1,
- "modified": "2021-08-30 20:10:07.864951",
+ "modified": "2021-08-30 21:10:07.864951",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Quotation",
@@ -1020,7 +1020,7 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "Maintenance Manager",
+   "role": "Asset Maintenance Manager",
    "share": 1,
    "submit": 1,
    "write": 1
@@ -1029,7 +1029,7 @@
    "permlevel": 1,
    "read": 1,
    "report": 1,
-   "role": "Maintenance Manager"
+   "role": "Asset Maintenance Manager"
   },
   {
    "amend": 1,

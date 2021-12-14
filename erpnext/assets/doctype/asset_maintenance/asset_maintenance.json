@@ -80,7 +80,7 @@
    "fieldname": "maintenance_manager",
    "fieldtype": "Data",
    "hidden": 1,
-   "label": "Maintenance Manager",
+   "label": "Asset Maintenance Manager",
    "read_only": 1
   },
   {
@@ -103,7 +103,7 @@
   }
  ],
  "links": [],
- "modified": "2021-12-14 07:51:24.698855",
+ "modified": "2021-12-15 07:51:24.698855",
  "modified_by": "Administrator",
  "module": "Assets",
  "name": "Asset Maintenance",
