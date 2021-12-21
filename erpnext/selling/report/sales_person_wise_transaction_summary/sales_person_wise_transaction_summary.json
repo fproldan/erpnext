@@ -7,7 +7,7 @@
  "doctype": "Report", 
  "idx": 3, 
  "is_standard": "Yes", 
- "modified": "2017-02-24 20:03:47.710828", 
+ "modified": "2017-02-25 20:03:47.710828", 
  "modified_by": "Administrator", 
  "module": "Selling", 
  "name": "Sales Person-wise Transaction Summary", 
@@ -23,7 +23,7 @@
    "role": "Sales Manager"
   }, 
   {
-   "role": "Maintenance User"
+   "role": "RMA Maintenance User"
   }, 
   {
    "role": "Accounts User"
