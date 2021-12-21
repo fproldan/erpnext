@@ -5,6 +5,6 @@ data = {
         'RMA'
     ],
     'restricted_roles': [
-        'Maintenance User'
+        'RMA Maintenance User'
     ]
 }

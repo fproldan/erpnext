@@ -7,7 +7,7 @@
  "doctype": "Report", 
  "idx": 0, 
  "is_standard": "Yes", 
- "modified": "2017-12-06 17:01:48.727970", 
+ "modified": "2017-12-07 17:01:48.727970", 
  "modified_by": "Administrator", 
  "module": "Stock", 
  "name": "Item Price Stock", 
@@ -32,7 +32,7 @@
    "role": "Purchase User"
   }, 
   {
-   "role": "Maintenance User"
+   "role": "RMA Maintenance User"
   }, 
   {
    "role": "Accounts User"

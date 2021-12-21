@@ -7,7 +7,7 @@
  "doctype": "Report", 
  "idx": 0, 
  "is_standard": "Yes", 
- "modified": "2017-11-16 06:24:10.818276", 
+ "modified": "2017-11-18 06:24:10.818276", 
  "modified_by": "Administrator", 
  "module": "Stock", 
  "name": "Item Variant Details", 
@@ -17,7 +17,7 @@
  "report_type": "Script Report", 
  "roles": [
   {
-   "role": "Maintenance User"
+   "role": "RMA Maintenance User"
   }, 
   {
    "role": "Accounts User"
@@ -35,7 +35,7 @@
    "role": "Sales User"
   }, 
   {
-   "role": "Manufacturing User"
+   "role": "RMA Manufacturing User"
   }, 
   {
    "role": "Item Manager"
