@@ -27,4 +27,8 @@ def execute():
         from erpnext.assets.setup import add_dashboard
         add_dashboard()
 
+    if "Website" in active_domains:
+        from frappe.website.setup import add_dashboard
+        add_dashboard()
+
     frappe.db.commit()
