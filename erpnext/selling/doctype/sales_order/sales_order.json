@@ -1525,7 +1525,7 @@
  "idx": 105,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-09-28 13:09:51.515542",
+ "modified": "2021-09-28 14:09:51.515542",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Sales Order",
@@ -1571,7 +1571,7 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "Maintenance User",
+   "role": "RMA Maintenance User",
    "share": 1,
    "submit": 1,
    "write": 1

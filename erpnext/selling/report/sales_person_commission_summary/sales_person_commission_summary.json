@@ -6,7 +6,7 @@
  "doctype": "Report", 
  "idx": 0, 
  "is_standard": "Yes", 
- "modified": "2018-09-11 17:49:27.256304", 
+ "modified": "2018-09-12 17:49:27.256304", 
  "modified_by": "Administrator", 
  "module": "Selling", 
  "name": "Sales Person Commission Summary", 
@@ -20,7 +20,7 @@
    "role": "Sales Manager"
   }, 
   {
-   "role": "Maintenance User"
+   "role": "RMA Maintenance User"
   }
  ]
 }
