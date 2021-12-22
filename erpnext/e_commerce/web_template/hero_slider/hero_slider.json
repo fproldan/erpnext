@@ -64,7 +64,7 @@
    "fieldname": "slide_1_content_align",
    "fieldtype": "Select",
    "label": "Alineación del contenido",
-   "options": "Left\nCentre\nRight",
+   "options": "Izquierda\nCentro\nDerecha",
    "reqd": 0
   },
   {
@@ -115,7 +115,7 @@
    "fieldname": "slide_2_content_align",
    "fieldtype": "Select",
    "label": "Alineación del contenido",
-   "options": "Left\nCentre\nRight",
+   "options": "Izquierda\nCentro\nDerecha",
    "reqd": 0
   },
   {
@@ -274,7 +274,7 @@
   }
  ],
  "idx": 2,
- "modified": "2021-02-26 15:57:05.889709",
+ "modified": "2021-02-26 16:57:05.889709",
  "modified_by": "Administrator",
  "module": "E-commerce",
  "name": "Presentación Hero",
