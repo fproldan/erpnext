@@ -7,13 +7,13 @@
   {
    "fieldname": "title",
    "fieldtype": "Data",
-   "label": "Title",
+   "label": "Título",
    "reqd": 1
   },
   {
    "fieldname": "subtitle",
    "fieldtype": "Data",
-   "label": "Subtitle",
+   "label": "Subtítulo",
    "reqd": 0
   },
   {
@@ -74,10 +74,10 @@
   }
  ],
  "idx": 0,
- "modified": "2021-02-24 16:03:33.835635",
+ "modified": "2021-02-26 16:03:33.835635",
  "modified_by": "Administrator",
  "module": "E-commerce",
- "name": "Product Category Cards",
+ "name": "Tarjetas de categorías de productos",
  "owner": "Administrator",
  "standard": 1,
  "template": "",
