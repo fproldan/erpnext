@@ -351,7 +351,7 @@
  "image_field": "image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-09-02 13:08:41.942726",
+ "modified": "2021-12-22 13:18:20.705573",
  "modified_by": "Administrator",
  "module": "E-commerce",
  "name": "Website Item",
@@ -406,6 +406,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "Ecommerce",
  "search_fields": "web_item_name, item_code, item_group",
  "show_name_in_global_search": 1,
  "sort_field": "modified",

@@ -109,7 +109,7 @@
  ],
  "issingle": 1,
  "links": [],
- "modified": "2021-02-18 13:29:29.531639",
+ "modified": "2021-12-22 13:15:44.521408",
  "modified_by": "Administrator",
  "module": "Portal",
  "name": "Homepage",
@@ -136,6 +136,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "Thrash",
  "sort_field": "modified",
  "sort_order": "DESC",
  "title_field": "company",
