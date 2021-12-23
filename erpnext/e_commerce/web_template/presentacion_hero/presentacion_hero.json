@@ -33,7 +33,7 @@
   {
    "fieldname": "slide_1_image",
    "fieldtype": "Attach Image",
-   "label": "Image",
+   "label": "Imagen",
    "reqd": 0
   },
   {
@@ -83,7 +83,7 @@
   {
    "fieldname": "slide_2_image",
    "fieldtype": "Attach Image",
-   "label": "Image",
+   "label": "Imagen",
    "reqd": 0
   },
   {
@@ -134,7 +134,7 @@
   {
    "fieldname": "slide_3_image",
    "fieldtype": "Attach Image",
-   "label": "Image",
+   "label": "Imagen",
    "reqd": 0
   },
   {
@@ -183,7 +183,7 @@
   {
    "fieldname": "slide_4_image",
    "fieldtype": "Attach Image",
-   "label": "Image",
+   "label": "Imagen",
    "reqd": 0
   },
   {
@@ -232,7 +232,7 @@
   {
    "fieldname": "slide_5_image",
    "fieldtype": "Attach Image",
-   "label": "Image",
+   "label": "Imagen",
    "reqd": 0
   },
   {
@@ -274,10 +274,10 @@
   }
  ],
  "idx": 2,
- "modified": "2021-02-26 16:57:05.889709",
+ "modified": "2021-02-27 16:57:05.889709",
  "modified_by": "Administrator",
  "module": "E-commerce",
- "name": "Presentación Hero",
+ "name": "Presentacion Hero",
  "owner": "Administrator",
  "standard": 1,
  "template": "",
