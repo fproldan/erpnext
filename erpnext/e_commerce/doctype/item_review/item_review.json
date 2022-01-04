@@ -87,7 +87,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-08-10 12:08:58.119691",
+ "modified": "2021-12-22 13:19:05.328654",
  "modified_by": "Administrator",
  "module": "E-commerce",
  "name": "Item Review",
@@ -128,6 +128,7 @@
    "share": 1
   }
  ],
+ "restrict_to_domain": "Ecommerce",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1
