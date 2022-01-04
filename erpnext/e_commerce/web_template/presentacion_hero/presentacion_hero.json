@@ -7,277 +7,280 @@
   {
    "fieldname": "slider_name",
    "fieldtype": "Data",
-   "label": "Slider Name",
+   "label": "Nombre de la presentación",
    "reqd": 1
   },
   {
    "default": "1",
    "fieldname": "show_indicators",
    "fieldtype": "Check",
-   "label": "Show Indicators",
+   "label": "Mostrar indicadores",
    "reqd": 0
   },
   {
    "default": "1",
    "fieldname": "show_controls",
    "fieldtype": "Check",
-   "label": "Show Controls",
+   "label": "Mostrar controles",
    "reqd": 0
   },
   {
    "fieldname": "slide_1",
    "fieldtype": "Section Break",
-   "label": "Slide 1",
+   "label": "Diapositiva 1",
    "reqd": 0
   },
   {
    "fieldname": "slide_1_image",
    "fieldtype": "Attach Image",
-   "label": "Image",
+   "label": "Imagen",
    "reqd": 0
   },
   {
    "fieldname": "slide_1_title",
    "fieldtype": "Data",
-   "label": "Title",
+   "label": "Título",
    "reqd": 0
   },
   {
    "fieldname": "slide_1_subtitle",
    "fieldtype": "Small Text",
-   "label": "Subtitle",
+   "label": "Subtítulo",
    "reqd": 0
   },
   {
    "fieldname": "slide_1_primary_action_label",
    "fieldtype": "Data",
-   "label": "Primary Action Label",
+   "label": "Etiqueta de acción primaria",
    "reqd": 0
   },
   {
    "fieldname": "slide_1_primary_action",
    "fieldtype": "Data",
-   "label": "Primary Action",
+   "label": "Acción primaria",
    "reqd": 0
   },
   {
    "fieldname": "slide_1_content_align",
    "fieldtype": "Select",
-   "label": "Content Align",
-   "options": "Left\nCentre\nRight",
+   "label": "Alineación del contenido",
+   "options": "Izquierda\nCentro\nDerecha",
    "reqd": 0
   },
   {
    "fieldname": "slide_1_theme",
    "fieldtype": "Select",
-   "label": "Slide Theme",
+   "label": "Tema de la diapositiva",
    "options": "Dark\nLight",
    "reqd": 0
   },
   {
    "fieldname": "slide_2",
    "fieldtype": "Section Break",
-   "label": "Slide 2",
+   "label": "Diapositiva 2",
    "reqd": 0
   },
   {
    "fieldname": "slide_2_image",
    "fieldtype": "Attach Image",
-   "label": "Image ",
+   "label": "Imagen",
    "reqd": 0
   },
   {
    "fieldname": "slide_2_title",
    "fieldtype": "Data",
-   "label": "Title ",
+   "label": "Título ",
    "reqd": 0
   },
   {
    "fieldname": "slide_2_subtitle",
    "fieldtype": "Small Text",
-   "label": "Subtitle ",
+   "label": "Subtítulo",
    "reqd": 0
   },
   {
    "fieldname": "slide_2_primary_action_label",
    "fieldtype": "Data",
-   "label": "Primary Action Label ",
+   "label": "Etiqueta de acción primaria",
    "reqd": 0
   },
   {
    "fieldname": "slide_2_primary_action",
    "fieldtype": "Data",
-   "label": "Primary Action ",
+   "label": "Acción primaria",
    "reqd": 0
   },
   {
    "default": "Left",
    "fieldname": "slide_2_content_align",
    "fieldtype": "Select",
-   "label": "Content Align",
-   "options": "Left\nCentre\nRight",
+   "label": "Alineación del contenido",
+   "options": "Izquierda\nCentro\nDerecha",
    "reqd": 0
   },
   {
    "fieldname": "slide_2_theme",
    "fieldtype": "Select",
-   "label": "Slide Theme",
+   "label": "Tema de la diapositiva",
    "options": "Dark\nLight",
    "reqd": 0
   },
   {
    "fieldname": "slide_3",
    "fieldtype": "Section Break",
-   "label": "Slide 3",
+   "label": "Diapositiva 3",
    "reqd": 0
   },
   {
    "fieldname": "slide_3_image",
    "fieldtype": "Attach Image",
-   "label": "Image",
+   "label": "Imagen",
    "reqd": 0
   },
   {
    "fieldname": "slide_3_title",
    "fieldtype": "Data",
-   "label": "Title",
+   "label": "Título",
    "reqd": 0
   },
   {
    "fieldname": "slide_3_subtitle",
    "fieldtype": "Small Text",
-   "label": "Subtitle",
+   "label": "Subtítulo",
    "reqd": 0
   },
   {
    "fieldname": "slide_3_primary_action_label",
    "fieldtype": "Data",
-   "label": "Primary Action Label",
+   "label": "Etiqueta de acción primaria",
    "reqd": 0
   },
   {
    "fieldname": "slide_3_primary_action",
    "fieldtype": "Data",
-   "label": "Primary Action",
+   "label": "Acción primaria",
    "reqd": 0
   },
   {
    "fieldname": "slide_3_content_align",
    "fieldtype": "Select",
-   "label": "Content Align",
+   "label": "Alineación del contenido",
+   "options": "Izquierda\nCentro\nDerecha",
    "reqd": 0
   },
   {
    "fieldname": "slide_3_theme",
    "fieldtype": "Select",
-   "label": "Slide Theme",
+   "label": "Tema de la diapositiva",
    "options": "Dark\nLight",
    "reqd": 0
   },
   {
    "fieldname": "slide_4",
    "fieldtype": "Section Break",
-   "label": "Slide 4",
+   "label": "Diapositiva 4",
    "reqd": 0
   },
   {
    "fieldname": "slide_4_image",
    "fieldtype": "Attach Image",
-   "label": "Image",
+   "label": "Imagen",
    "reqd": 0
   },
   {
    "fieldname": "slide_4_title",
    "fieldtype": "Data",
-   "label": "Title",
+   "label": "Título",
    "reqd": 0
   },
   {
    "fieldname": "slide_4_subtitle",
    "fieldtype": "Small Text",
-   "label": "Subtitle",
+   "label": "Subtítulo",
    "reqd": 0
   },
   {
    "fieldname": "slide_4_primary_action_label",
    "fieldtype": "Data",
-   "label": "Primary Action Label",
+   "label": "Etiqueta de acción primaria",
    "reqd": 0
   },
   {
    "fieldname": "slide_4_primary_action",
    "fieldtype": "Data",
-   "label": "Primary Action",
+   "label": "Acción primaria",
    "reqd": 0
   },
   {
    "fieldname": "slide_4_content_align",
    "fieldtype": "Select",
-   "label": "Content Align",
+   "label": "Alineación del contenido",
+   "options": "Izquierda\nCentro\nDerecha",
    "reqd": 0
   },
   {
    "fieldname": "slide_4_theme",
    "fieldtype": "Select",
-   "label": "Slide Theme",
+   "label": "Tema de la diapositiva",
    "options": "Dark\nLight",
    "reqd": 0
   },
   {
    "fieldname": "slide_5",
    "fieldtype": "Section Break",
-   "label": "Slide 5",
+   "label": "Diapositiva 5",
    "reqd": 0
   },
   {
    "fieldname": "slide_5_image",
    "fieldtype": "Attach Image",
-   "label": "Image",
+   "label": "Imagen",
    "reqd": 0
   },
   {
    "fieldname": "slide_5_title",
    "fieldtype": "Data",
-   "label": "Title",
+   "label": "Título",
    "reqd": 0
   },
   {
    "fieldname": "slide_5_subtitle",
    "fieldtype": "Small Text",
-   "label": "Subtitle",
+   "label": "Subtítulo",
    "reqd": 0
   },
   {
    "fieldname": "slide_5_primary_action_label",
    "fieldtype": "Data",
-   "label": "Primary Action Label",
+   "label": "Etiqueta de acción primaria",
    "reqd": 0
   },
   {
    "fieldname": "slide_5_primary_action",
    "fieldtype": "Data",
-   "label": "Primary Action",
+   "label": "Acción primaria",
    "reqd": 0
   },
   {
    "fieldname": "slide_5_content_align",
    "fieldtype": "Select",
-   "label": "Content Align",
+   "label": "Alineación del contenido",
+   "options": "Izquierda\nCentro\nDerecha",
    "reqd": 0
   },
   {
    "fieldname": "slide_5_theme",
    "fieldtype": "Select",
-   "label": "Slide Theme",
+   "label": "Tema de la diapositiva",
    "options": "Dark\nLight",
    "reqd": 0
   }
  ],
  "idx": 2,
- "modified": "2021-02-24 15:57:05.889709",
+ "modified": "2021-02-28 16:57:05.889709",
  "modified_by": "Administrator",
  "module": "E-commerce",
- "name": "Hero Slider",
+ "name": "Presentacion Hero",
  "owner": "Administrator",
  "standard": 1,
  "template": "",

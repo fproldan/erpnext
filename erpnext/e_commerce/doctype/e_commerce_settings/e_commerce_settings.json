@@ -370,7 +370,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2021-09-02 14:02:44.785824",
+ "modified": "2021-12-22 13:18:02.637060",
  "modified_by": "Administrator",
  "module": "E-commerce",
  "name": "E Commerce Settings",
@@ -387,6 +387,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "Ecommerce",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1
