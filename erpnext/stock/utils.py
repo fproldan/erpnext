@@ -425,7 +425,7 @@ def check_pending_reposting(posting_date: str, throw_error: bool = True) -> bool
 		msg = _("Stock/Accounts can not be frozen as processing of backdated entries is going on. Please try again later.")
 		frappe.msgprint(msg,
 				raise_exception=PendingRepostingError,
-				title="Stock Reposting Ongoing",
+				title=_("Stock Reposting Ongoing"),
 				indicator="red",
 				primary_action={
 					"label": _("Show pending entries"),
