@@ -8,5 +8,6 @@ data = {
         'Projects Manager',
         'Projects User'
     ],
-    'on_setup': 'erpnext.projects.setup.setup_projects'
+    'on_setup': 'erpnext.projects.setup.setup_projects',
+    'remove_dashboard': 'erpnext.projects.setup.remove_dashboard'
 }

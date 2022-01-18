@@ -25,9 +25,9 @@ from erpnext.accounts.report.general_ledger.general_ledger import execute as get
 class ProcessStatementOfAccounts(Document):
 	def validate(self):
 		if not self.subject:
-			self.subject = 'Statement Of Accounts for {{ customer.name }}'
+			self.subject = _('Statement Of Accounts for {{ customer.name }}')
 		if not self.body:
-			self.body = 'Hello {{ customer.name }},<br>PFA your Statement Of Accounts from {{ doc.from_date }} to {{ doc.to_date }}.'
+			self.body = 'Hola {{ customer.name }},<br>Su estado de cuentas desde {{ doc.from_date }} hasta {{ doc.to_date }}.'
 
 		validate_template(self.subject)
 		validate_template(self.body)
