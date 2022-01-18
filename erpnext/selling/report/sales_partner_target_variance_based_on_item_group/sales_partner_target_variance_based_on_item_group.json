@@ -7,7 +7,7 @@
  "doctype": "Report", 
  "idx": 0, 
  "is_standard": "Yes", 
- "modified": "2019-04-25 18:22:37.323995", 
+ "modified": "2019-04-26 18:22:37.323995", 
  "modified_by": "Administrator", 
  "module": "Selling", 
  "name": "Sales Partner Target Variance based on Item Group", 
@@ -24,7 +24,7 @@
    "role": "Sales Manager"
   }, 
   {
-   "role": "Maintenance User"
+   "role": "RMA Maintenance User"
   }, 
   {
    "role": "Accounts User"
