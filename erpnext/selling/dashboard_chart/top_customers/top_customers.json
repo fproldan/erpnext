@@ -1,5 +1,5 @@
 {
- "chart_name": "Top Customers",
+ "chart_name": "Clientes Principales",
  "chart_type": "Report",
  "creation": "2020-07-20 20:17:16.539281",
  "custom_options": "",
@@ -13,7 +13,7 @@
  "modified": "2020-07-22 17:03:10.320147",
  "modified_by": "Administrator",
  "module": "Selling",
- "name": "Top Customers",
+ "name": "Clientes Principales",
  "number_of_groups": 0,
  "owner": "Administrator",
  "report_name": "Delivery Note Trends",
