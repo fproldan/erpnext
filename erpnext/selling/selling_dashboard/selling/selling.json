@@ -1,38 +1,38 @@
 {
  "cards": [
   {
-   "card": "Annual Sales"
+   "card": "Ventas Anuales"
   },
   {
-   "card": "Sales Orders to Deliver"
+   "card": "Ordenes de Venta para Entregar"
   },
   {
-   "card": "Sales Orders to Bill"
+   "card": "Ordenes de Venta para Facturar"
   },
   {
-   "card": "Active Customers"
+   "card": "Clientes Activos"
   }
  ],
  "charts": [
   {
-   "chart": "Sales Order Trends",
+   "chart": "Tendencias de Ordenes de ventas",
    "width": "Full"
   },
   {
-   "chart": "Top Customers",
+   "chart": "Clientes Principales",
    "width": "Half"
   },
   {
-   "chart": "Sales Order Analysis",
+   "chart": "Análisis de órdenes de venta",
    "width": "Half"
   },
   {
-   "chart": "Item-wise Annual Sales",
+   "chart": "Ventas Anuales por Artículo",
    "width": "Full"
   }
  ],
  "creation": "2020-07-20 20:17:16.688162",
- "dashboard_name": "Selling",
+ "dashboard_name": "Ventas",
  "docstatus": 0,
  "doctype": "Dashboard",
  "idx": 0,
@@ -41,6 +41,6 @@
  "modified": "2020-07-22 15:31:22.299903",
  "modified_by": "Administrator",
  "module": "Selling",
- "name": "Selling",
+ "name": "Ventas",
  "owner": "Administrator"
 }

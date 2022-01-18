@@ -1,5 +1,5 @@
 {
- "chart_name": "Material Request Analysis",
+ "chart_name": "Análisis de Solicitudes de Materiales",
  "chart_type": "Group By",
  "creation": "2020-07-20 21:01:02.242563",
  "custom_options": "{\"height\": 300}",
@@ -17,7 +17,7 @@
  "modified": "2020-07-22 21:20:51.840194",
  "modified_by": "Administrator",
  "module": "Buying",
- "name": "Material Request Analysis",
+ "name": "Análisis de Solicitudes de Materiales",
  "number_of_groups": 0,
  "owner": "Administrator",
  "timeseries": 0,

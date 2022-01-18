@@ -1,5 +1,5 @@
 {
- "chart_name": "Bank Balance",
+ "chart_name": "Saldo Bancario",
  "chart_type": "Custom",
  "creation": "2020-07-17 11:25:34.620221",
  "docstatus": 0,
@@ -13,7 +13,7 @@
  "modified": "2020-07-22 12:21:48.780513",
  "modified_by": "Administrator",
  "module": "Accounts",
- "name": "Bank Balance",
+ "name": "Saldo Bancario",
  "number_of_groups": 0,
  "owner": "Administrator",
  "source": "Account Balance Timeline",

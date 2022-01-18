@@ -1,5 +1,5 @@
 {
- "chart_name": "Oldest Items",
+ "chart_name": "Antigüedad de Productos",
  "chart_type": "Report",
  "creation": "2020-07-20 21:01:04.336845",
  "custom_options": "{\"colors\": [\"#5e64ff\"]}",
@@ -13,7 +13,7 @@
  "modified": "2020-07-29 14:50:26.846482",
  "modified_by": "Administrator",
  "module": "Stock",
- "name": "Oldest Items",
+ "name": "Antigüedad de Productos",
  "number_of_groups": 0,
  "owner": "Administrator",
  "report_name": "Stock Ageing",
