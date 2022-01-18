@@ -1,5 +1,5 @@
 {
- "chart_name": "Profit and Loss",
+ "chart_name": "Pérdidas y ganancias",
  "chart_type": "Report",
  "creation": "2020-07-17 11:25:34.448572",
  "docstatus": 0,
@@ -12,7 +12,7 @@
  "modified": "2020-07-22 12:33:48.888943",
  "modified_by": "Administrator",
  "module": "Accounts",
- "name": "Profit and Loss",
+ "name": "Pérdidas y ganancias",
  "number_of_groups": 0,
  "owner": "Administrator",
  "report_name": "Profit and Loss Statement",

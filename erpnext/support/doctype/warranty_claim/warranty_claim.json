@@ -364,7 +364,7 @@
  "icon": "fa fa-bug",
  "idx": 1,
  "links": [],
- "modified": "2021-11-10 09:28:06.468795",
+ "modified": "2021-11-11 09:28:06.468795",
  "modified_by": "Administrator",
  "module": "Support",
  "name": "Warranty Claim",
@@ -377,7 +377,7 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "Maintenance User",
+   "role": "RMA Maintenance User",
    "share": 1,
    "write": 1
   },

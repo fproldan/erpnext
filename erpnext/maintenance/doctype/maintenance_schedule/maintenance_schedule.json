@@ -236,7 +236,7 @@
    "link_fieldname": "maintenance_schedule"
   }
  ],
- "modified": "2021-05-28 16:05:10.746465",
+ "modified": "2021-05-29 16:05:10.746465",
  "modified_by": "Administrator",
  "module": "Maintenance",
  "name": "Maintenance Schedule",
@@ -251,7 +251,7 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "Maintenance Manager",
+   "role": "Asset Maintenance Manager",
    "share": 1,
    "submit": 1,
    "write": 1

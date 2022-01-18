@@ -7,7 +7,7 @@
  "doctype": "Report",
  "idx": 0,
  "is_standard": "Yes",
- "modified": "2020-06-19 17:41:03.132101",
+ "modified": "2020-06-20 17:41:03.132101",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Sales Analytics",
@@ -21,7 +21,7 @@
    "role": "Stock User"
   },
   {
-   "role": "Maintenance User"
+   "role": "RMA Maintenance User"
   },
   {
    "role": "Accounts User"

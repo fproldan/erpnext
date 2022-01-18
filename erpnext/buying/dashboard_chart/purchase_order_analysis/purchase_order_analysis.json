@@ -1,5 +1,5 @@
 {
- "chart_name": "Purchase Order Analysis",
+ "chart_name": "Análisis de órdenes de compra",
  "chart_type": "Report",
  "creation": "2020-07-20 21:01:02.203880",
  "custom_options": "{\"type\": \"donut\", \"height\": 300, \"axisOptions\": {\"shortenYAxisNumbers\": 1}}",
@@ -13,7 +13,7 @@
  "modified": "2020-07-22 12:44:35.754973",
  "modified_by": "Administrator",
  "module": "Buying",
- "name": "Purchase Order Analysis",
+ "name": "Análisis de órdenes de compra",
  "number_of_groups": 0,
  "owner": "Administrator",
  "report_name": "Purchase Order Analysis",
