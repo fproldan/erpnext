@@ -7,7 +7,7 @@
  "doctype": "Report", 
  "idx": 3, 
  "is_standard": "Yes", 
- "modified": "2018-02-20 08:05:46.191588", 
+ "modified": "2018-02-21 08:05:46.191588", 
  "modified_by": "Administrator", 
  "module": "Selling", 
  "name": "Sales Order Trends", 
@@ -23,7 +23,7 @@
    "role": "Sales Manager"
   }, 
   {
-   "role": "Maintenance User"
+   "role": "RMA Maintenance User"
   }, 
   {
    "role": "Accounts User"

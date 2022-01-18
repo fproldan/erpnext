@@ -514,7 +514,13 @@
  "idx": 363,
  "image_field": "image",
  "index_web_pages_for_search": 1,
- "links": [],
+ "links": [
+  {
+   "group": "Allowed Items",
+   "link_doctype": "Party Specific Item",
+   "link_fieldname": "party"
+  }
+ ],
  "modified": "2021-11-15 11:52:35.042445",
  "modified_by": "Administrator",
  "module": "Selling",
