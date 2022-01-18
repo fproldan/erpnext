@@ -1,5 +1,5 @@
 {
- "chart_name": "Budget Variance",
+ "chart_name": "Variación de Presupuesto",
  "chart_type": "Report",
  "creation": "2020-07-17 11:25:34.593061",
  "docstatus": 0,
@@ -12,7 +12,7 @@
  "modified": "2020-07-22 12:24:49.144210",
  "modified_by": "Administrator",
  "module": "Accounts",
- "name": "Budget Variance",
+ "name": "Variación de Presupuesto",
  "number_of_groups": 0,
  "owner": "Administrator",
  "report_name": "Budget Variance Report",

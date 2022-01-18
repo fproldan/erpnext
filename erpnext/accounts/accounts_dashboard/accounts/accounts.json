@@ -1,50 +1,50 @@
 {
  "cards": [
   {
-   "card": "Total Outgoing Bills"
+   "card": "Total de Facturas Salientes"
   },
   {
-   "card": "Total Incoming Bills"
+   "card": "Total de Facturas Entrantes"
   },
   {
-   "card": "Total Incoming Payment"
+   "card": "Total de Ingresos a Cobrar"
   },
   {
-   "card": "Total Outgoing Payment"
+   "card": "Total de Egresos a Pagar"
   }
  ],
  "charts": [
   {
-   "chart": "Profit and Loss",
+   "chart": "Pérdidas y ganancias",
    "width": "Full"
   },
   {
-   "chart": "Incoming Bills (Purchase Invoice)",
+   "chart": "Facturas de Compra",
    "width": "Half"
   },
   {
-   "chart": "Outgoing Bills (Sales Invoice)",
+   "chart": "Facturas de Venta",
    "width": "Half"
   },
   {
-   "chart": "Accounts Receivable Ageing",
+   "chart": "Antigüedad de Cuentas por Cobrar",
    "width": "Half"
   },
   {
-   "chart": "Accounts Payable Ageing",
+   "chart": "Antigüedad de Cuentas por Pagar",
    "width": "Half"
   },
   {
-   "chart": "Budget Variance",
+   "chart": "Variación de Presupuesto",
    "width": "Full"
   },
   {
-   "chart": "Bank Balance",
+   "chart": "Saldo Bancario",
    "width": "Full"
   }
  ],
  "creation": "2020-07-17 11:25:34.796608",
- "dashboard_name": "Accounts",
+ "dashboard_name": "Cuentas",
  "docstatus": 0,
  "doctype": "Dashboard",
  "idx": 0,
@@ -53,6 +53,6 @@
  "modified": "2020-07-22 13:07:34.540574",
  "modified_by": "Administrator",
  "module": "Accounts",
- "name": "Accounts",
+ "name": "Cuentas",
  "owner": "Administrator"
 }

@@ -405,6 +405,7 @@
    "collapsible": 1,
    "fieldname": "column_break_38",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Loyalty Points"
   },
   {
@@ -513,10 +514,6 @@
  "idx": 363,
  "image_field": "image",
  "index_web_pages_for_search": 1,
-<<<<<<< HEAD
- "links": [],
- "modified": "2021-08-25 18:56:09.929905",
-=======
  "links": [
   {
    "group": "Allowed Items",
@@ -524,8 +521,7 @@
    "link_fieldname": "party"
   }
  ],
- "modified": "2021-11-06 17:38:54.196663",
->>>>>>> f148cbfc68 (Bumped to v13.12.1 (#32))
+ "modified": "2021-11-15 11:52:35.042445",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Customer",
