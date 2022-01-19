@@ -14,16 +14,16 @@
   {
    "fieldname": "featured",
    "fieldtype": "Check",
-   "label": "Featured",
+   "label": "Destacado",
    "options": "",
    "reqd": 0
   }
  ],
  "idx": 0,
- "modified": "2021-02-24 16:05:17.926610",
+ "modified": "2021-02-26 16:05:17.926610",
  "modified_by": "Administrator",
  "module": "E-commerce",
- "name": "Product Card",
+ "name": "Tarjeta de Producto",
  "owner": "Administrator",
  "standard": 1,
  "template": "",
