@@ -2,7 +2,7 @@
  "category": "Modules",
  "charts": [
   {
-   "chart_name": "Project Summary",
+   "chart_name": "Resumen del proyecto",
    "label": "Open Projects"
   }
  ],
@@ -181,7 +181,7 @@
    "type": "Link"
   }
  ],
- "modified": "2021-04-25 16:27:16.548780",
+ "modified": "2021-04-26 17:27:16.548780",
  "modified_by": "Administrator",
  "module": "Projects",
  "name": "Projects",
@@ -217,7 +217,7 @@
   },
   {
    "label": "Dashboard",
-   "link_to": "Project",
+   "link_to": "Proyecto",
    "type": "Dashboard"
   }
  ]

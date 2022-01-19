@@ -61,6 +61,7 @@ treeviews = ['Account', 'Cost Center', 'Warehouse', 'Item Group', 'Customer Grou
 # website
 update_website_context = ["erpnext.e_commerce.shopping_cart.utils.update_website_context", "erpnext.education.doctype.education_settings.education_settings.update_website_context"]
 my_account_context = "erpnext.e_commerce.shopping_cart.utils.update_my_account_context"
+webform_list_context = "erpnext.controllers.website_list_for_contact.get_webform_list_context"
 
 calendars = ["Task", "Work Order", "Leave Application", "Sales Order", "Holiday List", "Course Schedule"]
 
@@ -207,7 +208,6 @@ website_route_rules = [
 ]
 
 standard_portal_menu_items = [
-	{"title": _("Personal Details"), "route": "/personal-details", "reference_doctype": "Patient", "role": "Patient"},
 	{"title": _("Projects"), "route": "/project", "reference_doctype": "Project"},
 	{"title": _("Request for Quotations"), "route": "/rfq", "reference_doctype": "Request for Quotation", "role": "Supplier"},
 	{"title": _("Supplier Quotation"), "route": "/supplier-quotations", "reference_doctype": "Supplier Quotation", "role": "Supplier"},
@@ -220,13 +220,7 @@ standard_portal_menu_items = [
 	{"title": _("Issues"), "route": "/issues", "reference_doctype": "Issue", "role":"Customer"},
 	{"title": _("Addresses"), "route": "/addresses", "reference_doctype": "Address"},
 	{"title": _("Timesheets"), "route": "/timesheets", "reference_doctype": "Timesheet", "role":"Customer"},
-	{"title": _("Lab Test"), "route": "/lab-test", "reference_doctype": "Lab Test", "role":"Patient"},
-	{"title": _("Prescription"), "route": "/prescription", "reference_doctype": "Patient Encounter", "role":"Patient"},
-	{"title": _("Patient Appointment"), "route": "/patient-appointments", "reference_doctype": "Patient Appointment", "role":"Patient"},
-	{"title": _("Fees"), "route": "/fees", "reference_doctype": "Fees", "role":"Student"},
 	{"title": _("Newsletter"), "route": "/newsletters", "reference_doctype": "Newsletter"},
-	{"title": _("Admission"), "route": "/admissions", "reference_doctype": "Student Admission", "role": "Student"},
-	{"title": _("Certification"), "route": "/certification", "reference_doctype": "Certification Application", "role": "Non Profit Portal User"},
 	{"title": _("Material Request"), "route": "/material-requests", "reference_doctype": "Material Request", "role": "Customer"},
 	{"title": _("Appointment Booking"), "route": "/book_appointment"},
 ]
@@ -480,7 +474,7 @@ accounting_dimension_doctypes = ["GL Entry", "Sales Invoice", "Purchase Invoice"
 	"Purchase Receipt Item", "Stock Entry Detail", "Payment Entry Deduction", "Sales Taxes and Charges", "Purchase Taxes and Charges", "Shipping Rule",
 	"Landed Cost Item", "Asset Value Adjustment", "Loyalty Program", "Fee Schedule", "Fee Structure", "Stock Reconciliation",
 	"Travel Request", "Fees", "POS Profile", "Opening Invoice Creation Tool", "Opening Invoice Creation Tool Item", "Subscription",
-	"Subscription Plan"
+	"Subscription Plan", "POS Invoice", "POS Invoice Item"
 ]
 
 regional_overrides = {

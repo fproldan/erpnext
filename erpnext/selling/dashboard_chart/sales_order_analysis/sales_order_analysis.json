@@ -1,5 +1,5 @@
 {
- "chart_name": "Sales Order Analysis",
+ "chart_name": "Análisis de órdenes de venta",
  "chart_type": "Report",
  "creation": "2020-07-20 20:17:16.440393",
  "custom_options": "{\"type\": \"donut\", \"height\": 300, \"axisOptions\": {\"shortenYAxisNumbers\": 1}}",
@@ -13,7 +13,7 @@
  "modified": "2020-07-25 17:06:05.750660",
  "modified_by": "Administrator",
  "module": "Selling",
- "name": "Sales Order Analysis",
+ "name": "Análisis de órdenes de venta",
  "number_of_groups": 0,
  "owner": "Administrator",
  "report_name": "Sales Order Analysis",

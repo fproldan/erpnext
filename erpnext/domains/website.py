@@ -10,4 +10,5 @@ data = {
         'Knowledge Base Editor',
         'Blogger'
     ],
+    'on_setup': 'frappe.website.setup.setup_website',
 }
