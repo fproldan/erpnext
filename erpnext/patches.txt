@@ -326,3 +326,4 @@ erpnext.patches.v13_0.update_docs_route
 erpnext.patches.v13_0.asset_roles
 erpnext.patches.v13_0.manage_dashboards
 erpnext.patches.v13_0.delete_has_roles
+erpnext.patches.v13_0.release_2_1
