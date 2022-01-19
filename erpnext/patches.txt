@@ -328,3 +328,4 @@ erpnext.patches.v13_0.delete_portal_menu
 erpnext.patches.v13_0.asset_roles
 erpnext.patches.v13_0.manage_dashboards
 erpnext.patches.v13_0.delete_has_roles
+erpnext.patches.v13_0.release_2_1
