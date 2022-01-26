@@ -206,17 +206,6 @@ def get_all_sales_person(date_range, company, field = None, limit = 0):
 		limit %s
 	""".format(date_condition=date_condition), (company, cint(limit)), as_dict=1)
 
-def get_date_condition(date_range, field):
-	date_condition = ''
-	if date_range:
-		date_range = frappe.parse_json(date_range)
-		from_date, to_date = date_range
-		date_condition = "and {0} between {1} and {2}".format(
-			field, frappe.db.escape(from_date), frappe.db.escape(to_date)
-		)
-	return date_condition
-
-
 @frappe.whitelist()
 def get_all_payments_terms(date_range, company, field=None, limit=0):
 	date_condition = get_date_condition(date_range, 'sales_invoice.posting_date')
@@ -231,7 +220,6 @@ def get_all_payments_terms(date_range, company, field=None, limit=0):
 		order by value DESC
 		limit %s
 	""".format(date_condition=date_condition), (company, cint(limit)), as_dict=1)
-
 
 @frappe.whitelist()
 def get_all_mode_of_payments(date_range, company, field=None, limit=0):
@@ -248,3 +236,12 @@ def get_all_mode_of_payments(date_range, company, field=None, limit=0):
 		limit %s
 	""".format(date_condition=date_condition), (company, cint(limit)), as_dict=1)
 
+def get_date_condition(date_range, field):
+	date_condition = ''
+	if date_range:
+		date_range = frappe.parse_json(date_range)
+		from_date, to_date = date_range
+		date_condition = "and {0} between {1} and {2}".format(
+			field, frappe.db.escape(from_date), frappe.db.escape(to_date)
+		)
+	return date_condition
