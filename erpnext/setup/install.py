@@ -25,6 +25,8 @@ def after_install():
 	create_compact_item_print_custom_field()
 	create_print_uom_after_qty_custom_field()
 	create_print_zero_amount_taxes_custom_field()
+	create_print_sales_invoice_item_code_description()
+	create_print_sales_invoice_item_name_description()
 	add_all_roles_to("Administrator")
 	create_default_cash_flow_mapper_templates()
 	create_default_success_action()
@@ -90,6 +92,26 @@ def create_print_zero_amount_taxes_custom_field():
 		'fieldtype': 'Check',
 		'default': 0,
 		'insert_after': 'allow_print_for_cancelled'
+	})
+
+
+def create_print_sales_invoice_item_code_description():
+	create_custom_field('Print Settings', {
+		'label': 'Imprimir código de producto y descripción',
+		'fieldname': 'print_sales_invoice_item_code_description',
+		'fieldtype': 'Check',
+		'default': 0,
+		'insert_after': 'print_taxes_with_zero_amount'
+	})
+
+
+def create_print_sales_invoice_item_name_description():
+	create_custom_field('Print Settings', {
+		'label': 'Imprimir nombre de producto y descripción',
+		'fieldname': 'print_sales_invoice_item_name_description',
+		'fieldtype': 'Check',
+		'default': 0,
+		'insert_after': 'print_sales_invoice_item_code_description'
 	})
 
 
