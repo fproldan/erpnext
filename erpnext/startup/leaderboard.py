@@ -229,6 +229,7 @@ def get_all_mode_of_payments(date_range, company, field=None, limit=0):
 		select ifnull(payment_entry.mode_of_payment, 'No espeficado') as name, Count(ifnull(payment_entry.mode_of_payment, 'No espeficado')) as value
 		from `tabPayment Entry` as payment_entry
 		where payment_entry.docstatus = 1
+			and payment_entry.payment_type != 'Internal Transfer'
 			and payment_entry.company = %s
 			{date_condition}
 		group by payment_entry.mode_of_payment
