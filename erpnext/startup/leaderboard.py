@@ -51,6 +51,16 @@ def get_leaderboards():
 			],
 			"method": "erpnext.startup.leaderboard.get_all_sales_person",
 			"icon": "customer"
+		},
+		"Payment Terms Template": {
+			"fields": [],
+			"method": "erpnext.startup.leaderboard.get_all_payments_terms",
+			"icon": "tick"
+		},
+		"Mode of Payment": {
+			"fields": [],
+			"method": "erpnext.startup.leaderboard.get_all_mode_of_payments",
+			"icon": "sell"
 		}
 	}
 
@@ -192,6 +202,37 @@ def get_all_sales_person(date_range, company, field = None, limit = 0):
 			and sales_order.company = %s
 			{date_condition}
 		group by sales_team.sales_person
+		order by value DESC
+		limit %s
+	""".format(date_condition=date_condition), (company, cint(limit)), as_dict=1)
+
+@frappe.whitelist()
+def get_all_payments_terms(date_range, company, field=None, limit=0):
+	date_condition = get_date_condition(date_range, 'sales_invoice.posting_date')
+
+	return frappe.db.sql("""
+		select ifnull(sales_invoice.payment_terms_template, 'No especificado') as name, Count(ifnull(sales_invoice.payment_terms_template, 'No especificado')) as value
+		from `tabSales Invoice` as sales_invoice
+		where sales_invoice.docstatus = 1
+			and sales_invoice.company = %s
+			{date_condition}
+		group by payment_terms_template
+		order by value DESC
+		limit %s
+	""".format(date_condition=date_condition), (company, cint(limit)), as_dict=1)
+
+@frappe.whitelist()
+def get_all_mode_of_payments(date_range, company, field=None, limit=0):
+	date_condition = get_date_condition(date_range, 'payment_entry.posting_date')
+
+	return frappe.db.sql("""
+		select ifnull(payment_entry.mode_of_payment, 'No especificado') as name, Count(ifnull(payment_entry.mode_of_payment, 'No especificado')) as value
+		from `tabPayment Entry` as payment_entry
+		where payment_entry.docstatus = 1
+			and payment_entry.payment_type != 'Internal Transfer'
+			and payment_entry.company = %s
+			{date_condition}
+		group by payment_entry.mode_of_payment
 		order by value DESC
 		limit %s
 	""".format(date_condition=date_condition), (company, cint(limit)), as_dict=1)
