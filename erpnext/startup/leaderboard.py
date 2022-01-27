@@ -211,7 +211,7 @@ def get_all_payments_terms(date_range, company, field=None, limit=0):
 	date_condition = get_date_condition(date_range, 'sales_invoice.posting_date')
 
 	return frappe.db.sql("""
-		select ifnull(sales_invoice.payment_terms_template, 'No espeficado') as name, Count(ifnull(sales_invoice.payment_terms_template, 'No espeficado')) as value
+		select ifnull(sales_invoice.payment_terms_template, 'No especificado') as name, Count(ifnull(sales_invoice.payment_terms_template, 'No especificado')) as value
 		from `tabSales Invoice` as sales_invoice
 		where sales_invoice.docstatus = 1
 			and sales_invoice.company = %s
@@ -226,7 +226,7 @@ def get_all_mode_of_payments(date_range, company, field=None, limit=0):
 	date_condition = get_date_condition(date_range, 'payment_entry.posting_date')
 
 	return frappe.db.sql("""
-		select ifnull(payment_entry.mode_of_payment, 'No espeficado') as name, Count(ifnull(payment_entry.mode_of_payment, 'No espeficado')) as value
+		select ifnull(payment_entry.mode_of_payment, 'No especificado') as name, Count(ifnull(payment_entry.mode_of_payment, 'No especificado')) as value
 		from `tabPayment Entry` as payment_entry
 		where payment_entry.docstatus = 1
 			and payment_entry.payment_type != 'Internal Transfer'
