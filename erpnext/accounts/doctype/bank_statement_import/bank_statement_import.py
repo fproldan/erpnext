@@ -19,6 +19,8 @@ from openpyxl.styles import Font
 from openpyxl.utils import get_column_letter
 from six import string_types
 
+INVALID_VALUES = ("", None)
+
 
 class BankStatementImport(DataImport):
 	def __init__(self, *args, **kwargs):
@@ -83,6 +85,20 @@ class BankStatementImport(DataImport):
 
 		return False
 
+
+def parse_data_from_template(raw_data):
+	data = []
+
+	for i, row in enumerate(raw_data):
+		if all(v in INVALID_VALUES for v in row):
+			# empty row
+			continue
+
+		data.append(row)
+
+	return data
+
+
 @frappe.whitelist()
 def get_preview_from_template(data_import, import_file=None, google_sheets_url=None):
 	return frappe.get_doc("Bank Statement Import", data_import).get_preview_from_template(
@@ -107,7 +123,8 @@ def start_import(data_import, bank_account, import_file_path, google_sheets_url,
 	file = import_file_path if import_file_path else google_sheets_url
 
 	import_file = ImportFile("Bank Transaction", file = file, import_type="Insert New Records")
-	data = import_file.raw_data
+
+	data = parse_data_from_template(import_file.raw_data)
 
 	if import_file_path:
 		add_bank_account(data, bank_account)
