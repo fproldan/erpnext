@@ -61,9 +61,10 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 					this.dialog.fields_dict.no_matching_vouchers.$wrapper.hide();
 					this.data = [];
 					data.forEach((row) => {
+						console.log(row)
 						const reference_date = row[5] ? row[5] : row[8];
 						this.data.push([
-							row[1],
+							__(row[1]),
 							row[2],
 							reference_date,
 							format_currency(row[3], row[9]),
