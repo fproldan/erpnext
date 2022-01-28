@@ -87,33 +87,33 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 	get_dt_columns() {
 		this.columns = [
 			{
-				name: "Document Type",
+				name: __("Document Type"),
 				editable: false,
 				width: 125,
 			},
 			{
-				name: "Document Name",
+				name: __("Document Name"),
 				editable: false,
 				width: 150,
 			},
 			{
-				name: "Reference Date",
+				name: __("Reference Date"),
 				editable: false,
 				width: 120,
 			},
 			{
-				name: "Amount",
+				name: __("Amount"),
 				editable: false,
 				width: 100,
 			},
 			{
-				name: "Party",
+				name: __("Party"),
 				editable: false,
 				width: 120,
 			},
 
 			{
-				name: "Reference Number",
+				name: __("Reference Number"),
 				editable: false,
 				width: 140,
 			},
