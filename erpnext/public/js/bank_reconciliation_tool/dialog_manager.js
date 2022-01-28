@@ -54,14 +54,12 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 			callback: (result) => {
 				const data = result.message;
 
-
 				if (data && data.length > 0) {
 					const proposals_wrapper = this.dialog.fields_dict.payment_proposals.$wrapper;
 					proposals_wrapper.show();
 					this.dialog.fields_dict.no_matching_vouchers.$wrapper.hide();
 					this.data = [];
 					data.forEach((row) => {
-						console.log(row)
 						const reference_date = row[5] ? row[5] : row[8];
 						this.data.push([
 							__(row[1]),
@@ -70,6 +68,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 							format_currency(row[3], row[9]),
 							row[6],
 							row[4],
+							row[1],
 						]);
 					});
 					this.get_dt_columns();
@@ -90,7 +89,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 			{
 				name: __("Document Type"),
 				editable: false,
-				width: 125,
+				width: 150,
 			},
 			{
 				name: __("Document Name"),
@@ -112,11 +111,15 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				editable: false,
 				width: 120,
 			},
-
 			{
 				name: __("Reference Number"),
 				editable: false,
 				width: 140,
+			},
+			{
+				name: __("DocType"),
+				editable: false,
+				width: 80,
 			},
 		];
 	}
@@ -499,7 +502,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 		let vouchers = [];
 		rows.forEach((x) => {
 			vouchers.push({
-				payment_doctype: x[2].content,
+				payment_doctype: x[8].content,
 				payment_name: x[3].content,
 				amount: x[5].content,
 			});
@@ -512,10 +515,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				vouchers: vouchers,
 			},
 			callback: (response) => {
-				const alert_string =
-					"Bank Transaction " +
-					this.bank_transaction.name +
-					" Matched";
+				const alert_string = "Bank Transaction " + this.bank_transaction.name + " conciliada";
 				frappe.show_alert(alert_string);
 				this.update_dt_cards(response.message);
 				this.dialog.hide();
@@ -539,10 +539,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				cost_center: values.cost_center,
 			},
 			callback: (response) => {
-				const alert_string =
-					"Bank Transaction " +
-					this.bank_transaction.name +
-					" added as Payment Entry";
+				const alert_string = "Transacción bancaria " + this.bank_transaction.name + " añadida como Entrada de Pago";
 				frappe.show_alert(alert_string);
 				this.update_dt_cards(response.message);
 				this.dialog.hide();
@@ -567,10 +564,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				cheque: values.cheque,
 			},
 			callback: (response) => {
-				const alert_string =
-					"Bank Transaction " +
-					this.bank_transaction.name +
-					" added as Journal Entry";
+				const alert_string = "Transacción bancaria " + this.bank_transaction.name + " añadida como Asiento Contable";
 				frappe.show_alert(alert_string);
 				this.update_dt_cards(response.message);
 				this.dialog.hide();
@@ -589,10 +583,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				party: values.party,
 			},
 			callback: (response) => {
-				const alert_string =
-					"Bank Transaction " +
-					this.bank_transaction.name +
-					" updated";
+				const alert_string = "Transacción bancaria " + this.bank_transaction.name + " editada";
 				frappe.show_alert(alert_string);
 				this.update_dt_cards(response.message);
 				this.dialog.hide();
