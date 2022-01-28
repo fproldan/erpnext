@@ -25,8 +25,7 @@ def after_install():
 	create_compact_item_print_custom_field()
 	create_print_uom_after_qty_custom_field()
 	create_print_zero_amount_taxes_custom_field()
-	create_print_sales_invoice_item_code_description()
-	create_print_sales_invoice_item_name_description()
+	create_sales_invoice_items_print_format_field()
 	add_all_roles_to("Administrator")
 	create_default_cash_flow_mapper_templates()
 	create_default_success_action()
@@ -95,25 +94,17 @@ def create_print_zero_amount_taxes_custom_field():
 	})
 
 
-def create_print_sales_invoice_item_code_description():
+def create_sales_invoice_items_print_format_field():
 	create_custom_field('Print Settings', {
-		'label': 'Imprimir código de producto y descripción',
-		'fieldname': 'print_sales_invoice_item_code_description',
-		'fieldtype': 'Check',
-		'default': 0,
-		'insert_after': 'print_taxes_with_zero_amount'
+		"default": "C\u00f3digo y Nombre del Art\u00edculo",
+		"fieldname": "sales_invoice_items_print_format",
+		"fieldtype": "Select",
+		"label": "Formato de rengl\u00f3n de factura de venta",
+		"options": "C\u00f3digo y Nombre del Art\u00edculo\nC\u00f3digo y Descripci\u00f3n del Art\u00edculo\nNombre y Descripci\u00f3n del Art\u00edculo",
+		"insert_after": 'print_taxes_with_zero_amount',
+		"translatable": 0
 	})
-
-
-def create_print_sales_invoice_item_name_description():
-	create_custom_field('Print Settings', {
-		'label': 'Imprimir nombre de producto y descripción',
-		'fieldname': 'print_sales_invoice_item_name_description',
-		'fieldtype': 'Check',
-		'default': 0,
-		'insert_after': 'print_sales_invoice_item_code_description'
-	})
-
+	frappe.db.set_value('Print Settings', None, 'sales_invoice_items_print_format', 'C\u00f3digo y Nombre del Art\u00edculo')
 
 def create_default_cash_flow_mapper_templates():
 	for mapper in DEFAULT_MAPPERS:

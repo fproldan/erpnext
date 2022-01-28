@@ -3,10 +3,9 @@
 
 import frappe
 
-from erpnext.setup.install import create_print_sales_invoice_item_code_description, create_print_sales_invoice_item_name_description
+from erpnext.setup.install import create_sales_invoice_items_print_format_field
 
 
 def execute():
-    create_print_sales_invoice_item_code_description()
-    create_print_sales_invoice_item_name_description()
+    create_sales_invoice_items_print_format_field()
     frappe.db.commit()
