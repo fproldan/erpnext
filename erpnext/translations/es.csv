@@ -8912,13 +8912,8 @@ Successfully Set Supplier,Proveedor establecido con éxito,
 Successfully deleted all transactions related to this company!,Todas las transacciones relacionadas con esta compañía han sido eliminadas correctamente.,
 Successfully imported {0} record.,Registro importado con éxito {0}.,
 Successfully imported {0} records.,Importados con éxito {0} registros.,
-<<<<<<< HEAD
 Successfully imported {0},Importado con éxito {0},
 Successfully updated {0},Editado con éxito {0},
-=======
-Successfully imported {0},Importado con éxito {0}.
-Successfully updated {0,Editado con éxito {0}.
->>>>>>> 5737e68f04 (trans: action in bank transaction tool)
 Successfully updated {0} record.,Se actualizó correctamente el registro {0}.,
 Successfully updated {0} records.,Se actualizaron satisfactoriamente {0} registros.,
 Suggestions,Sugerencias.,
