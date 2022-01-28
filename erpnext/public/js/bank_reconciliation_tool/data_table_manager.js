@@ -30,28 +30,28 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 	get_dt_columns() {
 		this.columns = [
 			{
-				name: "Date",
+				name: __("Date"),
 				editable: false,
 				width: 100,
 			},
 
 			{
-				name: "Party Type",
+				name: __("Party Type"),
 				editable: false,
 				width: 95,
 			},
 			{
-				name: "Party",
+				name: __("Party"),
 				editable: false,
 				width: 100,
 			},
 			{
-				name: "Description",
+				name: __("Description"),
 				editable: false,
 				width: 350,
 			},
 			{
-				name: "Deposit",
+				name: __("Deposit"),
 				editable: false,
 				width: 100,
 				format: (value) =>
@@ -60,7 +60,7 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 					"</span>",
 			},
 			{
-				name: "Withdrawal",
+				name: __("Withdrawal"),
 				editable: false,
 				width: 100,
 				format: (value) =>
@@ -69,7 +69,7 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 					"</span>",
 			},
 			{
-				name: "Unallocated Amount",
+				name: __("Unallocated Amount"),
 				editable: false,
 				width: 100,
 				format: (value) =>
@@ -78,12 +78,12 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 					"</span>",
 			},
 			{
-				name: "Reference Number",
+				name: __("Reference Number"),
 				editable: false,
 				width: 140,
 			},
 			{
-				name: "Actions",
+				name: __("Actions"),
 				editable: false,
 				sortable: false,
 				focusable: false,
@@ -109,8 +109,8 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 	format_row(row) {
 		return [
 			row["date"],
-			row["party_type"],
-			row["party"],
+			__(row["party_type"]),
+			__(row["party"]),
 			row["description"],
 			row["deposit"],
 			row["withdrawal"],

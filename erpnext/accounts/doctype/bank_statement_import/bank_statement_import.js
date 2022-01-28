@@ -165,25 +165,13 @@ frappe.ui.form.on("Bank Statement Import", {
 			if (frm.doc.import_type === "Insert New Records") {
 				message =
 					successful_records.length > 1
-						? __(
-							"Successfully imported {0} records out of {1}. Click on Export Errored Rows, fix the errors and import again.",
-							message_args
-						)
-						: __(
-							"Successfully imported {0} record out of {1}. Click on Export Errored Rows, fix the errors and import again.",
-							message_args
-						);
+						? __("Successfully imported {0} records out of {1}. Click on Export Errored Rows, fix the errors and import again.", message_args)
+						: __("Successfully imported {0} record out of {1}. Click on Export Errored Rows, fix the errors and import again.", message_args);
 			} else {
 				message =
 					successful_records.length > 1
-						? __(
-							"Successfully updated {0} records out of {1}. Click on Export Errored Rows, fix the errors and import again.",
-							message_args
-						)
-						: __(
-							"Successfully updated {0} record out of {1}. Click on Export Errored Rows, fix the errors and import again.",
-							message_args
-						);
+						? __("Successfully updated {0} records out of {1}. Click on Export Errored Rows, fix the errors and import again.", message_args)
+						: __("Successfully updated {0} record out of {1}. Click on Export Errored Rows, fix the errors and import again.", message_args);
 			}
 		}
 		frm.dashboard.set_headline(message);
@@ -453,25 +441,9 @@ frappe.ui.form.on("Bank Statement Import", {
 				let html = "";
 				if (log.success) {
 					if (frm.doc.import_type === "Insert New Records") {
-						html = __(
-							"Successfully imported {0}", [
-								`<span class="underline">${frappe.utils.get_form_link(
-									frm.doc.reference_doctype,
-									log.docname,
-									true
-								)}<span>`,
-							]
-						);
+						html = __("Successfully imported {0}", [`<span class="underline">${frappe.utils.get_form_link(frm.doc.reference_doctype,log.docname,true)}<span>`,]);
 					} else {
-						html = __(
-							"Successfully updated {0}", [
-								`<span class="underline">${frappe.utils.get_form_link(
-									frm.doc.reference_doctype,
-									log.docname,
-									true
-								)}<span>`,
-							]
-						);
+						html = __("Successfully updated {0}", [`<span class="underline">${frappe.utils.get_form_link(frm.doc.reference_doctype, log.docname, true)}<span>`,]);
 					}
 				} else {
 					let messages = log.messages
