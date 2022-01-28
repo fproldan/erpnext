@@ -151,8 +151,8 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				label: __("Action"),
 				fieldname: "action",
 				fieldtype: "Select",
-				options: `Match Against Voucher\nCreate Voucher\nUpdate Bank Transaction`,
-				default: "Match Against Voucher",
+				options: `Conciliar con comprobante\nCrear comprobante\nActualizar transacción bancaria`,
+				default: "Conciliar con comprobante",
 			},
 			{
 				fieldname: "column_break_4",
@@ -170,7 +170,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				fieldtype: "Section Break",
 				fieldname: "section_break_1",
 				label: __("Filters"),
-				depends_on: "eval:doc.action=='Match Against Voucher'",
+				depends_on: "eval:doc.action=='Conciliar con comprobante'",
 			},
 			{
 				fieldtype: "Check",
@@ -221,7 +221,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				fieldtype: "Section Break",
 				fieldname: "section_break_1",
 				label: __("Select Vouchers to Match"),
-				depends_on: "eval:doc.action=='Match Against Voucher'",
+				depends_on: "eval:doc.action=='Conciliar con comprobante'",
 			},
 			{
 				fieldtype: "HTML",
@@ -236,7 +236,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				fieldtype: "Section Break",
 				fieldname: "details",
 				label: __("Details"),
-				depends_on: "eval:doc.action!='Match Against Voucher'",
+				depends_on: "eval:doc.action!='Conciliar con comprobante'",
 			},
 			{
 				label: "Cheque",
@@ -478,7 +478,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 	}
 
 	reconciliation_dialog_primary_action(values) {
-		if (values.action == "Match Against Voucher") this.match(values);
+		if (values.action == "Conciliar con comprobante") this.match(values);
 		if (
 			values.action == "Create Voucher" &&
 			values.document_type == "Payment Entry"
@@ -515,7 +515,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				vouchers: vouchers,
 			},
 			callback: (response) => {
-				const alert_string = "Bank Transaction " + this.bank_transaction.name + " conciliada";
+				const alert_string = "Transacción bancaria " + this.bank_transaction.name + " conciliada";
 				frappe.show_alert(alert_string);
 				this.update_dt_cards(response.message);
 				this.dialog.hide();
