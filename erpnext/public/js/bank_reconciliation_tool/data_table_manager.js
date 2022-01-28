@@ -109,8 +109,8 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 	format_row(row) {
 		return [
 			row["date"],
-			row["party_type"],
-			row["party"],
+			__(row["party_type"]),
+			__(row["party"]),
 			row["description"],
 			row["deposit"],
 			row["withdrawal"],
