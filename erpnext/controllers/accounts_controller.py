@@ -68,6 +68,10 @@ class AccountsController(TransactionBase):
 
 	def get_print_settings(self):
 		print_setting_fields = []
+
+		if self.doctype == 'Sales Invoice':
+			print_setting_fields += ['sales_invoice_items_print_format']
+
 		items_field = self.meta.get_field('items')
 
 		if items_field and items_field.fieldtype == 'Table':
