@@ -22,6 +22,7 @@
   "party",
   "account_details_section",
   "iban",
+  "alias",
   "column_break_12",
   "branch_code",
   "bank_account_no",
@@ -205,10 +206,15 @@
    "fieldtype": "Data",
    "in_global_search": 1,
    "label": "Branch Code"
+  },
+  {
+   "fieldname": "alias",
+   "fieldtype": "Data",
+   "label": "Alias"
   }
  ],
  "links": [],
- "modified": "2020-10-23 16:48:06.303658",
+ "modified": "2022-01-26 09:51:49.761718",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Bank Account",

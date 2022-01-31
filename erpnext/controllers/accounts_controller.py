@@ -68,6 +68,10 @@ class AccountsController(TransactionBase):
 
 	def get_print_settings(self):
 		print_setting_fields = []
+
+		if self.doctype == 'Sales Invoice':
+			print_setting_fields += ['sales_invoice_items_print_format']
+
 		items_field = self.meta.get_field('items')
 
 		if items_field and items_field.fieldtype == 'Table':
@@ -998,7 +1002,7 @@ class AccountsController(TransactionBase):
 			if not item.get(item_ref_dn):
 				continue
 
-			ref_amt = flt(frappe.db.get_value(ref_dt + " Item",
+        ref_amt = flt(frappe.db.get_value(ref_dt + " Item",
 				item.get(item_ref_dn), based_on), self.precision(based_on, item))
 			if not ref_amt:
 				frappe.msgprint(
