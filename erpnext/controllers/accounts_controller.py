@@ -1002,7 +1002,7 @@ class AccountsController(TransactionBase):
 			if not item.get(item_ref_dn):
 				continue
 
-			ref_amt = flt(frappe.db.get_value(ref_dt + " Item",
+        ref_amt = flt(frappe.db.get_value(ref_dt + " Item",
 				item.get(item_ref_dn), based_on), self.precision(based_on, item))
 			if not ref_amt:
 				frappe.msgprint(
