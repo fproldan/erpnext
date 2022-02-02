@@ -264,6 +264,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				fieldname: "reference_number",
 				fieldtype: "Data",
 				label: __("Reference Number"),
+				mandatory_depends_on: "eval:doc.action=='Crear comprobante' && !(doc.journal_entry_type=='Cheque Depositado' || doc.journal_entry_type=='Cheque Rechazado' || doc.journal_entry_type=='Cheque Cobrado')",
 			},
 			{
 				default: "Today",
@@ -277,7 +278,9 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				fieldname: "reference_date",
 				fieldtype: "Date",
 				label: __("Cheque/Reference Date"),
+				mandatory_depends_on: "eval:doc.action=='Crear comprobante' && !(doc.journal_entry_type=='Cheque Depositado' || doc.journal_entry_type=='Cheque Rechazado' || doc.journal_entry_type=='Cheque Cobrado')",
 				depends_on: "eval:doc.action=='Crear comprobante'",
+				reqd: 1,
 			},
 			{
 				fieldname: "mode_of_payment",
