@@ -292,7 +292,6 @@ erpnext.patches.v13_0.rename_issue_status_hold_to_on_hold
 erpnext.patches.v13_0.bill_for_rejected_quantity_in_purchase_invoice
 erpnext.patches.v13_0.update_job_card_details
 erpnext.patches.v13_0.update_level_in_bom #1234sswef
-erpnext.patches.v13_0.create_gst_payment_entry_fields
 erpnext.patches.v13_0.add_missing_fg_item_for_stock_entry
 erpnext.patches.v13_0.update_subscription_status_in_memberships
 erpnext.patches.v13_0.update_amt_in_work_order_required_items
@@ -331,3 +330,4 @@ erpnext.patches.v13_0.delete_has_roles
 erpnext.patches.v13_0.create_mercadopago_domain
 erpnext.patches.v13_0.release_2_1
 erpnext.patches.v13_0.add_new_print_settings
+erpnext.patches.v13_0.delete_gst_payment_entry_fields
