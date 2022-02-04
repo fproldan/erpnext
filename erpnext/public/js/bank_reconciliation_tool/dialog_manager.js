@@ -264,11 +264,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				fieldname: "reference_number",
 				fieldtype: "Data",
 				label: __("Reference Number"),
-<<<<<<< HEAD
-				mandatory_depends_on: "eval:doc.action=='Create Voucher'",
-=======
 				mandatory_depends_on: "eval:doc.action=='Crear comprobante' && !(doc.journal_entry_type=='Cheque Depositado' || doc.journal_entry_type=='Cheque Rechazado' || doc.journal_entry_type=='Cheque Cobrado')",
->>>>>>> 0ddc6d564d (Campos obligatorios conciliación cheque (#69))
 			},
 			{
 				default: "Today",
@@ -282,13 +278,8 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				fieldname: "reference_date",
 				fieldtype: "Date",
 				label: __("Cheque/Reference Date"),
-<<<<<<< HEAD
-				mandatory_depends_on: "eval:doc.action=='Create Voucher'",
-				depends_on: "eval:doc.action=='Create Voucher'",
-=======
 				mandatory_depends_on: "eval:doc.action=='Crear comprobante' && !(doc.journal_entry_type=='Cheque Depositado' || doc.journal_entry_type=='Cheque Rechazado' || doc.journal_entry_type=='Cheque Cobrado')",
 				depends_on: "eval:doc.action=='Crear comprobante'",
->>>>>>> 0ddc6d564d (Campos obligatorios conciliación cheque (#69))
 				reqd: 1,
 			},
 			{
