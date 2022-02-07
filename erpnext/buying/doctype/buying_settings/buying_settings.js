@@ -2,9 +2,19 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Buying Settings', {
-	// refresh: function(frm) {
+	refresh: function(frm) {
+		frm.fields_dict["tipo_de_documento_proveedor"].get_query = function(doc){
+            return {
+                filters: {'activo': 1}
+            }
+        }
 
-	// }
+        frm.fields_dict["condicion_de_iva_proveedor"].get_query = function(doc){
+            return {
+                filters: {'activo': 1}
+            }
+        }
+	}
 });
 
 frappe.tour['Buying Settings'] = [
