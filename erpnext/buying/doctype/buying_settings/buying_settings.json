@@ -8,6 +8,8 @@
  "field_order": [
   "supp_master_name",
   "supplier_group",
+  "tipo_de_documento_proveedor",
+  "condicion_de_iva_proveedor",
   "buying_price_list",
   "maintain_same_rate_action",
   "role_to_override_stop_action",
@@ -116,6 +118,20 @@
    "fieldname": "bill_for_rejected_quantity_in_purchase_invoice",
    "fieldtype": "Check",
    "label": "Bill for Rejected Quantity in Purchase Invoice"
+  },
+  {
+   "fieldname": "tipo_de_documento_proveedor",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Tipo de Documento Predeterminado",
+   "options": "Tipo de Documento"
+  },
+  {
+   "fieldname": "condicion_de_iva_proveedor",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Condici\u00f3n de IVA Predeterminada",
+   "options": "Condicion de IVA"
   }
  ],
  "icon": "fa fa-cog",
@@ -123,7 +139,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2021-09-08 19:26:23.548837",
+ "modified": "2022-02-02 14:23:56.148585",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Buying Settings",
