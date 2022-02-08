@@ -574,7 +574,7 @@ frappe.ui.form.on('Stock Entry', {
 			frm.fields_dict.to_warehouse.get_query = function() {
 				return {
 					filters:{
-						'warehouse_type' : 'Transit',
+						'warehouse_type' : 'Tránsito',
 						'is_group': 0,
 						'company': frm.doc.company
 					}
