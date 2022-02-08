@@ -38,7 +38,7 @@ frappe.ui.form.on("Company", {
 		frm.set_query("default_in_transit_warehouse", function() {
 			return {
 				filters:{
-					'warehouse_type' : 'Transit',
+					'warehouse_type' : 'Tránsito',
 					'is_group': 0,
 					'company': frm.doc.company
 				}
