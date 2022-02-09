@@ -12,7 +12,15 @@ doctype_list = [
 ]
 
 def get_message(doctype):
-	return _("{0} has been submitted successfully").format(_(doctype))
+	doc_map = {
+		'Purchase Receipt': 'Recibo de compra',
+		'Purchase Invoice': 'Factura de compra',
+		'Quotation': 'Cotización',
+		'Sales Order': 'Órden de venta',
+		'Delivery Note': 'Nota de entrega',
+		'Sales Invoice': 'Factura de venta',
+	}
+	return f"{doc_map[doctype]} validada con éxito"
 
 def get_first_success_message(doctype):
 	return get_message(doctype)
