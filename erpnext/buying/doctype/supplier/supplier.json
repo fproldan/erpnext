@@ -110,7 +110,8 @@
   {
    "fieldname": "tax_id",
    "fieldtype": "Data",
-   "label": "Tax ID"
+   "label": "Tax ID",
+   "allow_in_quick_entry": 1
   },
   {
    "fieldname": "tax_category",
@@ -174,8 +175,7 @@
    "fieldname": "supplier_type",
    "fieldtype": "Select",
    "label": "Supplier Type",
-   "options": "Company\nIndividual",
-   "reqd": 1
+   "options": "Company\nIndividual"
   },
   {
    "fieldname": "pan",
@@ -439,7 +439,7 @@
    "link_fieldname": "party"
   }
  ],
- "modified": "2021-09-06 17:37:56.522233",
+ "modified": "2021-09-07 18:37:56.522233",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Supplier",
