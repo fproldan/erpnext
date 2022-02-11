@@ -448,8 +448,8 @@ email_brand_image = "assets/erpnext/images/erpnext-logo.jpg"
 default_mail_footer = """
 	<span>
 		Enviado por
-		<a class="text-muted" href="https://diamo.com.ar?source=via_email_footer" target="_blank">
-			DiamoERP
+		<a class="text-muted" href="https://jphlions.com?source=via_email_footer" target="_blank">
+			JPHLions
 		</a>
 	</span>
 """
