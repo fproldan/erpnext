@@ -5,7 +5,10 @@
 
 from __future__ import unicode_literals
 
-from frappe import _, throw
+from typing import Optional
+
+import requests
+from frappe import _, new_doc, throw
 from frappe.model.document import Document
 from frappe.utils import cint, formatdate, get_datetime_str, nowdate
 
@@ -34,3 +37,27 @@ class CurrencyExchange(Document):
 
 		if not cint(self.for_buying) and not cint(self.for_selling):
 			throw(_("Currency Exchange must be applicable for Buying or for Selling."))
+
+
+def get_currency_exchange_rate(from_currency: str, to_currency: str) -> Optional[float]:
+	if from_currency == "ARS" and to_currency == "USD":
+		for data in requests.get("https://www.dolarsi.com/api/api.php?type=valoresprincipales").json():
+			if data["casa"]["nombre"] == "Dolar Oficial":
+				return float(data["casa"]["venta"].replace(',', '.'))
+	if from_currency == "USD" and to_currency == "ARS":
+		for data in requests.get("https://www.dolarsi.com/api/api.php?type=valoresprincipales").json():
+			if data["casa"]["nombre"] == "Dolar Oficial":
+				return 1 / float(data["casa"]["compra"].replace(',', '.'))
+	return None
+
+
+def set_currency_exchange_rates(*args, **kwargs):
+	for from_currency, to_currency in (
+		("ARS", "USD"),
+		("USD", "ARS"),
+	):
+		currency_exchange = new_doc("Currency Exchange")
+		currency_exchange.from_currency = from_currency
+		currency_exchange.to_currency = to_currency
+		currency_exchange.exchange_rate = get_currency_exchange_rate(from_currency, to_currency)
+		currency_exchange.insert()
