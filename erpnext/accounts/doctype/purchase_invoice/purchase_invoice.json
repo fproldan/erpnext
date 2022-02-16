@@ -354,6 +354,7 @@
    "label": "Supplier Invoice Details"
   },
   {
+   "description": "Ej: 00001865",
    "fieldname": "bill_no",
    "fieldtype": "Data",
    "label": "Supplier Invoice No",

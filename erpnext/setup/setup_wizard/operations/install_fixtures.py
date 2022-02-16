@@ -294,6 +294,7 @@ def install(country=None):
 		# Warehouse Type
 		{'doctype': 'Warehouse Type', 'name': _('Interno')},
 		{'doctype': 'Warehouse Type', 'name': _('Externo')},
+		{'doctype': 'Warehouse Type', 'name': _('Tránsito')},
 	]
 
 	from erpnext.setup.setup_wizard.data.industry_type import get_industry_types
