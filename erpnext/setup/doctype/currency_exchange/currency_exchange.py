@@ -43,11 +43,11 @@ def get_currency_exchange_rate(from_currency: str, to_currency: str) -> Optional
 	if from_currency == "ARS" and to_currency == "USD":
 		for data in requests.get("https://www.dolarsi.com/api/api.php?type=valoresprincipales").json():
 			if data["casa"]["nombre"] == "Dolar Oficial":
-				return float(data["casa"]["venta"].replace(",", "."))
+				return 1 / float(data["casa"]["venta"].replace(",", "."))
 	if from_currency == "USD" and to_currency == "ARS":
 		for data in requests.get("https://www.dolarsi.com/api/api.php?type=valoresprincipales").json():
 			if data["casa"]["nombre"] == "Dolar Oficial":
-				return 1 / float(data["casa"]["compra"].replace(",", "."))
+				return float(data["casa"]["compra"].replace(",", "."))
 	return None
 
 
