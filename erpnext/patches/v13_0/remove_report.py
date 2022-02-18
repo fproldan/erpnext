@@ -10,4 +10,7 @@ def execute():
 
 def delete_report():
     frappe.flags.in_patch = True
+    frappe.db.set_value("Report", "Sales Payment Summary", "is_standard", "No")
+    frappe.db.commit()
     frappe.delete_doc('Report', 'Sales Payment Summary', ignore_missing=True, ignore_permissions=True)
+    frappe.db.commit()
