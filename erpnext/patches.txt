@@ -332,4 +332,4 @@ erpnext.patches.v13_0.add_new_print_settings
 erpnext.patches.v13_0.delete_gst_payment_entry_fields
 execute:frappe.db.delete("Custom DocPerm", {"parent": 'Mode of Payment'})
 erpnext.patches.v13_0.add_transit_warehouse_type
-execute:frappe.delete_doc('Report', 'Sales Payment Summary', ignore_missing=True)
+erpnext.patches.v13_0.remove_report
