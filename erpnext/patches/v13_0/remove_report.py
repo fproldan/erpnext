@@ -9,4 +9,5 @@ def execute():
 
 
 def delete_report():
+    frappe.flags.in_patch = True
     frappe.delete_doc('Report', 'Sales Payment Summary', ignore_missing=True, ignore_permissions=True)
