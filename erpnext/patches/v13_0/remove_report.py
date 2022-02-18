@@ -9,4 +9,4 @@ def execute():
 
 
 def delete_report():
-    frappe.delete_doc('Report', 'Sales Payment Summary', ignore_missing=True)
+    frappe.delete_doc('Report', 'Sales Payment Summary', ignore_missing=True, ignore_permissions=True)
