@@ -8,7 +8,8 @@ from __future__ import unicode_literals
 from typing import Optional
 
 import requests
-from frappe import _, new_doc, throw
+from frappe import _, db, new_doc, throw
+from frappe.exceptions import DuplicateEntryError
 from frappe.model.document import Document
 from frappe.utils import cint, formatdate, get_datetime_str, nowdate
 
@@ -40,13 +41,16 @@ class CurrencyExchange(Document):
 
 
 def get_currency_exchange_rate(from_currency: str, to_currency: str) -> Optional[float]:
-	if from_currency == "ARS" and to_currency == "USD":
+	if (from_currency == "ARS" and to_currency == "USD") or (
+		from_currency == "USD" and to_currency == "ARS"
+	):
+		exchange_rate_type = db.get_value("Currency", {"currency_name": "USD"}, "exchange_rate_type")
+		if not exchange_rate_type:
+			return None
 		for data in requests.get("https://www.dolarsi.com/api/api.php?type=valoresprincipales").json():
-			if data["casa"]["nombre"] == "Dolar Oficial":
-				return 1 / float(data["casa"]["venta"].replace(",", "."))
-	if from_currency == "USD" and to_currency == "ARS":
-		for data in requests.get("https://www.dolarsi.com/api/api.php?type=valoresprincipales").json():
-			if data["casa"]["nombre"] == "Dolar Oficial":
+			if data["casa"]["nombre"] == exchange_rate_type:
+				if from_currency == "ARS" and to_currency == "USD":
+					return 1 / float(data["casa"]["venta"].replace(",", "."))
 				return float(data["casa"]["compra"].replace(",", "."))
 	return None
 
@@ -56,8 +60,14 @@ def set_currency_exchange_rates(*args, **kwargs):
 		("ARS", "USD"),
 		("USD", "ARS"),
 	):
+		exchange_rate = get_currency_exchange_rate(from_currency, to_currency)
+		if not exchange_rate:
+			continue
 		currency_exchange = new_doc("Currency Exchange")
 		currency_exchange.from_currency = from_currency
 		currency_exchange.to_currency = to_currency
-		currency_exchange.exchange_rate = get_currency_exchange_rate(from_currency, to_currency)
-		currency_exchange.insert()
+		currency_exchange.exchange_rate = exchange_rate
+		try:
+			currency_exchange.insert()
+		except DuplicateEntryError:
+			pass
