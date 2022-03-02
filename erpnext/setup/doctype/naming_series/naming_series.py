@@ -65,7 +65,8 @@ class NamingSeries(Document):
 		self.set_series_for(self.select_doc_for_series, series_list)
 
 		# create series
-		map(self.insert_series, [d.split('.')[0] for d in series_list if d.strip()])
+		for serie in [d.split('.')[0] for d in series_list if d.strip()]:
+			self.insert_series(serie)
 
 		if show_message:
 			msgprint(_("Series Updated"))
