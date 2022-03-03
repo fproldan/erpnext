@@ -406,6 +406,7 @@ class Subscription(Document):
 		invoice.to_date = self.current_invoice_end
 
 		if cint(frappe.db.get_single_value('Global Defaults', 'disable_rounded_total')):
+			invoice.disable_rounded_total = 1
 			invoice.rounded_total = 0
 			invoice.base_rounded_total = 0
 
