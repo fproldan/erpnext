@@ -60,7 +60,7 @@ def get_currency_exchange_rate(from_currency: str, to_currency: str) -> Optional
 
 
 def set_currency_exchange_rates(*args, **kwargs):
-	for currency_pair in list(
+	for currency_pair in tuple(
 		itertools.product(
 			("ARS",), get_all("Currency", {"exchange_rate_type": ("!=", "")}, pluck="name")
 		)
