@@ -5,10 +5,11 @@
 
 from __future__ import unicode_literals
 
+import itertools
 from typing import Optional
 
 import requests
-from frappe import _, db, new_doc, throw
+from frappe import _, db, get_all, new_doc, throw
 from frappe.exceptions import DuplicateEntryError
 from frappe.model.document import Document
 from frappe.utils import cint, formatdate, get_datetime_str, nowdate
@@ -41,33 +42,38 @@ class CurrencyExchange(Document):
 
 
 def get_currency_exchange_rate(from_currency: str, to_currency: str) -> Optional[float]:
-	if (from_currency == "ARS" and to_currency == "USD") or (
-		from_currency == "USD" and to_currency == "ARS"
-	):
-		exchange_rate_type = db.get_value("Currency", {"currency_name": "USD"}, "exchange_rate_type")
-		if not exchange_rate_type:
-			return None
-		for data in requests.get("https://www.dolarsi.com/api/api.php?type=valoresprincipales").json():
-			if data["casa"]["nombre"] == exchange_rate_type:
-				if from_currency == "ARS" and to_currency == "USD":
-					return 1 / float(data["casa"]["venta"].replace(",", "."))
-				return float(data["casa"]["compra"].replace(",", "."))
-	return None
+	exchange_rate_type = db.get_value(
+		"Currency",
+		{"currency_name": to_currency if from_currency == "ARS" else from_currency},
+		"exchange_rate_type",
+	)
+	return next(
+		(
+			1 / float(data["casa"]["venta"].replace(",", "."))
+			if from_currency == "ARS"
+			else float(data["casa"]["compra"].replace(",", "."))
+			for data in requests.get("https://www.dolarsi.com/api/api.php?type=valoresprincipales").json()
+			if data["casa"]["nombre"] == exchange_rate_type
+		),
+		None,
+	)
 
 
 def set_currency_exchange_rates(*args, **kwargs):
-	for from_currency, to_currency in (
-		("ARS", "USD"),
-		("USD", "ARS"),
+	for currency_pair in list(
+		itertools.product(
+			("ARS",), get_all("Currency", {"exchange_rate_type": ("!=", "")}, pluck="name")
+		)
 	):
-		exchange_rate = get_currency_exchange_rate(from_currency, to_currency)
-		if not exchange_rate:
-			continue
-		currency_exchange = new_doc("Currency Exchange")
-		currency_exchange.from_currency = from_currency
-		currency_exchange.to_currency = to_currency
-		currency_exchange.exchange_rate = exchange_rate
-		try:
-			currency_exchange.insert()
-		except DuplicateEntryError:
-			pass
+		for from_currency, to_currency in (currency_pair, currency_pair[::-1]):
+			exchange_rate = get_currency_exchange_rate(from_currency, to_currency)
+			if exchange_rate is None:
+				continue
+			currency_exchange = new_doc("Currency Exchange")
+			currency_exchange.from_currency = from_currency
+			currency_exchange.to_currency = to_currency
+			currency_exchange.exchange_rate = exchange_rate
+			try:
+				currency_exchange.insert()
+			except DuplicateEntryError:
+				pass
