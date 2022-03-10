@@ -24,8 +24,11 @@
   "employee",
   "delivery_service_stops",
   "delivery_stops",
+  "section_break_18",
   "calculate_arrival_time",
   "optimize_route",
+  "column_break_20",
+  "route",
   "section_break_15",
   "status",
   "cb_more_info",
@@ -127,7 +130,6 @@
    "description": "Use Google Maps Direction API to calculate estimated arrival times",
    "fieldname": "calculate_arrival_time",
    "fieldtype": "Button",
-   "hidden": 0,
    "label": "Calculate Estimated Arrival Times"
   },
   {
@@ -135,8 +137,7 @@
    "description": "Use Google Maps Direction API to optimize route",
    "fieldname": "optimize_route",
    "fieldtype": "Button",
-   "label": "Optimize Route",
-   "hidden": 0
+   "label": "Optimize Route"
   },
   {
    "allow_on_submit": 1,
@@ -187,11 +188,26 @@
    "label": "Employee",
    "options": "Employee",
    "read_only": 1
+  },
+  {
+   "fieldname": "column_break_20",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "route",
+   "fieldtype": "Geolocation",
+   "label": "Ruta"
+  },
+  {
+   "fieldname": "section_break_18",
+   "fieldtype": "Section Break",
+   "hide_border": 1
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-08-11 21:21:36.610142",
+ "modified": "2022-03-10 17:13:52.055385",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Delivery Trip",
@@ -229,6 +245,7 @@
   }
  ],
  "restrict_to_domain": "WMS",
+ "route": "app/doctype/Delivery%20Trip",
  "sort_field": "modified",
  "sort_order": "DESC",
  "title_field": "driver_name"

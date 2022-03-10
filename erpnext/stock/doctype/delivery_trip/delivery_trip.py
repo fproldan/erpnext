@@ -110,6 +110,8 @@ class DeliveryTrip(Document):
 
 		# For locks, maintain idx count while looping through route list
 		idx = 0
+		start_location = {}
+
 		for route in route_list:
 			directions = self.get_directions(route, optimize)
 
@@ -122,6 +124,9 @@ class DeliveryTrip(Document):
 
 				# Google Maps returns the legs in the optimized order
 				for leg in legs:
+					if not start_location:
+						start_location = leg.get("start_location", {})
+
 					delivery_stop = self.delivery_stops[idx]
 
 					delivery_stop.lat, delivery_stop.lng = leg.get("end_location", {}).values()
@@ -145,7 +150,35 @@ class DeliveryTrip(Document):
 			else:
 				idx += len(route) - 1
 
+		self.generate_route(start_location)
 		self.save()
+
+	def generate_route(self, start_location):
+		import requests
+		import json
+
+		geo_list = ["{},{}".format(str(start_location.get("lng", "")), str(start_location.get("lat", "")))]
+		sorted_directions = sorted(self.delivery_stops, key = lambda i: (i.idx)) 
+		
+		for direction in sorted_directions:
+			direction_lat_lon = "{},{}".format(str(direction.lng), str(direction.lat))
+			if direction_lat_lon != geo_list[-1]:
+				geo_list.append(direction_lat_lon)
+
+		webservice = "http://router.project-osrm.org/route/v1/driving/{coord}"
+
+		try:
+			response = requests.get(webservice.format(coord=";".join(geo_list)), params={"alternatives": "false", "geometries": "geojson"})
+
+			if response.status_code != 200:
+				self.route = '{"type":"FeatureCollection","features":[]}'
+			else:
+				response = response.json()
+				result_route = response.get("routes", [{}])[0].get("geometry", {})
+				to_jsonify = {"type": "Feature", "geometry": result_route}
+				self.route = json.dumps(to_jsonify)
+		except Exception as e:
+			self.route = '{"type":"FeatureCollection","features":[]}'
 
 	def form_route_list(self, optimize):
 		"""
