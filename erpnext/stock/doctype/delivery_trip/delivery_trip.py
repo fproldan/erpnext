@@ -19,9 +19,12 @@ class DeliveryTrip(Document):
 		super(DeliveryTrip, self).__init__(*args, **kwargs)
 
 		# Google Maps returns distances in meters by default
-		self.default_distance_uom = frappe.db.get_single_value("Global Defaults", "default_distance_unit") or "Meter"
-		self.uom_conversion_factor = frappe.db.get_value("UOM Conversion Factor",
-			{"from_uom": "Meter", "to_uom": self.default_distance_uom}, "value")
+		self.default_distance_uom = frappe.db.get_single_value("Global Defaults", "default_distance_unit") or "Metros"
+		self.uom_conversion_factor = frappe.db.get_value("UOM Conversion Factor", {"from_uom": "Metros", "to_uom": self.default_distance_uom}, "value")
+
+		if not self.uom_conversion_factor:
+			frappe.throw(f"Debe completar el Factor de Conversión de Unidad de Medida de Metros a {self.default_distance_uom}.")
+
 
 	def validate(self):
 		self.validate_stop_addresses()
@@ -220,13 +223,13 @@ class DeliveryTrip(Document):
 		Returns:
 			(dict): Route legs and, if `optimize` is `True`, optimized waypoint order
 		"""
-		if not frappe.db.get_single_value("Google Settings", "api_key"):
-			frappe.throw(_("Enter API key in Google Settings."))
+		if not frappe.conf.google_maps_api_key:
+			frappe.throw("Funcionalidad no habilitada, consulte con soporte.")
 
 		import googlemaps
 
 		try:
-			maps_client = googlemaps.Client(key=frappe.db.get_single_value("Google Settings", "api_key"))
+			maps_client = googlemaps.Client(key=frappe.conf.google_maps_api_key)
 		except Exception as e:
 			frappe.throw(e)
 
