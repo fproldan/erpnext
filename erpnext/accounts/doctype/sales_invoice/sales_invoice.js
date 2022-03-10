@@ -47,10 +47,6 @@ erpnext.accounts.SalesInvoiceController = erpnext.selling.SellingController.exte
 
 		this.frm.toggle_reqd("due_date", !this.frm.doc.is_return);
 
-		if (this.frm.doc.is_return) {
-			this.frm.return_print_format = "Sales Invoice Return";
-		}
-
 		this.show_general_ledger();
 
 		if(doc.update_stock) this.show_stock_ledger();
