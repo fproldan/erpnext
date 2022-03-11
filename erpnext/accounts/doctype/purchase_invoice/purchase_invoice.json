@@ -354,6 +354,7 @@
    "label": "Supplier Invoice Details"
   },
   {
+   "description": "Ej: 00001865",
    "fieldname": "bill_no",
    "fieldtype": "Data",
    "label": "Supplier Invoice No",
@@ -1404,7 +1405,7 @@
  "idx": 204,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-01-27 13:45:54.302677",
+ "modified": "2022-02-02 11:32:00.412591",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Purchase Invoice",

@@ -234,7 +234,7 @@
    "fieldtype": "Section Break"
   },
   {
-   "depends_on": "eval: doc.warehouse_type !== 'Transit';",
+   "depends_on": "eval: doc.warehouse_type !== 'Tránsito';",
    "fieldname": "default_in_transit_warehouse",
    "fieldtype": "Link",
    "label": "Default In-Transit Warehouse",

@@ -7,6 +7,10 @@ frappe.ui.form.SupplierQuickEntryForm = class SupplierQuickEntryForm extends fra
 	}
 
 	render_dialog() {
+		// Set tax_id in second place
+		var tax_id = this.mandatory.splice(2, 1);
+		this.mandatory.splice(1, 0, tax_id[0]);
+
 		this.mandatory = this.mandatory.concat(this.get_variant_fields());
 		super.render_dialog();
 	}
@@ -60,9 +64,10 @@ frappe.ui.form.SupplierQuickEntryForm = class SupplierQuickEntryForm extends fra
 				fieldtype: "Data"
 			},
 			{
-				label: __("State"),
-				fieldname: "state",
-				fieldtype: "Data"
+				label: __("Jurisdicción"),
+				fieldname: "jurisdiccion",
+				fieldtype: "Link",
+				options: "Jurisdiccion"
 			},
 			{
 				label: __("Country"),
