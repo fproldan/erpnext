@@ -68,7 +68,7 @@ def get_columns():
 			"label": _("Payment Document"),
 			"fieldtype": "Dynamic Link",
 			"options": "payment_document",
-			"width": 220
+			"width": 270
 		},
 		{
 			"fieldname": "debit",
