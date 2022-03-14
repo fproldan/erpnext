@@ -171,9 +171,7 @@ class DeliveryTrip(Document):
 				self.route = '{"type":"FeatureCollection","features":[]}'
 			else:
 				response = response.json()
-				result_route = response.get("routes", [{}])[0].get("geometry", {})
-				to_jsonify = {"type": "Feature", "geometry": result_route}
-				self.route = json.dumps(to_jsonify)
+				self.route = json.dumps({"type": "Feature", "geometry": response.get("routes", [{}])[0].get("geometry", {})})
 		except Exception as e:
 			self.route = '{"type":"FeatureCollection","features":[]}'
 
