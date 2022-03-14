@@ -158,9 +158,8 @@ class DeliveryTrip(Document):
 		import json
 
 		geo_list = [f"{start_location.get('lng', '')},{start_location.get('lat', '')}"]
-		sorted_directions = sorted(self.delivery_stops, key = lambda i: (i.idx)) 
-		
-		for direction in sorted_directions:
+
+		for direction in sorted(self.delivery_stops, key = lambda i: (i.idx)):
 			direction_lat_lon = f"{direction.lng},{direction.lat}"
 			if direction_lat_lon != geo_list[-1]:
 				geo_list.append(direction_lat_lon)
