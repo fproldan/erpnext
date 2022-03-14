@@ -165,10 +165,8 @@ class DeliveryTrip(Document):
 			if direction_lat_lon != geo_list[-1]:
 				geo_list.append(direction_lat_lon)
 
-		webservice = "http://router.project-osrm.org/route/v1/driving/{coord}"
-
 		try:
-			response = requests.get(webservice.format(coord=";".join(geo_list)), params={"alternatives": "false", "geometries": "geojson"})
+			response = requests.get("http://router.project-osrm.org/route/v1/driving/{coord}".format(coord=";".join(geo_list)), params={"alternatives": "false", "geometries": "geojson"})
 
 			if response.status_code != 200:
 				self.route = '{"type":"FeatureCollection","features":[]}'
