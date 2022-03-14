@@ -400,6 +400,14 @@ def add_uom_data():
 		uom.save()
 	frappe.db.commit()
 
+	doc = frappe.new_doc("UOM Conversion Factor")
+	doc.category = "Length"
+	doc.from_uom = "Metros"
+	doc.to_uom = "Metros"
+	doc.value = 1
+	doc.save()
+	frappe.db.commit()
+
 def add_market_segments():
 	records = [
 		# Market Segments
