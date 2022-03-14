@@ -157,11 +157,11 @@ class DeliveryTrip(Document):
 		import requests
 		import json
 
-		geo_list = ["{},{}".format(str(start_location.get("lng", "")), str(start_location.get("lat", "")))]
+		geo_list = [f"{start_location.get('lng', '')},{start_location.get('lat', '')}"]
 		sorted_directions = sorted(self.delivery_stops, key = lambda i: (i.idx)) 
 		
 		for direction in sorted_directions:
-			direction_lat_lon = "{},{}".format(str(direction.lng), str(direction.lat))
+			direction_lat_lon = f"{direction.lng},{direction.lat}"
 			if direction_lat_lon != geo_list[-1]:
 				geo_list.append(direction_lat_lon)
 
