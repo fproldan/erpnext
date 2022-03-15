@@ -972,7 +972,7 @@ erpnext.TransactionController = erpnext.taxes_and_totals.extend({
 
 				if ((this.frm.doc.payment_schedule || []).length) {
 					message2 = __("Payment Schedule Table");
-					if (message1.length !== 0) message2 = __(" and ") + message2;
+					if (message1.length !== 0) message2 = " " + __("and") + " " + message2;
 					final_message = final_message + message2;
 				}
 				frappe.msgprint(final_message);
