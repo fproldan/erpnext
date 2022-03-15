@@ -33,7 +33,6 @@ erpnext.selling.POSInvoiceController = erpnext.selling.SellingController.extend(
 		}
 
 		if (doc.is_return && doc.__islocal) {
-			this.frm.return_print_format = "Sales Invoice Return";
 			this.frm.set_value('consolidated_invoice', '');
 		}
 	},
