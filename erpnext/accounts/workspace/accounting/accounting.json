@@ -450,16 +450,6 @@
    "type": "Link"
   },
   {
-   "dependencies": "Sales Invoice",
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Sales Payment Summary",
-   "link_to": "Sales Payment Summary",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
    "dependencies": "Address",
    "hidden": 0,
    "is_query_report": 1,
@@ -1097,7 +1087,7 @@
    "type": "Link"
   }
  ],
- "modified": "2021-10-09 09:32:26.950686",
+ "modified": "2021-10-10 09:32:26.950686",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Accounting",
