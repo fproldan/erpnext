@@ -841,7 +841,7 @@
    "type": "Link"
   }
  ],
- "modified": "2021-06-12 13:36:15.413819",
+ "modified": "2021-06-13 13:36:15.413819",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "HR",
@@ -881,12 +881,5 @@
    "link_to": "Monthly Attendance Sheet",
    "type": "Report"
   },
-  {
-   "format": "{} Open",
-   "label": "Dashboard",
-   "link_to": "Human Resource",
-   "stats_filter": "{\n    \"status\": \"Open\"\n}",
-   "type": "Dashboard"
-  }
  ]
 }
