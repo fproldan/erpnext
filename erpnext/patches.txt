@@ -332,3 +332,7 @@ erpnext.patches.v13_0.add_new_print_settings
 erpnext.patches.v13_0.delete_gst_payment_entry_fields
 execute:frappe.db.delete("Custom DocPerm", {"parent": 'Mode of Payment'})
 erpnext.patches.v13_0.add_transit_warehouse_type
+erpnext.patches.v13_0.remove_report
+execute:frappe.delete_doc("Print Format", "Sales Invoice Return")
+execute:frappe.delete_doc("Print Format", "Sales Auditing Voucher")
+erpnext.patches.v13_0.release_1_3
