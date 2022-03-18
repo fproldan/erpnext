@@ -336,3 +336,4 @@ erpnext.patches.v13_0.remove_report
 execute:frappe.delete_doc("Print Format", "Sales Invoice Return")
 execute:frappe.delete_doc("Print Format", "Sales Auditing Voucher")
 erpnext.patches.v13_0.release_1_3
+erpnext.patches.v13_0.fix_workspace_links
