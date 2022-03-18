@@ -148,7 +148,7 @@ class DeliveryTrip(Document):
 					for leg in directions.get("legs"))  # in meters
 				self.total_distance = total_distance * self.uom_conversion_factor
 			else:
-				idx += len(route) - 1
+				frappe.throw(f"La dirección {self.delivery_stops[idx].address} no es válida")
 
 		self.generate_route(start_location)
 		self.save()
@@ -271,7 +271,7 @@ class DeliveryTrip(Document):
 		try:
 			directions = maps_client.directions(**directions_data)
 		except Exception as e:
-			frappe.throw(_(str(e)))
+			frappe.throw("No se encontraron algunas direcciones")
 
 		return directions[0] if directions else False
 
