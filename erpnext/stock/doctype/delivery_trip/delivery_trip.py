@@ -148,7 +148,7 @@ class DeliveryTrip(Document):
 					for leg in directions.get("legs"))  # in meters
 				self.total_distance = total_distance * self.uom_conversion_factor
 			else:
-				frappe.throw(f"La dirección {self.delivery_stops[idx].address} no es válida")
+				frappe.throw(f"Existen direcciones inválidas")
 
 		self.generate_route(start_location)
 		self.save()
