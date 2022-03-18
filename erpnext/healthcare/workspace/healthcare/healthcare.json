@@ -576,11 +576,6 @@
    "label": "Patient History",
    "link_to": "patient_history",
    "type": "Page"
-  },
-  {
-   "label": "Dashboard",
-   "link_to": "Healthcare",
-   "type": "Dashboard"
   }
  ]
 }

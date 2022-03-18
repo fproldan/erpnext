@@ -240,12 +240,6 @@
    "label": "Loan",
    "link_to": "Loan",
    "type": "DocType"
-  },
-  {
-   "doc_view": "",
-   "label": "Dashboard",
-   "link_to": "Loan Dashboard",
-   "type": "Dashboard"
   }
  ]
 }

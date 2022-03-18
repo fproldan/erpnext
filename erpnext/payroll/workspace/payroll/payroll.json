@@ -322,11 +322,6 @@
    "label": "Salary Register",
    "link_to": "Salary Register",
    "type": "Report"
-  },
-  {
-   "label": "Dashboard",
-   "link_to": "Payroll",
-   "type": "Dashboard"
   }
  ]
 }
