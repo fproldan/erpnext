@@ -9,3 +9,4 @@ def execute():
 		DELETE FROM `tabWorkspace Link`
 		WHERE type = "Dashboard" AND link_to in ("Education", "Healthcare", "Human Resource", "Loan Dashboard", "Manufacturing", "Payroll");
 	""")
+	frappe.db.commit()
