@@ -48,9 +48,9 @@ class TestPaymentTermsStatusForSalesOrder(ERPNextTestCase):
 			template.insert()
 		self.template = template
 
-	def test_payment_terms_status(self):
+	def test_01_payment_terms_status(self):
 		self.create_payment_terms_template()
-		item = create_item(item_code="_Test Excavator", is_stock_item=0)
+		item = create_item(item_code="_Test Excavator 1", is_stock_item=0)
 		so = make_sales_order(
 			transaction_date="2021-06-15",
 			delivery_date=add_days("2021-06-15", -30),
@@ -78,13 +78,14 @@ class TestPaymentTermsStatusForSalesOrder(ERPNextTestCase):
 				"company": "_Test Company",
 				"period_start_date": "2021-06-01",
 				"period_end_date": "2021-06-30",
-				"sales_order": [so.name],
+				"item": item.item_code,
 			}
 		)
 
 		expected_value = [
 			{
 				"name": so.name,
+				"customer": so.customer,
 				"submitted": datetime.date(2021, 6, 15),
 				"status": "Completed",
 				"payment_term": None,
@@ -98,6 +99,7 @@ class TestPaymentTermsStatusForSalesOrder(ERPNextTestCase):
 			},
 			{
 				"name": so.name,
+				"customer": so.customer,
 				"submitted": datetime.date(2021, 6, 15),
 				"status": "Partly Paid",
 				"payment_term": None,
@@ -128,11 +130,11 @@ class TestPaymentTermsStatusForSalesOrder(ERPNextTestCase):
 			})
 			doc.insert()
 
-	def test_alternate_currency(self):
+	def test_02_alternate_currency(self):
 		transaction_date = "2021-06-15"
 		self.create_payment_terms_template()
 		self.create_exchange_rate(transaction_date)
-		item = create_item(item_code="_Test Excavator", is_stock_item=0)
+		item = create_item(item_code="_Test Excavator 2", is_stock_item=0)
 		so = make_sales_order(
 			transaction_date=transaction_date,
 			currency="USD",
@@ -162,7 +164,7 @@ class TestPaymentTermsStatusForSalesOrder(ERPNextTestCase):
 				"company": "_Test Company",
 				"period_start_date": "2021-06-01",
 				"period_end_date": "2021-06-30",
-				"sales_order": [so.name],
+				"item": item.item_code,
 			}
 		)
 
@@ -170,6 +172,7 @@ class TestPaymentTermsStatusForSalesOrder(ERPNextTestCase):
 		expected_value = [
 			{
 				"name": so.name,
+				"customer": so.customer,
 				"submitted": datetime.date(2021, 6, 15),
 				"status": "Completed",
 				"payment_term": None,
@@ -183,6 +186,7 @@ class TestPaymentTermsStatusForSalesOrder(ERPNextTestCase):
 			},
 			{
 				"name": so.name,
+				"customer": so.customer,
 				"submitted": datetime.date(2021, 6, 15),
 				"status": "Partly Paid",
 				"payment_term": None,
