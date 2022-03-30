@@ -19,9 +19,12 @@ class DeliveryTrip(Document):
 		super(DeliveryTrip, self).__init__(*args, **kwargs)
 
 		# Google Maps returns distances in meters by default
-		self.default_distance_uom = frappe.db.get_single_value("Global Defaults", "default_distance_unit") or "Meter"
-		self.uom_conversion_factor = frappe.db.get_value("UOM Conversion Factor",
-			{"from_uom": "Meter", "to_uom": self.default_distance_uom}, "value")
+		self.default_distance_uom = frappe.db.get_single_value("Global Defaults", "default_distance_unit") or "Metros"
+		self.uom_conversion_factor = frappe.db.get_value("UOM Conversion Factor", {"from_uom": "Metros", "to_uom": self.default_distance_uom}, "value")
+
+		if not self.uom_conversion_factor:
+			frappe.throw(f"Debe completar el Factor de Conversión de Unidad de Medida de Metros a {self.default_distance_uom}.")
+
 
 	def validate(self):
 		self.validate_stop_addresses()
@@ -107,6 +110,8 @@ class DeliveryTrip(Document):
 
 		# For locks, maintain idx count while looping through route list
 		idx = 0
+		start_location = {}
+
 		for route in route_list:
 			directions = self.get_directions(route, optimize)
 
@@ -119,6 +124,9 @@ class DeliveryTrip(Document):
 
 				# Google Maps returns the legs in the optimized order
 				for leg in legs:
+					if not start_location:
+						start_location = leg.get("start_location", {})
+
 					delivery_stop = self.delivery_stops[idx]
 
 					delivery_stop.lat, delivery_stop.lng = leg.get("end_location", {}).values()
@@ -140,9 +148,32 @@ class DeliveryTrip(Document):
 					for leg in directions.get("legs"))  # in meters
 				self.total_distance = total_distance * self.uom_conversion_factor
 			else:
-				idx += len(route) - 1
+				frappe.throw(f"Existen direcciones inválidas")
 
+		self.generate_route(start_location)
 		self.save()
+
+	def generate_route(self, start_location):
+		import requests
+		import json
+
+		geo_list = [f"{start_location.get('lng', '')},{start_location.get('lat', '')}"]
+
+		for direction in sorted(self.delivery_stops, key = lambda i: (i.idx)):
+			direction_lat_lon = f"{direction.lng},{direction.lat}"
+			if direction_lat_lon != geo_list[-1]:
+				geo_list.append(direction_lat_lon)
+
+		try:
+			response = requests.get("http://router.project-osrm.org/route/v1/driving/{coord}".format(coord=";".join(geo_list)), params={"alternatives": "false", "geometries": "geojson"})
+
+			if response.status_code != 200:
+				self.route = '{"type":"FeatureCollection","features":[]}'
+			else:
+				response = response.json()
+				self.route = json.dumps({"type": "Feature", "geometry": response.get("routes", [{}])[0].get("geometry", {})})
+		except Exception as e:
+			self.route = '{"type":"FeatureCollection","features":[]}'
 
 	def form_route_list(self, optimize):
 		"""
@@ -220,13 +251,13 @@ class DeliveryTrip(Document):
 		Returns:
 			(dict): Route legs and, if `optimize` is `True`, optimized waypoint order
 		"""
-		if not frappe.db.get_single_value("Google Settings", "api_key"):
-			frappe.throw(_("Enter API key in Google Settings."))
+		if not frappe.conf.google_maps_api_key:
+			frappe.throw("Funcionalidad no habilitada, consulte con soporte.")
 
 		import googlemaps
 
 		try:
-			maps_client = googlemaps.Client(key=frappe.db.get_single_value("Google Settings", "api_key"))
+			maps_client = googlemaps.Client(key=frappe.conf.google_maps_api_key)
 		except Exception as e:
 			frappe.throw(e)
 
@@ -240,7 +271,7 @@ class DeliveryTrip(Document):
 		try:
 			directions = maps_client.directions(**directions_data)
 		except Exception as e:
-			frappe.throw(_(str(e)))
+			frappe.throw("No se encontraron algunas direcciones")
 
 		return directions[0] if directions else False
 
