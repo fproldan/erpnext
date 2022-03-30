@@ -72,9 +72,20 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 				width: 100,
 			},
 			{
-				name: __("Matcheo"),
+				name: __("Matcheo Tipo"),
+				editable: false,
+				width: 100,
+			},
+			{
+				name: __("Matcheo Nombre"),
 				editable: false,
 				width: 180,
+			},
+			{
+				name: __("Matcheo Importe"),
+				editable: false,
+				width: 100,
+				format: (value) => format_currency(value, this.currency) 
 			},
 			{
 				name: __("Actions"),
@@ -103,9 +114,13 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 	format_row(row) {
 		// (1, 'Payment Entry', 'ACC-PAY-2021-00027', 1110.0, '1', datetime.date(2021, 7, 27), 'Proveedor 1', 'Supplier', datetime.date(2021, 7, 27), 'ARS')
 		if (row["linked_payment"]) {
-			var linked_payment = row["linked_payment"][2];
+			var matcheo_dt = row["linked_payment"][1];
+			var matcheo_name = row["linked_payment"][2];
+			var matcheo_amount = row["linked_payment"][3];
 		} else {
-			var linked_payment = null;
+			var matcheo_dt = null;
+			var matcheo_name = null;
+			var matcheo_amount = null;
 		}
 		return [
 			row["date"],
@@ -114,7 +129,9 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 			row["withdrawal"],
 			row["unallocated_amount"],
 			row["reference_number"],
-			linked_payment,
+			matcheo_dt,
+			matcheo_name,
+			matcheo_amount,
 			`
 			<Button class="btn btn-primary btn-xs center"  data-name = ${row["name"]} >
 				Acciones
@@ -133,13 +150,7 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 			inlineFilters: true,
 			events: {
 				onCheckRow: function(data) {
-					let row_values = data.slice(3,length-1).map(function (column) {
-						return column.content;
-					})
-					console.log(row_values);
-
-					const checked_items = me.get_checked_indexes();
-
+					var checked_items = me.get_checked_indexes();
 					if (checked_items.length) {
 						cur_frm.conciliar_seleccionados_button.show();
 					} else {

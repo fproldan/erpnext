@@ -44,14 +44,33 @@ frappe.ui.form.on("Bank Reconciliation Tool", {
 		);
 
 		frm.conciliar_seleccionados_button = frm.page.add_button(
-			"Conciliar seleccionados",() => {
+			"Conciliar seleccionados", 
+			() => {
 				var checked_indexes = frm.bank_reconciliation_data_table_manager.get_checked_indexes();
 				var rows = frm.bank_reconciliation_data_table_manager.datatable.getRows();
-				checked_indexes.each((i, idx) => {
-					console.log(rows[idx]);
+				$.each(checked_indexes, function(i, idx) {
+					var row = rows[idx];
+					console.log(row)
+					var bank_transaction_name = $(row[11].content).attr("data-name");
+					var vouchers = [{
+						payment_doctype: row[8].content,
+						payment_name: row[9].content,
+						amount: row[10].content,
+					}]
+					frappe.call({
+						method: "erpnext.accounts.doctype.bank_reconciliation_tool.bank_reconciliation_tool.reconcile_vouchers",
+						args: {
+							bank_transaction_name: bank_transaction_name,
+							vouchers: vouchers,
+						},
+						callback: (response) => {
+							const alert_string = "Transacción bancaria " + bank_transaction_name + " conciliada";
+							frappe.show_alert(alert_string);
+							cur_frm.bank_reconciliation_data_table_manager.update_dt_cards(response.message);
+						},
+					});
 				});
-				
-			},
+			}
 		);
 		frm.conciliar_seleccionados_button.hide();
 	},
