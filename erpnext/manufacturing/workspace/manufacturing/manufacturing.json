@@ -273,7 +273,7 @@
    "type": "Link"
   }
  ],
- "modified": "2021-06-12 13:38:39.365928",
+ "modified": "2021-06-14 13:38:39.365928",
  "modified_by": "Administrator",
  "module": "Manufacturing",
  "name": "Manufacturing",
@@ -338,12 +338,6 @@
    "label": "Production Planning Report",
    "link_to": "Production Planning Report",
    "type": "Report"
-  },
-  {
-   "label": "Dashboard",
-   "link_to": "Manufacturing",
-   "restrict_to_domain": "Manufacturing",
-   "type": "Dashboard"
   }
  ]
 }
