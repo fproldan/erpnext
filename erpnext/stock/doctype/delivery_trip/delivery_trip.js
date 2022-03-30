@@ -40,6 +40,10 @@ frappe.ui.form.on('Delivery Trip', {
 		})
 	},
 
+	on_submit: function(frm) {
+		frm.reload_doc();
+	},
+
 	refresh: function (frm) {
 		if (frm.doc.docstatus == 1 && frm.doc.employee) {
 			frm.add_custom_button(__('Expense Claim'), function() {
