@@ -139,14 +139,11 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 					console.log(row_values);
 
 					const checked_items = me.get_checked_indexes();
-					console.log(checked_items);
-					if (checked_items) {
-						cur_frm.conciliar_seleccionados_button = cur_frm.page.add_button(
-								__("Conciliar seleccionados"),
-								() => {
-									alert("maomeno")
-								},
-							);
+
+					if (checked_items.length) {
+						cur_frm.conciliar_seleccionados_button.show();
+					} else {
+						cur_frm.conciliar_seleccionados_button.hide();
 					}
 				},
 			}

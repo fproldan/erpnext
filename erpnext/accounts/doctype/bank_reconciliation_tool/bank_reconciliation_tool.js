@@ -42,6 +42,18 @@ frappe.ui.form.on("Bank Reconciliation Tool", {
 					},
 				})
 		);
+
+		frm.conciliar_seleccionados_button = frm.page.add_button(
+			"Conciliar seleccionados",() => {
+				var checked_indexes = frm.bank_reconciliation_data_table_manager.get_checked_indexes();
+				var rows = frm.bank_reconciliation_data_table_manager.datatable.getRows();
+				checked_indexes.each((i, idx) => {
+					console.log(rows[idx]);
+				});
+				
+			},
+		);
+		frm.conciliar_seleccionados_button.hide();
 	},
 
 	after_save: function (frm) {
