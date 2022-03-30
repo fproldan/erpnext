@@ -101,6 +101,12 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 	}
 
 	format_row(row) {
+		// (1, 'Payment Entry', 'ACC-PAY-2021-00027', 1110.0, '1', datetime.date(2021, 7, 27), 'Proveedor 1', 'Supplier', datetime.date(2021, 7, 27), 'ARS')
+		if (row["linked_payment"]) {
+			var linked_payment = row["linked_payment"][2];
+		} else {
+			var linked_payment = null;
+		}
 		return [
 			row["date"],
 			row["description"],
@@ -108,7 +114,7 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 			row["withdrawal"],
 			row["unallocated_amount"],
 			row["reference_number"],
-			"Aca va lo que matchea",
+			linked_payment,
 			`
 			<Button class="btn btn-primary btn-xs center"  data-name = ${row["name"]} >
 				Acciones
@@ -134,6 +140,14 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 
 					const checked_items = me.get_checked_indexes();
 					console.log(checked_items);
+					if (checked_items) {
+						cur_frm.conciliar_seleccionados_button = cur_frm.page.add_button(
+								__("Conciliar seleccionados"),
+								() => {
+									alert("maomeno")
+								},
+							);
+					}
 				},
 			}
 		};

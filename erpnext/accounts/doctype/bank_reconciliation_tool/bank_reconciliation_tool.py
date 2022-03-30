@@ -41,6 +41,13 @@ def get_bank_transactions(bank_account, from_date = None, to_date = None):
 		'unallocated_amount', 'reference_number', 'party_type', 'party'],
 		filters = filters
 	)
+
+	for t in transactions:
+		linked_payments = get_linked_payments(t['name'], ['payment_entry'])
+		if linked_payments:
+			t['linked_payment'] = linked_payments[0]
+		else:
+			t['linked_payment'] = None
 	return transactions
 
 @frappe.whitelist()
