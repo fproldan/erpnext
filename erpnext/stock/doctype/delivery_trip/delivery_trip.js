@@ -44,6 +44,11 @@ frappe.ui.form.on('Delivery Trip', {
 		frm.reload_doc();
 	},
 
+	after_cancel: function(frm) {
+		frm.fields_dict["section_break_18"].df.hidden = 1;
+		frm.reload_doc();
+	},
+
 	refresh: function (frm) {
 		if (frm.doc.docstatus == 1 && frm.doc.employee) {
 			frm.add_custom_button(__('Expense Claim'), function() {
