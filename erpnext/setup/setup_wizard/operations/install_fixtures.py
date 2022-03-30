@@ -420,6 +420,21 @@ def add_uom_data():
 	doc.to_uom = "Centímetros"
 	doc.value = 1
 	doc.save()
+
+	doc = frappe.new_doc("UOM Conversion Factor")
+	doc.category = "Length"
+	doc.from_uom = "Metros"
+	doc.to_uom = "Kilómetros"
+	doc.value = 0.001
+	doc.save()
+
+	doc = frappe.new_doc("UOM Conversion Factor")
+	doc.category = "Length"
+	doc.from_uom = "Kilómetros"
+	doc.to_uom = "Metros"
+	doc.value = 1000
+	doc.save()
+
 	frappe.db.commit()
 
 
