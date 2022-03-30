@@ -34,21 +34,10 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 				editable: false,
 				width: 100,
 			},
-
-			{
-				name: __("Party Type"),
-				editable: false,
-				width: 95,
-			},
-			{
-				name: __("Party"),
-				editable: false,
-				width: 100,
-			},
 			{
 				name: __("Description"),
 				editable: false,
-				width: 350,
+				width: 300,
 			},
 			{
 				name: __("Deposit"),
@@ -80,7 +69,12 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 			{
 				name: __("Reference Number"),
 				editable: false,
-				width: 140,
+				width: 100,
+			},
+			{
+				name: __("Matcheo"),
+				editable: false,
+				width: 180,
 			},
 			{
 				name: __("Actions"),
@@ -88,7 +82,7 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 				sortable: false,
 				focusable: false,
 				dropdown: false,
-				width: 80,
+				width: 95,
 			},
 		];
 	}
@@ -109,13 +103,12 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 	format_row(row) {
 		return [
 			row["date"],
-			__(row["party_type"]),
-			__(row["party"]),
 			row["description"],
 			row["deposit"],
 			row["withdrawal"],
 			row["unallocated_amount"],
 			row["reference_number"],
+			"Aca va lo que matchea",
 			`
 			<Button class="btn btn-primary btn-xs center"  data-name = ${row["name"]} >
 				Acciones
@@ -125,12 +118,24 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 	}
 
 	get_datatable() {
+		var me = this;
 		const datatable_options = {
 			columns: this.columns,
 			data: this.transactions,
 			dynamicRowHeight: true,
-			checkboxColumn: false,
+			checkboxColumn: true,
 			inlineFilters: true,
+			events: {
+				onCheckRow: function(data) {
+					let row_values = data.slice(3,length-1).map(function (column) {
+						return column.content;
+					})
+					console.log(row_values);
+
+					const checked_items = me.get_checked_indexes();
+					console.log(checked_items);
+				},
+			}
 		};
 		this.datatable = new frappe.DataTable(
 			this.$reconciliation_tool_dt.get(0),
@@ -148,6 +153,10 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 			this.$reconciliation_tool_dt.hide();
 			this.$no_bank_transactions.show();
 		}
+	}
+
+	get_checked_indexes() {
+		return this.datatable.rowmanager.getCheckedRows();
 	}
 
 	set_listeners() {
