@@ -4,15 +4,30 @@
 import frappe
 
 def execute():
+
+	category = None
+
+	if frappe.db.exists({"doctype": "UOM Category", "name": "Length"}):
+		category = "Length"
+
+	if frappe.db.exists({"doctype": "UOM Category", "name": "Largo"}):
+		category = "Largo"
+
+	if not category:
+		doc = frappe.new_doc("UOM Category")
+		doc.category_name = "Largo"
+		doc.save()
+		frappe.db.commit()
+
 	doc = frappe.new_doc("UOM Conversion Factor")
-	doc.category = "Length"
+	doc.category = category
 	doc.from_uom = "Metros"
 	doc.to_uom = "Metros"
 	doc.value = 1
 	doc.save()
 
 	doc = frappe.new_doc("UOM Conversion Factor")
-	doc.category = "Length"
+	doc.category = category
 	doc.from_uom = "Kilómetros"
 	doc.to_uom = "Kilómetros"
 	doc.value = 1
@@ -20,21 +35,21 @@ def execute():
 
 	frappe.db.commit()
 	doc = frappe.new_doc("UOM Conversion Factor")
-	doc.category = "Length"
+	doc.category = category
 	doc.from_uom = "Centímetros"
 	doc.to_uom = "Centímetros"
 	doc.value = 1
 	doc.save()
 
 	doc = frappe.new_doc("UOM Conversion Factor")
-	doc.category = "Length"
+	doc.category = category
 	doc.from_uom = "Metros"
 	doc.to_uom = "Kilómetros"
 	doc.value = 0.001
 	doc.save()
 
 	doc = frappe.new_doc("UOM Conversion Factor")
-	doc.category = "Length"
+	doc.category = category
 	doc.from_uom = "Kilómetros"
 	doc.to_uom = "Metros"
 	doc.value = 1000
