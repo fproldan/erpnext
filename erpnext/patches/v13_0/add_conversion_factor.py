@@ -11,7 +11,7 @@ def execute():
 	else:
 		category = "Largo"
 		doc = frappe.new_doc("UOM Category")
-		doc.category_name = "Largo"
+		doc.category_name = category
 		doc.save()
 		frappe.db.commit()
 
