@@ -4,16 +4,12 @@
 import frappe
 
 def execute():
-
-	category = None
-
 	if frappe.db.exists({"doctype": "UOM Category", "name": "Length"}):
 		category = "Length"
-
-	if frappe.db.exists({"doctype": "UOM Category", "name": "Largo"}):
+	elif frappe.db.exists({"doctype": "UOM Category", "name": "Largo"}):
 		category = "Largo"
-
-	if not category:
+	else:
+		category = "Largo"
 		doc = frappe.new_doc("UOM Category")
 		doc.category_name = "Largo"
 		doc.save()
