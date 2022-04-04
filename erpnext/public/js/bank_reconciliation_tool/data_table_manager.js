@@ -72,17 +72,17 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 				width: 100,
 			},
 			{
-				name: __("Matcheo Tipo"),
+				name: __("Tipo de Documento"),
 				editable: false,
 				width: 100,
 			},
 			{
-				name: __("Matcheo Nombre"),
+				name: __("Documento"),
 				editable: false,
 				width: 180,
 			},
 			{
-				name: __("Matcheo Importe"),
+				name: __("Importe"),
 				editable: false,
 				width: 100,
 				format: (value) => format_currency(value, this.currency) 
@@ -112,7 +112,6 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 	}
 
 	format_row(row) {
-		// (1, 'Payment Entry', 'ACC-PAY-2021-00027', 1110.0, '1', datetime.date(2021, 7, 27), 'Proveedor 1', 'Supplier', datetime.date(2021, 7, 27), 'ARS')
 		if (row["linked_payment"]) {
 			var matcheo_dt = row["linked_payment"][1];
 			var matcheo_name = row["linked_payment"][2];
@@ -154,9 +153,11 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 					if (checked_items.length) {
 						cur_frm.conciliar_seleccionados_button.show();
 						cur_frm.eliminar_seleccionados_button.show();
+						cur_frm.crear_asiento_button.show();
 					} else {
 						cur_frm.conciliar_seleccionados_button.hide();
 						cur_frm.eliminar_seleccionados_button.hide();
+						cur_frm.crear_asiento_button.hide();
 					}
 				},
 			}

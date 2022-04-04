@@ -3,8 +3,8 @@
 # For license information, please see license.txt
 
 from __future__ import unicode_literals
-
 import json
+import datetime
 
 import frappe
 from frappe import _
@@ -259,16 +259,26 @@ def reconcile_vouchers(bank_transaction_name, vouchers):
 	transaction.update_allocations()
 	return frappe.get_doc("Bank Transaction", bank_transaction_name)
 
-
 @frappe.whitelist()
 def delete_bank_transactions(bank_transaction_names):
-	import json
 	for bank_transaction_name in json.loads(bank_transaction_names):
 		transaction = frappe.get_doc("Bank Transaction", bank_transaction_name)
 		transaction.cancel()
 		transaction.delete()
 	frappe.db.commit()
 
+@frappe.whitelist()
+def crear_asiento(bank_transaction_names):
+	bank_transactions = frappe.get_all("Bank Transaction", filters=[["name", "in", json.loads(bank_transaction_names)]])
+	journal_entry = frappe.new_doc("Journal Entry")
+	journal_entry.voucher_type = "Journal Entry"
+	journal_entry.posting_date = datetime.date.today()
+	journal_entry.flags.ignore_validate = True
+	journal_entry.flags.ignore_mandatory = True
+	journal_entry.set_missing_values()
+	journal_entry.save()
+	frappe.db.commit()
+	return journal_entry.doctype, journal_entry.name
 
 @frappe.whitelist()
 def get_linked_payments(bank_transaction_name, document_types = None):

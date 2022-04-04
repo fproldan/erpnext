@@ -112,6 +112,37 @@ frappe.ui.form.on("Bank Reconciliation Tool", {
 			}
 		);
 		frm.eliminar_seleccionados_button.hide();
+
+
+		frm.crear_asiento_button = frm.page.add_button(
+			"Crear asiento", 
+			() => {
+				var checked_indexes = frm.bank_reconciliation_data_table_manager.get_checked_indexes();
+				var rows = frm.bank_reconciliation_data_table_manager.datatable.getRows();
+				var bank_transaction_names = [];
+				$.each(checked_indexes, function(i, idx) {
+					var bank_transaction_name = $(rows[idx][11].content).attr("data-name");
+					bank_transaction_names.push(bank_transaction_name);
+				});
+				frappe.call({
+					method: "erpnext.accounts.doctype.bank_reconciliation_tool.bank_reconciliation_tool.crear_asiento",
+					args: {
+						bank_transaction_names: bank_transaction_names,
+					},
+					freeze: true,
+					freeze_message: "Creando asiento",
+					callback: (response) => {
+						if (response.message) {
+							var newdoc = response.message;
+                            newdoc.idx = null;
+                            newdoc.__run_link_triggers = false;
+                            frappe.set_route('Form', response.message[0], response.message[1]);
+						}
+					},
+				});
+			}
+		);
+		frm.crear_asiento_button.hide();
 	},
 
 	after_save: function (frm) {
