@@ -51,21 +51,33 @@ frappe.ui.form.on("Bank Reconciliation Tool", {
 				$.each(checked_indexes, function(i, idx) {
 					var row = rows[idx];
 					var bank_transaction_name = $(row[11].content).attr("data-name");
+					var payment_doctype = row[8].content;
+					var payment_name = row[9].content;
+					var amount = row[10].content;
+
+					if (!payment_name) {
+						return
+					}
+
 					var vouchers = [{
-						payment_doctype: row[8].content,
-						payment_name: row[9].content,
-						amount: row[10].content,
+						payment_doctype: payment_doctype,
+						payment_name: payment_name,
+						amount: amount,
 					}]
+					
 					frappe.call({
 						method: "erpnext.accounts.doctype.bank_reconciliation_tool.bank_reconciliation_tool.reconcile_vouchers",
 						args: {
 							bank_transaction_name: bank_transaction_name,
 							vouchers: vouchers,
 						},
+						freeze: true,
+						freeze_message: "Conciliando transacción bancaria",
 						callback: (response) => {
 							const alert_string = "Transacción bancaria " + bank_transaction_name + " conciliada";
 							frappe.show_alert(alert_string);
 							cur_frm.bank_reconciliation_data_table_manager.update_dt_cards(response.message);
+							cur_frm.refresh();
 						},
 					});
 				});
@@ -89,9 +101,9 @@ frappe.ui.form.on("Bank Reconciliation Tool", {
 						bank_transaction_names: bank_transaction_names,
 					},
 					freeze: true,
-					freeze_message: "Eliminando transacciónes bancarias",
+					freeze_message: "Eliminando transacciones bancarias",
 					callback: (response) => {
-						const alert_string = "Transacciónes bancarias eliminadas";
+						const alert_string = "Transacciones bancarias eliminadas";
 						frappe.show_alert(alert_string);
 						cur_frm.bank_reconciliation_data_table_manager.datatable.refresh();
 						cur_frm.refresh();
