@@ -43,7 +43,7 @@ def get_bank_transactions(bank_account, from_date = None, to_date = None):
 	)
 
 	for t in transactions:
-		linked_payments = get_linked_payments(t['name'], ['payment_entry'])
+		linked_payments = get_linked_payments(t['name'], ['payment_entry', 'exact_match'])
 		if linked_payments:
 			t['linked_payment'] = linked_payments[0]
 		else:
@@ -258,6 +258,17 @@ def reconcile_vouchers(bank_transaction_name, vouchers):
 	transaction.save()
 	transaction.update_allocations()
 	return frappe.get_doc("Bank Transaction", bank_transaction_name)
+
+
+@frappe.whitelist()
+def delete_bank_transactions(bank_transaction_names):
+	import json
+	for bank_transaction_name in json.loads(bank_transaction_names):
+		transaction = frappe.get_doc("Bank Transaction", bank_transaction_name)
+		transaction.cancel()
+		transaction.delete()
+	frappe.db.commit()
+
 
 @frappe.whitelist()
 def get_linked_payments(bank_transaction_name, document_types = None):

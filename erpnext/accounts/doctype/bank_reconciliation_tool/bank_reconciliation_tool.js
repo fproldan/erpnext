@@ -50,7 +50,6 @@ frappe.ui.form.on("Bank Reconciliation Tool", {
 				var rows = frm.bank_reconciliation_data_table_manager.datatable.getRows();
 				$.each(checked_indexes, function(i, idx) {
 					var row = rows[idx];
-					console.log(row)
 					var bank_transaction_name = $(row[11].content).attr("data-name");
 					var vouchers = [{
 						payment_doctype: row[8].content,
@@ -73,6 +72,34 @@ frappe.ui.form.on("Bank Reconciliation Tool", {
 			}
 		);
 		frm.conciliar_seleccionados_button.hide();
+
+		frm.eliminar_seleccionados_button = frm.page.add_button(
+			"Eliminar seleccionados", 
+			() => {
+				var checked_indexes = frm.bank_reconciliation_data_table_manager.get_checked_indexes();
+				var rows = frm.bank_reconciliation_data_table_manager.datatable.getRows();
+				var bank_transaction_names = [];
+				$.each(checked_indexes, function(i, idx) {
+					var bank_transaction_name = $(rows[idx][11].content).attr("data-name");
+					bank_transaction_names.push(bank_transaction_name);
+				});
+				frappe.call({
+					method: "erpnext.accounts.doctype.bank_reconciliation_tool.bank_reconciliation_tool.delete_bank_transactions",
+					args: {
+						bank_transaction_names: bank_transaction_names,
+					},
+					freeze: true,
+					freeze_message: "Eliminando transacciónes bancarias",
+					callback: (response) => {
+						const alert_string = "Transacciónes bancarias eliminadas";
+						frappe.show_alert(alert_string);
+						cur_frm.bank_reconciliation_data_table_manager.datatable.refresh();
+						cur_frm.refresh();
+					},
+				});
+			}
+		);
+		frm.eliminar_seleccionados_button.hide();
 	},
 
 	after_save: function (frm) {

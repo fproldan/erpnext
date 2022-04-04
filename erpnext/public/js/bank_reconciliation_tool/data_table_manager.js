@@ -153,8 +153,10 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 					var checked_items = me.get_checked_indexes();
 					if (checked_items.length) {
 						cur_frm.conciliar_seleccionados_button.show();
+						cur_frm.eliminar_seleccionados_button.show();
 					} else {
 						cur_frm.conciliar_seleccionados_button.hide();
+						cur_frm.eliminar_seleccionados_button.show();
 					}
 				},
 			}
