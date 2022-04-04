@@ -156,7 +156,7 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 						cur_frm.eliminar_seleccionados_button.show();
 					} else {
 						cur_frm.conciliar_seleccionados_button.hide();
-						cur_frm.eliminar_seleccionados_button.show();
+						cur_frm.eliminar_seleccionados_button.hide();
 					}
 				},
 			}
