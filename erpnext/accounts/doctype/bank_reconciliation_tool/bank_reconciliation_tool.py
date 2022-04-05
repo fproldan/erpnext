@@ -268,17 +268,10 @@ def delete_bank_transactions(bank_transaction_names):
 	frappe.db.commit()
 
 @frappe.whitelist()
-def crear_asiento(bank_transaction_names):
-	bank_transactions = frappe.get_all("Bank Transaction", filters=[["name", "in", json.loads(bank_transaction_names)]])
-	journal_entry = frappe.new_doc("Journal Entry")
-	journal_entry.voucher_type = "Journal Entry"
-	journal_entry.posting_date = datetime.date.today()
-	journal_entry.flags.ignore_validate = True
-	journal_entry.flags.ignore_mandatory = True
-	journal_entry.set_missing_values()
-	journal_entry.save()
-	frappe.db.commit()
-	return journal_entry.doctype, journal_entry.name
+def crear_asientos(data):
+	for row in json.loads(data):
+		row["allow_edit"] = False
+		create_journal_entry_bts(**row)
 
 @frappe.whitelist()
 def get_linked_payments(bank_transaction_name, document_types = None):

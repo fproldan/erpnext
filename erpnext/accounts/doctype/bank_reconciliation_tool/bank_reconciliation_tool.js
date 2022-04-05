@@ -113,31 +113,38 @@ frappe.ui.form.on("Bank Reconciliation Tool", {
 		);
 		frm.eliminar_seleccionados_button.hide();
 
-
 		frm.crear_asiento_button = frm.page.add_button(
 			"Crear asiento", 
 			() => {
 				var checked_indexes = frm.bank_reconciliation_data_table_manager.get_checked_indexes();
 				var rows = frm.bank_reconciliation_data_table_manager.datatable.getRows();
-				var bank_transaction_names = [];
+				var checked_rows_data = [];
 				$.each(checked_indexes, function(i, idx) {
-					var bank_transaction_name = $(rows[idx][11].content).attr("data-name");
-					bank_transaction_names.push(bank_transaction_name);
+					var row = rows[idx];
+					var data = {
+						bank_transaction_name: $(row[11].content).attr("data-name"),
+						reference_date: row[2].content,
+						reference_number: row[7].content,
+						posting_date: frappe.datetime.get_today(),
+						second_account: "1.1.1.01.01 - Caja - AM",
+						entry_type: "Journal Entry",
+						mode_of_payment: "",
+						cheque: "",
+						party_type: "",
+						party: "",
+					}
+					checked_rows_data.push(data);
 				});
+
 				frappe.call({
-					method: "erpnext.accounts.doctype.bank_reconciliation_tool.bank_reconciliation_tool.crear_asiento",
-					args: {
-						bank_transaction_names: bank_transaction_names,
-					},
+					method:"erpnext.accounts.doctype.bank_reconciliation_tool.bank_reconciliation_tool.crear_asientos",
+					args: {"data": checked_rows_data},
 					freeze: true,
-					freeze_message: "Creando asiento",
+					freeze_message: "Creando asientos contables",
 					callback: (response) => {
-						if (response.message) {
-							var newdoc = response.message;
-                            newdoc.idx = null;
-                            newdoc.__run_link_triggers = false;
-                            frappe.set_route('Form', response.message[0], response.message[1]);
-						}
+						const alert_string = "Transacciones bancarias añadidas como Asientos Contables";
+						frappe.show_alert(alert_string);
+						cur_frm.refresh();
 					},
 				});
 			}
