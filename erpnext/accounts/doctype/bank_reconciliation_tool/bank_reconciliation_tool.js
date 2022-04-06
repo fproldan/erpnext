@@ -116,9 +116,6 @@ frappe.ui.form.on("Bank Reconciliation Tool", {
 		frm.crear_asiento_button = frm.page.add_button(
 			"Crear asientos", 
 			() => {
-				var checked_indexes = frm.bank_reconciliation_data_table_manager.get_checked_indexes();
-				var rows = frm.bank_reconciliation_data_table_manager.datatable.getRows();
-				var checked_rows_data = [];
 				var dialog = new frappe.ui.Dialog({
 					title: 'Detalles',
 					fields: [
@@ -148,6 +145,11 @@ frappe.ui.form.on("Bank Reconciliation Tool", {
 				});
 				dialog.set_primary_action("Crear", () => {
 					dialog.hide();
+
+					var checked_indexes = frm.bank_reconciliation_data_table_manager.get_checked_indexes();
+					var rows = frm.bank_reconciliation_data_table_manager.datatable.getRows();
+					var checked_rows_data = [];
+
 					$.each(checked_indexes, function(i, idx) {
 						var row = rows[idx];
 						var data = {
