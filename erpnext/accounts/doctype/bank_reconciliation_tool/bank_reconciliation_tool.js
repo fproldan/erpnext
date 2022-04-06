@@ -114,39 +114,50 @@ frappe.ui.form.on("Bank Reconciliation Tool", {
 		frm.eliminar_seleccionados_button.hide();
 
 		frm.crear_asiento_button = frm.page.add_button(
-			"Crear asiento", 
+			"Crear asientos", 
 			() => {
 				var checked_indexes = frm.bank_reconciliation_data_table_manager.get_checked_indexes(); // TODO: ver que al filtrar y seleccionar todo toma todos hasta los no filtrados
 				var rows = frm.bank_reconciliation_data_table_manager.datatable.getRows();
 				var checked_rows_data = [];
-				$.each(checked_indexes, function(i, idx) {
-					var row = rows[idx];
-					var data = {
-						bank_transaction_name: $(row[11].content).attr("data-name"),
-						reference_date: row[2].content,
-						reference_number: row[7].content,
-						posting_date: frappe.datetime.get_today(), // TODO: popup
-						second_account: "1.1.1.01.01 - Caja - AM",  // TODO: popup
-						entry_type: "Journal Entry",
-						mode_of_payment: "",
-						cheque: "",
-						party_type: "",
-						party: "",
-					}
-					checked_rows_data.push(data);
+				var dialog = new frappe.ui.Dialog({
+					title: 'Detalles',
+					fields: [
+						{fieldname: 'second_account', fieldtype: 'Link', options: 'Account', 'reqd':1, 'label':'Cuenta'},
+						{fieldname: 'posting_date', fieldtype: 'Date', 'reqd':1, 'label':'Fecha de Referencia', 'default': frappe.datetime.get_today()}
+					],
 				});
+				dialog.set_primary_action("Crear", () => {
+					dialog.hide();
+					$.each(checked_indexes, function(i, idx) {
+						var row = rows[idx];
+						var data = {
+							bank_transaction_name: $(row[11].content).attr("data-name"),
+							reference_date: row[2].content,
+							reference_number: row[7].content,
+							posting_date: dialog.fields_dict.posting_date.value,
+							second_account: dialog.fields_dict.second_account.value,
+							entry_type: "Journal Entry",
+							mode_of_payment: "",
+							cheque: "",
+							party_type: "",
+							party: "",
+						}
+						checked_rows_data.push(data);
+					});
 
-				frappe.call({
-					method:"erpnext.accounts.doctype.bank_reconciliation_tool.bank_reconciliation_tool.crear_asientos",
-					args: {"data": checked_rows_data},
-					freeze: true,
-					freeze_message: "Creando asientos contables",
-					callback: (response) => {
-						const alert_string = "Transacciones bancarias añadidas como Asientos Contables";
-						frappe.show_alert(alert_string);
-						cur_frm.refresh();
-					},
+					frappe.call({
+						method:"erpnext.accounts.doctype.bank_reconciliation_tool.bank_reconciliation_tool.crear_asientos",
+						args: {"data": checked_rows_data},
+						freeze: true,
+						freeze_message: "Creando asientos contables",
+						callback: (response) => {
+							const alert_string = "Transacciones bancarias añadidas como Asientos Contables";
+							frappe.show_alert(alert_string);
+							cur_frm.refresh();
+						},
+					});
 				});
+				dialog.show();
 			}
 		);
 		frm.crear_asiento_button.hide();
