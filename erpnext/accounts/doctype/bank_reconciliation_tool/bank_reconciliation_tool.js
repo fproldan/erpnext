@@ -116,7 +116,7 @@ frappe.ui.form.on("Bank Reconciliation Tool", {
 		frm.crear_asiento_button = frm.page.add_button(
 			"Crear asiento", 
 			() => {
-				var checked_indexes = frm.bank_reconciliation_data_table_manager.get_checked_indexes();
+				var checked_indexes = frm.bank_reconciliation_data_table_manager.get_checked_indexes(); // TODO: ver que al filtrar y seleccionar todo toma todos hasta los no filtrados
 				var rows = frm.bank_reconciliation_data_table_manager.datatable.getRows();
 				var checked_rows_data = [];
 				$.each(checked_indexes, function(i, idx) {
@@ -125,8 +125,8 @@ frappe.ui.form.on("Bank Reconciliation Tool", {
 						bank_transaction_name: $(row[11].content).attr("data-name"),
 						reference_date: row[2].content,
 						reference_number: row[7].content,
-						posting_date: frappe.datetime.get_today(),
-						second_account: "1.1.1.01.01 - Caja - AM",
+						posting_date: frappe.datetime.get_today(), // TODO: popup
+						second_account: "1.1.1.01.01 - Caja - AM",  // TODO: popup
 						entry_type: "Journal Entry",
 						mode_of_payment: "",
 						cheque: "",
