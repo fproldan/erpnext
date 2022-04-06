@@ -105,7 +105,6 @@ frappe.ui.form.on("Bank Reconciliation Tool", {
 					callback: (response) => {
 						const alert_string = "Transacciones bancarias eliminadas";
 						frappe.show_alert(alert_string);
-						cur_frm.bank_reconciliation_data_table_manager.datatable.refresh();
 						cur_frm.refresh();
 					},
 				});
@@ -116,7 +115,7 @@ frappe.ui.form.on("Bank Reconciliation Tool", {
 		frm.crear_asiento_button = frm.page.add_button(
 			"Crear asientos", 
 			() => {
-				var checked_indexes = frm.bank_reconciliation_data_table_manager.get_checked_indexes(); // TODO: ver que al filtrar y seleccionar todo toma todos hasta los no filtrados
+				var checked_indexes = frm.bank_reconciliation_data_table_manager.get_checked_indexes();
 				var rows = frm.bank_reconciliation_data_table_manager.datatable.getRows();
 				var checked_rows_data = [];
 				var dialog = new frappe.ui.Dialog({

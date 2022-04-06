@@ -181,7 +181,18 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 	}
 
 	get_checked_indexes() {
-		return this.datatable.rowmanager.getCheckedRows();
+		var filtered_rows = this.datatable.datamanager.getFilteredRowIndices();
+		var checked_rows = this.datatable.rowmanager.getCheckedRows();
+
+		if (filtered_rows) {
+			var filtered_rows = filtered_rows.map(function(e){return e.toString()});
+			var filtered_and_checked = filtered_rows.filter(function(n) {
+			    return checked_rows.indexOf(n) !== -1;
+			});
+			return filtered_and_checked
+		}
+
+		return checked_rows
 	}
 
 	set_listeners() {
