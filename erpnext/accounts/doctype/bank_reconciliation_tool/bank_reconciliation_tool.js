@@ -121,8 +121,28 @@ frappe.ui.form.on("Bank Reconciliation Tool", {
 				var dialog = new frappe.ui.Dialog({
 					title: 'Detalles',
 					fields: [
-						{fieldname: 'second_account', fieldtype: 'Link', options: 'Account', 'reqd':1, 'label':'Cuenta'},
-						{fieldname: 'posting_date', fieldtype: 'Date', 'reqd':1, 'label':'Fecha de Referencia', 'default': frappe.datetime.get_today()}
+						{
+							fieldname: 'second_account',
+							fieldtype: 'Link',
+							options: 'Account',
+							reqd: 1,
+							label: 'Cuenta',
+							get_query: () => {
+								return {
+									filters: {
+										is_group: 0,
+										company: frm.doc.company,
+									},
+								};
+							},
+						},
+						{
+							fieldname: 'posting_date',
+							fieldtype: 'Date',
+							req: 1,
+							label: 'Fecha de Referencia',
+							default: frappe.datetime.get_today()
+						}
 					],
 				});
 				dialog.set_primary_action("Crear", () => {
