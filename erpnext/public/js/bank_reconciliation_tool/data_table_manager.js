@@ -13,11 +13,12 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 	make_dt() {
 		var me = this;
 		frappe.call({
-			method:
-				"erpnext.accounts.doctype.bank_reconciliation_tool.bank_reconciliation_tool.get_bank_transactions",
+			method: "erpnext.accounts.doctype.bank_reconciliation_tool.bank_reconciliation_tool.get_bank_transactions",
 			args: {
 				bank_account: this.bank_account,
 			},
+			reeze: true,
+			freeze_message: "Obteniendo transacciones",
 			callback: function (response) {
 				me.format_data(response.message);
 				me.get_dt_columns();

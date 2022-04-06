@@ -42,12 +42,12 @@ def get_bank_transactions(bank_account, from_date = None, to_date = None):
 		filters = filters
 	)
 
-	for t in transactions:
-		linked_payments = get_linked_payments(t['name'], ['payment_entry', 'journal_entry', 'exact_match'])
+	for transaction in transactions:
+		linked_payments = get_linked_payments(transaction['name'], ['payment_entry', 'journal_entry', 'exact_match'])
 		if linked_payments:
-			t['linked_payment'] = linked_payments[0]
+			transaction['linked_payment'] = linked_payments[0]
 		else:
-			t['linked_payment'] = None
+			transaction['linked_payment'] = None
 	return transactions
 
 @frappe.whitelist()
