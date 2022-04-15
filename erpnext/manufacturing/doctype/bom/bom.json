@@ -172,7 +172,8 @@
    "default": "1",
    "fieldname": "set_rate_of_sub_assembly_item_based_on_bom",
    "fieldtype": "Check",
-   "label": "Set rate of sub-assembly item based on BOM"
+   "label": "Set rate of sub-assembly item based on BOM",
+   "hidden": 1
   },
   {
    "depends_on": "inspection_required",
@@ -240,7 +241,8 @@
    "fieldname": "operations_section",
    "fieldtype": "Section Break",
    "hide_border": 1,
-   "oldfieldtype": "Section Break"
+   "oldfieldtype": "Section Break",
+   "hidden": 1
   },
   {
    "depends_on": "with_operations",
@@ -415,7 +417,8 @@
    "collapsible": 1,
    "fieldname": "website_section",
    "fieldtype": "Section Break",
-   "label": "Website"
+   "label": "Website",
+   "hidden": 1
   },
   {
    "allow_on_submit": 1,
@@ -479,7 +482,8 @@
   {
    "fieldname": "section_break_21",
    "fieldtype": "Section Break",
-   "label": "Operations"
+   "label": "Operations",
+   "hidden": 1
   },
   {
    "fieldname": "column_break_23",
@@ -539,9 +543,10 @@
  "image_field": "image",
  "is_submittable": 1,
  "links": [],
- "modified": "2021-05-16 12:25:09.081968",
+ "modified": "2022-04-15 10:30:09.081968",
  "modified_by": "Administrator",
  "module": "Manufacturing",
+ "restrict_to_domain": "BOM",
  "name": "BOM",
  "owner": "Administrator",
  "permissions": [

@@ -93,25 +93,25 @@ frappe.ui.form.on("BOM", {
 			});
 		}
 
-		if(frm.doc.docstatus!=0) {
-			frm.add_custom_button(__("Work Order"), function() {
-				frm.trigger("make_work_order");
-			}, __("Create"));
+		// if(frm.doc.docstatus!=0) {
+		// 	frm.add_custom_button(__("Work Order"), function() {
+		// 		frm.trigger("make_work_order");
+		// 	}, __("Create"));
 
-			if (frm.doc.has_variants) {
-				frm.add_custom_button(__("Variant BOM"), function() {
-					frm.trigger("make_variant_bom");
-				}, __("Create"));
-			}
+		// 	if (frm.doc.has_variants) {
+		// 		frm.add_custom_button(__("Variant BOM"), function() {
+		// 			frm.trigger("make_variant_bom");
+		// 		}, __("Create"));
+		// 	}
 
-			if (frm.doc.inspection_required) {
-				frm.add_custom_button(__("Quality Inspection"), function() {
-					frm.trigger("make_quality_inspection");
-				}, __("Create"));
-			}
+		// 	if (frm.doc.inspection_required) {
+		// 		frm.add_custom_button(__("Quality Inspection"), function() {
+		// 			frm.trigger("make_quality_inspection");
+		// 		}, __("Create"));
+		// 	}
 
-			frm.page.set_inner_btn_group_as_primary(__('Create'));
-		}
+		// 	frm.page.set_inner_btn_group_as_primary(__('Create'));
+		// }
 
 		if(frm.doc.items && frm.doc.allow_alternative_item) {
 			const has_alternative = frm.doc.items.find(i => i.allow_alternative_item === 1);
