@@ -414,6 +414,7 @@
  "modified": "2022-02-14 00:38:46.873105",
  "modified_by": "Administrator",
  "module": "Manufacturing",
+ "restrict_to_domain": "Manufacturing",
  "name": "Job Card",
  "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
