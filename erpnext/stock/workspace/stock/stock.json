@@ -3,7 +3,7 @@
  "category": "Modules",
  "charts": [
   {
-   "chart_name": "Inventario por almacén"
+   "chart_name": "Inventario por almac\u00e9n"
   }
  ],
  "creation": "2020-03-02 15:43:10.096528",
@@ -663,9 +663,53 @@
    "link_type": "Report",
    "onboard": 0,
    "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "BOM",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "BOM",
+   "link_to": "BOM",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+   {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "BOM Update Tool",
+   "link_to": "BOM Update Tool",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "BOM Comparison Tool",
+   "link_to": "bom-comparison-tool",
+   "link_type": "Page",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "BOM Stock Report",
+   "link_to": "BOM Stock Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
   }
  ],
- "modified": "2021-08-30 12:50:43.468001",
+ "modified": "2022-04-19 10:17:39.237835",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Stock",
@@ -722,7 +766,7 @@
   },
   {
    "label": "Dashboard",
-   "link_to": "Almacén",
+   "link_to": "Almac\u00e9n",
    "type": "Dashboard"
   }
  ],

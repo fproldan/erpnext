@@ -94,7 +94,7 @@ erpnext.BOMComparisonTool = class BOMComparisonTool {
 					let [fieldname, value1, value2] = change;
 					return `
 						<tr>
-							<td>${frappe.meta.get_label(doctype, fieldname)}</td>
+							<td>${__(frappe.meta.get_label(doctype, fieldname))}</td>
 							<td>${value1}</td>
 							<td>${value2}</td>
 						</tr>
@@ -139,7 +139,7 @@ erpnext.BOMComparisonTool = class BOMComparisonTool {
 					return `
 						<tr>
 							${th}
-							<td>${frappe.meta.get_label(child_doctype, fieldname)}</td>
+							<td>${__(frappe.meta.get_label(child_doctype, fieldname))}</td>
 							<td>${value1}</td>
 							<td>${value2}</td>
 						</tr>
