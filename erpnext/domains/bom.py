@@ -8,8 +8,5 @@ data = {
         'Manufacturing Manager',
         'Manufacturing User'
     ],
-    'modules': [
-        'Manufacturing'
-    ],
     'on_setup': 'erpnext.manufacturing.setup.setup_bom',
 }
