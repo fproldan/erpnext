@@ -701,7 +701,7 @@
   },
   {
    "hidden": 0,
-   "is_query_report": 0,
+   "is_query_report": 1,
    "label": "BOM Stock Report",
    "link_to": "BOM Stock Report",
    "link_type": "Report",
@@ -709,7 +709,7 @@
    "type": "Link"
   }
  ],
- "modified": "2022-04-19 10:17:39.237835",
+ "modified": "2022-04-19 11:17:39.237835",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Stock",
