@@ -42,6 +42,147 @@ frappe.ui.form.on("Bank Reconciliation Tool", {
 					},
 				})
 		);
+
+		frm.conciliar_seleccionados_button = frm.page.add_button(
+			"Conciliar seleccionados", 
+			() => {
+				var checked_indexes = frm.bank_reconciliation_data_table_manager.get_checked_indexes();
+				var rows = frm.bank_reconciliation_data_table_manager.datatable.getRows();
+				$.each(checked_indexes, function(i, idx) {
+					var row = rows[idx];
+					var payment_name = row[9].content;
+
+					if (!payment_name) {
+						return
+					}
+
+					var bank_transaction_name = $(row[11].content).attr("data-name");
+					var payment_doctype = row[8].content;
+					var amount = row[10].content;
+					var vouchers = [{
+						payment_doctype: payment_doctype,
+						payment_name: payment_name,
+						amount: amount,
+					}]
+					
+					frappe.call({
+						method: "erpnext.accounts.doctype.bank_reconciliation_tool.bank_reconciliation_tool.reconcile_vouchers",
+						args: {
+							bank_transaction_name: bank_transaction_name,
+							vouchers: vouchers,
+						},
+						freeze: true,
+						freeze_message: "Conciliando transacción bancaria",
+						callback: (response) => {
+							const alert_string = "Transacción bancaria " + bank_transaction_name + " conciliada";
+							frappe.show_alert(alert_string);
+						},
+					});
+				});
+				cur_frm.refresh();
+			}
+		);
+		frm.conciliar_seleccionados_button.hide();
+
+		frm.eliminar_seleccionados_button = frm.page.add_button(
+			"Eliminar seleccionados", 
+			() => {
+				var checked_indexes = frm.bank_reconciliation_data_table_manager.get_checked_indexes();
+				var rows = frm.bank_reconciliation_data_table_manager.datatable.getRows();
+				var bank_transaction_names = [];
+				
+				$.each(checked_indexes, function(i, idx) {
+					var bank_transaction_name = $(rows[idx][11].content).attr("data-name");
+					bank_transaction_names.push(bank_transaction_name);
+				});
+				
+				frappe.call({
+					method: "erpnext.accounts.doctype.bank_reconciliation_tool.bank_reconciliation_tool.delete_bank_transactions",
+					args: {
+						bank_transaction_names: bank_transaction_names,
+					},
+					freeze: true,
+					freeze_message: "Eliminando transacciones bancarias",
+					callback: (response) => {
+						const alert_string = "Transacciones bancarias eliminadas";
+						frappe.show_alert(alert_string);
+						cur_frm.refresh();
+					},
+				});
+			}
+		);
+		frm.eliminar_seleccionados_button.hide();
+
+		frm.crear_asiento_button = frm.page.add_button(
+			"Crear asientos", 
+			() => {
+				var dialog = new frappe.ui.Dialog({
+					title: 'Detalles',
+					fields: [
+						{
+							fieldname: 'second_account',
+							fieldtype: 'Link',
+							options: 'Account',
+							reqd: 1,
+							label: 'Cuenta',
+							get_query: () => {
+								return {
+									filters: {
+										is_group: 0,
+										company: frm.doc.company,
+									},
+								};
+							},
+						},
+						{
+							fieldname: 'posting_date',
+							fieldtype: 'Date',
+							req: 1,
+							label: 'Fecha de Referencia',
+							default: frappe.datetime.get_today()
+						}
+					],
+				});
+				dialog.set_primary_action("Crear", () => {
+					dialog.hide();
+
+					var checked_indexes = frm.bank_reconciliation_data_table_manager.get_checked_indexes();
+					var rows = frm.bank_reconciliation_data_table_manager.datatable.getRows();
+					var checked_rows_data = [];
+
+					$.each(checked_indexes, function(i, idx) {
+						var row = rows[idx];
+						var data = {
+							bank_transaction_name: $(row[11].content).attr("data-name"),
+							reference_date: row[2].content,
+							reference_number: row[7].content,
+							posting_date: dialog.fields_dict.posting_date.value,
+							second_account: dialog.fields_dict.second_account.value,
+							entry_type: "Journal Entry",
+							mode_of_payment: "",
+							cheque: "",
+							party_type: "",
+							party: "",
+						}
+						checked_rows_data.push(data);
+					});
+
+					frappe.call({
+						method:"erpnext.accounts.doctype.bank_reconciliation_tool.bank_reconciliation_tool.crear_asientos",
+						args: {"data": checked_rows_data},
+						freeze: true,
+						freeze_message: "Creando asientos contables",
+						callback: (response) => {
+							const alert_string = "Transacciones bancarias añadidas como Asientos Contables";
+							frappe.show_alert(alert_string);
+							cur_frm.refresh();
+						},
+					});
+				});
+				dialog.show();
+			}
+		);
+		frm.crear_asiento_button.hide();
 	},
 
 	after_save: function (frm) {

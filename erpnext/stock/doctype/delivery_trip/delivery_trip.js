@@ -40,6 +40,15 @@ frappe.ui.form.on('Delivery Trip', {
 		})
 	},
 
+	on_submit: function(frm) {
+		frm.reload_doc();
+	},
+
+	after_cancel: function(frm) {
+		frm.fields_dict["section_break_18"].df.hidden = 1;
+		frm.reload_doc();
+	},
+
 	refresh: function (frm) {
 		if (frm.doc.docstatus == 1 && frm.doc.employee) {
 			frm.add_custom_button(__('Expense Claim'), function() {
@@ -80,7 +89,7 @@ frappe.ui.form.on('Delivery Trip', {
 			frappe.throw(__("Cannot Calculate Arrival Time as Driver Address is Missing."));
 		}
 		frappe.show_alert({
-			message: "Calculating Arrival Times",
+			message: __("Calculating Arrival Times"),
 			indicator: 'orange'
 		});
 		frm.call("process_route", {
@@ -109,7 +118,7 @@ frappe.ui.form.on('Delivery Trip', {
 			frappe.throw(__("Cannot Optimize Route as Driver Address is Missing."));
 		}
 		frappe.show_alert({
-			message: "Optimizing Route",
+			message: __("Optimizing Route"),
 			indicator: 'orange'
 		});
 		frm.call("process_route", {
