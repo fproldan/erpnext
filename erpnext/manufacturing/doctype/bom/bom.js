@@ -133,9 +133,9 @@ frappe.ui.form.on("BOM", {
 
 
 		if (frm.doc.has_variants) {
-			frm.set_intro(__('This is a Template BOM and will be used to make the work order for {0} of the item {1}',
+			frm.set_intro(__('Esta es una BOM plantilla y será usada para crear ordenes de trabajo para {0} del Producto {1}',
 				[
-					`<a class="variants-intro">variants</a>`,
+					`<a class="variants-intro">variantes</a>`,
 					`<a href="/app/item/${frm.doc.item}">${frm.doc.item}</a>`,
 				]), true);
 
