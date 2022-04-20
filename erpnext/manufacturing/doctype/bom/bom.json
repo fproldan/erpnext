@@ -172,8 +172,8 @@
    "default": "1",
    "fieldname": "set_rate_of_sub_assembly_item_based_on_bom",
    "fieldtype": "Check",
-   "label": "Set rate of sub-assembly item based on BOM",
-   "hidden": 1
+   "hidden": 1,
+   "label": "Set rate of sub-assembly item based on BOM"
   },
   {
    "depends_on": "inspection_required",
@@ -240,9 +240,9 @@
   {
    "fieldname": "operations_section",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "hide_border": 1,
-   "oldfieldtype": "Section Break",
-   "hidden": 1
+   "oldfieldtype": "Section Break"
   },
   {
    "depends_on": "with_operations",
@@ -296,6 +296,7 @@
   {
    "fieldname": "operating_cost",
    "fieldtype": "Currency",
+   "hidden": 1,
    "label": "Operating Cost",
    "options": "currency",
    "read_only": 1
@@ -417,8 +418,8 @@
    "collapsible": 1,
    "fieldname": "website_section",
    "fieldtype": "Section Break",
-   "label": "Website",
-   "hidden": 1
+   "hidden": 1,
+   "label": "Website"
   },
   {
    "allow_on_submit": 1,
@@ -482,8 +483,8 @@
   {
    "fieldname": "section_break_21",
    "fieldtype": "Section Break",
-   "label": "Operations",
-   "hidden": 1
+   "hidden": 1,
+   "label": "Operations"
   },
   {
    "fieldname": "column_break_23",
@@ -543,10 +544,9 @@
  "image_field": "image",
  "is_submittable": 1,
  "links": [],
- "modified": "2022-04-15 10:30:09.081968",
+ "modified": "2022-04-20 09:04:39.732945",
  "modified_by": "Administrator",
  "module": "Manufacturing",
- "restrict_to_domain": "BOM",
  "name": "BOM",
  "owner": "Administrator",
  "permissions": [
@@ -577,6 +577,7 @@
    "write": 1
   }
  ],
+ "restrict_to_domain": "BOM",
  "search_fields": "item, item_name",
  "show_name_in_global_search": 1,
  "sort_field": "modified",

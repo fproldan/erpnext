@@ -1175,7 +1175,7 @@ BOM and Manufacturing Quantity are required,Se requiere la lista de materiales (
 BOM does not contain any stock item,BOM no contiene ningún artículo de stock,
 BOM is not specified for subcontracting item {0} at row {1},BOM is not specified for subcontracting item {0} at row {1},
 BOM recursion: {0} cannot be child of {1},Recurrencia de la lista de materiales: {0} no puede ser hijo de {1},
-BOM recursion: {0} cannot be parent or child of {0},BOM recursion: {0} cannot be parent or child of {0},
+BOM recursion: {0} cannot be parent or child of {0},Recurrencia de la lista de materiales: {0} no puede ser padre o hijo de {0},
 BOM {0} does not belong to Item {1},La lista de materiales (LdM) {0} no pertenece al producto {1},
 BOM {0} must be active,La lista de materiales (LdM) {0} debe estar activa,
 BOM {0} must be submitted,La lista de materiales (LdM) {0} debe ser validada,
