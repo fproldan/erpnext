@@ -13,11 +13,12 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 	make_dt() {
 		var me = this;
 		frappe.call({
-			method:
-				"erpnext.accounts.doctype.bank_reconciliation_tool.bank_reconciliation_tool.get_bank_transactions",
+			method: "erpnext.accounts.doctype.bank_reconciliation_tool.bank_reconciliation_tool.get_bank_transactions",
 			args: {
 				bank_account: this.bank_account,
 			},
+			reeze: true,
+			freeze_message: "Obteniendo transacciones",
 			callback: function (response) {
 				me.format_data(response.message);
 				me.get_dt_columns();
@@ -34,21 +35,10 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 				editable: false,
 				width: 100,
 			},
-
-			{
-				name: __("Party Type"),
-				editable: false,
-				width: 95,
-			},
-			{
-				name: __("Party"),
-				editable: false,
-				width: 100,
-			},
 			{
 				name: __("Description"),
 				editable: false,
-				width: 350,
+				width: 300,
 			},
 			{
 				name: __("Deposit"),
@@ -80,7 +70,23 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 			{
 				name: __("Reference Number"),
 				editable: false,
-				width: 140,
+				width: 100,
+			},
+			{
+				name: __("Tipo de Documento"),
+				editable: false,
+				width: 100,
+			},
+			{
+				name: __("Documento"),
+				editable: false,
+				width: 180,
+			},
+			{
+				name: __("Importe"),
+				editable: false,
+				width: 100,
+				format: (value) => format_currency(value, this.currency) 
 			},
 			{
 				name: __("Actions"),
@@ -88,7 +94,7 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 				sortable: false,
 				focusable: false,
 				dropdown: false,
-				width: 80,
+				width: 95,
 			},
 		];
 	}
@@ -107,15 +113,25 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 	}
 
 	format_row(row) {
+		if (row["linked_payment"]) {
+			var matcheo_dt = row["linked_payment"][1];
+			var matcheo_name = row["linked_payment"][2];
+			var matcheo_amount = row["linked_payment"][3];
+		} else {
+			var matcheo_dt = null;
+			var matcheo_name = null;
+			var matcheo_amount = null;
+		}
 		return [
 			row["date"],
-			__(row["party_type"]),
-			__(row["party"]),
 			row["description"],
 			row["deposit"],
 			row["withdrawal"],
 			row["unallocated_amount"],
 			row["reference_number"],
+			matcheo_dt,
+			matcheo_name,
+			matcheo_amount,
 			`
 			<Button class="btn btn-primary btn-xs center"  data-name = ${row["name"]} >
 				Acciones
@@ -125,12 +141,27 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 	}
 
 	get_datatable() {
+		var me = this;
 		const datatable_options = {
 			columns: this.columns,
 			data: this.transactions,
 			dynamicRowHeight: true,
-			checkboxColumn: false,
+			checkboxColumn: true,
 			inlineFilters: true,
+			events: {
+				onCheckRow: function(data) {
+					var checked_items = me.get_checked_indexes();
+					if (checked_items.length) {
+						cur_frm.conciliar_seleccionados_button.show();
+						cur_frm.eliminar_seleccionados_button.show();
+						cur_frm.crear_asiento_button.show();
+					} else {
+						cur_frm.conciliar_seleccionados_button.hide();
+						cur_frm.eliminar_seleccionados_button.hide();
+						cur_frm.crear_asiento_button.hide();
+					}
+				},
+			}
 		};
 		this.datatable = new frappe.DataTable(
 			this.$reconciliation_tool_dt.get(0),
@@ -148,6 +179,21 @@ erpnext.accounts.bank_reconciliation.DataTableManager = class DataTableManager {
 			this.$reconciliation_tool_dt.hide();
 			this.$no_bank_transactions.show();
 		}
+	}
+
+	get_checked_indexes() {
+		var filtered_rows = this.datatable.datamanager.getFilteredRowIndices();
+		var checked_rows = this.datatable.rowmanager.getCheckedRows();
+
+		if (filtered_rows) {
+			var filtered_rows = filtered_rows.map(function(e){return e.toString()});
+			var filtered_and_checked = filtered_rows.filter(function(n) {
+			    return checked_rows.indexOf(n) !== -1;
+			});
+			return filtered_and_checked
+		}
+
+		return checked_rows
 	}
 
 	set_listeners() {
