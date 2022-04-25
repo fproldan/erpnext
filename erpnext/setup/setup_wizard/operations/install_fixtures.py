@@ -80,7 +80,7 @@ def install(country=None):
 		{'doctype': 'Domain', 'domain': 'Mercadopago'},
 		{'doctype': 'Domain', 'domain': 'BOM'},
 
-		# ensure at least an empty Address Template exists for this Country
+    # ensure at least an empty Address Template exists for this Country
 		{'doctype':"Address Template", "country": country},
 
 		# item group
