@@ -1549,7 +1549,7 @@ Cannot change Variant properties after stock transaction. You will have to make 
 "Cannot change company's default currency, because there are existing transactions. Transactions must be cancelled to change the default currency.","No se puede cambiar la divisa/moneda por defecto de la Compañía ya que existen transacciones, las cuales deben ser canceladas antes de cambiarla.",
 Cannot change status as student {0} is linked with student application {1},No se puede cambiar el estado ya que el estudiante {0} está vinculado con la solicitud {1},
 Cannot close loan as there is an outstanding of {0},No se puede cerrar el préstamo ya que hay un monto pendiente de {0},
-Cannot complete task {0} as its dependant task {1} are not ccompleted / cancelled.,No se puede completar la tarea {0} ya que depende de la tarea {1}, la cual no se ha completado / cancelado.,
+"Cannot complete task {0} as its dependant task {1} are not ccompleted / cancelled.","No se puede completar la tarea {0} ya que depende de la tarea {1}, la cual no se ha completado / cancelado.",
 Cannot convert Cost Center to ledger as it has child nodes,"No puede dejar de ser un grupo ya que posee Centros de costo hijos",
 Cannot convert Task to non-group because the following child Tasks exist: {0}.,No puede dejar de ser grupo ya que posee la/s Tarea/s hija/s: {0}.,
 Cannot convert to Group because Account Type is selected.,No se puede convertir a Grupo ya que tiene seleccionado el Tipo de cuenta.,
