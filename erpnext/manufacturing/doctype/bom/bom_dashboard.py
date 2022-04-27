@@ -19,7 +19,7 @@ def get_data():
 			},
 			{
 				'label': _('Manufacture'),
-				'items': ['BOM', 'Work Order', 'Job Card']
+				'items': ['BOM']
 			},
 			{
 				'label': _('Subcontract'),
