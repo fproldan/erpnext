@@ -119,6 +119,31 @@ def update_product_bundle_price(doc, parent_items):
 	if not doc.get('items'):
 		return
 
+	if "ecommerce_integrations" in frappe.get_installed_apps():
+		# Para los DocTypes relacionados a OVs generadas por la Integración de Ecommerce, evitamos la actualización de
+		# precios.
+		from ecommerce_integrations.base.utils import (
+			AVAILABLE_INTEGRATIONS,
+			Fields,
+			get_custom_field_name,
+		)
+
+		for item in doc.items:
+			for integration_name in AVAILABLE_INTEGRATIONS:
+				account_name_field = get_custom_field_name(integration_name, Fields.ACCOUNT_NAME.field)
+				if (
+					(doc.doctype == "Sales Order" and getattr(doc, account_name_field))
+					or (
+						doc.doctype == "Sales Invoice"
+						and frappe.db.get_value("Sales Order", item.sales_order, account_name_field)
+					)
+					or (
+						doc.doctype == "Delivery Note"
+						and frappe.db.get_value("Sales Order", item.against_sales_order, account_name_field)
+					)
+				):
+					return
+
 	parent_items_index = 0
 	bundle_price = 0
 
