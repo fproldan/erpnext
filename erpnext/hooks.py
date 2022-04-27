@@ -119,6 +119,8 @@ domains = {
 	'Pagos360': 'erpnext.domains.pagos360',
 	'Mercadolibre': 'erpnext.domains.mercadolibre',
 	'Shopify': 'erpnext.domains.shopify',
+	'Mercadopago': 'erpnext.domains.mercadopago',
+	'BOM': 'erpnext.domains.bom',
 }
 
 website_generators = ["Item Group", "Website Item", "BOM", "Sales Partner",
