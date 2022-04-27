@@ -94,7 +94,7 @@ erpnext.BOMComparisonTool = class BOMComparisonTool {
 					let [fieldname, value1, value2] = change;
 					return `
 						<tr>
-							<td>${frappe.meta.get_label(doctype, fieldname)}</td>
+							<td>${__(frappe.meta.get_label(doctype, fieldname))}</td>
 							<td>${value1}</td>
 							<td>${value2}</td>
 						</tr>
@@ -139,7 +139,7 @@ erpnext.BOMComparisonTool = class BOMComparisonTool {
 					return `
 						<tr>
 							${th}
-							<td>${frappe.meta.get_label(child_doctype, fieldname)}</td>
+							<td>${__(frappe.meta.get_label(child_doctype, fieldname))}</td>
 							<td>${value1}</td>
 							<td>${value2}</td>
 						</tr>
@@ -148,7 +148,7 @@ erpnext.BOMComparisonTool = class BOMComparisonTool {
 			}).join('');
 
 			return `
-				<h4 class="margin-top">${__('Changes in {0}', [df.label])}</h4>
+				<h4 class="margin-top">${__('Changes in {0}', [__(df.label)])}</h4>
 				<table class="table table-bordered">
 					<tr>
 						<th width="25%">${__('Item Code')}</th>
@@ -171,14 +171,14 @@ erpnext.BOMComparisonTool = class BOMComparisonTool {
 				let html = rows.map(row => {
 					let [, doc] = row;
 					let cells = fields
-						.map(df => `<td>${doc[df.fieldname]}</td>`)
+						.map(df => `<td>${__(doc[df.fieldname])}</td>`)
 						.join('');
 					return `<tr>${cells}</tr>`;
 				}).join('');
 
-				let header = fields.map(df => `<th>${df.label}</th>`).join('');
+				let header = fields.map(df => `<th>${__(df.label)}</th>`).join('');
 				return `
-					<h4 class="margin-top">${$.format(title, [df.label])}</h4>
+					<h4 class="margin-top">${$.format(title, [__(df.label)])}</h4>
 					<table class="table table-bordered">
 						<tr>${header}</tr>
 						${html}
