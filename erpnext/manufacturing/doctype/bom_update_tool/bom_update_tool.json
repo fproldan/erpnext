@@ -208,9 +208,10 @@
  "issingle": 1, 
  "istable": 0, 
  "max_attachments": 0, 
- "modified": "2018-07-02 16:17:09.014102", 
+ "modified": "2018-07-03 16:17:09.014102", 
  "modified_by": "Administrator", 
  "module": "Manufacturing", 
+ "restrict_to_domain": "BOM",
  "name": "BOM Update Tool", 
  "owner": "Administrator", 
  "permissions": [

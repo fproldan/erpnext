@@ -93,25 +93,25 @@ frappe.ui.form.on("BOM", {
 			});
 		}
 
-		if(frm.doc.docstatus!=0) {
-			frm.add_custom_button(__("Work Order"), function() {
-				frm.trigger("make_work_order");
-			}, __("Create"));
+		// if(frm.doc.docstatus!=0) {
+		// 	frm.add_custom_button(__("Work Order"), function() {
+		// 		frm.trigger("make_work_order");
+		// 	}, __("Create"));
 
-			if (frm.doc.has_variants) {
-				frm.add_custom_button(__("Variant BOM"), function() {
-					frm.trigger("make_variant_bom");
-				}, __("Create"));
-			}
+		// 	if (frm.doc.has_variants) {
+		// 		frm.add_custom_button(__("Variant BOM"), function() {
+		// 			frm.trigger("make_variant_bom");
+		// 		}, __("Create"));
+		// 	}
 
-			if (frm.doc.inspection_required) {
-				frm.add_custom_button(__("Quality Inspection"), function() {
-					frm.trigger("make_quality_inspection");
-				}, __("Create"));
-			}
+		// 	if (frm.doc.inspection_required) {
+		// 		frm.add_custom_button(__("Quality Inspection"), function() {
+		// 			frm.trigger("make_quality_inspection");
+		// 		}, __("Create"));
+		// 	}
 
-			frm.page.set_inner_btn_group_as_primary(__('Create'));
-		}
+		// 	frm.page.set_inner_btn_group_as_primary(__('Create'));
+		// }
 
 		if(frm.doc.items && frm.doc.allow_alternative_item) {
 			const has_alternative = frm.doc.items.find(i => i.allow_alternative_item === 1);
@@ -133,9 +133,9 @@ frappe.ui.form.on("BOM", {
 
 
 		if (frm.doc.has_variants) {
-			frm.set_intro(__('This is a Template BOM and will be used to make the work order for {0} of the item {1}',
+			frm.set_intro(__('Esta es una BOM plantilla y será usada para crear ordenes de trabajo para {0} del Producto {1}',
 				[
-					`<a class="variants-intro">variants</a>`,
+					`<a class="variants-intro">variantes</a>`,
 					`<a href="/app/item/${frm.doc.item}">${frm.doc.item}</a>`,
 				]), true);
 
