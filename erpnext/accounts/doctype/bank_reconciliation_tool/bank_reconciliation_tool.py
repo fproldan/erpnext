@@ -3,8 +3,8 @@
 # For license information, please see license.txt
 
 from __future__ import unicode_literals
-
 import json
+import datetime
 
 import frappe
 from frappe import _
@@ -41,6 +41,13 @@ def get_bank_transactions(bank_account, from_date = None, to_date = None):
 		'unallocated_amount', 'reference_number', 'party_type', 'party'],
 		filters = filters
 	)
+
+	for transaction in transactions:
+		linked_payments = get_linked_payments(transaction['name'], ['payment_entry', 'journal_entry', 'exact_match'])
+		if linked_payments:
+			transaction['linked_payment'] = linked_payments[0]
+		else:
+			transaction['linked_payment'] = None
 	return transactions
 
 @frappe.whitelist()
@@ -251,6 +258,20 @@ def reconcile_vouchers(bank_transaction_name, vouchers):
 	transaction.save()
 	transaction.update_allocations()
 	return frappe.get_doc("Bank Transaction", bank_transaction_name)
+
+@frappe.whitelist()
+def delete_bank_transactions(bank_transaction_names):
+	for bank_transaction_name in json.loads(bank_transaction_names):
+		transaction = frappe.get_doc("Bank Transaction", bank_transaction_name)
+		transaction.cancel()
+		transaction.delete()
+	frappe.db.commit()
+
+@frappe.whitelist()
+def crear_asientos(data):
+	for row in json.loads(data):
+		row["allow_edit"] = False
+		create_journal_entry_bts(**row)
 
 @frappe.whitelist()
 def get_linked_payments(bank_transaction_name, document_types = None):
