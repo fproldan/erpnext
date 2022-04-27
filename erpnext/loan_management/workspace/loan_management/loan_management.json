@@ -220,7 +220,7 @@
    "type": "Link"
   }
  ],
- "modified": "2021-05-25 17:31:53.586508",
+ "modified": "2021-05-26 17:31:53.586508",
  "modified_by": "Administrator",
  "module": "Loan Management",
  "name": "Loans",
@@ -240,12 +240,6 @@
    "label": "Loan",
    "link_to": "Loan",
    "type": "DocType"
-  },
-  {
-   "doc_view": "",
-   "label": "Dashboard",
-   "link_to": "Loan Dashboard",
-   "type": "Dashboard"
   }
  ]
 }
