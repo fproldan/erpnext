@@ -7,7 +7,7 @@ def execute():
     frappe.get_doc(
         {
             "name": "¡Nueva actualización 1.4!",
-            "title": "¡Nueva actualización 1.4 🚀 !",
+            "title": "¡Nueva actualización 1.4 🚀!",
             "public": 1,
             "notify_on_login": 1,
             "notify_on_every_login": 0,
