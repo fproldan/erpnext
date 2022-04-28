@@ -420,7 +420,7 @@ class Company(NestedSet):
 			total_companies += 1
 
 		if total_companies > limits.companies:
-			frappe.throw('Lo sentimos, ha alcanzado el límite máximo de <b>empresas</b> para su suscripción. Puedes contactar a <a href="https://diamo.com.ar" target="_blank">soporte</a> para descubrir cómo añadir más <b>empresas</b>.', MaxCompaniesReachedError)
+			frappe.throw('Lo sentimos, ha alcanzado el límite máximo de <b>empresas</b> para su suscripción. Puedes contactar a <a href="https://grupo-gestion.com.ar" target="_blank">soporte</a> para descubrir cómo añadir más <b>empresas</b>.', MaxCompaniesReachedError)
 
 
 @frappe.whitelist()

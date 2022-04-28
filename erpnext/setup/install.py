@@ -16,7 +16,7 @@ from erpnext.setup.default_energy_point_rules import get_default_energy_point_ru
 
 from .default_success_action import get_default_success_action
 
-default_mail_footer = """<div style="padding: 7px; text-align: right; color: #888"><small>Enviado por <a style="color: #888" href="https://diamo.com.ar">DiamoERP</a></div>"""
+default_mail_footer = """<div style="padding: 7px; text-align: right; color: #888"><small>Enviado por <a style="color: #888" href="https://www.grupo-gestion.com.ar/">Grupo Gestión</a></div>"""
 
 
 def after_install():
@@ -143,7 +143,7 @@ def add_standard_navbar_items():
 		{
 			'item_label': 'Documentación',
 			'item_type': 'Route',
-			'route': 'https://diamo.com.ar/doc',
+			'route': 'https://grupo-gestion.com.ar/doc',
 			'is_standard': 1
 		},
 	]
