@@ -340,3 +340,4 @@ erpnext.patches.v13_0.create_mercadopago_domain
 erpnext.patches.v13_0.add_conversion_factor
 erpnext.patches.v13_0.fix_workspace_links
 erpnext.patches.v13_0.add_bom_domain
+erpnext.patches.v13_0.release_1_4
