@@ -94,7 +94,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 			{
 				name: __("Document Name"),
 				editable: false,
-				width: 150,
+				width: 180,
 			},
 			{
 				name: __("Reference Date"),
@@ -215,6 +215,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				fieldtype: "Check",
 				label: __("Show Only Exact Amount"),
 				fieldname: "exact_match",
+				default: 1,
 				onchange: () => this.update_options(),
 			},
 			{
