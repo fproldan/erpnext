@@ -2041,7 +2041,7 @@
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Sales Invoice",
- "name_after_submit": 1,
+ "set_name_after_submit": 1,
  "name_case": "Title Case",
  "owner": "Administrator",
  "permissions": [
