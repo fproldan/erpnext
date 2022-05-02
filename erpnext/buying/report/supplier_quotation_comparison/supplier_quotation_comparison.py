@@ -259,12 +259,12 @@ def get_columns(filters):
 
 def get_message():
 	return  """<span class="indicator">
-		Valid till : &nbsp;&nbsp;
+		Válido hasta: &nbsp;&nbsp;
 		</span>
 		<span class="indicator orange">
-		Expires in a week or less
+		Expira en una semana o menos
 		</span>
 		&nbsp;&nbsp;
 		<span class="indicator red">
-		Expires today / Already Expired
+		Expira hoy / Ya expirado
 		</span>"""
