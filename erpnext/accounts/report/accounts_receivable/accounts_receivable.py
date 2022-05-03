@@ -217,6 +217,10 @@ class ReceivablePayableReport(object):
 		# as we can use this to filter out invoices without outstanding
 		for key, row in self.voucher_balance.items():
 			row.outstanding = flt(row.invoiced - row.paid - row.credit_note, self.currency_precision)
+
+			conversion_rate = frappe.get_value(row['voucher_type'], row['voucher_no'], 'conversion_rate')
+			row.outstanding_original_currency = flt((row.outstanding / conversion_rate), self.currency_precision)
+
 			row.invoice_grand_total = row.invoiced
 			if abs(row.outstanding) > 1.0/10 ** self.currency_precision:
 				# non-zero oustanding, we must consider this row
@@ -779,6 +783,8 @@ class ReceivablePayableReport(object):
 			# note: fieldname is still `credit_note`
 			self.add_column(_('Debit Note'), fieldname='credit_note')
 		self.add_column(_('Outstanding Amount'), fieldname='outstanding')
+
+		self.add_column('Monto pendiente en moneda original', fieldname='outstanding_original_currency')
 
 		self.setup_ageing_columns()
 
