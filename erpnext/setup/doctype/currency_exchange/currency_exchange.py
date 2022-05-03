@@ -5,8 +5,9 @@
 
 from __future__ import unicode_literals
 
+import re
 import itertools
-from typing import Optional
+from functools import lru_cache
 
 import requests
 from frappe import _, db, get_all, new_doc, throw
@@ -41,22 +42,29 @@ class CurrencyExchange(Document):
 			throw(_("Currency Exchange must be applicable for Buying or for Selling."))
 
 
-def get_currency_exchange_rate(from_currency: str, to_currency: str) -> Optional[float]:
+@lru_cache
+def get_dolarsi_exchange_rate_xml() -> str:
+	return requests.get("https://www.dolarsi.com/api/dolarSiInfo.xml").content.decode()
+
+
+def get_currency_exchange_rate(from_currency: str, to_currency: str) -> float:
 	exchange_rate_type = db.get_value(
 		"Currency",
 		{"currency_name": to_currency if from_currency == "ARS" else from_currency},
 		"exchange_rate_type",
 	)
-	return next(
-		(
-			1 / float(data["casa"]["venta"].replace(",", "."))
-			if from_currency == "ARS"
-			else float(data["casa"]["compra"].replace(",", "."))
-			for data in requests.get("https://www.dolarsi.com/api/api.php?type=valoresprincipales").json()
-			if data["casa"]["nombre"] == exchange_rate_type
-		),
-		None,
-	)
+
+	exchange_rate_info = re.search(
+		rf"<(?P<casa>casa\d*)>(?P<info>[\S\s]*<nombre>{exchange_rate_type}</nombre>[\S\s]*)</(?P=casa)>",
+		get_dolarsi_exchange_rate_xml(),
+	).group("info")
+
+	if from_currency == "ARS":
+		exchange_rate_value = re.search(r"<venta>(?P<venta>.*)</venta>", exchange_rate_info).group("venta")
+		return 1 / float(exchange_rate_value.replace(",", "."))
+
+	exchange_rate_value = re.search(r"<compra>(?P<compra>.*)</compra>", exchange_rate_info).group("compra")
+	return float(exchange_rate_value.replace(",", "."))
 
 
 def set_currency_exchange_rates(*args, **kwargs):
@@ -66,13 +74,10 @@ def set_currency_exchange_rates(*args, **kwargs):
 		)
 	):
 		for from_currency, to_currency in (currency_pair, currency_pair[::-1]):
-			exchange_rate = get_currency_exchange_rate(from_currency, to_currency)
-			if exchange_rate is None:
-				continue
 			currency_exchange = new_doc("Currency Exchange")
 			currency_exchange.from_currency = from_currency
 			currency_exchange.to_currency = to_currency
-			currency_exchange.exchange_rate = exchange_rate
+			currency_exchange.exchange_rate = get_currency_exchange_rate(from_currency, to_currency)
 			try:
 				currency_exchange.insert()
 			except DuplicateEntryError:
