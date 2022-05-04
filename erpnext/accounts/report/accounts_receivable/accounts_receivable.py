@@ -213,13 +213,22 @@ class ReceivablePayableReport(object):
 		return voucher_balance
 
 	def build_data(self):
+		from erpnext.setup.utils import get_exchange_rate
 		# set outstanding for all the accumulated balances
 		# as we can use this to filter out invoices without outstanding
 		for key, row in self.voucher_balance.items():
 			row.outstanding = flt(row.invoiced - row.paid - row.credit_note, self.currency_precision)
 
-			conversion_rate = frappe.get_value(row['voucher_type'], row['voucher_no'], 'conversion_rate')
-			row.outstanding_original_currency = flt((row.outstanding / conversion_rate), self.currency_precision)
+			vourcher_data = frappe.db.get_values(row['voucher_type'], row['voucher_no'], ["currency", "conversion_rate", "posting_date"], as_dict=1)[0]
+			if vourcher_data['conversion_rate'] != 1:
+				row.outstanding_original_currency = flt((row.outstanding / vourcher_data['conversion_rate']), self.currency_precision)
+			else:
+				if row['voucher_type'] == "Purchase Invoice":
+					exchange_type = "for_buying"
+				else:
+					exchange_type = "for_selling"
+				conversion_rate = get_exchange_rate(vourcher_data['currency'], "USD", str(vourcher_data['posting_date']), exchange_type)
+				row.outstanding_original_currency = flt((row.outstanding * conversion_rate), self.currency_precision)
 
 			row.invoice_grand_total = row.invoiced
 			if abs(row.outstanding) > 1.0/10 ** self.currency_precision:
@@ -784,7 +793,7 @@ class ReceivablePayableReport(object):
 			self.add_column(_('Debit Note'), fieldname='credit_note')
 		self.add_column(_('Outstanding Amount'), fieldname='outstanding')
 
-		self.add_column('Monto pendiente en moneda original', fieldname='outstanding_original_currency')
+		self.add_column('Monto pendiente USD', fieldname='outstanding_original_currency')
 
 		self.setup_ageing_columns()
 
