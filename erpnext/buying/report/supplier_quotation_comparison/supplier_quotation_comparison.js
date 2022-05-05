@@ -128,6 +128,11 @@ frappe.query_reports["Supplier Quotation Comparison"] = {
 		let filters = report.get_values();
 		let item_code = filters.item_code;
 
+		if (!item_code) {
+			frappe.msgprint("Debe seleccionar un producto en el filtro de productos");
+			return;
+		};
+
 		// Get a list of the suppliers (with a blank as well) for the user to select
 		let suppliers = $.map(report.data, (row, idx)=>{ return row.supplier_name })
 
@@ -155,6 +160,7 @@ frappe.query_reports["Supplier Quotation Comparison"] = {
 		dialog.set_primary_action(__("Set Default Supplier"), () => {
 			let values = dialog.get_values();
 			if(values) {
+				console.log(item_code)
 				// Set the default_supplier field of the appropriate Item to the selected supplier
 				frappe.call({
 					method: "frappe.client.set_value",
