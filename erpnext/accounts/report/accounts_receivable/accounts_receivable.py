@@ -219,7 +219,7 @@ class ReceivablePayableReport(object):
 		for key, row in self.voucher_balance.items():
 			row.outstanding = flt(row.invoiced - row.paid - row.credit_note, self.currency_precision)
 
-			if frappe.get_hooks('accounts_receivable_usd_column'):
+			if frappe.get_hooks('accounts_receivable_usd_column') and row.outstanding != 0.0:
 				vourcher_data = frappe.db.get_values(row['voucher_type'], row['voucher_no'], ["currency", "conversion_rate", "posting_date"], as_dict=1)[0]
 				if vourcher_data['conversion_rate'] != 1:
 					row.outstanding_original_currency = flt((row.outstanding / vourcher_data['conversion_rate']), self.currency_precision)
