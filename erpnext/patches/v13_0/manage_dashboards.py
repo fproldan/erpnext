@@ -31,4 +31,4 @@ def execute():
         from frappe.website.setup import add_dashboard
         add_dashboard()
 
-        frappe.db.commit()
+    frappe.db.commit()

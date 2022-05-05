@@ -630,7 +630,7 @@
    "type": "Link"
   }
  ],
- "modified": "2021-06-12 13:38:37.448989",
+ "modified": "2021-06-13 13:38:37.448989",
  "modified_by": "Administrator",
  "module": "Education",
  "name": "Education",
@@ -690,11 +690,6 @@
    "label": "Student Attendance Tool",
    "link_to": "Student Attendance Tool",
    "type": "DocType"
-  },
-  {
-   "label": "Dashboard",
-   "link_to": "Education",
-   "type": "Dashboard"
   }
  ]
 }

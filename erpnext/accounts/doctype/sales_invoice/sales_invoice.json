@@ -2002,9 +2002,7 @@
    "fieldtype": "Check",
    "hidden": 1,
    "label": "Ignore Default Payment Terms Template",
-   "read_only": 1,
-   "show_days": 1,
-   "show_seconds": 1
+   "read_only": 1
   },
   {
    "allow_on_submit": 1,
@@ -2039,10 +2037,11 @@
    "link_fieldname": "consolidated_invoice"
   }
  ],
- "modified": "2021-09-28 13:09:34.391799",
+ "modified": "2022-02-25 11:51:44.271169",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Sales Invoice",
+ "name_after_submit": 1,
  "name_case": "Title Case",
  "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
