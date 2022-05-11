@@ -470,10 +470,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 			                var cuenta = r.message["cuenta_cobros"];
 			            } else if (journal_entry_type == 'Cheque Rechazado') {
 			        		var cuenta = r.message["cuenta_rechazados"];
-			        	} else if (journal_entry_type == 'Cheque Debitado') {
-			        		var cuenta = r.message["cuenta_debitos"];
 			        	}
-
 			        	me.dialog.fields_dict.second_account.value = cuenta;
 						me.dialog.get_field("second_account").refresh();
 					}
