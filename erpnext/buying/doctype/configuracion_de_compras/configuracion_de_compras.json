@@ -1,0 +1,133 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-05-17 10:59:42.683956",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "aprobar_solicitud",
+  "monto_de_aprobacion_de_solicitud",
+  "alta_simple_de_proveedor",
+  "notificacion_factura_de_venta_vencida",
+  "alerta_por_monto_superado",
+  "proveedor_cambia_orden_de_compra",
+  "column_break_5",
+  "aprobacion_de_orden_de_compra_por_analista",
+  "aprobacion_de_orden_de_compra_por_jefe",
+  "aprobacion_de_orden_de_compra_por_gerente"
+ ],
+ "fields": [
+  {
+   "default": "0",
+   "fieldname": "aprobar_solicitud",
+   "fieldtype": "Check",
+   "label": "Aprobar solicitud"
+  },
+  {
+   "fieldname": "monto_de_aprobacion_de_solicitud",
+   "fieldtype": "Currency",
+   "label": "Monto de aprobaci\u00f3n de solicitud"
+  },
+  {
+   "default": "0",
+   "fieldname": "alta_simple_de_proveedor",
+   "fieldtype": "Check",
+   "label": "Alta simple de proveedor"
+  },
+  {
+   "default": "0",
+   "fieldname": "notificacion_factura_de_venta_vencida",
+   "fieldtype": "Check",
+   "label": "Notificaci\u00f3n factura de venta vencida"
+  },
+  {
+   "default": "0",
+   "fieldname": "alerta_por_monto_superado",
+   "fieldtype": "Check",
+   "label": "Alerta por monto superado"
+  },
+  {
+   "default": "0",
+   "fieldname": "proveedor_cambia_orden_de_compra",
+   "fieldtype": "Check",
+   "label": "Proveedor cambia orden de compra (Tiempo de entrega)"
+  },
+  {
+   "default": "0",
+   "fieldname": "aprobacion_de_orden_de_compra_por_analista",
+   "fieldtype": "Check",
+   "label": "Aprobaci\u00f3n de Orden de Compra por Analista"
+  },
+  {
+   "default": "0",
+   "fieldname": "aprobacion_de_orden_de_compra_por_jefe",
+   "fieldtype": "Check",
+   "label": "Aprobaci\u00f3n de Orden de Compra por Jefe"
+  },
+  {
+   "default": "0",
+   "fieldname": "aprobacion_de_orden_de_compra_por_gerente",
+   "fieldtype": "Check",
+   "label": "Aprobaci\u00f3n de Orden de Compra por Gerente"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2022-05-17 11:07:52.845498",
+ "modified_by": "Administrator",
+ "module": "Buying",
+ "name": "Configuracion de Compras",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Purchase Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Purchase Master Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Purchase User",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "route": "app/doctype/Configuracion%20de%20Compras",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
