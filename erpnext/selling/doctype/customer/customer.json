@@ -516,12 +516,12 @@
  "index_web_pages_for_search": 1,
  "links": [
   {
-   "group": "Allowed Items",
+   "group": "Elementos Permitidos",
    "link_doctype": "Party Specific Item",
    "link_fieldname": "party"
   }
  ],
- "modified": "2021-11-15 11:52:35.042445",
+ "modified": "2021-11-16 11:52:35.042445",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Customer",
