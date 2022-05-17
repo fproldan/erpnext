@@ -16,6 +16,7 @@
   "country",
   "default_bank_account",
   "tax_id",
+  "estado_cuit",
   "tax_category",
   "tax_withholding_category",
   "is_transporter",
@@ -29,10 +30,21 @@
   "allow_purchase_invoice_creation_without_purchase_order",
   "allow_purchase_invoice_creation_without_purchase_receipt",
   "disabled",
+  "fecha_de_alta",
+  "fecha_de_baja",
+  "motivo_de_baja",
   "warn_rfqs",
   "warn_pos",
   "prevent_rfqs",
   "prevent_pos",
+  "section_break_40",
+  "critico",
+  "proveedor_o_suministro",
+  "zona_de_entrega",
+  "columna_compras",
+  "limite_de_credito_cta_cte",
+  "forma_de_pago",
+  "centro_de_costo",
   "allowed_to_transact_section",
   "companies",
   "section_break_7",
@@ -108,10 +120,10 @@
    "options": "Bank Account"
   },
   {
+   "allow_in_quick_entry": 1,
    "fieldname": "tax_id",
    "fieldtype": "Data",
-   "label": "Tax ID",
-   "allow_in_quick_entry": 1
+   "label": "Tax ID"
   },
   {
    "fieldname": "tax_category",
@@ -427,6 +439,70 @@
    "fieldtype": "Link",
    "label": "Supplier Primary Address",
    "options": "Address"
+  },
+  {
+   "default": "Today",
+   "fieldname": "fecha_de_alta",
+   "fieldtype": "Date",
+   "label": "Fecha de alta"
+  },
+  {
+   "fieldname": "fecha_de_baja",
+   "fieldtype": "Date",
+   "label": "Fecha de baja"
+  },
+  {
+   "fieldname": "motivo_de_baja",
+   "fieldtype": "Data",
+   "label": "Motivo de baja"
+  },
+  {
+   "fieldname": "estado_cuit",
+   "fieldtype": "Select",
+   "label": "Estado CUIT",
+   "options": "\nActivo\nInactivo"
+  },
+  {
+   "fieldname": "section_break_40",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "critico",
+   "fieldtype": "Select",
+   "label": "Critico",
+   "options": "\nSi\nNo"
+  },
+  {
+   "fieldname": "proveedor_o_suministro",
+   "fieldtype": "Data",
+   "label": "Proveedor o Suministro"
+  },
+  {
+   "fieldname": "zona_de_entrega",
+   "fieldtype": "Link",
+   "label": "Zona de entrega",
+   "options": "Jurisdiccion"
+  },
+  {
+   "fieldname": "limite_de_credito_cta_cte",
+   "fieldtype": "Currency",
+   "label": "Limite de credito Cta Cte"
+  },
+  {
+   "fieldname": "forma_de_pago",
+   "fieldtype": "Link",
+   "label": "Forma de Pago",
+   "options": "Mode of Payment"
+  },
+  {
+   "fieldname": "centro_de_costo",
+   "fieldtype": "Link",
+   "label": "Centro de Costo",
+   "options": "Cost Center"
+  },
+  {
+   "fieldname": "columna_compras",
+   "fieldtype": "Column Break"
   }
  ],
  "icon": "fa fa-user",
@@ -439,7 +515,7 @@
    "link_fieldname": "party"
   }
  ],
- "modified": "2021-09-07 18:37:56.522233",
+ "modified": "2022-05-17 11:47:42.403639",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Supplier",
@@ -499,6 +575,7 @@
   }
  ],
  "quick_entry": 1,
+ "route": "app/doctype/Supplier",
  "search_fields": "supplier_name, supplier_group",
  "show_name_in_global_search": 1,
  "sort_field": "modified",

@@ -166,7 +166,7 @@
    "hidden": 0,
    "is_query_report": 0,
    "label": "Buying Settings",
-   "link_to": "Buying Settings",
+   "link_to": "Configuracion de Compras",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -467,7 +467,7 @@
    "type": "Link"
   }
  ],
- "modified": "2021-06-13 14:38:38.615167",
+ "modified": "2021-06-14 14:38:38.615167",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Buying",
