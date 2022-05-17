@@ -510,7 +510,7 @@
  "image_field": "image",
  "links": [
   {
-   "group": "Allowed Items",
+   "group": "Elementos Permitidos",
    "link_doctype": "Party Specific Item",
    "link_fieldname": "party"
   }
