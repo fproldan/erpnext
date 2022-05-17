@@ -27,10 +27,14 @@
   "customer_group",
   "territory",
   "tax_id",
+  "estado_cuit",
   "tax_category",
   "so_required",
   "dn_required",
   "disabled",
+  "fecha_de_alta",
+  "fecha_de_baja",
+  "motivo_de_baja",
   "is_internal_customer",
   "represents_company",
   "allowed_to_transact_section",
@@ -508,6 +512,28 @@
    "no_copy": 1,
    "options": "Opportunity",
    "print_hide": 1
+  },
+  {
+   "fieldname": "estado_cuit",
+   "fieldtype": "Select",
+   "label": "Estado CUIT",
+   "options": "\nActivo\nInactivo"
+  },
+  {
+   "default": "Today",
+   "fieldname": "fecha_de_alta",
+   "fieldtype": "Date",
+   "label": "Fecha de alta"
+  },
+  {
+   "fieldname": "fecha_de_baja",
+   "fieldtype": "Date",
+   "label": "Fecha de baja"
+  },
+  {
+   "fieldname": "motivo_de_baja",
+   "fieldtype": "Data",
+   "label": "Motivo de baja"
   }
  ],
  "icon": "fa fa-user",
@@ -521,7 +547,7 @@
    "link_fieldname": "party"
   }
  ],
- "modified": "2021-11-17 17:38:54.196663",
+ "modified": "2022-05-17 12:14:27.279401",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Customer",
