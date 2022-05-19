@@ -244,7 +244,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				fieldname: "cheque",
 				fieldtype: "Link",
 				options: "Cheque",
-				depends_on: "eval:doc.action=='Crear comprobante' && doc.document_type=='Journal Entry' && (doc.journal_entry_type=='Cheque Depositado' || doc.journal_entry_type=='Cheque Rechazado' || doc.journal_entry_type=='Cheque Cobrado')",
+				depends_on: "eval:doc.action=='Crear comprobante' && doc.document_type=='Journal Entry' && (doc.journal_entry_type=='Cheque Depositado' || doc.journal_entry_type=='Cheque Rechazado' || doc.journal_entry_type=='Cheque Cobrado' || doc.journal_entry_type=='Cheque Debitado')",
 				get_query: () => {
 					var journal_entry_type = this.dialog.fields_dict.journal_entry_type.value;
 					
@@ -254,6 +254,8 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 						var estados = ['En Mano', 'Vencido'];
 					} else if (journal_entry_type == 'Cheque Rechazado') {
 						var estados = ['Vencido', 'Depositado', 'Entregado', 'Cobrado'];
+					} else if (journal_entry_type == 'Cheque Debitado') {
+						var estados = ['Entregado'];
 					}
 
 					return {
@@ -265,7 +267,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				fieldname: "reference_number",
 				fieldtype: "Data",
 				label: __("Reference Number"),
-				mandatory_depends_on: "eval:doc.action=='Crear comprobante' && !(doc.journal_entry_type=='Cheque Depositado' || doc.journal_entry_type=='Cheque Rechazado' || doc.journal_entry_type=='Cheque Cobrado')",
+				mandatory_depends_on: "eval:doc.action=='Crear comprobante' && !(doc.journal_entry_type=='Cheque Depositado' || doc.journal_entry_type=='Cheque Rechazado' || doc.journal_entry_type=='Cheque Cobrado' || doc.journal_entry_type=='Cheque Debitado')",
 			},
 			{
 				default: "Today",
@@ -279,7 +281,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				fieldname: "reference_date",
 				fieldtype: "Date",
 				label: __("Cheque/Reference Date"),
-				mandatory_depends_on: "eval:doc.action=='Crear comprobante' && !(doc.journal_entry_type=='Cheque Depositado' || doc.journal_entry_type=='Cheque Rechazado' || doc.journal_entry_type=='Cheque Cobrado')",
+				mandatory_depends_on: "eval:doc.action=='Crear comprobante' && !(doc.journal_entry_type=='Cheque Depositado' || doc.journal_entry_type=='Cheque Rechazado' || doc.journal_entry_type=='Cheque Cobrado' || doc.journal_entry_type=='Cheque Debitado')",
 				depends_on: "eval:doc.action=='Crear comprobante'",
 				reqd: 1,
 			},
@@ -310,7 +312,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				fieldtype: "Select",
 				label: __("Journal Entry Type"),
 				options:
-					"Journal Entry\nInter Company Journal Entry\nBank Entry\nCash Entry\nCredit Card Entry\nDebit Note\nCredit Note\nContra Entry\nExcise Entry\nWrite Off Entry\nOpening Entry\nDepreciation Entry\nExchange Rate Revaluation\nDeferred Revenue\nDeferred Expense\nAjuste por Inflacion\nCheque Rechazado\nCheque Depositado\nCheque Cobrado",
+					"Journal Entry\nInter Company Journal Entry\nBank Entry\nCash Entry\nCredit Card Entry\nDebit Note\nCredit Note\nContra Entry\nExcise Entry\nWrite Off Entry\nOpening Entry\nDepreciation Entry\nExchange Rate Revaluation\nDeferred Revenue\nDeferred Expense\nAjuste por Inflacion\nCheque Rechazado\nCheque Depositado\nCheque Cobrado\nCheque Debitado",
 				depends_on:
 					"eval:doc.action=='Crear comprobante' &&  doc.document_type=='Journal Entry'",
 				mandatory_depends_on:
@@ -454,7 +456,7 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 
 		var journal_entry_type = me.dialog.fields_dict.journal_entry_type.input.value;
 
-		if (journal_entry_type == 'Cheque Depositado' || journal_entry_type == 'Cheque Cobrado' || journal_entry_type == 'Cheque Rechazado')  {
+		if (journal_entry_type == 'Cheque Depositado' || journal_entry_type == 'Cheque Cobrado' || journal_entry_type == 'Cheque Rechazado' || journal_entry_type == 'Cheque Debitado')  {
 			frappe.call({
 		    	method:"erpnext_argentina.cheques.get_cuentas_cheque",
 			    args: {
@@ -469,7 +471,6 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 			            } else if (journal_entry_type == 'Cheque Rechazado') {
 			        		var cuenta = r.message["cuenta_rechazados"];
 			        	}
-
 			        	me.dialog.fields_dict.second_account.value = cuenta;
 						me.dialog.get_field("second_account").refresh();
 					}
