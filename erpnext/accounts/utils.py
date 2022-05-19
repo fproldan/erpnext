@@ -115,7 +115,7 @@ def validate_fiscal_year(date, fiscal_year, company, label="Date", doc=None):
 
 @frappe.whitelist()
 def get_balance_on(account=None, date=None, party_type=None, party=None, company=None,
-	in_account_currency=True, cost_center=None, ignore_account_permission=False):
+	in_account_currency=True, cost_center=None, ignore_account_permission=False, from_date=None):
 	if not account and frappe.form_dict.get("account"):
 		account = frappe.form_dict.get("account")
 	if not date and frappe.form_dict.get("date"):
@@ -131,6 +131,8 @@ def get_balance_on(account=None, date=None, party_type=None, party=None, company
 	cond = ["is_cancelled=0"]
 	if date:
 		cond.append("posting_date <= %s" % frappe.db.escape(cstr(date)))
+		if from_date:
+			cond.append("posting_date >= %s" % frappe.db.escape(cstr(from_date)))
 	else:
 		# get balance of all entries that exist
 		date = nowdate()
