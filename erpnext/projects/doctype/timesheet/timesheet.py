@@ -225,6 +225,7 @@ def get_projectwise_timesheet_data(project=None, parent=None, from_time=None, to
 
 	query = f"""
 		SELECT
+
 			tsd.name as name,
 			tsd.parent as time_sheet,
 			tsd.from_time as from_time,
@@ -235,15 +236,20 @@ def get_projectwise_timesheet_data(project=None, parent=None, from_time=None, to
 			tsd.description as description,
 			ts.currency as currency,
       		tsd.project_name as project_name
+
 		FROM `tabTimesheet Detail` tsd
+
 			INNER JOIN `tabTimesheet` ts
 			ON ts.name = tsd.parent
+
 		WHERE
+
 			tsd.parenttype = 'Timesheet'
 			AND tsd.docstatus = 1
 			AND tsd.is_billable = 1
 			AND tsd.sales_invoice is NULL
 			{condition}
+
 		ORDER BY tsd.from_time ASC
 	"""
 

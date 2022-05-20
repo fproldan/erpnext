@@ -803,8 +803,7 @@ def make_stock_entry(source_name,target_doc=None):
 			"doctype": "Stock Entry Detail",
 			"field_map": {
 				"warehouse": "s_warehouse",
-				"parent": "reference_purchase_receipt",
-				"batch_no": "batch_no"
+				"parent": "reference_purchase_receipt"
 			},
 		},
 	}, target_doc, set_missing_values)
