@@ -689,9 +689,7 @@ class AccountsController(TransactionBase):
 			advance_entries_against_si = [d.reference_name for d in self.get("advances")]
 			for d in advance_entries:
 				if not advance_entries_against_si or d.reference_name not in advance_entries_against_si:
-					frappe.msgprint(_(
-						"Payment Entry {0} is linked against Order {1}, check if it should be pulled as advance in this invoice.")
-							.format(d.reference_name, d.against_order))
+					frappe.msgprint(_("Payment Entry {0} is linked against Order {1}, check if it should be pulled as advance in this invoice.").format(d.reference_name, d.against_order))
 
 	def set_advance_gain_or_loss(self):
 		if self.get('conversion_rate') == 1 or not self.get("advances"):
