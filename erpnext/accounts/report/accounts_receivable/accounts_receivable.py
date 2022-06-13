@@ -219,7 +219,7 @@ class ReceivablePayableReport(object):
 		for key, row in self.voucher_balance.items():
 			row.outstanding = flt(row.invoiced - row.paid - row.credit_note, self.currency_precision)
 
-			if frappe.get_hooks('accounts_receivable_usd_column') and row.outstanding != 0.0:
+			if frappe.get_hooks('accounts_receivable_usd_column') and row.outstanding != 0.0 and row['voucher_type'] != "Journal Entry":
 				if row['voucher_type'] == "Payment Entry":
 					currency_field = "paid_to_account_currency"
 				else:
