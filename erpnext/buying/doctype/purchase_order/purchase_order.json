@@ -20,6 +20,8 @@
   "company",
   "transaction_date",
   "schedule_date",
+  "nuevo_pacto_entrega",
+  "reclamado",
   "order_confirmation_no",
   "order_confirmation_date",
   "amended_from",
@@ -1141,13 +1143,25 @@
    "fieldtype": "Link",
    "label": "Tax Withholding Category",
    "options": "Tax Withholding Category"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "nuevo_pacto_entrega",
+   "fieldtype": "Date",
+   "label": "Nuevo pacto de entrega"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "reclamado",
+   "fieldtype": "Date",
+   "label": "Reclamado"
   }
  ],
  "icon": "fa fa-file-text",
  "idx": 105,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-01-27 08:54:17.855083",
+ "modified": "2022-06-13 12:34:09.082227",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Purchase Order",
