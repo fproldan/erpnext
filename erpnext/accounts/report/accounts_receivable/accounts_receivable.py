@@ -140,8 +140,7 @@ class ReceivablePayableReport(object):
 				self.total_row_map[party][field] = 0.0
 
 	def get_currency_fields(self):
-		return ['invoiced', 'paid', 'credit_note', 'outstanding', 'range1',
-			'range2', 'range3', 'range4', 'range5']
+		return ['invoiced', 'paid', 'credit_note', 'outstanding', 'range1', 'range2', 'range3', 'range4', 'range5']
 
 	def update_voucher_balance(self, gle):
 		# get the row where this balance needs to be updated
@@ -167,7 +166,7 @@ class ReceivablePayableReport(object):
 				# advance / unlinked payment or other adjustment
 				row.paid -= gle_balance
 		if gle.cost_center:
-			row.cost_center =  str(gle.cost_center)
+			row.cost_center = str(gle.cost_center)
 
 	def update_sub_total_row(self, row, party):
 		total_row = self.total_row_map.get(party)
@@ -219,25 +218,42 @@ class ReceivablePayableReport(object):
 		for key, row in self.voucher_balance.items():
 			row.outstanding = flt(row.invoiced - row.paid - row.credit_note, self.currency_precision)
 
-			if frappe.get_hooks('accounts_receivable_usd_column') and row.outstanding != 0.0 and row['voucher_type'] != "Journal Entry":
+			if frappe.get_hooks('accounts_receivable_usd_column') and row.outstanding != 0.0:
 				if row['voucher_type'] == "Payment Entry":
 					currency_field = "paid_to_account_currency"
+					fields_to_get = ["paid_to_account_currency", "source_exchange_rate", "posting_date"]
+				elif row['voucher_type'] == "Journal Entry":
+					currency_field = "currency"
+					fields_to_get = ["posting_date"]
 				else:
 					currency_field = "currency"
+					fields_to_get = ["currency", "conversion_rate", "posting_date"]
 
-				vourcher_data = frappe.db.get_values(row['voucher_type'], row['voucher_no'], [currency_field, "conversion_rate", "posting_date"], as_dict=1)[0]
-				if vourcher_data['conversion_rate'] != 1:
+				vourcher_data = frappe.db.get_values(row['voucher_type'], row['voucher_no'], fields_to_get, as_dict=1)[0]
+
+				if row['voucher_type'] == "Journal Entry":
+					vourcher_data[currency_field] = "ARS"
+				elif row['voucher_type'] == "Payment Entry":
+					vourcher_data["conversion_rate"] = vourcher_data['source_exchange_rate']
+
+				if vourcher_data.get('conversion_rate') and vourcher_data.get('conversion_rate') != 1:
 					row.outstanding_original_currency = flt((row.outstanding / vourcher_data['conversion_rate']), self.currency_precision)
 				else:
 					if row['voucher_type'] == "Purchase Invoice":
 						exchange_type = "for_buying"
-					else:
+					elif row['voucher_type'] == "Sales Invoice":
 						exchange_type = "for_selling"
+					elif row['voucher_type'] in ["Payment Entry", "Journal Entry"]:
+						if self.party_type == "Customer":
+							exchange_type = "for_selling"
+						else:
+							exchange_type = "for_buying"
+
 					conversion_rate = get_exchange_rate(vourcher_data[currency_field], "USD", str(vourcher_data['posting_date']), exchange_type)
 					row.outstanding_original_currency = flt((row.outstanding * conversion_rate), self.currency_precision)
 
 			row.invoice_grand_total = row.invoiced
-			if abs(row.outstanding) > 1.0/10 ** self.currency_precision:
+			if abs(row.outstanding) > 1.0 / 10 ** self.currency_precision:
 				# non-zero oustanding, we must consider this row
 
 				if self.is_invoice(row) and self.filters.based_on_payment_terms:
