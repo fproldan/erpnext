@@ -219,8 +219,13 @@ class ReceivablePayableReport(object):
 		for key, row in self.voucher_balance.items():
 			row.outstanding = flt(row.invoiced - row.paid - row.credit_note, self.currency_precision)
 
-			if frappe.get_hooks('accounts_receivable_usd_column') and row.outstanding != 0.0:
-				vourcher_data = frappe.db.get_values(row['voucher_type'], row['voucher_no'], ["currency", "conversion_rate", "posting_date"], as_dict=1)[0]
+			if frappe.get_hooks('accounts_receivable_usd_column') and row.outstanding != 0.0 and row['voucher_type'] != "Journal Entry":
+				if row['voucher_type'] == "Payment Entry":
+					currency_field = "paid_to_account_currency"
+				else:
+					currency_field = "currency"
+
+				vourcher_data = frappe.db.get_values(row['voucher_type'], row['voucher_no'], [currency_field, "conversion_rate", "posting_date"], as_dict=1)[0]
 				if vourcher_data['conversion_rate'] != 1:
 					row.outstanding_original_currency = flt((row.outstanding / vourcher_data['conversion_rate']), self.currency_precision)
 				else:
@@ -228,7 +233,7 @@ class ReceivablePayableReport(object):
 						exchange_type = "for_buying"
 					else:
 						exchange_type = "for_selling"
-					conversion_rate = get_exchange_rate(vourcher_data['currency'], "USD", str(vourcher_data['posting_date']), exchange_type)
+					conversion_rate = get_exchange_rate(vourcher_data[currency_field], "USD", str(vourcher_data['posting_date']), exchange_type)
 					row.outstanding_original_currency = flt((row.outstanding * conversion_rate), self.currency_precision)
 
 			row.invoice_grand_total = row.invoiced
