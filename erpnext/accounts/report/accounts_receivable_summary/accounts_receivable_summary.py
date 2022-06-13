@@ -80,6 +80,7 @@ class AccountsReceivableSummary(ReceivablePayableReport):
 			"paid": 0.0,
 			"credit_note": 0.0,
 			"outstanding": 0.0,
+			"outstanding_original_currency": 0.0,
 			"range1": 0.0,
 			"range2": 0.0,
 			"range3": 0.0,
@@ -115,6 +116,9 @@ class AccountsReceivableSummary(ReceivablePayableReport):
 		self.add_column(_('Paid Amount'), fieldname='paid')
 		self.add_column(_(credit_debit_label), fieldname='credit_note')
 		self.add_column(_('Outstanding Amount'), fieldname='outstanding')
+
+		if frappe.get_hooks('accounts_receivable_usd_column'):
+			self.add_column('Monto pendiente USD', fieldname='outstanding_original_currency')
 
 		self.setup_ageing_columns()
 
