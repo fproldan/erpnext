@@ -75,12 +75,11 @@ class AccountsReceivableSummary(ReceivablePayableReport):
 			self.set_party_details(d)
 
 	def init_party_total(self, row):
-		self.party_total.setdefault(row.party, frappe._dict({
+		original_dict = {
 			"invoiced": 0.0,
 			"paid": 0.0,
 			"credit_note": 0.0,
 			"outstanding": 0.0,
-			"outstanding_original_currency": 0.0,
 			"range1": 0.0,
 			"range2": 0.0,
 			"range3": 0.0,
@@ -88,7 +87,11 @@ class AccountsReceivableSummary(ReceivablePayableReport):
 			"range5": 0.0,
 			"total_due": 0.0,
 			"sales_person": []
-		}))
+		}
+		if frappe.get_hooks('accounts_receivable_usd_column'):
+			original_dict["outstanding_original_currency"] = 0.0
+
+		self.party_total.setdefault(row.party, frappe._dict(original_dict))
 
 	def set_party_details(self, row):
 		self.party_total[row.party].currency = row.currency
