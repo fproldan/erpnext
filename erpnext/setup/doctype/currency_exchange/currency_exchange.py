@@ -42,7 +42,7 @@ class CurrencyExchange(Document):
 			throw(_("Currency Exchange must be applicable for Buying or for Selling."))
 
 
-@lru_cache
+#@lru_cache
 def get_dolarsi_exchange_rate_xml() -> str:
 	return requests.get("https://www.dolarsi.com/api/dolarSiInfo.xml").content.decode()
 
