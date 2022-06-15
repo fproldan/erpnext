@@ -228,6 +228,7 @@
  "name": "Sales Commission",
  "naming_rule": "Expression",
  "owner": "Administrator",
+ "restrict_to_domain": "Vendedores y Socios",
  "permissions": [
   {
    "create": 1,

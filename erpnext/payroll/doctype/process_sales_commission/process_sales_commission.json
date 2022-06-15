@@ -99,6 +99,7 @@
  "modified_by": "Administrator",
  "module": "Payroll",
  "name": "Process Sales Commission",
+ "restrict_to_domain": "Vendedores y Socios",
  "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [

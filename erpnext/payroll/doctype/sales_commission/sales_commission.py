@@ -33,10 +33,8 @@ class SalesCommission(Document):
 	@frappe.whitelist()
 	def add_contributions(self):
 		self.set("contributions", [])
-		filter_date = "transaction_date" if self.commission_based_on=="Sales Order" else "posting_date"
-		records = [entry.name for entry in frappe.db.get_all(
-			self.commission_based_on,
-			filters={"company": self.company, "docstatus":1, filter_date: ('between', [self.from_date, self.to_date])})]
+		filter_date = "transaction_date" if self.commission_based_on == "Sales Order" else "posting_date"
+		records = [entry.name for entry in frappe.db.get_all(self.commission_based_on, filters={"company": self.company, "docstatus": 1, filter_date: ('between', [self.from_date, self.to_date])})]
 		sales_persons_details = frappe.get_all(
 			"Sales Team", filters={"parent": ['in', records], "sales_person": self.sales_person},
 			fields=["sales_person", "commission_rate", "incentives", "allocated_percentage", "allocated_amount", "parent"])
@@ -60,7 +58,7 @@ class SalesCommission(Document):
 		self.calculate_total_contribution_and_total_commission_amount()
 
 	def calculate_total_contribution_and_total_commission_amount(self):
-		total_contribution, total_commission_amount = 0,0
+		total_contribution, total_commission_amount = 0, 0
 		for entry in self.contributions:
 			total_contribution += entry.contribution_amount
 			total_commission_amount += entry.commission_amount
@@ -79,7 +77,7 @@ class SalesCommission(Document):
 			paid_from = get_bank_cash_account(mode_of_payment, self.company).get("account")
 
 		paid_to = frappe.db.get_value(
-			"Company", filters={"name":self.company},
+			"Company", filters={"name": self.company},
 			fieldname=['default_payable_account'], as_dict=True)['default_payable_account']
 		if not paid_to:
 			frappe.throw(_("Please set Default Payable Account in {}").format(get_link_to_form("Company", self.company)))
@@ -138,10 +136,11 @@ class SalesCommission(Document):
 		}
 		doc.append("references", reference)
 
+
 def add_record(record, sales_person):
-	previous_contibutions = frappe.get_all("Contributions", filters={"order_or_invoice":record["parent"], "docstatus": 1}, fields=["parent"])
+	previous_contibutions = frappe.get_all("Contributions", filters={"order_or_invoice": record["parent"], "docstatus": 1}, fields=["parent"])
 	if previous_contibutions:
 		for contributions in previous_contibutions:
-			if frappe.db.get_value("Sales Commission", {"name":contributions["parent"]}, fieldname=["sales_person"]) == sales_person:
+			if frappe.db.get_value("Sales Commission", {"name": contributions["parent"]}, fieldname=["sales_person"]) == sales_person:
 				return False
 	return True

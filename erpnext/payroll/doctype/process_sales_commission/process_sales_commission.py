@@ -16,19 +16,17 @@ class ProcessSalesCommission(Document):
 		return super().validate_from_to_dates("from_date", "to_date")
 
 	def validate_salary_component(self):
-		if self.pay_via_salary and not frappe.db.get_single_value(
-		    "Payroll Settings", "salary_component_for_sales_commission"):
-				frappe.throw(_("Please set {0} in {1}").format(
-					frappe.bold("Salary Component for Sales Commission"), get_link_to_form("Payroll Settings", "Payroll Settings")))
+		if self.pay_via_salary and not frappe.db.get_single_value("Payroll Settings", "salary_component_for_sales_commission"):
+			frappe.throw(_("Please set {0} in {1}").format(frappe.bold("Salary Component for Sales Commission"), get_link_to_form("Payroll Settings", "Payroll Settings")))
 
 	def on_submit(self):
 		self.process_sales_commission()
 
 	def process_sales_commission(self):
-		filter_date = "transaction_date" if self.commission_based_on=="Sales Order" else "posting_date"
+		filter_date = "transaction_date" if self.commission_based_on == "Sales Order" else "posting_date"
 		records = [entry.name for entry in frappe.db.get_all(
 			self.commission_based_on,
-			filters={"company": self.company, "docstatus":1, filter_date: ('between', [self.from_date, self.to_date])})]
+			filters={"company": self.company, "docstatus": 1, filter_date: ('between', [self.from_date, self.to_date])})]
 		sales_persons_details = frappe.get_all(
 			"Sales Team", filters={"parent": ['in', records]},
 			fields=["sales_person", "commission_rate", "incentives", "allocated_percentage", "allocated_amount", "parent"])
@@ -41,7 +39,7 @@ class ProcessSalesCommission(Document):
 	def get_sales_persons_list(self, sales_persons):
 		sales_persons_list = sales_persons
 		if self.department or self.designation or self.branch:
-			sales_persons_emp = frappe.get_all("Sales Person", filters= {"name": ["in", sales_persons]}, fields=["employee"], as_dict=True)['employee']
+			sales_persons_emp = frappe.get_all("Sales Person", filters={"name": ["in", sales_persons]}, fields=["employee"], as_dict=True)['employee']
 			emp_filters = {"name": ["in", sales_persons_emp], "company": self.company}
 			# for field in ["department", "designation", "branch"]:
 			if self.department:
@@ -85,6 +83,7 @@ class ProcessSalesCommission(Document):
 		for record in sales_persons_details_map:
 			doc = doc = frappe.new_doc("Sales Commission")
 			doc.sales_person = record
+			doc.commission_based_on = self.commission_based_on
 			doc.from_date = self.from_date
 			doc.to_date = self.to_date
 			doc.pay_via_salary = self.pay_via_salary
