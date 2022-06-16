@@ -41,9 +41,9 @@
    "fetch_from": "sales_person.employee",
    "fieldname": "employee",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Employee",
    "options": "Employee",
-   "hidden": 1,
    "read_only": 1
   },
   {
@@ -51,35 +51,35 @@
    "fetch_from": "employee.employee_name",
    "fieldname": "employee_name",
    "fieldtype": "Data",
-   "label": "Employee Name",
    "hidden": 1,
+   "label": "Employee Name",
    "read_only": 1
   },
   {
    "fetch_from": "employee.designation",
    "fieldname": "designation",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Designation",
    "options": "Designation",
-   "hidden": 1,
    "read_only": 1
   },
   {
    "fetch_from": "employee.department",
    "fieldname": "department",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Department",
    "options": "Department",
-   "hidden": 1,
    "read_only": 1
   },
   {
    "fetch_from": "employee.branch",
    "fieldname": "branch",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Branch",
    "options": "Branch",
-   "hidden": 1,
    "read_only": 1
   },
   {
@@ -228,15 +228,15 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-10-28 16:33:19.283507",
+ "modified": "2022-06-16 11:21:34.018262",
  "modified_by": "Administrator",
  "module": "Payroll",
  "name": "Sales Commission",
- "naming_rule": "Expression",
  "owner": "Administrator",
- "restrict_to_domain": "Vendedores y Socios",
  "permissions": [
   {
+   "amend": 1,
+   "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,
@@ -246,9 +246,12 @@
    "report": 1,
    "role": "System Manager",
    "share": 1,
+   "submit": 1,
    "write": 1
   },
   {
+   "amend": 1,
+   "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,
@@ -258,9 +261,12 @@
    "report": 1,
    "role": "Sales Manager",
    "share": 1,
+   "submit": 1,
    "write": 1
   },
   {
+   "amend": 1,
+   "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,
@@ -270,9 +276,11 @@
    "report": 1,
    "role": "HR Manager",
    "share": 1,
+   "submit": 1,
    "write": 1
   }
  ],
+ "restrict_to_domain": "Vendedores y Socios",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1
