@@ -43,6 +43,7 @@
    "fieldtype": "Link",
    "label": "Employee",
    "options": "Employee",
+   "hidden": 1,
    "read_only": 1
   },
   {
@@ -51,6 +52,7 @@
    "fieldname": "employee_name",
    "fieldtype": "Data",
    "label": "Employee Name",
+   "hidden": 1,
    "read_only": 1
   },
   {
@@ -59,6 +61,7 @@
    "fieldtype": "Link",
    "label": "Designation",
    "options": "Designation",
+   "hidden": 1,
    "read_only": 1
   },
   {
@@ -67,6 +70,7 @@
    "fieldtype": "Link",
    "label": "Department",
    "options": "Department",
+   "hidden": 1,
    "read_only": 1
   },
   {
@@ -75,6 +79,7 @@
    "fieldtype": "Link",
    "label": "Branch",
    "options": "Branch",
+   "hidden": 1,
    "read_only": 1
   },
   {
@@ -96,6 +101,7 @@
    "default": "0",
    "fieldname": "pay_via_salary",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Pay Via Salary"
   },
   {
@@ -222,7 +228,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-10-27 16:33:19.283507",
+ "modified": "2021-10-28 16:33:19.283507",
  "modified_by": "Administrator",
  "module": "Payroll",
  "name": "Sales Commission",

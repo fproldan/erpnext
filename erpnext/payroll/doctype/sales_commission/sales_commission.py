@@ -13,6 +13,7 @@ class SalesCommission(Document):
 
 		self.validate_salary_component()
 		self.calculate_total_contribution_and_total_commission_amount()
+		self.create_employee()
 
 	def validate_from_to_dates(self):
 		return super().validate_from_to_dates("from_date", "to_date")
@@ -71,20 +72,18 @@ class SalesCommission(Document):
 		self.total_commission_amount = total_commission_amount
 
 	@frappe.whitelist()
-	def payout_entry(self, mode_of_payment=None):
+	def payout_entry(self, mode_of_payment=None, reference_no=None, reference_date=None):
 		from erpnext.accounts.doctype.sales_invoice.sales_invoice import get_bank_cash_account
 		if mode_of_payment:
 			paid_from = get_bank_cash_account(mode_of_payment, self.company).get("account")
 
-		paid_to = frappe.db.get_value(
-			"Company", filters={"name": self.company},
-			fieldname=['default_payable_account'], as_dict=True)['default_payable_account']
+		paid_to = frappe.db.get_value("Company", filters={"name": self.company}, fieldname=['default_payroll_payable_account'], as_dict=True)['default_payroll_payable_account']
 		if not paid_to:
 			frappe.throw(_("Please set Default Payable Account in {}").format(get_link_to_form("Company", self.company)))
 		if self.pay_via_salary:
 			self.make_additional_salary()
 		else:
-			self.make_payment_entry(mode_of_payment, paid_from, paid_to)
+			self.make_payment_entry(mode_of_payment, paid_from, paid_to, reference_no, reference_date)
 
 	def make_additional_salary(self):
 		currency = frappe.get_value("Company", self.company, "default_currency")
@@ -104,11 +103,32 @@ class SalesCommission(Document):
 		self.db_set("reference_name", doc.name)
 		self.db_set("status", "Paid")
 
-	def make_payment_entry(self, mode_of_payment, paid_from, paid_to):
+	def create_employee(self):
+		from frappe.utils import nowdate
+
+		if self.employee:
+			return self.employee
+
+		sales_person = frappe.get_doc("Sales Person", self.sales_person)
+		employee = frappe.new_doc("Employee")
+		employee.update({
+			"first_name": sales_person.name,
+			"gender": "Male",
+			"date_of_birth": "1970-01-01",
+			"date_of_joining": nowdate(),
+		})
+		employee.insert(ignore_permissions=True)
+		sales_person.db_set("employee", employee.name)
+		self.db_set("employee", employee.name)
+		frappe.db.commit()
+
+	def make_payment_entry(self, mode_of_payment, paid_from, paid_to, reference_no, reference_date):
 		doc = frappe.new_doc("Payment Entry")
 		doc.company = self.company
 		doc.payment_type = "Pay"
 		doc.mode_of_payment = mode_of_payment
+		doc.reference_no = reference_no
+		doc.reference_date = reference_date
 		doc.party_type = "Employee"
 		doc.party = self.employee
 		doc.paid_from = paid_from

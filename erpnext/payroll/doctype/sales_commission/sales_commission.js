@@ -69,6 +69,16 @@ const create_payment_entry = function (frm) {
 					};
 				},
 				'reqd': 1
+			},
+			{
+				'fieldname': 'reference_no',
+				'fieldtype': 'Data',
+				'label': __('Número de referencia'),
+			},
+			{
+				'fieldname': 'reference_date',
+				'fieldtype': 'Date',
+				'label': __('Fecha de referencia'),
 			}
 		],
 	});
@@ -80,7 +90,9 @@ const create_payment_entry = function (frm) {
 				frappe.call({
 					method: 'payout_entry',
 					args: {
-						"mode_of_payment": arg.mode_of_payment
+						"mode_of_payment": arg.mode_of_payment,
+						"reference_no": arg.reference_no,
+						"reference_date": arg.reference_date
 					},
 					callback: function () {
 						frappe.set_route(
