@@ -151,7 +151,6 @@
    "share": 1
   }
  ],
- "route": "app/doctype/Holiday%20List",
  "sort_field": "modified",
  "sort_order": "DESC"
 }
