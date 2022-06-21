@@ -42,9 +42,7 @@ class SalesCommission(Document):
 		if sales_persons_details:
 			for record in sales_persons_details:
 				if add_record(record, self.sales_person):
-					record_details = frappe.db.get_value(
-						self.commission_based_on, filters={"name": record["parent"]},
-						fieldname=["customer", filter_date], as_dict=True)
+					record_details = frappe.db.get_value(self.commission_based_on, filters={"name": record["parent"]}, fieldname=["customer", filter_date], as_dict=True)
 					contribution = {
 						"document_type": self.commission_based_on,
 						"order_or_invoice": record["parent"],
