@@ -79,7 +79,7 @@ class SalesCommission(Document):
 
 		paid_to = frappe.db.get_value("Company", filters={"name": self.company}, fieldname=['default_payroll_payable_account'], as_dict=True)['default_payroll_payable_account']
 		if not paid_to:
-			frappe.throw(_("Please set Default Payable Account in {}").format(get_link_to_form("Company", self.company)))
+			frappe.throw(_("Ingresar la cuenta de pago de nómina predeterminada en {}").format(get_link_to_form("Company", self.company)))
 		if self.pay_via_salary:
 			self.make_additional_salary()
 		else:

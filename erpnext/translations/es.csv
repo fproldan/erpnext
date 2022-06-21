@@ -10835,3 +10835,5 @@ Creating Payment Entry. Do you want to proceed?,Creando Entrada de Pago. ¿Desea
 Creating Payment Entry,Creando Entrada de Pago,
 Approval Required for Sales Commission Payout,Aprobación necesaria para el pago de las comisiones de ventas,
 Cancel All,Cancelar Todos,
+Total Commission Amount should be greater than 0,Importe total de la Comisión debe ser mayor a 0,
+Please set Default Payable Account in {},Ingresar la Cuenta por pagar predeterminada en {},
