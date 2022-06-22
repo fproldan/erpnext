@@ -112,7 +112,7 @@
  "icon": "fa fa-calendar",
  "idx": 1,
  "links": [],
- "modified": "2021-05-12 20:01:53.159529",
+ "modified": "2022-06-21 15:13:55.735097",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Holiday List",
@@ -128,9 +128,29 @@
    "role": "HR Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "All",
+   "share": 1
   }
  ],
- "restrict_to_domain": "HR Asistencia y Vacaciones",
  "sort_field": "modified",
  "sort_order": "DESC"
 }
