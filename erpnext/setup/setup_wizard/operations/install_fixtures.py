@@ -227,7 +227,7 @@ def install(country=None):
 		{'doctype': 'Issue Priority', 'name': _('Medium')},
 		{'doctype': 'Issue Priority', 'name': _('High')},
 
-		#Job Applicant Source
+		# Job Applicant Source
 		{'doctype': 'Job Applicant Source', 'source_name': _('Website Listing')},
 		{'doctype': 'Job Applicant Source', 'source_name': _('Walk In')},
 		{'doctype': 'Job Applicant Source', 'source_name': _('Employee Referral')},
