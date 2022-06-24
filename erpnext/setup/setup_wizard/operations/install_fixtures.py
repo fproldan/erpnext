@@ -402,6 +402,13 @@ def add_uom_data():
 		uom.save()
 	frappe.db.commit()
 
+	stock_settings = frappe.get_doc("Stock Settings")
+	stock_settings.stock_uom = "Unidades"
+	stock_settings.save()
+
+	frappe.db.commit()
+
+
 def add_market_segments():
 	records = [
 		# Market Segments
@@ -524,7 +531,7 @@ def update_stock_settings():
 	stock_settings.item_naming_by = "Item Code"
 	stock_settings.valuation_method = "Moving Average"
 	stock_settings.default_warehouse = frappe.db.get_value('Warehouse', {'warehouse_name': _('Stores')})
-	stock_settings.stock_uom = _("Nos")
+	stock_settings.stock_uom = "Unidades"
 	stock_settings.auto_indent = 1
 	stock_settings.auto_insert_price_list_rate_if_missing = 1
 	stock_settings.automatically_set_serial_nos_based_on_fifo = 1
