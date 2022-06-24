@@ -342,3 +342,4 @@ erpnext.patches.v13_0.fix_workspace_links
 erpnext.patches.v13_0.add_bom_domain
 erpnext.patches.v13_0.release_1_4
 erpnext.patches.v13_0.update_docs_link
+erpnext.patches.v13_0.release_1_4_1
