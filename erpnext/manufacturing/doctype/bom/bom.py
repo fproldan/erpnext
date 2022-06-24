@@ -1110,25 +1110,28 @@ def item_query(doctype, txt, searchfield, start, page_len, filters):
 	order_by = "idx desc, name, item_name"
 
 	fields = ["name", "item_group", "item_name", "description"]
-	fields.extend([field for field in searchfields
-		if not field in ["name", "item_group", "description"]])
+	fields.extend(
+		[field for field in searchfields if not field in ["name", "item_group", "description"]]
+	)
 
-	searchfields = searchfields + [field for field in [searchfield or "name", "item_code", "item_group", "item_name"]
-		if not field in searchfields]
+	searchfields = searchfields + [
+		field
+		for field in [searchfield or "name", "item_code", "item_group", "item_name"]
+		if not field in searchfields
+	]
 
-	query_filters = {
-		"disabled": 0,
-		"ifnull(end_of_life, '5050-50-50')": (">", today())
-	}
+	query_filters = {"disabled": 0, "ifnull(end_of_life, '5050-50-50')": (">", today())}
 
 	or_cond_filters = {}
 	if txt:
 		for s_field in searchfields:
 			or_cond_filters[s_field] = ("like", "%{0}%".format(txt))
 
-		barcodes = frappe.get_all("Item Barcode",
+		barcodes = frappe.get_all(
+			"Item Barcode",
 			fields=["distinct parent as item_code"],
-			filters = {"barcode": ("like", "%{0}%".format(txt))})
+			filters={"barcode": ("like", "%{0}%".format(txt))},
+		)
 
 		barcodes = [d.item_code for d in barcodes]
 		if barcodes:
@@ -1140,13 +1143,18 @@ def item_query(doctype, txt, searchfield, start, page_len, filters):
 			query_filters["has_variants"] = 0
 
 	if filters and filters.get("is_stock_item"):
-		or_cond_filters["is_stock_item"] = 1
-		or_cond_filters["has_variants"] = 1
+		query_filters["is_stock_item"] = 1
 
-	return frappe.get_list("Item",
-		fields = fields, filters=query_filters,
-		or_filters = or_cond_filters, order_by=order_by,
-		limit_start=start, limit_page_length=page_len, as_list=1)
+	return frappe.get_list(
+		"Item",
+		fields=fields,
+		filters=query_filters,
+		or_filters=or_cond_filters,
+		order_by=order_by,
+		limit_start=start,
+		limit_page_length=page_len,
+		as_list=1,
+	)
 
 @frappe.whitelist()
 def make_variant_bom(source_name, bom_no, item, variant_items, target_doc=None):
