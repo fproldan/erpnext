@@ -10839,3 +10839,4 @@ Total Commission Amount should be greater than 0,Importe total de la Comisión d
 Please set Default Payable Account in {},Ingresar la Cuenta por pagar predeterminada en {},
 Process Sales Commission Reference,Creado desde,
 "Payment Entry {0} is linked against Order {1}, check if it should be pulled as advance in this invoice.","La Entrada de Pago {0} está vinculada a la Orden de venta {1}. Verificar si se debe Obtener el anticipo en esta Factura.",
+
