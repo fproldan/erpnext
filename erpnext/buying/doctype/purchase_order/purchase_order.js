@@ -590,6 +590,38 @@ erpnext.buying.PurchaseOrderController = erpnext.buying.BuyingController.extend(
 
 	schedule_date: function() {
 		set_schedule_date(this.frm);
+	},
+
+	before_cancel: function() {
+		var dialog = new frappe.ui.Dialog({
+			title: __("Motivo de Rechazo"),
+			fields: [
+				{
+					"fieldtype": "Small Text",
+					"label": __("Motivo de Rechazo"),
+					"fieldname": "motivo_de_rechazo",
+					"reqd": 1
+				},
+			],
+			primary_action: function() {
+				var values = dialog.get_values();
+				var motivo_de_rechazo = values["motivo_de_rechazo"];
+
+				frappe.call({
+					method: 'erpnext.buying.doctype.purchase_order.purchase_order.establecer_motivo_de_rechazo',
+					args: {motivo_de_rechazo: motivo_de_rechazo, name: cur_frm.doc.name},
+					callback: function(r) {
+						dialog.hide();
+						cur_frm.reload_doc();
+					},
+				});
+				refresh_field("motivo_de_rechazo");
+				
+			},
+			primary_action_label: __('Establecer')
+		});
+
+		dialog.show();
 	}
 });
 
