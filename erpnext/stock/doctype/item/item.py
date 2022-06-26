@@ -739,7 +739,7 @@ class Item(Document):
 
 		values = frappe.db.get_value("Item", self.name, fields, as_dict=True)
 		if not values.get('valuation_method') and self.get('valuation_method'):
-			values['valuation_method'] = frappe.db.get_single_value("Stock Settings", "valuation_method") or "FIFO"
+			values['valuation_method'] = frappe.db.get_single_value("Stock Settings", "valuation_method") or "Moving Average"
 
 		if values:
 			for field in fields:

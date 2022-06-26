@@ -283,7 +283,7 @@ class PaymentEntry(AccountsController):
 		elif self.party_type == "Supplier":
 			valid_reference_doctypes = ("Purchase Order", "Purchase Invoice", "Journal Entry")
 		elif self.party_type == "Employee":
-			valid_reference_doctypes = ("Expense Claim", "Journal Entry", "Employee Advance", "Gratuity")
+			valid_reference_doctypes = ("Expense Claim", "Journal Entry", "Employee Advance", "Gratuity", "Sales Commission")
 		elif self.party_type == "Shareholder":
 			valid_reference_doctypes = ("Journal Entry")
 		elif self.party_type == "Donor":
@@ -390,6 +390,9 @@ class PaymentEntry(AccountsController):
 						invoice_paid_amount_map[invoice_key]['discounted_amt'] = ref.total_amount * (term.discount / 100)
 
 		for key, allocated_amount in iteritems(invoice_payment_amount_map):
+			if not invoice_paid_amount_map.get(key):
+				frappe.throw(_('Payment term {0} not used in {1}').format(key[0], key[1]))
+
 			outstanding = flt(invoice_paid_amount_map.get(key, {}).get('outstanding'))
 			discounted_amt = flt(invoice_paid_amount_map.get(key, {}).get('discounted_amt'))
 
@@ -709,10 +712,14 @@ class PaymentEntry(AccountsController):
 			dr_or_cr = "credit" if erpnext.get_party_account_type(self.party_type) == 'Receivable' else "debit"
 
 			for d in self.get("references"):
+				cost_center = self.cost_center
+				if d.reference_doctype == "Sales Invoice" and not cost_center:
+					cost_center = frappe.db.get_value(d.reference_doctype, d.reference_name, "cost_center")
 				gle = party_gl_dict.copy()
 				gle.update({
 					"against_voucher_type": d.reference_doctype,
-					"against_voucher": d.reference_name
+					"against_voucher": d.reference_name,
+					"cost_center": cost_center
 				})
 
 				allocated_amount_in_company_currency = flt(flt(d.allocated_amount) * flt(d.exchange_rate),
@@ -1355,6 +1362,9 @@ def get_reference_details(reference_doctype, reference_name, party_account_curre
 			exchange_rate = 1
 			outstanding_amount = get_outstanding_on_journal_entry(reference_name)
 	elif reference_doctype != "Journal Entry":
+		if ref_doc.doctype == "Sales Commission":
+			total_amount = ref_doc.total_commission_amount
+			exchange_rate = 1
 		if ref_doc.doctype == "Expense Claim":
 				total_amount = flt(ref_doc.total_sanctioned_amount) + flt(ref_doc.total_taxes_and_charges)
 		elif ref_doc.doctype == "Employee Advance":
@@ -1389,6 +1399,8 @@ def get_reference_details(reference_doctype, reference_name, party_account_curre
 					exchange_rate = 1
 		elif reference_doctype == "Gratuity":
 			outstanding_amount = ref_doc.amount - flt(ref_doc.paid_amount)
+		elif reference_doctype == "Sales Commission":
+			outstanding_amount = 0
 		else:
 			outstanding_amount = flt(total_amount) - flt(ref_doc.advance_paid)
 	else:
