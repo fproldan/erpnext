@@ -20,7 +20,7 @@ def execute(filters=None):
         SELECT supplier, name, IF(per_received > 0, "Parcial", "Completo") AS per_received, schedule_date, reclamado, nuevo_pacto_entrega
         FROM `tabPurchase Order`
         WHERE docstatus = 1
-        AND DATEDIFF(CURDATE(), schedule_date) > 7
+        AND DATEDIFF(CURDATE(), schedule_date) >= 7
         AND per_received < 100
         {filtros}
         ORDER BY DATEDIFF(CURDATE(), schedule_date) DESC
