@@ -227,7 +227,7 @@ def install(country=None):
 		{'doctype': 'Issue Priority', 'name': _('Medium')},
 		{'doctype': 'Issue Priority', 'name': _('High')},
 
-		#Job Applicant Source
+		# Job Applicant Source
 		{'doctype': 'Job Applicant Source', 'source_name': _('Website Listing')},
 		{'doctype': 'Job Applicant Source', 'source_name': _('Walk In')},
 		{'doctype': 'Job Applicant Source', 'source_name': _('Employee Referral')},
@@ -402,6 +402,13 @@ def add_uom_data():
 		uom.save()
 	frappe.db.commit()
 
+	stock_settings = frappe.get_doc("Stock Settings")
+	stock_settings.stock_uom = "Unidades"
+	stock_settings.save()
+
+	frappe.db.commit()
+
+
 def add_market_segments():
 	records = [
 		# Market Segments
@@ -510,7 +517,7 @@ def set_global_defaults(args):
 	global_defaults.update({
 		'current_fiscal_year': current_fiscal_year.name,
 		'default_currency': args.get('currency'),
-		'default_company':args.get('company_name')	,
+		'default_company': args.get('company_name'),
 		"country": args.get("country"),
 	})
 
@@ -522,9 +529,9 @@ def set_active_domains(args):
 def update_stock_settings():
 	stock_settings = frappe.get_doc("Stock Settings")
 	stock_settings.item_naming_by = "Item Code"
-	stock_settings.valuation_method = "FIFO"
+	stock_settings.valuation_method = "Moving Average"
 	stock_settings.default_warehouse = frappe.db.get_value('Warehouse', {'warehouse_name': _('Stores')})
-	stock_settings.stock_uom = _("Nos")
+	stock_settings.stock_uom = "Unidades"
 	stock_settings.auto_indent = 1
 	stock_settings.auto_insert_price_list_rate_if_missing = 1
 	stock_settings.automatically_set_serial_nos_based_on_fifo = 1
