@@ -134,6 +134,7 @@
   "update_auto_repeat_reference",
   "more_info",
   "ref_sq",
+  "motivo_de_rechazo",
   "column_break_74",
   "party_account_currency",
   "is_internal_supplier",
@@ -1141,13 +1142,20 @@
    "fieldtype": "Link",
    "label": "Tax Withholding Category",
    "options": "Tax Withholding Category"
+  },
+  {
+   "fieldname": "motivo_de_rechazo",
+   "fieldtype": "Small Text",
+   "label": "Motivo de Rechazo",
+   "no_copy": 1,
+   "read_only": 1
   }
  ],
  "icon": "fa fa-file-text",
  "idx": 105,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-01-27 08:54:17.855083",
+ "modified": "2022-06-26 17:15:09.519137",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Purchase Order",
@@ -1193,6 +1201,7 @@
    "write": 1
   }
  ],
+ "route": "app/doctype/Purchase%20Order",
  "search_fields": "status, transaction_date, supplier, grand_total",
  "show_name_in_global_search": 1,
  "sort_field": "modified",
