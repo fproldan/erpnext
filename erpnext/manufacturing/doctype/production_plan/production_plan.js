@@ -68,13 +68,13 @@ frappe.ui.form.on('Production Plan', {
 			frm.trigger("show_progress");
 
 			if (frm.doc.status !== "Completed") {
-				frm.add_custom_button(__("Work Order Tree"), ()=> {
-					frappe.set_route('Tree', 'Work Order', {production_plan: frm.doc.name});
-				}, __('View'));
+				// frm.add_custom_button(__("Work Order Tree"), ()=> {
+				// 	frappe.set_route('Tree', 'Work Order', {production_plan: frm.doc.name});
+				// }, __('View'));
 
-				frm.add_custom_button(__("Production Plan Summary"), ()=> {
-					frappe.set_route('query-report', 'Production Plan Summary', {production_plan: frm.doc.name});
-				}, __('View'));
+				// frm.add_custom_button(__("Production Plan Summary"), ()=> {
+				// 	frappe.set_route('query-report', 'Production Plan Summary', {production_plan: frm.doc.name});
+				// }, __('View'));
 
 				if  (frm.doc.status === "Closed") {
 					frm.add_custom_button(__("Re-open"), function() {
@@ -86,17 +86,17 @@ frappe.ui.form.on('Production Plan', {
 					}, __("Status"));
 				}
 
-				if (frm.doc.po_items && frm.doc.status !== "Closed") {
-					frm.add_custom_button(__("Work Order / Subcontract PO"), ()=> {
-						frm.trigger("make_work_order");
-					}, __('Create'));
-				}
+				// if (frm.doc.po_items && frm.doc.status !== "Closed") {
+				// 	frm.add_custom_button(__("Work Order / Subcontract PO"), ()=> {
+				// 		frm.trigger("make_work_order");
+				// 	}, __('Create'));
+				// }
 
-				if (frm.doc.mr_items && !in_list(['Material Requested', 'Closed'], frm.doc.status)) {
-					frm.add_custom_button(__("Material Request"), ()=> {
-						frm.trigger("make_material_request");
-					}, __('Create'));
-				}
+				// if (frm.doc.mr_items && !in_list(['Material Requested', 'Closed'], frm.doc.status)) {
+				// 	frm.add_custom_button(__("Material Request"), ()=> {
+				// 		frm.trigger("make_material_request");
+				// 	}, __('Create'));
+				// }
 			}
 		}
 

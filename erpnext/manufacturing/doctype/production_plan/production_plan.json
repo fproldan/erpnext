@@ -77,7 +77,8 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Get Items From",
-   "options": "\nSales Order\nMaterial Request"
+   "options": "\nSales Order\nMaterial Request",
+   "hidden": 1 
   },
   {
    "fieldname": "column_break1",
@@ -219,7 +220,7 @@
    "label": "Include Subcontracted Items"
   },
   {
-   "default": "0",
+   "default": "1",
    "description": "To know more about projected quantity, <a href=\"https://erpnext.com/docs/user/manual/en/stock/projected-quantity\" style=\"text-decoration: underline;\" target=\"_blank\">click here</a>.",
    "fieldname": "ignore_existing_ordered_qty",
    "fieldtype": "Check",
@@ -243,7 +244,8 @@
   {
    "fieldname": "section_break_27",
    "fieldtype": "Section Break",
-   "hide_border": 1
+   "hide_border": 1,
+   "hidden": 1
   },
   {
    "fieldname": "mr_items",
@@ -256,7 +258,8 @@
    "collapsible": 1,
    "fieldname": "other_details",
    "fieldtype": "Section Break",
-   "label": "Other Details"
+   "label": "Other Details",
+   "hidden": 1
   },
   {
    "default": "0",
@@ -347,7 +350,8 @@
   {
    "fieldname": "section_break_24",
    "fieldtype": "Section Break",
-   "hide_border": 1
+   "hide_border": 1,
+   "hidden": 1
   },
   {
    "fieldname": "sub_assembly_items",
@@ -376,7 +380,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-07-07 10:55:31.554301",
+ "modified": "2022-07-07 11:55:31.554301",
  "modified_by": "Administrator",
  "module": "Manufacturing",
  "name": "Production Plan",
