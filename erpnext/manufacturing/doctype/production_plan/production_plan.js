@@ -100,9 +100,9 @@ frappe.ui.form.on('Production Plan', {
 			}
 		}
 
-		if (frm.doc.status !== "Closed") {
-			frm.page.set_inner_btn_group_as_primary(__('Create'));
-		}
+		// if (frm.doc.status !== "Closed") {
+		// 	frm.page.set_inner_btn_group_as_primary(__('Create'));
+		// }
 		frm.trigger("material_requirement");
 
 		const projected_qty_formula = ` <table class="table table-bordered" style="background-color: var(--scrollbar-track-color);">
