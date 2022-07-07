@@ -121,6 +121,10 @@
   "hub_category_to_publish",
   "hub_warehouse",
   "synced_with_hub",
+  "comisi\u00f3n_section",
+  "porcentaje_comision",
+  "column_break_113",
+  "comision_valido_hasta",
   "more_information_section",
   "published_in_website",
   "total_projected_qty"
@@ -944,6 +948,26 @@
    "fieldtype": "Check",
    "label": "Published in Website",
    "read_only": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "comisi\u00f3n_section",
+   "fieldtype": "Section Break",
+   "label": "Comisi\u00f3n"
+  },
+  {
+   "fieldname": "column_break_113",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "porcentaje_comision",
+   "fieldtype": "Percent",
+   "label": "Porcentaje"
+  },
+  {
+   "fieldname": "comision_valido_hasta",
+   "fieldtype": "Date",
+   "label": "V\u00e1lido hasta"
   }
  ],
  "icon": "fa fa-tag",
@@ -952,7 +976,7 @@
  "index_web_pages_for_search": 1,
  "links": [],
  "max_attachments": 1,
- "modified": "2021-09-11 12:23:07.277077",
+ "modified": "2022-07-07 14:43:02.417058",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Item",
@@ -1016,6 +1040,7 @@
   }
  ],
  "quick_entry": 1,
+ "route": "app/doctype/Item",
  "search_fields": "item_name,description,item_group,customer_code",
  "show_name_in_global_search": 1,
  "show_preview_popup": 1,
