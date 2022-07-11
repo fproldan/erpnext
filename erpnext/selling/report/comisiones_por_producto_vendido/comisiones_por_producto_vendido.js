@@ -43,6 +43,12 @@ frappe.query_reports["Comisiones por producto vendido"] = {
 			options: "Item Group",
 		},
 		{
+			fieldname:"item_code",
+			label: __("Item"),
+			fieldtype: "Link",
+			options: "Item",
+		},
+		{
 			fieldname:"brand",
 			label: __("Brand"),
 			fieldtype: "Link",

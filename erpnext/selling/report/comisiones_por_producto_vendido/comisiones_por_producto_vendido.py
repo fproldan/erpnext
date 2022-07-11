@@ -139,6 +139,7 @@ def get_columns(filters):
 
 	return columns
 
+
 def get_entries(filters):
 	date_field = filters["doc_type"] == "Sales Order" and "transaction_date" or "posting_date"
 	if filters["doc_type"] == "Sales Order":
@@ -168,10 +169,10 @@ def get_entries(filters):
 		WHERE
 			st.parent = dt.name and dt.name = dt_item.parent and st.parenttype = %s
 			and dt.docstatus = 1 %s order by st.sales_person, dt.name desc
-		""" %(date_field, qty_field, qty_field, qty_field, filters["doc_type"], filters["doc_type"], '%s', conditions),
-			tuple([filters["doc_type"]] + values), as_dict=1)
+		""" % (date_field, qty_field, qty_field, qty_field, filters["doc_type"], filters["doc_type"], '%s', conditions), tuple([filters["doc_type"]] + values), as_dict=1)
 
 	return entries
+
 
 def get_conditions(filters, date_field):
 	conditions = [""]
@@ -196,22 +197,28 @@ def get_conditions(filters, date_field):
 
 	items = get_items(filters)
 	if items:
-		conditions.append("dt_item.item_code in (%s)" % ', '.join(['%s']*len(items)))
+		conditions.append("dt_item.item_code in (%s)" % ', '.join(['%s'] * len(items)))
 		values += items
 
 	return " and ".join(conditions), values
 
+
 def get_items(filters):
-	if filters.get("item_group"): key = "item_group"
-	elif filters.get("brand"): key = "brand"
-	else: key = ""
+	if filters.get("item_group"):
+		key = "item_group"
+	elif filters.get("brand"):
+		key = "brand"
+	elif filters.get("item_code"):
+		key = "item_code"
+	else:
+		key = ""
 
 	items = []
 	if key:
-		items = frappe.db.sql_list("""select name from tabItem where %s = %s""" %
-			(key, '%s'), (filters[key]))
+		items = frappe.db.sql_list("""select name from tabItem where %s = %s""" % (key, '%s'), (filters[key]))
 
 	return items
+
 
 def get_item_details():
 	item_details = {}
