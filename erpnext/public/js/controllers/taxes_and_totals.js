@@ -110,7 +110,6 @@ erpnext.taxes_and_totals = erpnext.payments.extend({
 			$.each(this.frm.doc["items"] || [], function(i, item) {
 				frappe.model.round_floats_in(item);
 				item.net_rate = item.rate;
-				
 				if ((!item.qty) && me.frm.doc.is_return) {
 					item.amount = flt(item.rate * -1, precision("amount", item));
 				} else {
