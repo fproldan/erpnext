@@ -289,7 +289,7 @@ erpnext.selling.SellingController = erpnext.TransactionController.extend({
 		});
 
 		if (total_incentives) {
-			row.incentives = flt(total_incentives, precision("incentives", row));
+			row.incentives = flt((row.allocated_percentage * flt(total_incentives, precision("incentives", row))) / 100);
 		}
 	},
 
