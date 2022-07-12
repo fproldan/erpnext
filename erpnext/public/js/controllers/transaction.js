@@ -1278,6 +1278,7 @@ erpnext.TransactionController = erpnext.taxes_and_totals.extend({
 		});
 		refresh_field("total_net_weight");
 		this.shipping_rule();
+		this.calculate_total_incentives();
 	},
 
 	calculate_incentives: function(frm, cdt, cdn) {
