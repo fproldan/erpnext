@@ -13,7 +13,7 @@ frappe.query_reports["Comisiones por producto vendido"] = {
 			fieldname: "doc_type",
 			label: __("Document Type"),
 			fieldtype: "Select",
-			options: "Sales Order\nDelivery Note\nSales Invoice",
+			options: "Sales Order\nSales Invoice",
 			default: "Sales Order"
 		},
 		{
