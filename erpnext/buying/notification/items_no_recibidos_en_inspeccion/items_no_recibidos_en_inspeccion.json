@@ -2,7 +2,7 @@
  "attach_print": 0,
  "channel": "System Notification",
  "condition": "doc.per_received < 100",
- "creation": "2022-07-12 20:02:41.510251",
+ "creation": "2022-07-12 20:02:42.510251",
  "date_changed": "schedule_date",
  "days_in_advance": 0,
  "docstatus": 0,
