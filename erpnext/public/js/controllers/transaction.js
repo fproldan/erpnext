@@ -1296,7 +1296,7 @@ erpnext.TransactionController = erpnext.taxes_and_totals.extend({
 			});
 
 			$.each(this.frm.doc["sales_team"] || [], function(i, item) {
-				item.incentives = total_incentives;
+				item.incentives = flt((total_incentives * item.allocated_percentage) / 100.0);
 			});
 
 			refresh_field("sales_team");
