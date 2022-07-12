@@ -94,6 +94,7 @@
   "comisi\u00f3n_section",
   "porcentaje_comision",
   "column_break_113",
+  "porcentaje_comision_especial",
   "comision_valido_hasta",
   "deferred_revenue",
   "deferred_revenue_account",
@@ -713,9 +714,15 @@
   },
   {
    "description": "Si no hay datos en este campo, siempre se efectuar\u00e1 la comisi\u00f3n del campo anterior al vendedor",
+   "fieldname": "porcentaje_comision_especial",
+   "fieldtype": "Percent",
+   "label": "Comisi\u00f3n especial %"
+  },
+  {
+   "description": "Si este valor es anterior a la fecha actual, siempre se efectuar\u00e1 la comisi\u00f3n del campo anterior al vendedor",
    "fieldname": "comision_valido_hasta",
    "fieldtype": "Date",
-   "label": "Fecha l\u00edmite comisi\u00f3n"
+   "label": "Fecha l\u00edmite comisi\u00f3n especial"
   },
   {
    "collapsible": 1,
@@ -977,7 +984,7 @@
  "index_web_pages_for_search": 1,
  "links": [],
  "max_attachments": 1,
- "modified": "2022-07-08 12:37:59.534877",
+ "modified": "2022-07-08 13:39:59.534877",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Item",

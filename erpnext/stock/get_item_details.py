@@ -287,6 +287,11 @@ def get_basic_details(args, item, overwrite_warehouse=True):
 		item.name != frappe.get_cached_value('Batch', args.get("batch_no"), 'item')):
 		args['batch_no'] = ''
 
+	if (not item.porcentaje_comision_especial) or (item.porcentaje_comision_especial and (item.comision_valido_hasta or getdate()) < getdate()):
+		comision = item.porcentaje_comision
+	else:
+		comision = item.porcentaje_comision_especial
+
 	out = frappe._dict({
 		"item_code": item.name,
 		"item_name": item.item_name,
@@ -323,7 +328,7 @@ def get_basic_details(args, item, overwrite_warehouse=True):
 		"bom_no": item.get("default_bom"),
 		"weight_per_unit": args.get("weight_per_unit") or item.get("weight_per_unit"),
 		"weight_uom": args.get("weight_uom") or item.get("weight_uom"),
-		"porcentaje_comision": item.porcentaje_comision,
+		"porcentaje_comision": comision,
 	})
 
 	if item.get("enable_deferred_revenue") or item.get("enable_deferred_expense"):
