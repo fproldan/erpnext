@@ -82,9 +82,19 @@ erpnext.taxes_and_totals = erpnext.payments.extend({
 		this.determine_exclusive_rate();
 		this.calculate_net_total();
 		this.calculate_taxes();
+		this.calculate_item_commission();
 		this.manipulate_grand_total_for_inclusive_tax();
 		this.calculate_totals();
 		this._cleanup();
+	},
+
+	calculate_item_commission: function() {
+		let me = this;
+		$.each(this.frm.doc["items"] || [], function(i, item) {
+			frappe.model.round_floats_in(item);
+			item.importe_comision = flt((item.porcentaje_comision * item.net_amount) / 100.0)
+			me.frm.trigger("calculate_total_incentives");
+		});
 	},
 
 	validate_conversion_rate: function() {
