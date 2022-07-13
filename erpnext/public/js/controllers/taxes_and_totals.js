@@ -82,9 +82,19 @@ erpnext.taxes_and_totals = erpnext.payments.extend({
 		this.determine_exclusive_rate();
 		this.calculate_net_total();
 		this.calculate_taxes();
+		this.calculate_item_commission();
 		this.manipulate_grand_total_for_inclusive_tax();
 		this.calculate_totals();
 		this._cleanup();
+	},
+
+	calculate_item_commission: function() {
+		let me = this;
+		$.each(this.frm.doc["items"] || [], function(i, item) {
+			frappe.model.round_floats_in(item);
+			item.importe_comision = flt((item.porcentaje_comision * item.net_amount) / 100.0)
+			me.frm.trigger("calculate_total_incentives");
+		});
 	},
 
 	validate_conversion_rate: function() {
@@ -110,7 +120,6 @@ erpnext.taxes_and_totals = erpnext.payments.extend({
 			$.each(this.frm.doc["items"] || [], function(i, item) {
 				frappe.model.round_floats_in(item);
 				item.net_rate = item.rate;
-
 				if ((!item.qty) && me.frm.doc.is_return) {
 					item.amount = flt(item.rate * -1, precision("amount", item));
 				} else {
@@ -118,10 +127,12 @@ erpnext.taxes_and_totals = erpnext.payments.extend({
 				}
 
 				item.net_amount = item.amount;
+				item.importe_comision = flt((item.porcentaje_comision * item.net_amount) / 100.0)
 				item.item_tax_amount = 0.0;
 				item.total_weight = flt(item.weight_per_unit * item.stock_qty);
 
 				me.set_in_company_currency(item, ["price_list_rate", "rate", "amount", "net_rate", "net_amount"]);
+				me.frm.trigger("calculate_total_incentives");
 			});
 		}
 	},

@@ -1223,6 +1223,14 @@ erpnext.TransactionController = erpnext.taxes_and_totals.extend({
 		this.apply_pricing_rule(item, true);
 	},
 
+	porcentaje_comision(doc, cdt, cdn) {
+		this.calculate_incentives(doc, cdt, cdn);
+	},
+
+	importe_comision(doc, cdt, cdn) {
+		this.calculate_total_incentives();
+	},
+
 	calculate_stock_uom_rate: function(doc, cdt, cdn) {
 		let item = frappe.get_doc(cdt, cdn);
 		item.stock_uom_rate = flt(item.rate)/flt(item.conversion_factor);
@@ -1270,6 +1278,29 @@ erpnext.TransactionController = erpnext.taxes_and_totals.extend({
 		});
 		refresh_field("total_net_weight");
 		this.shipping_rule();
+		this.calculate_total_incentives();
+	},
+
+	calculate_incentives: function(frm, cdt, cdn) {
+		var child = locals[cdt][cdn];
+		var importe_comision = flt((child.porcentaje_comision * child.net_amount) / 100.0)
+		frappe.model.set_value(cdt, cdn, "importe_comision", importe_comision);
+	},
+
+	calculate_total_incentives: function() {
+		if (this.frm.doc["sales_team"] || []) {
+			var total_incentives = 0.0;
+
+			$.each(this.frm.doc["items"] || [], function(i, item) {
+				total_incentives += flt(item.importe_comision);
+			});
+
+			$.each(this.frm.doc["sales_team"] || [], function(i, item) {
+				item.incentives = flt((total_incentives * item.allocated_percentage) / 100.0);
+			});
+
+			refresh_field("sales_team");
+		}
 	},
 
 	set_dynamic_labels: function() {

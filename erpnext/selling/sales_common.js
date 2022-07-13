@@ -279,11 +279,17 @@ erpnext.selling.SellingController = erpnext.TransactionController.extend({
 	},
 
 	calculate_incentive: function(row) {
-		if(row.allocated_amount)
-		{
-			row.incentives = flt(
-					row.allocated_amount * row.commission_rate / 100.0,
-					precision("incentives", row));
+		if (row.allocated_amount) {
+			row.incentives = flt(row.allocated_amount * row.commission_rate / 100.0, precision("incentives", row));
+		}
+
+		var total_incentives = 0.0;
+		$.each(this.frm.doc["items"] || [], function(i, item) {
+			total_incentives += flt(item.importe_comision);
+		});
+
+		if (total_incentives) {
+			row.incentives = flt((row.allocated_percentage * flt(total_incentives, precision("incentives", row))) / 100);
 		}
 	},
 
