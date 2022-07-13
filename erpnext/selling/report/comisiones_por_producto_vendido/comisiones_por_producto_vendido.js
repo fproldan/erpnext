@@ -72,5 +72,10 @@ frappe.query_reports["Comisiones por producto vendido"] = {
 			fieldtype: "Check",
 			default: 0,
 		},
+		{
+			fieldname: "show_zero_values",
+			label: __("Show zero values"),
+			fieldtype: "Check"
+		}
 	]
 }
