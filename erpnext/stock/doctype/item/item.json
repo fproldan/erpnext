@@ -91,6 +91,11 @@
   "is_sales_item",
   "column_break3",
   "max_discount",
+  "comisi\u00f3n_section",
+  "porcentaje_comision",
+  "column_break_113",
+  "porcentaje_comision_especial",
+  "comision_valido_hasta",
   "deferred_revenue",
   "deferred_revenue_account",
   "enable_deferred_revenue",
@@ -694,6 +699,33 @@
   },
   {
    "collapsible": 1,
+   "fieldname": "comisi\u00f3n_section",
+   "fieldtype": "Section Break",
+   "label": "Comisi\u00f3n Vendedores"
+  },
+  {
+   "fieldname": "column_break_113",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "porcentaje_comision",
+   "fieldtype": "Percent",
+   "label": "Comisi\u00f3n %"
+  },
+  {
+   "description": "Si no hay datos en este campo, siempre se efectuar\u00e1 la comisi\u00f3n del campo anterior al vendedor",
+   "fieldname": "porcentaje_comision_especial",
+   "fieldtype": "Percent",
+   "label": "Comisi\u00f3n especial %"
+  },
+  {
+   "description": "Si este valor es anterior a la fecha actual, siempre se efectuar\u00e1 la comisi\u00f3n del campo anterior al vendedor",
+   "fieldname": "comision_valido_hasta",
+   "fieldtype": "Date",
+   "label": "Fecha l\u00edmite comisi\u00f3n especial"
+  },
+  {
+   "collapsible": 1,
    "fieldname": "deferred_revenue",
    "fieldtype": "Section Break",
    "label": "Deferred Revenue"
@@ -952,7 +984,7 @@
  "index_web_pages_for_search": 1,
  "links": [],
  "max_attachments": 1,
- "modified": "2021-09-11 12:23:07.277077",
+ "modified": "2022-07-08 13:39:59.534877",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Item",
@@ -1016,6 +1048,7 @@
   }
  ],
  "quick_entry": 1,
+ "route": "app/doctype/Item",
  "search_fields": "item_name,description,item_group,customer_code",
  "show_name_in_global_search": 1,
  "show_preview_popup": 1,
