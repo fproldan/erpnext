@@ -244,7 +244,7 @@
   {
    "fieldname": "section_break_27",
    "fieldtype": "Section Break",
-   "hide_border": 1,
+   "hide_border": 1
   },
   {
    "fieldname": "mr_items",
