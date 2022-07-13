@@ -179,7 +179,7 @@ def get_conditions(filters, date_field):
 	values = []
 
 	if not filters.get("show_zero_values"):
-		conditions.append("dt_item.importe_comision > 0")
+		conditions.append("dt_item.importe_comision != 0")
 
 	for field in ["company", "customer", "territory"]:
 		if filters.get(field):
