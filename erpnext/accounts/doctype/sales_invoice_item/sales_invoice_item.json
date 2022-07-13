@@ -26,6 +26,10 @@
   "uom",
   "conversion_factor",
   "stock_qty",
+  "comisi\u00f3n_section",
+  "porcentaje_comision",
+  "column_break_53",
+  "importe_comision",
   "section_break_17",
   "price_list_rate",
   "base_price_list_rate",
@@ -212,6 +216,26 @@
    "no_copy": 1,
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "comisi\u00f3n_section",
+   "fieldtype": "Section Break",
+   "label": "Comisión Vendedores por Producto"
+  },
+  {
+   "fieldname": "porcentaje_comision",
+   "fieldtype": "Percent",
+   "label": "Comisión %"
+  },
+  {
+   "fieldname": "column_break_53",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "importe_comision",
+   "fieldtype": "Float",
+   "label": "Incentivo"
   },
   {
    "fieldname": "section_break_17",
@@ -834,7 +858,7 @@
  "idx": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-08-19 13:41:53.435827",
+ "modified": "2021-08-19 15:42:53.435827",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Sales Invoice Item",
