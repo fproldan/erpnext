@@ -220,7 +220,7 @@
    "label": "Include Subcontracted Items"
   },
   {
-   "default": "0",
+   "default": "1",
    "description": "To know more about projected quantity, <a href=\"https://erpnext.com/docs/user/manual/en/stock/projected-quantity\" style=\"text-decoration: underline;\" target=\"_blank\">click here</a>.",
    "fieldname": "ignore_existing_ordered_qty",
    "fieldtype": "Check",
@@ -239,7 +239,8 @@
   {
    "fieldname": "get_items_for_mr",
    "fieldtype": "Button",
-   "label": "Get Raw Materials For Production"
+   "label": "Get Raw Materials For Production",
+   "hidden": 1
   },
   {
    "fieldname": "section_break_27",
@@ -251,7 +252,8 @@
    "fieldtype": "Table",
    "label": "Raw Materials",
    "no_copy": 1,
-   "options": "Material Request Plan Item"
+   "options": "Material Request Plan Item",
+   "hidden": 1
   },
   {
    "collapsible": 1,
@@ -379,7 +381,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-07-07 12:55:31.554301",
+ "modified": "2022-07-07 14:55:31.554301",
  "modified_by": "Administrator",
  "module": "Manufacturing",
  "name": "Production Plan",
