@@ -166,7 +166,10 @@ erpnext.stock.PurchaseReceiptController = erpnext.buying.BuyingController.extend
 								status: ["not in", ["Closed", "On Hold"]],
 								per_received: ["<", 99.99],
 								company: me.frm.doc.company
-							}
+							},
+							allow_child_item_selection: true,
+							child_fielname: "items",
+							child_columns: ["item_code", "qty", "warehouse"]
 						})
 					}, __("Get Items From"));
 			}
