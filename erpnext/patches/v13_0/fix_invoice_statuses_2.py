@@ -9,12 +9,6 @@ from erpnext.accounts.doctype.sales_invoice.sales_invoice import (
 TODAY = getdate()
 
 def execute():
-	# This fix is not related to Party Specific Item,
-	# but it is needed for code introduced after Party Specific Item was
-	# If your DB doesn't have this doctype yet, you should be fine
-	if not frappe.db.exists("DocType", "Party Specific Item"):
-		return
-
 	for doctype in ("Purchase Invoice", "Sales Invoice"):
 		fields = [
 			"name",
