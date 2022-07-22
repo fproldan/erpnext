@@ -67,7 +67,7 @@ def execute():
 
 		for invoice in invoices_to_update.values():
 			invoice.doctype = doctype
-			doc = frappe.get_doc(invoice)
+			doc = frappe.get_doc(doctype, invoice.name)
 			correct_status = get_correct_status(doc)
 			if not correct_status or doc.status == correct_status:
 				continue
