@@ -81,6 +81,7 @@ def execute():
 				status,
 				update_modified=False
 			)
+	frappe.db.commit()
 
 
 def get_correct_status(doc):
