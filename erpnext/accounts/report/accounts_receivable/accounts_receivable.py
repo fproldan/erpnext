@@ -249,8 +249,8 @@ class ReceivablePayableReport(object):
 						else:
 							exchange_type = "for_buying"
 
-					conversion_rate = get_exchange_rate(vourcher_data[currency_field], "USD", nowdate(), exchange_type)
-					row.outstanding_original_currency = flt((row.outstanding * conversion_rate), self.currency_precision)
+					conversion_rate = get_exchange_rate("USD", vourcher_data[currency_field], nowdate(), exchange_type)
+					row.outstanding_original_currency = flt((row.outstanding / conversion_rate), self.currency_precision)
 
 			row.invoice_grand_total = row.invoiced
 			if abs(row.outstanding) > 1.0 / 10 ** self.currency_precision:
