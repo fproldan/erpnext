@@ -143,7 +143,7 @@
  "idx": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2021-05-12 19:59:17.419890",
+ "modified": "2022-07-26 11:47:39.759745",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Department",
@@ -186,6 +186,24 @@
    "set_user_permissions": 1,
    "share": 1,
    "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "report": 1,
+   "role": "Projects User",
+   "select": 1,
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "report": 1,
+   "role": "Projects Manager",
+   "select": 1,
+   "share": 1
   }
  ],
  "restrict_to_domain": "HR",
