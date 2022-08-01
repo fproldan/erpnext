@@ -49,7 +49,7 @@ frappe.ui.form.on("Timesheet", {
 					"fa fa-file-text");
 			}
 
-			if(!frm.doc.salary_slip && frm.doc.employee && False){
+			if(!frm.doc.salary_slip && frm.doc.employee && false){
 				frm.add_custom_button(__('Create Salary Slip'), function() { frm.trigger("make_salary_slip") },
 					"fa fa-file-text");
 			}
