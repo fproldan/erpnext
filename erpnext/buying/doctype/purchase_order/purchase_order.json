@@ -482,7 +482,7 @@
    "fieldtype": "Section Break",
    "hide_border": 1,
    "oldfieldtype": "Section Break",
-   "options": "fa fa-shopping-cart",
+   "options": "fa fa-shopping-cart"
   },
   {
    "fieldname": "scan_barcode",
