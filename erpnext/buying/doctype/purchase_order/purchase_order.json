@@ -443,6 +443,10 @@
   {
    "fieldname": "sec_warehouse",
    "fieldtype": "Section Break",
+<<<<<<< HEAD
+=======
+   "hidden": 1,
+>>>>>>> 6486bfda26 (hide (#322))
    "label": "Subcontrataci\u00f3n"
   },
   {
@@ -483,6 +487,7 @@
   {
    "fieldname": "scan_barcode",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Scan Barcode",
    "options": "Barcode"
   },
@@ -605,6 +610,7 @@
   {
    "fieldname": "shipping_rule",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Shipping Rule",
    "options": "Shipping Rule",
    "print_hide": 1
@@ -718,6 +724,10 @@
    "collapsible_depends_on": "apply_discount_on",
    "fieldname": "discount_section",
    "fieldtype": "Section Break",
+<<<<<<< HEAD
+=======
+   "hidden": 1,
+>>>>>>> 6486bfda26 (hide (#322))
    "label": "Additional Discount"
   },
   {
@@ -882,6 +892,7 @@
    "collapsible_depends_on": "terms",
    "fieldname": "terms_section_break",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Terms and Conditions",
    "oldfieldtype": "Section Break",
    "options": "fa fa-legal"
@@ -980,6 +991,7 @@
    "collapsible": 1,
    "fieldname": "column_break5",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Printing Settings",
    "oldfieldtype": "Column Break",
    "print_hide": 1,
@@ -1086,6 +1098,10 @@
    "collapsible": 1,
    "fieldname": "tracking_section",
    "fieldtype": "Section Break",
+<<<<<<< HEAD
+=======
+   "hidden": 1,
+>>>>>>> 6486bfda26 (hide (#322))
    "label": "Order Status"
   },
   {
@@ -1106,7 +1122,8 @@
   },
   {
    "fieldname": "before_items_section",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "hidden": 1
   },
   {
    "fieldname": "items_col_break",
@@ -1155,7 +1172,11 @@
  "idx": 105,
  "is_submittable": 1,
  "links": [],
+<<<<<<< HEAD
  "modified": "2022-06-26 17:15:09.519137",
+=======
+ "modified": "2022-08-03 10:21:34.510200",
+>>>>>>> 6486bfda26 (hide (#322))
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Purchase Order",
