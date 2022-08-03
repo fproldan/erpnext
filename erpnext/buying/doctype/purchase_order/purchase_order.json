@@ -446,8 +446,8 @@
   {
    "fieldname": "sec_warehouse",
    "fieldtype": "Section Break",
-   "label": "Subcontrataci\u00f3n",
-   "hidden": 1
+   "hidden": 1,
+   "label": "Subcontrataci\u00f3n"
   },
   {
    "description": "Sets 'Warehouse' in each row of the Items table.",
@@ -487,9 +487,9 @@
   {
    "fieldname": "scan_barcode",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Scan Barcode",
-   "options": "Barcode",
-   "hidden": 1
+   "options": "Barcode"
   },
   {
    "allow_bulk_edit": 1,
@@ -610,10 +610,10 @@
   {
    "fieldname": "shipping_rule",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Shipping Rule",
    "options": "Shipping Rule",
-   "print_hide": 1,
-   "hidden": 1
+   "print_hide": 1
   },
   {
    "fieldname": "section_break_52",
@@ -724,8 +724,8 @@
    "collapsible_depends_on": "apply_discount_on",
    "fieldname": "discount_section",
    "fieldtype": "Section Break",
-   "label": "Additional Discount",
-   "hidden": 1
+   "hidden": 1,
+   "label": "Additional Discount"
   },
   {
    "default": "Grand Total",
@@ -889,10 +889,10 @@
    "collapsible_depends_on": "terms",
    "fieldname": "terms_section_break",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Terms and Conditions",
    "oldfieldtype": "Section Break",
-   "options": "fa fa-legal",
-   "hidden": 1
+   "options": "fa fa-legal"
   },
   {
    "fieldname": "tc_name",
@@ -988,12 +988,12 @@
    "collapsible": 1,
    "fieldname": "column_break5",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Printing Settings",
    "oldfieldtype": "Column Break",
    "print_hide": 1,
    "print_width": "50%",
-   "width": "50%",
-   "hidden": 1
+   "width": "50%"
   },
   {
    "allow_on_submit": 1,
@@ -1095,8 +1095,8 @@
    "collapsible": 1,
    "fieldname": "tracking_section",
    "fieldtype": "Section Break",
-   "label": "Order Status",
-   "hidden": 1
+   "hidden": 1,
+   "label": "Order Status"
   },
   {
    "fieldname": "column_break_75",
@@ -1116,7 +1116,8 @@
   },
   {
    "fieldname": "before_items_section",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "hidden": 1
   },
   {
    "fieldname": "items_col_break",
@@ -1184,7 +1185,7 @@
  "idx": 105,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-08-01 10:29:27.820436",
+ "modified": "2022-08-03 10:21:34.510200",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Purchase Order",
