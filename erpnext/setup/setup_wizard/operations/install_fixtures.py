@@ -76,6 +76,7 @@ def install(country=None):
 		{'doctype': 'Domain', 'domain': 'Build'},
 		{'doctype': 'Domain', 'domain': 'Pagos360'},
 		{'doctype': 'Domain', 'domain': 'Mercadolibre'},
+		{'doctype': 'Domain', 'domain': 'Tiendanube'},
 		{'doctype': 'Domain', 'domain': 'Woocommerce'},
 		{'doctype': 'Domain', 'domain': 'Shopify'},
 		{'doctype': 'Domain', 'domain': 'Mercadopago'},
