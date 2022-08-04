@@ -132,7 +132,7 @@ def update_product_bundle_price(doc, parent_items):
 			for integration_name in AVAILABLE_INTEGRATIONS:
 				account_name_field = get_custom_field_name(integration_name, Fields.ACCOUNT_NAME.field)
 				if (
-					(doc.doctype == "Sales Order" and getattr(doc, account_name_field))
+					(doc.doctype == "Sales Order" and getattr(doc, account_name_field, None))
 					or (
 						doc.doctype == "Sales Invoice"
 						and frappe.db.get_value("Sales Order", item.sales_order, account_name_field)
