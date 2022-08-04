@@ -27,6 +27,10 @@
   "uom",
   "conversion_factor",
   "stock_qty",
+  "comisi\u00f3n_section",
+  "porcentaje_comision",
+  "column_break_53",
+  "importe_comision",
   "section_break_16",
   "price_list_rate",
   "base_price_list_rate",
@@ -789,17 +793,38 @@
    "no_copy": 1,
    "options": "currency",
    "read_only": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "comisi\u00f3n_section",
+   "fieldtype": "Section Break",
+   "label": "Comisión Vendedores por Producto"
+  },
+  {
+   "fieldname": "porcentaje_comision",
+   "fieldtype": "Percent",
+   "label": "Comisión %"
+  },
+  {
+   "fieldname": "column_break_53",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "importe_comision",
+   "fieldtype": "Float",
+   "label": "Incentivo"
   }
  ],
  "idx": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-02-23 01:15:05.803091",
+ "modified": "2022-07-07 15:02:24.732248",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Sales Order Item",
  "owner": "Administrator",
  "permissions": [],
+ "route": "app/doctype/Sales%20Order%20Item",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

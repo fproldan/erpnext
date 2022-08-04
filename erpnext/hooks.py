@@ -119,6 +119,7 @@ domains = {
 	'Pagos360': 'erpnext.domains.pagos360',
 	'Mercadolibre': 'erpnext.domains.mercadolibre',
 	'Tiendanube': 'erpnext.domains.tiendanube',
+	'Woocommerce': 'erpnext.domains.woocommerce',
 	'Shopify': 'erpnext.domains.shopify',
 	'Mercadopago': 'erpnext.domains.mercadopago',
 	'BOM': 'erpnext.domains.bom',

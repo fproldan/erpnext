@@ -689,9 +689,7 @@ class AccountsController(TransactionBase):
 			advance_entries_against_si = [d.reference_name for d in self.get("advances")]
 			for d in advance_entries:
 				if not advance_entries_against_si or d.reference_name not in advance_entries_against_si:
-					frappe.msgprint(_(
-						"Payment Entry {0} is linked against Order {1}, check if it should be pulled as advance in this invoice.")
-							.format(d.reference_name, d.against_order))
+					frappe.msgprint(_("Payment Entry {0} is linked against Order {1}, check if it should be pulled as advance in this invoice.").format(d.reference_name, d.against_order))
 
 	def set_advance_gain_or_loss(self):
 		if self.get('conversion_rate') == 1 or not self.get("advances"):
@@ -1685,17 +1683,59 @@ def get_advance_payment_entries(party_type, party, party_account, order_doctype,
 
 def update_invoice_status():
 	"""Updates status as Overdue for applicable invoices. Runs daily."""
+	today = getdate()
 
 	for doctype in ("Sales Invoice", "Purchase Invoice"):
 		frappe.db.sql("""
-			update `tab{}` as dt set dt.status = 'Overdue'
-			where dt.docstatus = 1
-				and dt.status != 'Overdue'
-				and dt.outstanding_amount > 0
-				and (dt.grand_total - dt.outstanding_amount) <
-					(select sum(payment_amount) from `tabPayment Schedule` as ps
-						where ps.parent = dt.name and ps.due_date < %s)
-		""".format(doctype), getdate())
+			UPDATE `tab{doctype}` invoice SET invoice.status = 'Overdue'
+			WHERE invoice.docstatus = 1
+				AND invoice.status REGEXP '^Unpaid|^Partly Paid'
+				AND invoice.outstanding_amount > 0
+				AND (
+						{or_condition}
+						(
+							(
+								CASE
+									WHEN invoice.party_account_currency = invoice.currency
+									THEN (
+										CASE
+											WHEN invoice.disable_rounded_total
+											THEN invoice.grand_total
+											ELSE invoice.rounded_total
+										END
+									)
+									ELSE (
+										CASE
+											WHEN invoice.disable_rounded_total
+											THEN invoice.base_grand_total
+											ELSE invoice.base_rounded_total
+										END
+									)
+								END
+							) - invoice.outstanding_amount
+						) < (
+							SELECT SUM(
+								CASE
+									WHEN invoice.party_account_currency = invoice.currency
+									THEN ps.payment_amount
+									ELSE ps.base_payment_amount
+								END
+							)
+							FROM `tabPayment Schedule` ps
+							WHERE ps.parent = invoice.name
+								AND ps.due_date < %(today)s
+						)
+					)
+		""".format(
+				doctype=doctype,
+				or_condition=(
+					"invoice.is_pos AND invoice.due_date < %(today)s OR"
+					if doctype == "Sales Invoice"
+					else ""
+				)
+			), {"today": today}
+		)
+
 
 @frappe.whitelist()
 def get_payment_terms(terms_template, posting_date=None, grand_total=None, base_grand_total=None, bill_date=None):
