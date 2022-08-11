@@ -199,7 +199,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-05-12 20:01:58.077754",
+ "modified": "2021-05-12 21:01:58.077754",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Training Event",
@@ -222,7 +222,7 @@
    "write": 1
   }
  ],
- "restrict_to_domain": "HR Reclutamiento, Capacitacion y Gastos",
+ "restrict_to_domain": "HR",
  "search_fields": "event_name",
  "show_name_in_global_search": 1,
  "sort_field": "modified",
