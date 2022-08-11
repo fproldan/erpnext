@@ -133,7 +133,6 @@ def install(country=None):
 		{'doctype': 'Employment Type', 'employee_type_name': _('Intern')},
 		{'doctype': 'Employment Type', 'employee_type_name': _('Apprentice')},
 
-
 		# Stock Entry Type
 		{'doctype': 'Stock Entry Type', 'name': 'Material Issue', 'purpose': 'Material Issue'},
 		{'doctype': 'Stock Entry Type', 'name': 'Material Receipt', 'purpose': 'Material Receipt'},
@@ -143,23 +142,6 @@ def install(country=None):
 		{'doctype': 'Stock Entry Type', 'name': 'Send to Subcontractor', 'purpose': 'Send to Subcontractor'},
 		{'doctype': 'Stock Entry Type', 'name': 'Material Transfer for Manufacture', 'purpose': 'Material Transfer for Manufacture'},
 		{'doctype': 'Stock Entry Type', 'name': 'Material Consumption for Manufacture', 'purpose': 'Material Consumption for Manufacture'},
-
-		# Designation
-		{'doctype': 'Designation', 'designation_name': _('CEO')},
-		{'doctype': 'Designation', 'designation_name': _('Manager')},
-		{'doctype': 'Designation', 'designation_name': _('Analyst')},
-		{'doctype': 'Designation', 'designation_name': _('Engineer')},
-		{'doctype': 'Designation', 'designation_name': _('Accountant')},
-		{'doctype': 'Designation', 'designation_name': _('Secretary')},
-		{'doctype': 'Designation', 'designation_name': _('Associate')},
-		{'doctype': 'Designation', 'designation_name': _('Administrative Officer')},
-		{'doctype': 'Designation', 'designation_name': _('Business Development Manager')},
-		{'doctype': 'Designation', 'designation_name': _('HR Manager')},
-		{'doctype': 'Designation', 'designation_name': _('Project Manager')},
-		{'doctype': 'Designation', 'designation_name': _('Head of Marketing and Sales')},
-		{'doctype': 'Designation', 'designation_name': _('Software Developer')},
-		{'doctype': 'Designation', 'designation_name': _('Designer')},
-		{'doctype': 'Designation', 'designation_name': _('Researcher')},
 
 		# territory: with two default territories, one for home country and one named Rest of the World
 		{'doctype': 'Territory', 'territory_name': _('All Territories'), 'is_group': 1, 'name': _('All Territories'), 'parent_territory': ''},
@@ -254,18 +236,18 @@ def install(country=None):
 		{'doctype': "Project Type", "project_type": _("External")},
 		{'doctype': "Project Type", "project_type": _("Other")},
 
-		{"doctype": "Offer Term", "offer_term": _("Date of Joining")},
-		{"doctype": "Offer Term", "offer_term": _("Annual Salary")},
-		{"doctype": "Offer Term", "offer_term": _("Probationary Period")},
-		{"doctype": "Offer Term", "offer_term": _("Employee Benefits")},
-		{"doctype": "Offer Term", "offer_term": _("Working Hours")},
-		{"doctype": "Offer Term", "offer_term": _("Stock Options")},
-		{"doctype": "Offer Term", "offer_term": _("Department")},
-		{"doctype": "Offer Term", "offer_term": _("Job Description")},
-		{"doctype": "Offer Term", "offer_term": _("Responsibilities")},
-		{"doctype": "Offer Term", "offer_term": _("Leaves per Year")},
-		{"doctype": "Offer Term", "offer_term": _("Notice Period")},
-		{"doctype": "Offer Term", "offer_term": _("Incentives")},
+		{"doctype": "Offer Term", "offer_term": _("Incentivos")},
+		{"doctype": "Offer Term", "offer_term": _("Período de Preaviso")},
+		{"doctype": "Offer Term", "offer_term": _("Francos por Año")},
+		{"doctype": "Offer Term", "offer_term": _("Responsabilidades")},
+		{"doctype": "Offer Term", "offer_term": _("Descripción del Trabajo")},
+		{"doctype": "Offer Term", "offer_term": _("Departamento")},
+		{"doctype": "Offer Term", "offer_term": _("Acciones de la empresa")},
+		{"doctype": "Offer Term", "offer_term": _("Horas de Trabajo")},
+		{"doctype": "Offer Term", "offer_term": _("Beneficios del Empleado")},
+		{"doctype": "Offer Term", "offer_term": _("Período de Prueba")},
+		{"doctype": "Offer Term", "offer_term": _("Salario Anual")},
+		{"doctype": "Offer Term", "offer_term": _("Fecha de incorporación")},
 
 		{'doctype': "Print Heading", 'print_heading': _("Credit Note")},
 		{'doctype': "Print Heading", 'print_heading': _("Debit Note")},
@@ -510,19 +492,6 @@ def install_post_company_fixtures(args=None):
 	records = [
 		# Department
 		{'doctype': 'Department', 'department_name': _('All Departments'), 'is_group': 1, 'parent_department': ''},
-		{'doctype': 'Department', 'department_name': _('Accounts'), 'parent_department': _('All Departments'), 'company': args.company_name},
-		{'doctype': 'Department', 'department_name': _('Marketing'), 'parent_department': _('All Departments'), 'company': args.company_name},
-		{'doctype': 'Department', 'department_name': _('Sales'), 'parent_department': _('All Departments'), 'company': args.company_name},
-		{'doctype': 'Department', 'department_name': _('Purchase'), 'parent_department': _('All Departments'), 'company': args.company_name},
-		{'doctype': 'Department', 'department_name': _('Operations'), 'parent_department': _('All Departments'), 'company': args.company_name},
-		{'doctype': 'Department', 'department_name': _('Production'), 'parent_department': _('All Departments'), 'company': args.company_name},
-		{'doctype': 'Department', 'department_name': _('Dispatch'), 'parent_department': _('All Departments'), 'company': args.company_name},
-		{'doctype': 'Department', 'department_name': _('Customer Service'), 'parent_department': _('All Departments'), 'company': args.company_name},
-		{'doctype': 'Department', 'department_name': _('Human Resources'), 'parent_department': _('All Departments'), 'company': args.company_name},
-		{'doctype': 'Department', 'department_name': _('Management'), 'parent_department': _('All Departments'), 'company': args.company_name},
-		{'doctype': 'Department', 'department_name': _('Quality Management'), 'parent_department': _('All Departments'), 'company': args.company_name},
-		{'doctype': 'Department', 'department_name': _('Research & Development'), 'parent_department': _('All Departments'), 'company': args.company_name},
-		{'doctype': 'Department', 'department_name': _('Legal'), 'parent_department': _('All Departments'), 'company': args.company_name},
 	]
 
 	# Make root department with NSM updation
