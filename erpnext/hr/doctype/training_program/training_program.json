@@ -102,7 +102,7 @@
   }
  ],
  "links": [],
- "modified": "2021-05-12 20:01:57.812822",
+ "modified": "2021-05-12 21:01:57.812822",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Training Program",
@@ -121,7 +121,7 @@
    "write": 1
   }
  ],
- "restrict_to_domain": "HR Reclutamiento, Capacitacion y Gastos",
+ "restrict_to_domain": "HR",
  "show_name_in_global_search": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
