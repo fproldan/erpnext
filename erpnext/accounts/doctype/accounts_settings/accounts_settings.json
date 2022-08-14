@@ -164,6 +164,7 @@
   {
    "fieldname": "report_settings_sb",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Report Settings"
   },
   {
@@ -227,6 +228,7 @@
    "default": "1",
    "fieldname": "delete_linked_ledger_entries",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Delete Accounting and Stock Ledger Entries on deletion of Transaction"
   },
   {
@@ -239,6 +241,7 @@
   {
    "fieldname": "period_closing_settings_section",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Period Closing Settings"
   },
   {
@@ -296,7 +299,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2021-10-01 15:08:44.117312",
+ "modified": "2022-08-14 12:36:03.569685",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Accounts Settings",
@@ -321,6 +324,7 @@
   }
  ],
  "quick_entry": 1,
+ "route": "app/doctype/Accounts%20Settings",
  "sort_field": "modified",
  "sort_order": "ASC",
  "track_changes": 1
