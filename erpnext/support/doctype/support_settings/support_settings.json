@@ -56,13 +56,15 @@
    "default": "0",
    "fieldname": "show_latest_forum_posts",
    "fieldtype": "Check",
-   "label": "Show Latest Forum Posts"
+   "label": "Show Latest Forum Posts",
+   "hidden": 1
   },
   {
    "depends_on": "show_latest_forum_posts",
    "fieldname": "forum_sb",
    "fieldtype": "Section Break",
-   "label": "Forum Posts"
+   "label": "Forum Posts",
+   "default": "0",
   },
   {
    "fieldname": "forum_url",
