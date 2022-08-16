@@ -15,7 +15,7 @@
  "is_standard": 1,
  "label": "ERPNext Settings",
  "links": [],
- "modified": "2021-06-12 01:58:11.399566",
+ "modified": "2022-08-14 12:47:04.725436",
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "ERPNext Settings",
@@ -66,18 +66,6 @@
    "type": "DocType"
   },
   {
-   "icon": "retail",
-   "label": "Shopping Cart Settings",
-   "link_to": "Shopping Cart Settings",
-   "type": "DocType"
-  },
-  {
-   "icon": "website",
-   "label": "Portal Settings",
-   "link_to": "Portal Settings",
-   "type": "DocType"
-  },
-  {
    "icon": "organization",
    "label": "Manufacturing Settings",
    "link_to": "Manufacturing Settings",
@@ -103,19 +91,6 @@
    "label": "Healthcare Settings",
    "link_to": "Healthcare Settings",
    "restrict_to_domain": "Healthcare",
-   "type": "DocType"
-  },
-  {
-   "icon": "setting",
-   "label": "Domain Settings",
-   "link_to": "Domain Settings",
-   "type": "DocType"
-  },
-  {
-   "doc_view": "",
-   "icon": "retail",
-   "label": "Products Settings",
-   "link_to": "Products Settings",
    "type": "DocType"
   }
  ]
