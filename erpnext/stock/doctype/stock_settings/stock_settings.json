@@ -65,7 +65,6 @@
    "options": "Item Group"
   },
   {
-   "default": "Unidades",
    "fieldname": "stock_uom",
    "fieldtype": "Link",
    "in_list_view": 1,
