@@ -64,7 +64,7 @@
    "fieldname": "forum_sb",
    "fieldtype": "Section Break",
    "label": "Forum Posts",
-   "default": "0"
+   "hidden": 1
   },
   {
    "fieldname": "forum_url",
