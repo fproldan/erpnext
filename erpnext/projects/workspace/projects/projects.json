@@ -181,7 +181,7 @@
    "type": "Link"
   }
  ],
- "modified": "2021-04-26 17:27:16.548780",
+ "modified": "2022-08-14 12:50:30.987275",
  "modified_by": "Administrator",
  "module": "Projects",
  "name": "Projects",
@@ -214,6 +214,12 @@
    "label": "Project Billing Summary",
    "link_to": "Project Billing Summary",
    "type": "Report"
+  },
+  {
+   "doc_view": "",
+   "label": "Projects Settings",
+   "link_to": "Projects Settings",
+   "type": "DocType"
   },
   {
    "label": "Dashboard",
