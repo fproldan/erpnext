@@ -75,6 +75,7 @@
   {
    "fieldname": "subcontract",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Subcontract"
   },
   {
@@ -139,7 +140,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2022-02-02 15:25:56.148585",
+ "modified": "2022-08-09 12:33:19.707518",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Buying Settings",
