@@ -83,7 +83,7 @@ def get_columns():
 			"label": _("Stock de Seguridad"),
 			"fieldname": "safety_stock",
 			"fieldtype": "Float",
-			"width": 130,
+			"width": 150,
 			"convertible": "qty"
 		},
 		{
