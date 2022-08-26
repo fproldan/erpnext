@@ -26,6 +26,7 @@
   "gender",
   "date_of_birth",
   "date_of_joining",
+  "dni",
   "employee_number",
   "emergency_contact_details",
   "person_to_be_contacted",
@@ -143,6 +144,7 @@
   {
    "fieldname": "salutation",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Salutation",
    "oldfieldname": "salutation",
    "oldfieldtype": "Select",
@@ -754,6 +756,7 @@
    "collapsible": 1,
    "fieldname": "attendance_and_leave_details",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Attendance and Leave Details"
   },
   {
@@ -869,6 +872,7 @@
   }
  ],
  "restrict_to_domain": "HR",
+ "route": "app/doctype/Employee",
  "search_fields": "employee_name",
  "show_name_in_global_search": 1,
  "sort_field": "modified",
