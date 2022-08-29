@@ -112,7 +112,7 @@
   {
    "fieldname": "additional_information_section",
    "fieldtype": "Section Break",
-   "label": "Additional Information "
+   "label": "Additional Information"
   },
   {
    "fieldname": "work_references",
