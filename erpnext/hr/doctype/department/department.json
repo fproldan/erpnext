@@ -74,7 +74,8 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Leave Block List",
-   "options": "Leave Block List"
+   "options": "Leave Block List",
+   "hidden": 1
   },
   {
    "fieldname": "leave_approvers",
@@ -143,7 +144,7 @@
  "idx": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2022-07-26 11:47:39.759745",
+ "modified": "2022-07-27 11:47:39.759745",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Department",
