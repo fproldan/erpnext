@@ -347,6 +347,7 @@ class Subscription(Document):
 
 		if doctype == 'Sales Invoice':
 			invoice.customer = self.party
+			invoice.territory = frappe.db.get_value('Customer', self.party, 'territory')
 		else:
 			invoice.supplier = self.party
 			if frappe.db.get_value('Supplier', self.party, 'tax_withholding_category'):
@@ -373,7 +374,7 @@ class Subscription(Document):
 
 		if doctype == 'Sales Invoice' and self.sales_tax_template:
 			tax_template = self.sales_tax_template
-			invoice.territory = frappe.db.get_value('Customer', self.party, 'territory')
+
 		if doctype == 'Purchase Invoice' and self.purchase_tax_template:
 			tax_template = self.purchase_tax_template
 
