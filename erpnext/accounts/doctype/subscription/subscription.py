@@ -373,6 +373,7 @@ class Subscription(Document):
 
 		if doctype == 'Sales Invoice' and self.sales_tax_template:
 			tax_template = self.sales_tax_template
+			invoice.territory = frappe.db.get_value('Customer', self.party, 'territory')
 		if doctype == 'Purchase Invoice' and self.purchase_tax_template:
 			tax_template = self.purchase_tax_template
 
