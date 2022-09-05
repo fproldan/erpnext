@@ -26,7 +26,7 @@
                     {% if start.date() == end.date() %}
                     <li>{{_("Date")}}: <b>{{ start.strftime("%A, %d %b %Y") }}</b></li>
                     <li>
-                        {{_("Timing")}}: <b>{{ start.strftime("%I:%M %p") + ' to ' + end.strftime("%I:%M %p") }}</b>
+                        {{_("Timing")}}: <b>{{ start.strftime("%I:%M %p") + ' a ' + end.strftime("%I:%M %p") }}</b>
                     </li>
                     {% else %}
                     <li>{{_("Start Time")}}: <b>{{ start.strftime("%A, %d %b %Y at %I:%M %p") }}</b>
