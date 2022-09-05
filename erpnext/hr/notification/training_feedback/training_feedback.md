@@ -1,9 +1,9 @@
-<h3>{{_("Training Event")}}</h3>
+<h3>Evento de Capacitación</h3>
 <p>{{ message }}</p>
 
-<h4>{{_("Details")}}</h4>
-{{_("Event Name")}}: <a href="{{ event_link }}">{{ name }}</a>
-<br>{{_("Event Location")}}: {{ location }}
-<br>{{_("Start Time")}}: {{ start_time }}
-<br>{{_("End Time")}}: {{ end_time }}
-<br>{{_("Attendance")}}: {{ attendance }}
+<h4>Detalles</h4>
+Nombre del evento: <a href="{{ event_link }}">{{ name }}</a>
+<br>Lugar del evento: {{ location }}
+<br>Hora de inicio: {{ start_time }}
+<br>Hora de fin: {{ end_time }}
+<br>Asistencia: {{ attendance }}

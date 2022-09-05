@@ -4,7 +4,7 @@
         <td width="15"></td>
         <td>
             <div class="text-medium text-muted">
-                <span>{{_("Training Event:")}} {{ doc.event_name }}</span>
+                <span>Evento de Capacitación: {{ doc.event_name }}</span>
             </div>
         </td>
         <td width="15"></td>
@@ -20,21 +20,24 @@
             <div>
                 {{ doc.introduction }}
                 <ul class="list-unstyled" style="line-height: 1.7">
-                    <li>{{_("Event Location")}}: <b>{{ doc.location }}</b></li>
+                    <li>Lugar del evento: <b>{{ doc.location }}</b></li>
                     {% set start = frappe.utils.get_datetime(doc.start_time) %}
                     {% set end = frappe.utils.get_datetime(doc.end_time) %}
                     {% if start.date() == end.date() %}
-                    <li>{{_("Date")}}: <b>{{ start.strftime("%A, %d %b %Y") }}</b></li>
-                    <li>
-                        {{_("Timing")}}: <b>{{ start.strftime("%I:%M %p") + ' a ' + end.strftime("%I:%M %p") }}</b>
-                    </li>
+                        <li>Fecha: <b>{{ start.strftime("%A, %d %b %Y") }}</b></li>
+                        <li>
+                            Tiempo: <b>{{ start.strftime("%I:%M %p") + ' a ' + end.strftime("%I:%M %p") }}</b>
+                        </li>
                     {% else %}
-                    <li>{{_("Start Time")}}: <b>{{ start.strftime("%A, %d %b %Y at %I:%M %p") }}</b>
-                    </li>
-                    <li>{{_("End Time")}}: <b>{{ end.strftime("%A, %d %b %Y at %I:%M %p") }}</b>
-                    </li>
+                        <li>
+                            Hora de inciio: <b>{{ start.strftime("%A, %d %b %Y at %I:%M %p") }}</b>
+                        </li>
+                        <li>Hora de fin: <b>{{ end.strftime("%A, %d %b %Y at %I:%M %p") }}</b></li>
                     {% endif %}
-                    <li>{{ _('Event Link') }}: {{ frappe.utils.get_link_to_form(doc.doctype, doc.name) }}</li>
+                    <li>Enlace al evento: {{ frappe.utils.get_link_to_form(doc.doctype, doc.name) }}</li>
+                    {% if doc.is_mandatory %}
+                        <li>Nota: Esta capacitación es obligatorio</li>
+                    {% endif %}
                 </ul>
             </div>
         </td>
