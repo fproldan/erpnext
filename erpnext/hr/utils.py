@@ -217,7 +217,7 @@ def get_employee_field_property(employee, fieldname):
 		elif field.fieldtype == "Datetime":
 			value = format_datetime(value)
 		return {
-			"value" : value,
+			"value" : value or '',
 			"datatype" : field.fieldtype,
 			"label" : field.label,
 			"options" : options
