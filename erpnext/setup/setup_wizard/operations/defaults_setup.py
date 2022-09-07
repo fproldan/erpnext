@@ -54,6 +54,7 @@ def set_default_settings(args):
 	buying_settings.pr_required = "No"
 	buying_settings.maintain_same_rate = 1
 	buying_settings.allow_multiple_items = 1
+	buying_settings.supplier_group = "Todos los Grupos de proveedores"
 	buying_settings.save()
 
 	delivery_settings = frappe.get_doc("Delivery Settings")
