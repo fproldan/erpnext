@@ -128,7 +128,7 @@
   {
    "fieldname": "section_break_16",
    "fieldtype": "Section Break",
-   "label": "Salary Expectation"
+   "label": "Expectativa salarial"
   },
   {
    "fieldname": "lower_range",
@@ -166,7 +166,7 @@
  "idx": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-05-12 21:01:56.931294",
+ "modified": "2021-05-13 21:01:56.931294",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Job Applicant",
