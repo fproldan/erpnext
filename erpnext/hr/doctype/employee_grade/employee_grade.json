@@ -15,12 +15,13 @@
    "fieldname": "default_salary_structure",
    "fieldtype": "Link",
    "label": "Default Salary Structure",
-   "options": "Salary Structure"
+   "options": "Salary Structure",
+   "hidden": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-05-12 19:59:16.103699",
+ "modified": "2021-05-14 19:59:16.103699",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Employee Grade",
