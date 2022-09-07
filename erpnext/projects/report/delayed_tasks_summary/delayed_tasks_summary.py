@@ -4,6 +4,7 @@
 from __future__ import unicode_literals
 
 import frappe
+from frappe import _
 from frappe.utils import date_diff, nowdate
 
 
@@ -36,6 +37,9 @@ def get_data(filters):
 			# task has no end date, hence no delay
 			task.delay = 0
 
+		task.status = _(task.status)
+		task.priority = _(task.priority)
+
 	# Sort by descending order of delay
 	tasks.sort(key=lambda x: x["delay"], reverse=True)
 	return tasks
@@ -61,10 +65,10 @@ def get_chart_data(data):
 			on_track = on_track + 1
 	charts = {
 		"data": {
-			"labels": ["On Track", "Delayed"],
+			"labels": [_("On Track"), _("Delayed")],
 			"datasets": [
 				{
-					"name": "Delayed",
+					"name": _("Delayed"),
 					"values": [on_track, delay]
 				}
 			]
@@ -79,56 +83,56 @@ def get_columns():
 		{
 			"fieldname": "name",
 			"fieldtype": "Link",
-			"label": "Task",
+			"label": _("Task"),
 			"options": "Task",
 			"width": 150
 		},
 		{
 			"fieldname": "subject",
 			"fieldtype": "Data",
-			"label": "Subject",
+			"label": _("Subject"),
 			"width": 200
 		},
 		{
 			"fieldname": "status",
 			"fieldtype": "Data",
-			"label": "Status",
+			"label": _("Status"),
 			"width": 100
 		},
 		{
 			"fieldname": "priority",
 			"fieldtype": "Data",
-			"label": "Priority",
+			"label": _("Priority"),
 			"width": 80
 		},
 		{
 			"fieldname": "progress",
 			"fieldtype": "Data",
-			"label": "Progress (%)",
+			"label": _("Progress (%)"),
 			"width": 120
 		},
 		{
 			"fieldname": "exp_start_date",
 			"fieldtype": "Date",
-			"label": "Expected Start Date",
+			"label": _("Expected Start Date"),
 			"width": 150
 		},
 		{
 			"fieldname": "exp_end_date",
 			"fieldtype": "Date",
-			"label": "Expected End Date",
+			"label": _("Expected End Date"),
 			"width": 150
 		},
 		{
 			"fieldname": "completed_on",
 			"fieldtype": "Date",
-			"label": "Actual End Date",
+			"label": _("Actual End Date"),
 			"width": 130
 		},
 		{
 			"fieldname": "delay",
 			"fieldtype": "Data",
-			"label": "Delay (In Days)",
+			"label": _("Delay (In Days)"),
 			"width": 120
 		}
 	]

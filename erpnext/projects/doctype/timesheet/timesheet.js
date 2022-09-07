@@ -49,7 +49,7 @@ frappe.ui.form.on("Timesheet", {
 					"fa fa-file-text");
 			}
 
-			if(!frm.doc.salary_slip && frm.doc.employee){
+			if(!frm.doc.salary_slip && frm.doc.employee && false){
 				frm.add_custom_button(__('Create Salary Slip'), function() { frm.trigger("make_salary_slip") },
 					"fa fa-file-text");
 			}
@@ -57,10 +57,10 @@ frappe.ui.form.on("Timesheet", {
 
 		if (frm.doc.docstatus < 1) {
 
-			let button = 'Start Timer';
+			let button = __('Start Timer');
 			$.each(frm.doc.time_logs || [], function(i, row) {
 				if ((row.from_time <= frappe.datetime.now_datetime()) && !row.completed) {
-					button = 'Resume Timer';
+					button = __('Resume Timer');
 				}
 			});
 

@@ -568,6 +568,15 @@
    "type": "Link"
   },
   {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Reporte Stock Bajo",
+   "link_to": "Reporte Stock Bajo",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
    "dependencies": "Batch",
    "hidden": 0,
    "is_query_report": 1,
@@ -681,7 +690,7 @@
    "onboard": 0,
    "type": "Link"
   },
-   {
+  {
    "hidden": 0,
    "is_query_report": 0,
    "label": "BOM Update Tool",
@@ -709,7 +718,7 @@
    "type": "Link"
   }
  ],
- "modified": "2022-04-19 11:17:39.237835",
+ "modified": "2022-08-23 10:00:44.576293",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Stock",
