@@ -339,5 +339,8 @@ execute:frappe.delete_doc("Print Format", "Sales Auditing Voucher")
 erpnext.patches.v13_0.release_1_3
 erpnext.patches.v13_0.create_mercadopago_domain
 erpnext.patches.v13_0.fix_workspace_links
+ches.v13_0.add_bom_domain
+erpnext.patches.v13_0.fetch_thumbnail_in_website_items
+erpnext.patches.v13_0.update_production_plan_status
 erpnext.patches.v13_0.add_bom_domain
 erpnext.patches.v13_0.hr_offer_term
