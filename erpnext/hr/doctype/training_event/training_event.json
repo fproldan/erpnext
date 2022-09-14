@@ -24,6 +24,7 @@
   "contact_number",
   "section_break_9",
   "course",
+  "curso",
   "location",
   "column_break_12",
   "start_time",
@@ -130,7 +131,7 @@
   {
    "fieldname": "course",
    "fieldtype": "Link",
-   "in_standard_filter": 1,
+   "hidden": 1,
    "label": "Course",
    "options": "Course"
   },
@@ -195,11 +196,17 @@
    "hidden": 1,
    "label": "Employee Emails",
    "options": "Email"
+  },
+  {
+   "fieldname": "curso",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Course"
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-05-12 21:01:58.077754",
+ "modified": "2022-09-02 11:46:58.633963",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Training Event",
