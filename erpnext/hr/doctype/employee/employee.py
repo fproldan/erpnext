@@ -460,3 +460,16 @@ def has_upload_permission(doc, ptype='read', user=None):
 	if get_doc_permissions(doc, user=user, ptype=ptype).get(ptype):
 		return True
 	return doc.user_id == user
+
+def calculate_employee_seniority():
+	from dateutil import relativedelta
+	import datetime
+
+	for employee in frappe.get_all('Employee', fields=['name', 'date_of_joining']):
+
+		if not employee['date_of_joining']:
+			continue
+
+		senority = relativedelta.relativedelta(datetime.date.today(), employee['date_of_joining']).years
+		frappe.db.set_value('Employee', employee['name'], 'senority', senority)
+		frappe.db.commit()
