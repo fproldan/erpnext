@@ -24,27 +24,24 @@ frappe.ui.form.on("Employee Referral", {
 		}
 
 		// To check whether Payment is done or not
-		if (frm.doc.docstatus === 1 && frm.doc.status === "Accepted") {
-			frappe.db.get_list("Additional Salary", {
-				filters: {
-					ref_docname: cur_frm.doc.name,
-					docstatus: 1
-				},
-				fields: ["count(name) as additional_salary_count"]
-			}).then((data) => {
+		// if (frm.doc.docstatus === 1 && frm.doc.status === "Accepted") {
+		// 	frappe.db.get_list("Additional Salary", {
+		// 		filters: {
+		// 			ref_docname: cur_frm.doc.name,
+		// 			docstatus: 1
+		// 		},
+		// 		fields: ["count(name) as additional_salary_count"]
+		// 	}).then((data) => {
 
-				let additional_salary_count = data[0].additional_salary_count;
+		// 		let additional_salary_count = data[0].additional_salary_count;
 
-				if (frm.doc.is_applicable_for_referral_bonus && !additional_salary_count) {
-					frm.add_custom_button(__("Create Additional Salary"), function() {
-						frm.events.create_additional_salary(frm);
-					}).addClass("btn-primary");
-				}
-			});
-		}
-
-
-
+		// 		if (frm.doc.is_applicable_for_referral_bonus && !additional_salary_count) {
+		// 			frm.add_custom_button(__("Create Additional Salary"), function() {
+		// 				frm.events.create_additional_salary(frm);
+		// 			}).addClass("btn-primary");
+		// 		}
+		// 	});
+		// }
 	},
 	create_job_applicant: function(frm) {
 		frappe.model.open_mapped_doc({
