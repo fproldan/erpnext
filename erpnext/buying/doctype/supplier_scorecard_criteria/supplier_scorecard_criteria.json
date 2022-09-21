@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_rename": 1,
  "autoname": "field:criteria_name",
  "creation": "2017-05-29 01:32:43.064891",
  "doctype": "DocType",
@@ -42,7 +43,7 @@
   }
  ],
  "links": [],
- "modified": "2021-05-12 20:01:47.455765",
+ "modified": "2021-05-13 20:01:47.455765",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Supplier Scorecard Criteria",
