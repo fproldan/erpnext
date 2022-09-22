@@ -62,6 +62,12 @@ def get_item_details(args, doc=None, for_validate=False, overwrite_warehouse=Tru
 	if isinstance(doc, string_types):
 		doc = json.loads(doc)
 
+	if args.get("doctype") == "Material Request":
+		item_group = frappe.db.get_value("Item", args.item_code, 'item_group')
+		item_purchase_user = frappe.db.get_value("Item Default", {"parent": args.item_code, "company": args.company}, 'purchase_user')
+		item_group_purchase_user = frappe.db.get_value("Item Default", {"parent": item_group, "company": args.company}, 'purchase_user')
+		out.update({"purchase_user": item_purchase_user or item_group_purchase_user})
+
 	if doc and doc.get('doctype') == 'Purchase Invoice':
 		args['bill_date'] = doc.get('bill_date')
 
