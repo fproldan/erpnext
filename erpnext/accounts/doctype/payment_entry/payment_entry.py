@@ -571,12 +571,17 @@ class PaymentEntry(AccountsController):
 					+ (total_deductions / self.target_exchange_rate)
 				)
 			elif self.payment_type == "Receive":
-				self.unallocated_amount = (
-					self.paid_amount
-					- self.total_allocated_amount
-					+ (included_taxes / self.source_exchange_rate)
-					+ (total_deductions / self.source_exchange_rate)
-				)
+				if total_deductions:
+					self.unallocated_amount = (self.base_received_amount + total_deductions -
+					self.base_total_allocated_amount) / self.source_exchange_rate
+					self.unallocated_amount -= included_taxes
+				else:
+					self.unallocated_amount = (
+						self.paid_amount
+						- self.total_allocated_amount
+						+ (included_taxes / self.source_exchange_rate)
+						+ (total_deductions / self.source_exchange_rate)
+					)
 
 	def set_difference_amount(self):
 		base_unallocated_amount = flt(self.unallocated_amount) * (flt(self.source_exchange_rate)
