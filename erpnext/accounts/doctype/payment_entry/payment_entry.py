@@ -564,12 +564,17 @@ class PaymentEntry(AccountsController):
 			total_deductions = sum(flt(d.amount) for d in self.get("deductions"))
 			included_taxes = self.get_included_taxes()
 			if self.payment_type == "Pay":
-				self.unallocated_amount = (
-					self.received_amount
-					- self.total_allocated_amount
-					+ (included_taxes / self.target_exchange_rate)
-					+ (total_deductions / self.target_exchange_rate)
-				)
+				if total_deductions:
+					self.unallocated_amount = (self.base_paid_amount - (total_deductions +
+					self.base_total_allocated_amount)) / self.target_exchange_rate
+					self.unallocated_amount -= included_taxes
+				else:
+					self.unallocated_amount = (
+						self.received_amount
+						- self.total_allocated_amount
+						+ (included_taxes / self.target_exchange_rate)
+						+ (total_deductions / self.target_exchange_rate)
+					)
 			elif self.payment_type == "Receive":
 				if total_deductions:
 					self.unallocated_amount = (self.base_received_amount + total_deductions -

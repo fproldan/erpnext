@@ -879,9 +879,14 @@ frappe.ui.form.on('Payment Entry', {
 
 		if (party) {
 			if (payment_type === "Pay") {
-				unallocated_amount = received_amount - total_allocated_amount;
-				unallocated_amount += (base_total_taxes_and_charges / target_exchange_rate);
-				unallocated_amount += (total_deductions / target_exchange_rate);
+				if (total_deductions) {
+					unallocated_amount = (frm.doc.base_paid_amount + frm.doc.base_total_taxes_and_charges - (total_deductions
+						+ frm.doc.base_total_allocated_amount)) / frm.doc.target_exchange_rate;
+				} else {
+					unallocated_amount = received_amount - total_allocated_amount;
+					unallocated_amount += (base_total_taxes_and_charges / target_exchange_rate);
+					unallocated_amount += (total_deductions / target_exchange_rate);
+				}
 			}
 			else if (payment_type === "Receive") {
 				if (total_deductions) {
