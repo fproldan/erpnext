@@ -841,7 +841,7 @@
    "type": "Link"
   }
  ],
- "modified": "2022-08-09 15:40:19.850937",
+ "modified": "2022-08-09 15:41:19.850937",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "HR",
@@ -871,7 +871,7 @@
    {
    "format": "{} Open",
    "label": "Dashboard",
-   "link_to": "Human Resource",
+   "link_to": "Recursos Humanos",
    "stats_filter": "{\n    \"status\": \"Open\"\n}",
    "type": "Dashboard"
   }
