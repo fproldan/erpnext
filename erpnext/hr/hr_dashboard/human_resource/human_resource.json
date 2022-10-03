@@ -1,33 +1,33 @@
 {
  "cards": [
   {
-   "card": "Total Employees"
+   "card": "Empelados totales"
   },
   {
-   "card": "New Joinees (Last year)"
+   "card": "Nuevos miembros (último año)"
   },
   {
-   "card": "Employees Left (Last year)"
+   "card": "Empleados que se han ido (último año)"
   },
   {
-   "card": "Total Applicants (Last month)"
+   "card": "Total de solicitantes (último mes)"
   }
  ],
  "charts": [
   {
-   "chart": "Attendance Count",
+   "chart": "Recuento de asistencia",
    "width": "Full"
   },
   {
-   "chart": "Gender Diversity Ratio",
+   "chart": "Ratio de diversidad de género",
    "width": "Half"
   },
   {
-   "chart": "Job Application Status",
+   "chart": "Estado de la solicitud de empleo",
    "width": "Half"
   },
   {
-   "chart": "Designation Wise Employee Count",
+   "chart": "Recuento de empleados por designación",
    "width": "Half"
   },
   {
@@ -35,24 +35,24 @@
    "width": "Half"
   },
   {
-   "chart": "Designation Wise Openings",
+   "chart": "Aperturas en función de la designación",
    "width": "Half"
   },
   {
-   "chart": "Department Wise Openings",
+   "chart": "Aperturas por departamento",
    "width": "Half"
   }
  ],
- "creation": "2020-07-22 11:56:33.015888",
- "dashboard_name": "Human Resource",
+ "creation": "2020-07-23 12:57:33.015888",
+ "dashboard_name": "Recursos Humanos",
  "docstatus": 0,
  "doctype": "Dashboard",
  "idx": 0,
  "is_default": 0,
  "is_standard": 1,
- "modified": "2020-07-22 14:42:12.789249",
+ "modified": "2020-07-25 15:42:12.789249",
  "modified_by": "Administrator",
  "module": "HR",
- "name": "Human Resource",
+ "name": "Recursos Humanos",
  "owner": "Administrator"
 }
