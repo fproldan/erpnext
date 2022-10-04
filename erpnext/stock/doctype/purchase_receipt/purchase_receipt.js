@@ -41,12 +41,24 @@ frappe.ui.form.on("Purchase Receipt", {
 			}
 		});
 
+		frm.set_query("to_company_warehouse", function() {
+			return {
+				filters: {'company': frm.doc.to_company }
+			}
+		});
+
 	},
 	onload: function(frm) {
 		erpnext.queries.setup_queries(frm, "Warehouse", function() {
 			return erpnext.queries.warehouse(frm.doc);
 		});
 
+
+		frm.set_query("to_company_warehouse", function() {
+			return {
+				filters: {'company': frm.doc.to_company }
+			}
+		});
 		erpnext.accounts.dimensions.setup_dimension_filters(frm, frm.doctype);
 	},
 

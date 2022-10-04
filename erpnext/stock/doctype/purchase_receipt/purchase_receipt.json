@@ -24,6 +24,10 @@
   "apply_putaway_rule",
   "is_return",
   "return_against",
+  "destino_section",
+  "to_company",
+  "column_break_18",
+  "to_company_warehouse",
   "section_addresses",
   "supplier_address",
   "contact_person",
@@ -1145,13 +1149,36 @@
    "label": "Represents Company",
    "options": "Company",
    "read_only": 1
+  },
+  {
+   "fieldname": "destino_section",
+   "fieldtype": "Section Break",
+   "label": "Destino"
+  },
+  {
+   "default": "\n",
+   "fieldname": "to_company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "fieldname": "column_break_18",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "to_company_warehouse",
+   "fieldtype": "Link",
+   "label": "Warehouse",
+   "mandatory_depends_on": "eval:doc.to_company && doc.to_company!='\\n'",
+   "options": "Warehouse"
   }
  ],
  "icon": "fa fa-truck",
  "idx": 261,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-09-28 13:11:10.181328",
+ "modified": "2022-10-04 15:03:13.482261",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Purchase Receipt",
@@ -1211,6 +1238,7 @@
    "write": 1
   }
  ],
+ "route": "app/doctype/Purchase%20Receipt",
  "search_fields": "status, posting_date, supplier",
  "show_name_in_global_search": 1,
  "sort_field": "modified",
