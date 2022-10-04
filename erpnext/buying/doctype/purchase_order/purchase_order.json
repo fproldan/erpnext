@@ -443,10 +443,7 @@
   {
    "fieldname": "sec_warehouse",
    "fieldtype": "Section Break",
-<<<<<<< HEAD
-=======
    "hidden": 1,
->>>>>>> 6486bfda26 (hide (#322))
    "label": "Subcontrataci\u00f3n"
   },
   {
@@ -724,10 +721,7 @@
    "collapsible_depends_on": "apply_discount_on",
    "fieldname": "discount_section",
    "fieldtype": "Section Break",
-<<<<<<< HEAD
-=======
    "hidden": 1,
->>>>>>> 6486bfda26 (hide (#322))
    "label": "Additional Discount"
   },
   {
@@ -1098,10 +1092,7 @@
    "collapsible": 1,
    "fieldname": "tracking_section",
    "fieldtype": "Section Break",
-<<<<<<< HEAD
-=======
    "hidden": 1,
->>>>>>> 6486bfda26 (hide (#322))
    "label": "Order Status"
   },
   {
@@ -1172,11 +1163,7 @@
  "idx": 105,
  "is_submittable": 1,
  "links": [],
-<<<<<<< HEAD
- "modified": "2022-06-26 17:15:09.519137",
-=======
  "modified": "2022-08-03 10:21:34.510200",
->>>>>>> 6486bfda26 (hide (#322))
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Purchase Order",
