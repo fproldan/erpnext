@@ -214,7 +214,8 @@ frappe.ui.form.on('Material Request', {
 					material_request_type: frm.doc.material_request_type,
 					plc_conversion_rate: 1,
 					rate: item.rate,
-					conversion_factor: item.conversion_factor
+					conversion_factor: item.conversion_factor,
+					purchase_user: item.purchase_user
 				},
 				overwrite_warehouse: overwrite_warehouse
 			},
