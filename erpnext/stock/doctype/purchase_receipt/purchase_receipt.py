@@ -201,6 +201,67 @@ class PurchaseReceipt(BuyingController):
 		self.make_gl_entries()
 		self.repost_future_sle_and_gle()
 		self.set_consumed_qty_in_po()
+		self.make_intercompany_stock_entry()
+
+	def make_intercompany_stock_entry(self):
+		"""
+		JPH
+		En caso de que el Recibo de Compra tenga cargado to_company y to_company_warehouse
+		se crean las Entradas de Inventario Intercompany.
+		"""
+		from erpnext.stock.doctype.stock_entry.stock_entry_utils import make_stock_entry
+
+		if not self.to_company or not self.to_company_warehouse:
+			return
+
+		# Expedicion de Material
+		stock_entry = frappe.new_doc("Stock Entry")
+		stock_entry.purpose = "Material Issue"
+		stock_entry.company = self.company
+		stock_entry.reference_purchase_receipt = self.name
+
+		for item in self.items:
+			stock_entry.append("items", {
+				"item_code": item.item_code,
+				"s_warehouse": item.warehouse or self.set_warehouse,
+				"qty": item.received_qty,
+				"basic_rate": item.base_rate,
+				"conversion_factor": item.conversion_factor or 1.0,
+				"transfer_qty": flt(item.received_qty) * (flt(item.conversion_factor) or 1.0),
+				"serial_no": item.serial_no,
+				'batch_no': item.batch_no,
+				'cost_center': item.cost_center,
+				'expense_account': item.expense_account,
+			})
+
+		stock_entry.set_stock_entry_type()
+		stock_entry.insert(ignore_permissions=True)
+		stock_entry.submit()
+
+		# Recepcion de Material
+		stock_entry = frappe.new_doc("Stock Entry")
+		stock_entry.purpose = "Material Receipt"
+		stock_entry.company = self.to_company
+		cost_center = frappe.get_value('Company', self.to_company, 'cost_center')
+		expense_account = frappe.get_value('Company', self.to_company, 'stock_adjustment_account')
+		
+		for item in self.items:
+			stock_entry.append("items", {
+				"item_code": item.item_code,
+				"t_warehouse": self.to_company_warehouse,
+				"qty": item.received_qty,
+				"basic_rate": item.base_rate,
+				"conversion_factor": item.conversion_factor or 1.0,
+				"transfer_qty": flt(item.received_qty) * (flt(item.conversion_factor) or 1.0),
+				"serial_no": item.serial_no,
+				'batch_no': item.batch_no,
+				'cost_center': cost_center,
+				'expense_account': expense_account
+			})
+		
+		stock_entry.set_stock_entry_type()
+		stock_entry.insert(ignore_permissions=True)
+		stock_entry.submit()
 
 	def check_next_docstatus(self):
 		submit_rv = frappe.db.sql("""select t1.name

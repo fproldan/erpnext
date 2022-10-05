@@ -1156,7 +1156,6 @@
    "label": "Destino"
   },
   {
-   "default": "\n",
    "fieldname": "to_company",
    "fieldtype": "Link",
    "label": "Company",
@@ -1178,7 +1177,7 @@
  "idx": 261,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-10-04 15:03:13.482261",
+ "modified": "2022-10-05 09:59:11.863077",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Purchase Receipt",
