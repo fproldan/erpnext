@@ -184,6 +184,6 @@ def get_doctypes_to_be_ignored():
 		'Item Default', 'Customer', 'Supplier',
 		'Punto de Venta', 'Impuesto de Retencion', 'Impuesto de Percepcion',
 		'Cheque', 'User', 'Role Profile', 'Issue Type', 'Service Level Agreement',
-		'Project Type', 'Activity Type', 'Activity Cost', 'Certificado AFIP',
+		'Project Type', 'Activity Type', 'Activity Cost', 'Certificado AFIP', 'Department'
 	]
 	return doctypes_to_be_ignored_list
