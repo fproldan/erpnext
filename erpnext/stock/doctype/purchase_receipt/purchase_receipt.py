@@ -209,8 +209,6 @@ class PurchaseReceipt(BuyingController):
 		En caso de que el Recibo de Compra tenga cargado to_company y to_company_warehouse
 		se crean las Entradas de Inventario Intercompany.
 		"""
-		from erpnext.stock.doctype.stock_entry.stock_entry_utils import make_stock_entry
-
 		if not self.to_company or not self.to_company_warehouse:
 			return
 
