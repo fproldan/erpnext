@@ -48,7 +48,7 @@ frappe.ui.form.on(cur_frm.doctype, {
 
 var show_dialog = function(frm, table, field_labels) {
 	var d = new frappe.ui.Dialog({
-		title: "Update Property",
+		title: __("Update Property"),
 		fields: [
 			{fieldname: "property", label: __('Select Property'), fieldtype:"Select", options: field_labels},
 			{fieldname: "current", fieldtype: "Data", label:__('Current'), read_only: true},

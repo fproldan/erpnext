@@ -19,6 +19,7 @@
   "column_break1",
   "company",
   "transaction_date",
+  "tipo_de_orden",
   "schedule_date",
   "nuevo_pacto_entrega",
   "reclamado",
@@ -445,6 +446,7 @@
   {
    "fieldname": "sec_warehouse",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Subcontrataci\u00f3n"
   },
   {
@@ -485,6 +487,7 @@
   {
    "fieldname": "scan_barcode",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Scan Barcode",
    "options": "Barcode"
   },
@@ -607,6 +610,7 @@
   {
    "fieldname": "shipping_rule",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Shipping Rule",
    "options": "Shipping Rule",
    "print_hide": 1
@@ -720,6 +724,7 @@
    "collapsible_depends_on": "apply_discount_on",
    "fieldname": "discount_section",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Additional Discount"
   },
   {
@@ -884,6 +889,7 @@
    "collapsible_depends_on": "terms",
    "fieldname": "terms_section_break",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Terms and Conditions",
    "oldfieldtype": "Section Break",
    "options": "fa fa-legal"
@@ -982,6 +988,7 @@
    "collapsible": 1,
    "fieldname": "column_break5",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Printing Settings",
    "oldfieldtype": "Column Break",
    "print_hide": 1,
@@ -1088,6 +1095,7 @@
    "collapsible": 1,
    "fieldname": "tracking_section",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Order Status"
   },
   {
@@ -1108,7 +1116,8 @@
   },
   {
    "fieldname": "before_items_section",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "hidden": 1
   },
   {
    "fieldname": "items_col_break",
@@ -1163,13 +1172,20 @@
    "label": "Motivo de Rechazo",
    "no_copy": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "tipo_de_orden",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Tipo de Orden",
+   "options": "\nAbierta\nCerrada"
   }
  ],
  "icon": "fa fa-file-text",
  "idx": 105,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-06-27 17:15:09.519137",
+ "modified": "2022-08-03 10:21:34.510200",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Purchase Order",

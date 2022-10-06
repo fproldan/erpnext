@@ -312,6 +312,7 @@ erpnext.patches.v13_0.create_website_items #30-09-2021
 erpnext.patches.v13_0.populate_e_commerce_settings
 erpnext.patches.v13_0.make_homepage_products_website_items
 erpnext.patches.v13_0.update_dates_in_tax_withholding_category
+erpnext.patches.v13_0.fix_invoice_statuses_3
 erpnext.patches.v13_0.rename_sla_rma_domain
 erpnext.patches.v13_0.replace_supplier_item_group_with_party_specific_item
 erpnext.patches.v13_0.gst_fields_for_pos_invoice
@@ -339,3 +340,7 @@ erpnext.patches.v13_0.release_1_3
 erpnext.patches.v13_0.create_mercadopago_domain
 erpnext.patches.v13_0.fix_workspace_links
 erpnext.patches.v13_0.add_bom_domain
+erpnext.patches.v13_0.fetch_thumbnail_in_website_items
+erpnext.patches.v13_0.update_production_plan_status
+erpnext.patches.v13_0.add_bom_domain
+erpnext.patches.v13_0.hr_offer_term
