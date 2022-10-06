@@ -216,7 +216,6 @@ class PurchaseReceipt(BuyingController):
 		stock_entry = frappe.new_doc("Stock Entry")
 		stock_entry.purpose = "Material Issue"
 		stock_entry.company = self.company
-		stock_entry.reference_purchase_receipt = self.name
 
 		for item in self.items:
 			stock_entry.append("items", {
@@ -230,6 +229,7 @@ class PurchaseReceipt(BuyingController):
 				'batch_no': item.batch_no,
 				'cost_center': item.cost_center,
 				'expense_account': item.expense_account,
+				'reference_purchase_receipt': self.name
 			})
 
 		stock_entry.set_stock_entry_type()
@@ -254,7 +254,8 @@ class PurchaseReceipt(BuyingController):
 				"serial_no": item.serial_no,
 				'batch_no': item.batch_no,
 				'cost_center': cost_center,
-				'expense_account': expense_account
+				'expense_account': expense_account,
+				'reference_purchase_receipt': self.name
 			})
 		
 		stock_entry.set_stock_entry_type()

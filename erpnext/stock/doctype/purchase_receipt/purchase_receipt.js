@@ -41,12 +41,11 @@ frappe.ui.form.on("Purchase Receipt", {
 			}
 		});
 
-		frm.set_query("to_company_warehouse", function() {
+		frm.set_query("to_company", function() {
 			return {
-				filters: {'company': frm.doc.to_company }
+				filters: {'name': ['!=', frm.doc.company] }
 			}
 		});
-
 	},
 	onload: function(frm) {
 		erpnext.queries.setup_queries(frm, "Warehouse", function() {
@@ -56,7 +55,10 @@ frappe.ui.form.on("Purchase Receipt", {
 
 		frm.set_query("to_company_warehouse", function() {
 			return {
-				filters: {'company': frm.doc.to_company }
+				filters: [
+					["Warehouse", "company", "=", frm.doc.to_company],
+					["Warehouse", "is_group", "=", 0]
+				]
 			}
 		});
 		erpnext.accounts.dimensions.setup_dimension_filters(frm, frm.doctype);
@@ -178,7 +180,10 @@ erpnext.stock.PurchaseReceiptController = erpnext.buying.BuyingController.extend
 								status: ["not in", ["Closed", "On Hold"]],
 								per_received: ["<", 99.99],
 								company: me.frm.doc.company
-							}
+							},
+							allow_child_item_selection: true,
+							child_fielname: "items",
+							child_columns: ["item_code", "qty", "warehouse"]
 						})
 					}, __("Get Items From"));
 			}
