@@ -28,3 +28,9 @@ def get_stock(item_code, warehouse=None):
 
 	response['total'] = total
 	return response
+
+
+@frappe.whitelist()
+def create_delivery_note(data):
+	print(data)
+	return 'DN'
