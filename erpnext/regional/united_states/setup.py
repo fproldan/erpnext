@@ -11,6 +11,7 @@ from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
 
 
 def setup(company=None, patch=True):
+	return
 	# Company independent fixtures should be called only once at the first company setup
 	if frappe.db.count('Company', {'country': 'United States'}) <=1:
 		setup_company_independent_fixtures(patch=patch)
