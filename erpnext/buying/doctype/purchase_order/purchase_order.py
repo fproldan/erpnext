@@ -4,6 +4,7 @@
 from __future__ import unicode_literals
 
 import json
+from six import string_types
 
 import frappe
 from frappe import _, msgprint
@@ -405,7 +406,14 @@ def set_missing_values(source, target):
 	target.run_method("calculate_taxes_and_totals")
 
 @frappe.whitelist()
-def make_purchase_receipt(source_name, target_doc=None):
+def make_purchase_receipt(source_name, target_doc=None, args=None):
+
+	if args is None:
+		args = {}
+
+	if isinstance(args, string_types):
+		args = json.loads(args)
+
 	def update_item(obj, target, source_parent):
 		target.qty = flt(obj.qty) - flt(obj.received_qty)
 		target.stock_qty = (flt(obj.qty) - flt(obj.received_qty)) * flt(obj.conversion_factor)
@@ -413,11 +421,16 @@ def make_purchase_receipt(source_name, target_doc=None):
 		target.base_amount = (flt(obj.qty) - flt(obj.received_qty)) * \
 			flt(obj.rate) * flt(source_parent.conversion_rate)
 
+	def select_item(d):
+		filtered_items = args.get('filtered_children', [])
+		child_filter = d.name in filtered_items if filtered_items else True
+		return abs(d.received_qty) < abs(d.qty) and d.delivered_by_supplier != 1 and child_filter
+
 	doc = get_mapped_doc("Purchase Order", source_name,	{
 		"Purchase Order": {
 			"doctype": "Purchase Receipt",
 			"field_map": {
-				"supplier_warehouse":"supplier_warehouse"
+				"supplier_warehouse": "supplier_warehouse"
 			},
 			"validation": {
 				"docstatus": ["=", 1],
@@ -433,7 +446,7 @@ def make_purchase_receipt(source_name, target_doc=None):
 				"material_request_item": "material_request_item"
 			},
 			"postprocess": update_item,
-			"condition": lambda doc: abs(doc.received_qty) < abs(doc.qty) and doc.delivered_by_supplier!=1
+			"condition": select_item
 		},
 		"Purchase Taxes and Charges": {
 			"doctype": "Purchase Taxes and Charges",
