@@ -37,8 +37,8 @@ def create_stock_entry(data):
 	from_company = data.get("from_company")
 	from_warehouse = data.get("from_warehouse")
 
-	to_company = data.get("from_company")
-	to_warehouse = data.get("from_warehouse")
+	to_company = data.get("to_company")
+	to_warehouse = data.get("to_warehouse")
 
 	items = data.get("items")
 
@@ -76,62 +76,67 @@ def create_stock_entry(data):
 
 	receipt_stock_entry = None
 
-	# Expedicion de Material
-	issue_stock_entry = frappe.new_doc("Stock Entry")
-	issue_stock_entry.purpose = "Material Issue"
-	issue_stock_entry.company = from_company
-
-	for item_data in items:
-		item = frappe.get_doc('Item', item['item_code'])
-		issue_stock_entry.append("items", {
-			"item_code": item.item_code,
-			"s_warehouse": from_warehouse,
-			"qty": item_data.get('qty') or 1,
-			"basic_rate": item.base_rate,
-			"conversion_factor": item.conversion_factor or 1.0,
-			"transfer_qty": flt(item_data.get('qty') or 1) * (flt(item.conversion_factor) or 1.0),
-			"serial_no": item.serial_no,
-			'batch_no': item.batch_no,
-			'cost_center': item.cost_center,
-			'expense_account': item.expense_account,
-		})
-
-	issue_stock_entry.set_stock_entry_type()
-	issue_stock_entry.insert(ignore_permissions=True)
-	issue_stock_entry.submit()
-
-	if to_company and to_warehouse:
-		# Recepcion de Material
-		receipt_stock_entry = frappe.new_doc("Stock Entry")
-		receipt_stock_entry.purpose = "Material Receipt"
-		receipt_stock_entry.company = to_company
-		cost_center = frappe.get_value('Company', to_company, 'cost_center')
-		expense_account = frappe.get_value('Company', to_company, 'stock_adjustment_account')
+	try:
+		# Expedicion de Material
+		issue_stock_entry = frappe.new_doc("Stock Entry")
+		issue_stock_entry.purpose = "Material Issue"
+		issue_stock_entry.company = from_company
+		cost_center = frappe.get_value('Company', from_company, 'cost_center')
+		expense_account = frappe.get_value('Company', from_company, 'stock_adjustment_account')
 
 		for item_data in items:
-			item = frappe.get_doc('Item', item['item_code'])
-			receipt_stock_entry.append("items", {
+			item = frappe.get_doc('Item', item_data['item_code'])
+			issue_stock_entry.append("items", {
 				"item_code": item.item_code,
-				"t_warehouse": to_warehouse,
+				"s_warehouse": from_warehouse,
+				"uom": item.stock_uom,
 				"qty": item_data.get('qty') or 1,
-				"basic_rate": item.base_rate,
-				"conversion_factor": item.conversion_factor or 1.0,
-				"transfer_qty": flt(item_data.get('qty') or 1) * (flt(item.conversion_factor) or 1.0),
-				"serial_no": item.serial_no,
-				'batch_no': item.batch_no,
+				"conversion_factor": 1.0,  # TODO: conversion factor
+				"transfer_qty": item_data.get('qty') * 1.0,  # TODO: conversion factor
 				'cost_center': cost_center,
 				'expense_account': expense_account,
 			})
 
-		receipt_stock_entry.set_stock_entry_type()
-		receipt_stock_entry.insert(ignore_permissions=True)
-		receipt_stock_entry.submit()
+		issue_stock_entry.get_stock_and_rate()
+		issue_stock_entry.set_stock_entry_type()
+		issue_stock_entry.insert(ignore_permissions=True)
+		issue_stock_entry.submit()
 
-	frappe.db.commit()
+		if to_company and to_warehouse:
+			# Recepcion de Material
+			receipt_stock_entry = frappe.new_doc("Stock Entry")
+			receipt_stock_entry.purpose = "Material Receipt"
+			receipt_stock_entry.company = to_company
+			cost_center = frappe.get_value('Company', to_company, 'cost_center')
+			expense_account = frappe.get_value('Company', to_company, 'stock_adjustment_account')
 
-	response = {
-		'issue_stock_entry': issue_stock_entry.__dict__,
-		'receipt_stock_entry': receipt_stock_entry.__dict__ if receipt_stock_entry else {}
-	}
+			for item_data in items:
+				item = frappe.get_doc('Item', item_data['item_code'])
+				receipt_stock_entry.append("items", {
+					"item_code": item.item_code,
+					"t_warehouse": to_warehouse,
+					"uom": item.stock_uom,
+					"qty": item_data.get('qty') or 1,
+					"conversion_factor": 1.0,  # TODO: conversion factor
+					"transfer_qty": item_data.get('qty') * 1.0,  # TODO: conversion factor
+					'cost_center': cost_center,
+					'expense_account': expense_account,
+				})
 
-	return response
+			receipt_stock_entry.get_stock_and_rate()
+			receipt_stock_entry.set_stock_entry_type()
+			receipt_stock_entry.insert(ignore_permissions=True)
+			receipt_stock_entry.submit()
+
+		frappe.db.commit()
+
+		response = {
+			'issue_stock_entry': issue_stock_entry.as_dict(),
+			'receipt_stock_entry': receipt_stock_entry.as_dict() if receipt_stock_entry else {}
+		}
+
+		return response
+	except Exception as e:
+		response['errors'] = str(e)
+		return response
+	
