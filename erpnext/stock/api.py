@@ -8,22 +8,23 @@ def get_stock(item_code, warehouse=None):
 	if not frappe.db.exists('Item', item_code):
 		return 'Producto inexistente'
 
-	response = {}
+	response = {
+		'warehouses': [],
+		'total': 0.0
+	}
 	total = 0.0
 	qty_warehouse = 0.0
 
 	if not warehouse:
-		warehouses = frappe.db.get_all('Warehouse', filters={'is_group': 0})
+		warehouses = frappe.db.get_all('Warehouse', filters={'is_group': 0}, fields=['name', 'company'])
 
 	if warehouse:
-		if frappe.db.exists('Warehouse', warehouse):
-			warehouses = [{'name': warehouse}]
-		else:
-			warehouses = frappe.db.get_all('Warehouse', filters=[['name', 'like', f'%{warehouse}%'], ['is_group', '=', 0]])
+		warehouses = frappe.db.get_all('Warehouse', filters=[['name', 'like', f'%{warehouse}%'], ['is_group', '=', 0]], fields=['name', 'company'])
 
 	for warehouse in warehouses:
 		qty_warehouse = get_latest_stock_qty(item_code, warehouse['name']) or 0.0
-		response[warehouse['name']] = qty_warehouse
+		warehouse.update({"qty": qty_warehouse})
+		response['warehouses'].append(warehouse)
 		total += qty_warehouse
 
 	response['total'] = total
@@ -32,56 +33,105 @@ def get_stock(item_code, warehouse=None):
 
 @frappe.whitelist()
 def create_stock_entry(data):
-	print(data)
+	
+	from_company = data.get("from_company")
+	from_warehouse = data.get("from_warehouse")
 
-	if False:
-		# Expedicion de Material
-		stock_entry = frappe.new_doc("Stock Entry")
-		stock_entry.purpose = "Material Issue"
-		stock_entry.company = self.company
+	to_company = data.get("from_company")
+	to_warehouse = data.get("from_warehouse")
 
-		for item in self.items:
-			stock_entry.append("items", {
-				"item_code": item.item_code,
-				"s_warehouse": item.warehouse or self.set_warehouse,
-				"qty": item.received_qty,
-				"basic_rate": item.base_rate,
-				"conversion_factor": item.conversion_factor or 1.0,
-				"transfer_qty": flt(item.received_qty) * (flt(item.conversion_factor) or 1.0),
-				"serial_no": item.serial_no,
-				'batch_no': item.batch_no,
-				'cost_center': item.cost_center,
-				'expense_account': item.expense_account,
-				'reference_purchase_receipt': self.name
-			})
+	items = data.get("items")
 
-		stock_entry.set_stock_entry_type()
-		stock_entry.insert(ignore_permissions=True)
-		stock_entry.submit()
+	response = {}
+	errors = []
 
+	if not from_company:
+		errors.append("Debe especificar la Compañía origen (from_company)")
+
+	if not frappe.db.exists('Company', from_company):
+		errors.append(f"Compañía origen {from_company} no existe (from_company)")
+
+	if not from_warehouse:
+		errors.append("Debe especificar el Almacén origen (from_warehouse)")
+
+	if not frappe.db.exists('Warehouse', from_warehouse):
+		errors.append("Almacén origen {from_warehouse} no existe (from_warehouse)")
+
+	if to_company and not frappe.db.exists('Company', to_company):
+		errors.append("Compañía destino {to_company} no existe (to_company)")
+
+	if to_warehouse and not frappe.db.exists('Warehouse', to_warehouse):
+		errors.append("Almacén destino {to_warehouse} no existe (to_warehouse)")
+
+	if not items:
+		errors.append("Debe especificar los productos (items)")
+
+	for item in items:
+		if not frappe.db.exists('Item', item['item_code']):
+			errors.append(f"Producto {item['item_code']} no existe (items.item_code)")
+
+	if errors:
+		response['errors'] = errors
+		return response
+
+	receipt_stock_entry = None
+
+	# Expedicion de Material
+	issue_stock_entry = frappe.new_doc("Stock Entry")
+	issue_stock_entry.purpose = "Material Issue"
+	issue_stock_entry.company = from_company
+
+	for item_data in items:
+		item = frappe.get_doc('Item', item['item_code'])
+		issue_stock_entry.append("items", {
+			"item_code": item.item_code,
+			"s_warehouse": from_warehouse,
+			"qty": item_data.get('qty') or 1,
+			"basic_rate": item.base_rate,
+			"conversion_factor": item.conversion_factor or 1.0,
+			"transfer_qty": flt(item_data.get('qty') or 1) * (flt(item.conversion_factor) or 1.0),
+			"serial_no": item.serial_no,
+			'batch_no': item.batch_no,
+			'cost_center': item.cost_center,
+			'expense_account': item.expense_account,
+		})
+
+	issue_stock_entry.set_stock_entry_type()
+	issue_stock_entry.insert(ignore_permissions=True)
+	issue_stock_entry.submit()
+
+	if to_company and to_warehouse:
 		# Recepcion de Material
-		stock_entry = frappe.new_doc("Stock Entry")
-		stock_entry.purpose = "Material Receipt"
-		stock_entry.company = self.to_company
-		cost_center = frappe.get_value('Company', self.to_company, 'cost_center')
-		expense_account = frappe.get_value('Company', self.to_company, 'stock_adjustment_account')
+		receipt_stock_entry = frappe.new_doc("Stock Entry")
+		receipt_stock_entry.purpose = "Material Receipt"
+		receipt_stock_entry.company = to_company
+		cost_center = frappe.get_value('Company', to_company, 'cost_center')
+		expense_account = frappe.get_value('Company', to_company, 'stock_adjustment_account')
 
-		for item in self.items:
-			stock_entry.append("items", {
+		for item_data in items:
+			item = frappe.get_doc('Item', item['item_code'])
+			receipt_stock_entry.append("items", {
 				"item_code": item.item_code,
-				"t_warehouse": self.to_company_warehouse,
-				"qty": item.received_qty,
+				"t_warehouse": to_warehouse,
+				"qty": item_data.get('qty') or 1,
 				"basic_rate": item.base_rate,
 				"conversion_factor": item.conversion_factor or 1.0,
-				"transfer_qty": flt(item.received_qty) * (flt(item.conversion_factor) or 1.0),
+				"transfer_qty": flt(item_data.get('qty') or 1) * (flt(item.conversion_factor) or 1.0),
 				"serial_no": item.serial_no,
 				'batch_no': item.batch_no,
 				'cost_center': cost_center,
 				'expense_account': expense_account,
-				'reference_purchase_receipt': self.name
 			})
 
-		stock_entry.set_stock_entry_type()
-		stock_entry.insert(ignore_permissions=True)
-		stock_entry.submit()
-	return 'SE'
+		receipt_stock_entry.set_stock_entry_type()
+		receipt_stock_entry.insert(ignore_permissions=True)
+		receipt_stock_entry.submit()
+
+	frappe.db.commit()
+
+	response = {
+		'issue_stock_entry': issue_stock_entry.__dict__,
+		'receipt_stock_entry': receipt_stock_entry.__dict__ if receipt_stock_entry else {}
+	}
+
+	return response
