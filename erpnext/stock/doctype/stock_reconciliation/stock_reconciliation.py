@@ -227,7 +227,7 @@ class StockReconciliation(StockController):
 						row.valuation_rate = previous_sle.get("valuation_rate", 0)
 
 				if row.qty and not row.valuation_rate and not row.allow_zero_valuation_rate:
-					frappe.throw(_("Valuation Rate required for Item {0} at row {1}").format(row.item_code, row.idx))
+					frappe.throw(_("Tasa de valoración requerida para el artículo {0} en la fila {1}").format(row.item_code, row.idx))
 
 				if ((previous_sle and row.qty == previous_sle.get("qty_after_transaction")
 					and (row.valuation_rate == previous_sle.get("valuation_rate") or row.qty == 0))
@@ -253,7 +253,6 @@ class StockReconciliation(StockController):
 		from erpnext.stock.stock_ledger import get_previous_sle
 
 		serial_nos = get_serial_nos(row.serial_no)
-
 
 		# To issue existing serial nos
 		if row.current_qty and (row.current_serial_no or row.batch_no):
