@@ -74,7 +74,7 @@ frappe.query_reports["Payment Terms Status for Sales Order"] = {
 			}
 			return formatted_value;
 		}
-		else if (column.fieldname == 'status' && value == 'Completed'){
+		else if (column.fieldname == 'status' && value == __('Completed')){
 			return "<span style='color:green;'>" + default_formatter(value, row, column, data) + "</span>";
 		}
 

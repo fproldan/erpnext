@@ -165,13 +165,13 @@ def set_payment_terms_statuses(sales_orders, invoices, filters):
 					inv.invoice_amount -= amount
 					so.paid_amount += amount
 					so.invoices += "," + inv.invoice
-					so.status = "Completed"
+					so.status = _("Completed")
 					break
 				else:
 					so.paid_amount += inv.invoice_amount
 					inv.invoice_amount = 0
 					so.invoices += "," + inv.invoice
-					so.status = "Partly Paid"
+					so.status = _("Partly Paid")
 
 	return sales_orders, invoices
 
@@ -182,8 +182,8 @@ def prepare_chart(s_orders):
 			"data": {
 				"labels": [term.payment_term for term in s_orders],
 				"datasets": [
-					{"name": "Payment Amount", "values": [x.base_payment_amount for x in s_orders],},
-					{"name": "Paid Amount", "values": [x.paid_amount for x in s_orders],},
+					{"name": _("Payment Amount"), "values": [x.base_payment_amount for x in s_orders],},
+					{"name": _("Paid Amount"), "values": [x.paid_amount for x in s_orders],},
 				],
 			},
 			"type": "bar",
