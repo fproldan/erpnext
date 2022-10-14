@@ -138,8 +138,7 @@ def get_conditions(filters):
 	return conditions
 
 
-<<<<<<< HEAD
-=======
+
 def build_filter_criterions(filters):
 	filters = frappe._dict(filters) if filters else frappe._dict({})
 	qb_criterions = []
@@ -167,7 +166,6 @@ def build_filter_criterions(filters):
 	return qb_criterions
 
 
->>>>>>> a9d5000eab (refactor: use group fields from Sales Order and Sales Order Items)
 def get_so_with_invoices(filters):
 	"""
 	Get Sales Order with payment terms template with their associated Invoices
@@ -176,25 +174,20 @@ def get_so_with_invoices(filters):
 
 	so = qb.DocType("Sales Order")
 	ps = qb.DocType("Payment Schedule")
-<<<<<<< HEAD
-=======
+
 	soi = qb.DocType("Sales Order Item")
 
 	conditions = get_conditions(filters)
 	filter_criterions = build_filter_criterions(filters)
 
->>>>>>> a9d5000eab (refactor: use group fields from Sales Order and Sales Order Items)
 	datediff = query_builder.CustomFunction("DATEDIFF", ["cur_date", "due_date"])
 	ifelse = query_builder.CustomFunction("IF", ["condition", "then", "else"])
 
 	conditions = get_conditions(filters)
 	query_so = (
 		qb.from_(so)
-<<<<<<< HEAD
-=======
 		.join(soi)
 		.on(soi.parent == so.name)
->>>>>>> a9d5000eab (refactor: use group fields from Sales Order and Sales Order Items)
 		.join(ps)
 		.on(ps.parent == so.name)
 		.select(
