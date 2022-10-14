@@ -27,9 +27,9 @@ function get_filters() {
 			"default": frappe.datetime.get_today()
 		},
 		{
-			"fieldname":"sales_order",
-			"label": __("Sales Order"),
-			"fieldtype": "MultiSelectList",
+			"fieldname":"customer_group",
+			"label": __("Customer Group"),
+			"fieldtype": "Link",
 			"width": 100,
 			"options": "Customer Group",
 		},
@@ -76,7 +76,6 @@ function get_filters() {
 			}
 		}
 	]
-
 	return filters;
 }
 

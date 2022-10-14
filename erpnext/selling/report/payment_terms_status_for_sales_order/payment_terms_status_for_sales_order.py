@@ -3,7 +3,7 @@
 
 import frappe
 from frappe import _, qb, query_builder
-from frappe.query_builder import functions
+from frappe.query_builder import Criterion, functions
 
 
 def get_columns():
@@ -13,6 +13,12 @@ def get_columns():
 			"fieldname": "name",
 			"fieldtype": "Link",
 			"options": "Sales Order",
+		},
+		{
+			"label": _("Customer"),
+			"fieldname": "customer",
+			"fieldtype": "Link",
+			"options": "Customer",
 		},
 		{
 			"label": _("Posting Date"),
@@ -62,12 +68,7 @@ def get_columns():
 			"fieldname": "status",
 			"fieldtype": "Data",
 		},
-		{
-			"label": _("Currency"),
-			"fieldname": "currency",
-			"fieldtype": "Currency",
-			"hidden": 1
-		}
+		{"label": _("Currency"), "fieldname": "currency", "fieldtype": "Currency", "hidden": 1},
 	]
 	return columns
 
@@ -133,10 +134,8 @@ def get_conditions(filters):
 	conditions.start_date = filters.period_start_date or frappe.utils.add_months(
 		conditions.end_date, -1
 	)
-	conditions.sales_order = filters.sales_order or []
 
 	return conditions
-
 
 
 def build_filter_criterions(filters):
@@ -174,7 +173,6 @@ def get_so_with_invoices(filters):
 
 	so = qb.DocType("Sales Order")
 	ps = qb.DocType("Payment Schedule")
-
 	soi = qb.DocType("Sales Order Item")
 
 	conditions = get_conditions(filters)
@@ -183,7 +181,6 @@ def get_so_with_invoices(filters):
 	datediff = query_builder.CustomFunction("DATEDIFF", ["cur_date", "due_date"])
 	ifelse = query_builder.CustomFunction("IF", ["condition", "then", "else"])
 
-	conditions = get_conditions(filters)
 	query_so = (
 		qb.from_(so)
 		.join(soi)
@@ -192,6 +189,7 @@ def get_so_with_invoices(filters):
 		.on(ps.parent == so.name)
 		.select(
 			so.name,
+			so.customer,
 			so.transaction_date.as_("submitted"),
 			ifelse(datediff(ps.due_date, functions.CurDate()) < 0, "Overdue", "Unpaid").as_("status"),
 			ps.payment_term,
@@ -207,11 +205,9 @@ def get_so_with_invoices(filters):
 			& (so.company == conditions.company)
 			& (so.transaction_date[conditions.start_date : conditions.end_date])
 		)
+		.where(Criterion.all(filter_criterions))
 		.orderby(so.name, so.transaction_date, ps.due_date)
 	)
-
-	if conditions.sales_order != []:
-		query_so = query_so.where(so.name.isin(conditions.sales_order))
 
 	sorders = query_so.run(as_dict=True)
 
@@ -241,8 +237,9 @@ def set_payment_terms_statuses(sales_orders, invoices, filters):
 	"""
 
 	for so in sales_orders:
-		so.currency = frappe.get_cached_value('Company', filters.get('company'), 'default_currency')
+		so.currency = frappe.get_cached_value("Company", filters.get("company"), "default_currency")
 		so.invoices = ""
+		so.status = _(so.status)
 		for inv in [x for x in invoices if x.sales_order == so.name and x.invoice_amount > 0]:
 			if so.base_payment_amount - so.paid_amount > 0:
 				amount = so.base_payment_amount - so.paid_amount
@@ -267,8 +264,14 @@ def prepare_chart(s_orders):
 			"data": {
 				"labels": [term.payment_term for term in s_orders],
 				"datasets": [
-					{"name": _("Payment Amount"), "values": [x.base_payment_amount for x in s_orders],},
-					{"name": _("Paid Amount"), "values": [x.paid_amount for x in s_orders],},
+					{
+						"name": _("Payment Amount"),
+						"values": [x.base_payment_amount for x in s_orders],
+					},
+					{
+						"name": _("Paid Amount"),
+						"values": [x.paid_amount for x in s_orders],
+					},
 				],
 			},
 			"type": "bar",
