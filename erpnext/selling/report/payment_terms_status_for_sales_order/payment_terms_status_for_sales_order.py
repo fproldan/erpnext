@@ -4,9 +4,19 @@
 import frappe
 from frappe import _, qb, query_builder
 from frappe.query_builder import Criterion, functions
+from erpnext import get_company_currency, get_default_company
 
 
-def get_columns():
+def get_columns(filters):
+	if filters.get("presentation_currency"):
+		currency = filters["presentation_currency"]
+	else:
+		if filters.get("company"):
+			currency = get_company_currency(filters["company"])
+		else:
+			company = get_default_company()
+			currency = get_company_currency(company)
+
 	columns = [
 		{
 			"label": _("Sales Order"),
@@ -48,10 +58,9 @@ def get_columns():
 			"options": "currency",
 		},
 		{
-			"label": _("Pendiente de Facturar"),
+			"label": _("Pendiente de Facturar ({0})").format(currency),
 			"fieldname": "pendiente_de_facturar",
-			"fieldtype": "Currency",
-			"options": "currency",
+			"fieldtype": "Float",
 		},
 		{
 			"label": _("Invoices"),
@@ -280,10 +289,10 @@ def execute(filters=None):
 	from erpnext.accounts.report.utils import convert
 	from frappe.utils import today
 
-	columns = get_columns()
+	columns = get_columns(filters)
 	sales_orders, so_invoices = get_so_with_invoices(filters)
 	sales_orders, so_invoices = set_payment_terms_statuses(sales_orders, so_invoices, filters)
-
+	
 	presentation_currency = filters.get('presentation_currency')
 	for sales_order in sales_orders:
 		sales_order.pendiente_de_facturar = sales_order.base_payment_amount - sales_order.paid_amount
