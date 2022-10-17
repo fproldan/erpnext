@@ -74,6 +74,12 @@ function get_filters() {
 					]
 				}
 			}
+		},
+		{
+			"fieldname": "presentation_currency",
+			"label": __("Currency"),
+			"fieldtype": "Select",
+			"options": erpnext.get_presentation_currency_list()
 		}
 	]
 	return filters;

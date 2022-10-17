@@ -21,18 +21,8 @@ def get_columns():
 			"options": "Customer",
 		},
 		{
-			"label": _("Posting Date"),
-			"fieldname": "submitted",
-			"fieldtype": "Date",
-		},
-		{
 			"label": _("Payment Term"),
 			"fieldname": "payment_term",
-			"fieldtype": "Data",
-		},
-		{
-			"label": _("Description"),
-			"fieldname": "description",
 			"fieldtype": "Data",
 		},
 		{
@@ -41,19 +31,25 @@ def get_columns():
 			"fieldtype": "Date",
 		},
 		{
-			"label": _("Invoice Portion"),
+			"label": _("% Fact"),
 			"fieldname": "invoice_portion",
 			"fieldtype": "Percent",
 		},
 		{
-			"label": _("Payment Amount"),
+			"label": _("Importe Facturado"),
 			"fieldname": "base_payment_amount",
 			"fieldtype": "Currency",
 			"options": "currency",
 		},
 		{
-			"label": _("Paid Amount"),
+			"label": _("Cantidad Facturada"),
 			"fieldname": "paid_amount",
+			"fieldtype": "Currency",
+			"options": "currency",
+		},
+		{
+			"label": _("Pendiente de Facturar"),
+			"fieldname": "pendiente_de_facturar",
 			"fieldtype": "Currency",
 			"options": "currency",
 		},
@@ -198,6 +194,7 @@ def get_so_with_invoices(filters):
 			ps.invoice_portion,
 			ps.base_payment_amount,
 			ps.paid_amount,
+			so.currency
 		)
 		.where(
 			(so.docstatus == 1)
@@ -280,9 +277,18 @@ def prepare_chart(s_orders):
 
 
 def execute(filters=None):
+	from erpnext.accounts.report.utils import convert
+	from frappe.utils import today
+
 	columns = get_columns()
 	sales_orders, so_invoices = get_so_with_invoices(filters)
 	sales_orders, so_invoices = set_payment_terms_statuses(sales_orders, so_invoices, filters)
+
+	presentation_currency = filters.get('presentation_currency')
+	for sales_order in sales_orders:
+		sales_order.pendiente_de_facturar = sales_order.base_payment_amount - sales_order.paid_amount
+		if presentation_currency:
+			sales_order.pendiente_de_facturar = convert(sales_order.pendiente_de_facturar, presentation_currency, sales_order.currency, today())
 
 	prepare_chart(sales_orders)
 
