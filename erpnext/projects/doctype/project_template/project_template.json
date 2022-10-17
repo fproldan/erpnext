@@ -52,9 +52,13 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "Projects User",
+   "role": "Projects Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "role": "Projects User",
+   "select": 1
   }
  ],
  "quick_entry": 1,
