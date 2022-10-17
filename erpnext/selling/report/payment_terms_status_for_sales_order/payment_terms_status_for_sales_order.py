@@ -262,11 +262,11 @@ def prepare_chart(s_orders):
 				"labels": [term.payment_term for term in s_orders],
 				"datasets": [
 					{
-						"name": _("Payment Amount"),
+						"name": _("Importe Facturado"),
 						"values": [x.base_payment_amount for x in s_orders],
 					},
 					{
-						"name": _("Paid Amount"),
+						"name": _("Cantidad Facturada"),
 						"values": [x.paid_amount for x in s_orders],
 					},
 				],
