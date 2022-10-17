@@ -245,7 +245,11 @@ def set_payment_terms_statuses(sales_orders, invoices, filters):
 	for so in sales_orders:
 		so.currency = frappe.get_cached_value("Company", filters.get("company"), "default_currency")
 		so.invoices = ""
-		so.status = _(so.status)
+		if so.status == "Unpaid":
+			so.status = "No facturado"
+		else:
+			so.status = _(so.status)
+
 		for inv in [x for x in invoices if x.sales_order == so.name and x.invoice_amount > 0]:
 			if so.base_payment_amount - so.paid_amount > 0:
 				amount = so.base_payment_amount - so.paid_amount
@@ -259,7 +263,7 @@ def set_payment_terms_statuses(sales_orders, invoices, filters):
 					so.paid_amount += inv.invoice_amount
 					inv.invoice_amount = 0
 					so.invoices += "," + inv.invoice
-					so.status = _("Partly Paid")
+					so.status = _("Facturada parcialmente")
 
 	return sales_orders, invoices
 
