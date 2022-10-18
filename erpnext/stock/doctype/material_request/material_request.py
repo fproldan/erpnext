@@ -94,6 +94,7 @@ class MaterialRequest(BuyingController):
 		self.update_requested_qty_in_production_plan()
 		if self.material_request_type == 'Purchase':
 			self.validate_budget()
+		self.assign_purchase_users()
 
 	def before_save(self):
 		self.set_status(update=True)
@@ -106,6 +107,17 @@ class MaterialRequest(BuyingController):
 		check_on_hold_or_closed_status(self.doctype, self.name)
 
 		self.set_status(update=True, status='Cancelled')
+
+	def assign_purchase_users(self):
+		from frappe.desk.form.assign_to import add as add_assignemnt
+		
+		assign_to = [item.purchase_user for item in self.items if item.purchase_user]
+		if assign_to:
+			add_assignemnt({
+				'doctype': self.doctype,
+				'name': self.name,
+				'assign_to': assign_to
+			})
 
 	def check_modified_date(self):
 		mod_db = frappe.db.sql("""select modified from `tabMaterial Request` where name = %s""",
