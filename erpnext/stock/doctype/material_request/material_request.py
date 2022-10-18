@@ -409,25 +409,42 @@ def get_material_requests_based_on_supplier(doctype, txt, searchfield, start, pa
 		conditions += "and mr.transaction_date between '{0}' and '{1}' ".format(date[0], date[1])
 
 	supplier = filters.get("supplier")
-	supplier_items = get_items_based_on_default_supplier(supplier)
 
-	if not supplier_items:
-		frappe.throw(_("{0} is not the default supplier for any items.").format(supplier))
+	if supplier:
+		supplier_items = get_items_based_on_default_supplier(supplier)
 
-	material_requests = frappe.db.sql("""select distinct mr.name, transaction_date,company
-		from `tabMaterial Request` mr, `tabMaterial Request Item` mr_item
-		where mr.name = mr_item.parent
-			and mr_item.item_code in ({0})
-			and mr.material_request_type = 'Purchase'
-			and mr.per_ordered < 99.99
-			and mr.docstatus = 1
-			and mr.status != 'Stopped'
-			and mr.company = '{1}'
-			{2}
-		order by mr_item.item_code ASC
-		limit {3} offset {4} """ \
-		.format(', '.join(['%s']*len(supplier_items)), filters.get("company"), conditions, page_len, start),
-		tuple(supplier_items), as_dict=1)
+		if not supplier_items:
+			frappe.throw(_("{0} is not the default supplier for any items.").format(supplier))
+
+		material_requests = frappe.db.sql("""select distinct mr.name, transaction_date,company
+			from `tabMaterial Request` mr, `tabMaterial Request Item` mr_item
+			where mr.name = mr_item.parent
+				and mr_item.item_code in ({0})
+				and mr.material_request_type = 'Purchase'
+				and mr.per_ordered < 99.99
+				and mr.docstatus = 1
+				and mr.status != 'Stopped'
+				and mr.company = '{1}'
+				{2}
+			order by mr_item.item_code ASC
+			limit {3} offset {4} """ \
+			.format(', '.join(['%s']*len(supplier_items)), filters.get("company"), conditions, page_len, start),
+			tuple(supplier_items), as_dict=1)
+	else:
+		material_requests = frappe.db.sql("""select distinct mr.name, mr.transaction_date, mr.company, mr.status, mr.schedule_date
+			from `tabMaterial Request` mr, `tabMaterial Request Item` mr_item
+			where mr.name = mr_item.parent
+				and mr.material_request_type = 'Purchase'
+				and mr.per_ordered < 100
+				and mr.docstatus = 1
+				and mr.status != 'Stopped'
+				and mr.company = '{0}'
+				and mr_item.purchase_user='{1}'
+				or mr_item.purchase_user IS NULL
+				{2}
+			order by mr_item.item_code ASC
+			limit {3} offset {4} """ \
+			.format(filters.get("company"), frappe.session.user, conditions, page_len, start), as_dict=1)
 
 	return material_requests
 
