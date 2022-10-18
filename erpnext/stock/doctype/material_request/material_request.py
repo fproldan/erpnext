@@ -431,6 +431,7 @@ def get_material_requests_based_on_supplier(doctype, txt, searchfield, start, pa
 			.format(', '.join(['%s']*len(supplier_items)), filters.get("company"), conditions, page_len, start),
 			tuple(supplier_items), as_dict=1)
 	else:
+		print(frappe.session.user)
 		material_requests = frappe.db.sql("""select distinct mr.name, mr.transaction_date, mr.company, mr.status, mr.schedule_date
 			from `tabMaterial Request` mr, `tabMaterial Request Item` mr_item
 			where mr.name = mr_item.parent
@@ -439,8 +440,7 @@ def get_material_requests_based_on_supplier(doctype, txt, searchfield, start, pa
 				and mr.docstatus = 1
 				and mr.status != 'Stopped'
 				and mr.company = '{0}'
-				and mr_item.purchase_user='{1}'
-				or mr_item.purchase_user IS NULL
+				and (mr_item.purchase_user='{1}' or mr_item.purchase_user IS NULL)
 				{2}
 			order by mr_item.item_code ASC
 			limit {3} offset {4} """ \
