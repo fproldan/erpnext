@@ -1,0 +1,58 @@
+{
+ "cards": [
+  {
+   "card": "Empleados totales"
+  },
+  {
+   "card": "Nuevos miembros (\u00faltimo a\u00f1o)"
+  },
+  {
+   "card": "Empleados que se han ido (\u00faltimo a\u00f1o)"
+  },
+  {
+   "card": "Total de solicitantes (\u00faltimo mes)"
+  }
+ ],
+ "charts": [
+  {
+   "chart": "Recuento de asistencia",
+   "width": "Full"
+  },
+  {
+   "chart": "Ratio de diversidad de g\u00e9nero",
+   "width": "Half"
+  },
+  {
+   "chart": "Estado de la solicitud de empleo",
+   "width": "Half"
+  },
+  {
+   "chart": "Recuento de empleados por designaci\u00f3n",
+   "width": "Half"
+  },
+  {
+   "chart": "Department Wise Employee Count",
+   "width": "Half"
+  },
+  {
+   "chart": "Aperturas en funci\u00f3n de la designaci\u00f3n",
+   "width": "Half"
+  },
+  {
+   "chart": "Aperturas por departamento",
+   "width": "Half"
+  }
+ ],
+ "creation": "2020-07-23 12:57:33.015888",
+ "dashboard_name": "Recursos Humanos",
+ "docstatus": 0,
+ "doctype": "Dashboard",
+ "idx": 0,
+ "is_default": 0,
+ "is_standard": 1,
+ "modified": "2022-10-12 14:24:12.536888",
+ "modified_by": "Administrator",
+ "module": "HR",
+ "name": "Recursos Humanos",
+ "owner": "Administrator"
+}
