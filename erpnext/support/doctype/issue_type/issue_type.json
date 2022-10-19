@@ -19,7 +19,7 @@
   }
  ],
  "links": [],
- "modified": "2021-05-12 19:59:35.484361",
+ "modified": "2021-05-13 19:59:35.484361",
  "modified_by": "Administrator",
  "module": "Support",
  "name": "Issue Type",
@@ -46,9 +46,13 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "Support Team",
+   "role": "Support Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "select": 1,
+   "role": "Support Team"
   }
  ],
  "quick_entry": 1,
