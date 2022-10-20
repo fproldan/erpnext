@@ -37,7 +37,7 @@ frappe.ui.form.on("Timesheet", {
 			calculate_time_and_amount(frm);
 		}
 
-		if (frm.is_new()) {
+		if (frm.is_new() && !frm.doc.employee && frappe.perm.has_perm("Employee", 0, 'read')) {
 			set_employee_and_company(frm);
 		}
 	},
