@@ -35,7 +35,7 @@
   {
    "fieldname": "first_name",
    "fieldtype": "Data",
-   "label": "First Name ",
+   "label": "First Name",
    "reqd": 1
   },
   {
@@ -61,7 +61,7 @@
   {
    "fieldname": "current_employer",
    "fieldtype": "Data",
-   "label": "Current Employer "
+   "label": "Current Employer"
   },
   {
    "fieldname": "column_break_6",
@@ -112,7 +112,7 @@
   {
    "fieldname": "additional_information_section",
    "fieldtype": "Section Break",
-   "label": "Additional Information "
+   "label": "Información adicional"
   },
   {
    "fieldname": "work_references",
@@ -137,7 +137,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "in_standard_filter": 1,
-   "label": "For Designation ",
+   "label": "For Designation",
    "options": "Designation",
    "reqd": 1
   },
@@ -194,7 +194,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-04-26 21:21:38.094086",
+ "modified": "2021-04-28 22:22:38.094086",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Employee Referral",

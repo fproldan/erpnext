@@ -26,6 +26,7 @@
   "gender",
   "date_of_birth",
   "date_of_joining",
+  "dni",
   "employee_number",
   "emergency_contact_details",
   "person_to_be_contacted",
@@ -40,6 +41,7 @@
   "job_applicant",
   "scheduled_confirmation_date",
   "final_confirmation_date",
+  "senority",
   "col_break_22",
   "contract_end_date",
   "notice_number_of_days",
@@ -142,6 +144,7 @@
   {
    "fieldname": "salutation",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Salutation",
    "oldfieldname": "salutation",
    "oldfieldtype": "Select",
@@ -753,6 +756,7 @@
    "collapsible": 1,
    "fieldname": "attendance_and_leave_details",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Attendance and Leave Details"
   },
   {
@@ -807,13 +811,25 @@
    "fieldtype": "Link",
    "label": "Shift Request Approver",
    "options": "User"
+  },
+  {
+   "fieldname": "dni",
+   "fieldtype": "Data",
+   "label": "DNI",
+   "length": 8
+  },
+  {
+   "fieldname": "senority",
+   "fieldtype": "Int",
+   "label": "Antig\u00fcedad",
+   "read_only": 1
   }
  ],
  "icon": "fa fa-user",
  "idx": 24,
  "image_field": "image",
  "links": [],
- "modified": "2021-06-17 11:31:37.730760",
+ "modified": "2022-08-11 15:28:59.782180",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Employee",
@@ -856,6 +872,7 @@
   }
  ],
  "restrict_to_domain": "HR",
+ "route": "app/doctype/Employee",
  "search_fields": "employee_name",
  "show_name_in_global_search": 1,
  "sort_field": "modified",

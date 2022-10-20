@@ -63,7 +63,7 @@ def _get_party_details(party=None, account=None, party_type="Customer", company=
 	currency = party.default_currency if party.get("default_currency") else get_company_currency(company)
 
 	party_address, shipping_address = set_address_details(party_details, party, party_type, doctype, company, party_address, company_address, shipping_address)
-	set_contact_details(party_details, party, party_type)
+	set_contact_details(party_details, party, party_type, doctype)
 	set_other_values(party_details, party, party_type)
 	set_price_list(party_details, party, party_type, price_list, pos_profile)
 
@@ -132,8 +132,8 @@ def set_address_details(party_details, party, party_type, doctype=None, company=
 def get_regional_address_details(party_details, doctype, company):
 	pass
 
-def set_contact_details(party_details, party, party_type):
-	party_details.contact_person = get_default_contact(party_type, party.name)
+def set_contact_details(party_details, party, party_type, doctype):
+	party_details.contact_person = get_default_contact(party_type, party.name, doctype)
 
 	if not party_details.contact_person:
 		party_details.update({
@@ -220,7 +220,7 @@ def set_account_and_due_date(party, account, party_type, company, posting_date, 
 	return out
 
 @frappe.whitelist()
-def get_party_account(party_type, party, company=None):
+def get_party_account(party_type, party=None, company=None):
 	"""Returns the account for the given `party`.
 		Will first search in party (Customer / Supplier) record, if not found,
 		will search in group (Customer Group / Supplier Group),
@@ -228,8 +228,11 @@ def get_party_account(party_type, party, company=None):
 	if not company:
 		frappe.throw(_("Please select a Company"))
 
-	if not party:
-		return
+	if not party and party_type in ['Customer', 'Supplier']:
+		default_account_name = "default_receivable_account" \
+			if party_type=="Customer" else "default_payable_account"
+
+		return frappe.get_cached_value('Company',  company,  default_account_name)
 
 	account = frappe.db.get_value("Party Account",
 		{"parenttype": party_type, "parent": party, "company": company}, "account")
@@ -647,21 +650,29 @@ def get_partywise_advanced_payment_amount(party_type, posting_date = None, futur
 	if data:
 		return frappe._dict(data)
 
-def get_default_contact(doctype, name):
+def get_default_contact(doctype, name, document_doctype):
 	"""
 		Returns default contact for the given doctype and name.
 		Can be ordered by `contact_type` to either is_primary_contact or is_billing_contact.
 	"""
+	order_by = 'ORDER BY is_primary_contact DESC, is_billing_contact DESC'
+
+	if document_doctype and document_doctype in ['Sales Invoice', 'Purchase Invoice']:
+		order_by = 'ORDER BY is_billing_contact DESC, is_primary_contact DESC'
+
+	if document_doctype and document_doctype in ['Sales Order', 'Purchase Order']:
+		order_by = 'ORDER BY is_po_so_contact DESC, is_primary_contact DESC'
+
 	out = frappe.db.sql("""
-			SELECT dl.parent, c.is_primary_contact, c.is_billing_contact
+			SELECT dl.parent, c.is_primary_contact, c.is_billing_contact, c.is_po_so_contact
 			FROM `tabDynamic Link` dl
 			INNER JOIN tabContact c ON c.name = dl.parent
 			WHERE
 				dl.link_doctype=%s AND
 				dl.link_name=%s AND
 				dl.parenttype = "Contact"
-			ORDER BY is_primary_contact DESC, is_billing_contact DESC
-		""", (doctype, name))
+			{order_by}
+		""".format(order_by=order_by), (doctype, name))
 	if out:
 		try:
 			return out[0][0]

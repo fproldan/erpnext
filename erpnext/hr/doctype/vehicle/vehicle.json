@@ -47,7 +47,7 @@
   {
    "fieldname": "make",
    "fieldtype": "Data",
-   "label": "Make",
+   "label": "Brand",
    "reqd": 1
   },
   {
@@ -195,7 +195,7 @@
   }
  ],
  "links": [],
- "modified": "2022-04-11 11:57:26.174555",
+ "modified": "2022-04-11 12:57:26.174555",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Vehicle",

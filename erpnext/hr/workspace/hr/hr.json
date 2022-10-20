@@ -2,8 +2,8 @@
  "category": "Modules",
  "charts": [
   {
-   "chart_name": "Outgoing Salary",
-   "label": "Outgoing Salary"
+   "chart_name": "Department Wise Employee Count",
+   "label": "Department Wise Employee Count"
   }
  ],
  "creation": "2020-03-02 15:48:58.322521",
@@ -841,7 +841,7 @@
    "type": "Link"
   }
  ],
- "modified": "2021-06-14 13:36:15.413819",
+ "modified": "2022-08-09 15:41:19.850937",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "HR",
@@ -858,28 +858,22 @@
    "type": "DocType"
   },
   {
-   "color": "Yellow",
-   "format": "{} Open",
-   "label": "Leave Application",
-   "link_to": "Leave Application",
-   "stats_filter": "{\"status\":\"Open\"}",
-   "type": "DocType"
-  },
-  {
-   "label": "Attendance",
-   "link_to": "Attendance",
-   "stats_filter": "",
-   "type": "DocType"
-  },
-  {
    "label": "Job Applicant",
    "link_to": "Job Applicant",
    "type": "DocType"
   },
   {
-   "label": "Monthly Attendance Sheet",
-   "link_to": "Monthly Attendance Sheet",
-   "type": "Report"
+   "doc_view": "",
+   "label": "Job Opening",
+   "link_to": "Job Opening",
+   "type": "DocType"
+  },
+   {
+   "format": "{} Open",
+   "label": "Dashboard",
+   "link_to": "Recursos Humanos",
+   "stats_filter": "{\n    \"status\": \"Open\"\n}",
+   "type": "Dashboard"
   }
  ]
 }
