@@ -213,6 +213,7 @@
    "collapsible": 1,
    "fieldname": "printing_details",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Printing Details"
   },
   {
@@ -238,6 +239,7 @@
    "collapsible_depends_on": "terms",
    "fieldname": "terms_section_break",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Terms and Conditions",
    "oldfieldtype": "Section Break",
    "options": "fa fa-legal"
@@ -315,7 +317,7 @@
  "idx": 70,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-08-17 20:16:12.737743",
+ "modified": "2022-10-04 13:46:50.267343",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Material Request",

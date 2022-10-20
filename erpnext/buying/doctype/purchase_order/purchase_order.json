@@ -21,6 +21,8 @@
   "transaction_date",
   "tipo_de_orden",
   "schedule_date",
+  "nuevo_pacto_entrega",
+  "reclamado",
   "order_confirmation_no",
   "order_confirmation_date",
   "amended_from",
@@ -135,6 +137,7 @@
   "update_auto_repeat_reference",
   "more_info",
   "ref_sq",
+  "motivo_de_rechazo",
   "column_break_74",
   "party_account_currency",
   "is_internal_supplier",
@@ -443,7 +446,8 @@
   {
    "fieldname": "sec_warehouse",
    "fieldtype": "Section Break",
-   "label": "Subcontrataci\u00f3n"
+   "label": "Subcontrataci\u00f3n",
+   "hidden": 1
   },
   {
    "description": "Sets 'Warehouse' in each row of the Items table.",
@@ -484,7 +488,8 @@
    "fieldname": "scan_barcode",
    "fieldtype": "Data",
    "label": "Scan Barcode",
-   "options": "Barcode"
+   "options": "Barcode",
+   "hidden": 1
   },
   {
    "allow_bulk_edit": 1,
@@ -607,7 +612,8 @@
    "fieldtype": "Link",
    "label": "Shipping Rule",
    "options": "Shipping Rule",
-   "print_hide": 1
+   "print_hide": 1,
+   "hidden": 1
   },
   {
    "fieldname": "section_break_52",
@@ -718,7 +724,8 @@
    "collapsible_depends_on": "apply_discount_on",
    "fieldname": "discount_section",
    "fieldtype": "Section Break",
-   "label": "Additional Discount"
+   "label": "Additional Discount",
+   "hidden": 1
   },
   {
    "default": "Grand Total",
@@ -884,7 +891,8 @@
    "fieldtype": "Section Break",
    "label": "Terms and Conditions",
    "oldfieldtype": "Section Break",
-   "options": "fa fa-legal"
+   "options": "fa fa-legal",
+   "hidden": 1
   },
   {
    "fieldname": "tc_name",
@@ -984,7 +992,8 @@
    "oldfieldtype": "Column Break",
    "print_hide": 1,
    "print_width": "50%",
-   "width": "50%"
+   "width": "50%",
+   "hidden": 1
   },
   {
    "allow_on_submit": 1,
@@ -1086,7 +1095,8 @@
    "collapsible": 1,
    "fieldname": "tracking_section",
    "fieldtype": "Section Break",
-   "label": "Order Status"
+   "label": "Order Status",
+   "hidden": 1
   },
   {
    "fieldname": "column_break_75",
@@ -1174,7 +1184,7 @@
  "idx": 105,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-01-27 08:54:17.855083",
+ "modified": "2022-08-01 10:29:27.820436",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Purchase Order",
@@ -1220,6 +1230,7 @@
    "write": 1
   }
  ],
+ "route": "app/doctype/Purchase%20Order",
  "search_fields": "status, transaction_date, supplier, grand_total",
  "show_name_in_global_search": 1,
  "sort_field": "modified",

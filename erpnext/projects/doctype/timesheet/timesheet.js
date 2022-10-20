@@ -37,7 +37,7 @@ frappe.ui.form.on("Timesheet", {
 			calculate_time_and_amount(frm);
 		}
 
-		if (frm.is_new()) {
+		if (frm.is_new() && !frm.doc.employee && frappe.perm.has_perm("Employee", 0, 'read')) {
 			set_employee_and_company(frm);
 		}
 	},
@@ -49,7 +49,7 @@ frappe.ui.form.on("Timesheet", {
 					"fa fa-file-text");
 			}
 
-			if(!frm.doc.salary_slip && frm.doc.employee){
+			if(!frm.doc.salary_slip && frm.doc.employee && false){
 				frm.add_custom_button(__('Create Salary Slip'), function() { frm.trigger("make_salary_slip") },
 					"fa fa-file-text");
 			}
@@ -57,10 +57,10 @@ frappe.ui.form.on("Timesheet", {
 
 		if (frm.doc.docstatus < 1) {
 
-			let button = 'Start Timer';
+			let button = __('Start Timer');
 			$.each(frm.doc.time_logs || [], function(i, row) {
 				if ((row.from_time <= frappe.datetime.now_datetime()) && !row.completed) {
-					button = 'Resume Timer';
+					button = __('Resume Timer');
 				}
 			});
 
@@ -283,7 +283,9 @@ frappe.ui.form.on("Timesheet Detail", {
 		calculate_time_and_amount(frm);
 	},
 
-	activity_type: function(frm, cdt, cdn) {
+	activity_type: function (frm, cdt, cdn) {
+		if (!frappe.get_doc(cdt, cdn).activity_type) return;
+
 		frappe.call({
 			method: "erpnext.projects.doctype.timesheet.timesheet.get_activity_cost",
 			args: {
@@ -291,10 +293,10 @@ frappe.ui.form.on("Timesheet Detail", {
 				activity_type: frm.selected_doc.activity_type,
 				currency: frm.doc.currency
 			},
-			callback: function(r){
-				if(r.message){
-					frappe.model.set_value(cdt, cdn, 'billing_rate', r.message['billing_rate']);
-					frappe.model.set_value(cdt, cdn, 'costing_rate', r.message['costing_rate']);
+			callback: function (r) {
+				if (r.message) {
+					frappe.model.set_value(cdt, cdn, "billing_rate", r.message["billing_rate"]);
+					frappe.model.set_value(cdt, cdn, "costing_rate", r.message["costing_rate"]);
 					calculate_billing_costing_amount(frm, cdt, cdn);
 				}
 			}
