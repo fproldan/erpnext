@@ -19,6 +19,7 @@
   "column_break1",
   "company",
   "transaction_date",
+  "tipo_de_orden",
   "schedule_date",
   "nuevo_pacto_entrega",
   "reclamado",
@@ -1170,6 +1171,13 @@
    "label": "Motivo de Rechazo",
    "no_copy": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "tipo_de_orden",
+   "fieldtype": "Select",
+   "in_standard_filter": 1,
+   "label": "Tipo de Orden",
+   "options": "\nAbierta\nCerrada"
   }
  ],
  "icon": "fa fa-file-text",
