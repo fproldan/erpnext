@@ -748,7 +748,7 @@
  "image_field": "company_logo",
  "is_tree": 1,
  "links": [],
- "modified": "2021-05-12 16:51:08.187233",
+ "modified": "2021-05-13 16:51:08.187233",
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Company",
@@ -789,10 +789,6 @@
    "role": "Stock User"
   },
   {
-   "read": 1,
-   "role": "Projects User"
-  },
-  {
    "create": 1,
    "delete": 1,
    "email": 1,
@@ -803,6 +799,10 @@
    "role": "Accounts Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "role": "Projects User",
+   "select": 1
   }
  ],
  "show_name_in_global_search": 1,
