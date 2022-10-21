@@ -47,7 +47,7 @@
  "icon": "icon-flag",
  "idx": 1,
  "links": [],
- "modified": "2021-05-12 19:59:08.789613",
+ "modified": "2021-05-13 19:59:08.789613",
  "modified_by": "Administrator",
  "module": "Projects",
  "name": "Activity Type",
@@ -72,13 +72,17 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "Projects User",
+   "role": "Projects Manager",
    "share": 1,
    "write": 1
   },
   {
    "read": 1,
    "role": "Employee"
+  },
+  {
+   "role": "Projects User",
+   "select": 1
   }
  ],
  "quick_entry": 1,
