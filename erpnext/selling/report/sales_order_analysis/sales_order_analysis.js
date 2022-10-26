@@ -66,6 +66,12 @@ frappe.query_reports["Sales Order Analysis"] = {
 			"label": __("Group by Sales Order"),
 			"fieldtype": "Check",
 			"default": 0
+		},
+		{
+			"fieldname": "delayed",
+			"label": __("Atrasadas"),
+			"fieldtype": "Check",
+			"default": 0
 		}
 	],
 
