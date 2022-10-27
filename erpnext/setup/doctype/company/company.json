@@ -16,8 +16,7 @@
   "is_group",
   "cb0",
   "domain",
-  "color_de_fondo",
-  "color_de_letra",
+  "color",
   "parent_company",
   "charts_section",
   "default_currency",
@@ -745,14 +744,9 @@
    "options": "Account"
   },
   {
-   "fieldname": "color_de_fondo",
+   "fieldname": "color",
    "fieldtype": "Color",
-   "label": "Color de fondo"
-  },
-  {
-   "fieldname": "color_de_letra",
-   "fieldtype": "Color",
-   "label": "Color de letra"
+   "label": "Color"
   }
  ],
  "icon": "fa fa-building",
@@ -760,7 +754,7 @@
  "image_field": "company_logo",
  "is_tree": 1,
  "links": [],
- "modified": "2022-10-25 18:34:15.010675",
+ "modified": "2022-10-27 09:32:06.405371",
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Company",
