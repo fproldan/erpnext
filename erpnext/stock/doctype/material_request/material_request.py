@@ -292,28 +292,29 @@ def make_purchase_order(source_name, target_doc=None, args=None):
 		args = json.loads(args)
 
 	def postprocess(source, target_doc):
+		supplier_items = []
+		user_items = []
+
 		if frappe.flags.args and frappe.flags.args.default_supplier:
 			# items only for given default supplier
-			supplier_items = []
 			for d in target_doc.items:
 				default_supplier = get_item_defaults(d.item_code, target_doc.company).get('default_supplier')
 				if frappe.flags.args.default_supplier == default_supplier:
 					supplier_items.append(d)
-			target_doc.items = supplier_items
 
 		if frappe.flags.args and frappe.flags.args.default_user:
-			user_items = []
 			for d in target_doc.items:
 				purchase_user = get_item_defaults(d.item_code, target_doc.company).get('purchase_user')
 
-				print(frappe.flags.args.include_null_default_user)
 				if frappe.flags.args.include_null_default_user:
 					if frappe.flags.args.default_user == purchase_user or purchase_user is None:
 						user_items.append(d)
 				else:
 					if frappe.flags.args.default_user == purchase_user:
 						user_items.append(d)
-			target_doc.items = user_items
+
+		if frappe.flags.args.default_supplier or frappe.flags.args.default_user:
+			target_doc.items = list(set(supplier_items + user_items ))
 
 		set_missing_values(source, target_doc)
 
