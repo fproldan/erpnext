@@ -301,6 +301,20 @@ def make_purchase_order(source_name, target_doc=None, args=None):
 					supplier_items.append(d)
 			target_doc.items = supplier_items
 
+		if frappe.flags.args and frappe.flags.args.default_user:
+			user_items = []
+			for d in target_doc.items:
+				purchase_user = get_item_defaults(d.item_code, target_doc.company).get('purchase_user')
+
+				print(frappe.flags.args.include_null_default_user)
+				if frappe.flags.args.include_null_default_user:
+					if frappe.flags.args.default_user == purchase_user or purchase_user is None:
+						user_items.append(d)
+				else:
+					if frappe.flags.args.default_user == purchase_user:
+						user_items.append(d)
+			target_doc.items = user_items
+
 		set_missing_values(source, target_doc)
 
 	def select_item(d):
@@ -461,6 +475,21 @@ def get_default_supplier_query(doctype, txt, searchfield, start, page_len, filte
 		where parent in ({0}) and
 		default_supplier IS NOT NULL
 		""".format(', '.join(['%s']*len(item_list))),tuple(item_list))
+
+
+@frappe.whitelist()
+@frappe.validate_and_sanitize_search_inputs
+def get_default_user_query(doctype, txt, searchfield, start, page_len, filters):
+	doc = frappe.get_doc("Material Request", filters.get("doc"))
+	user_list = []
+	for d in doc.items:
+		user_list.append(d.purchase_user)
+
+	return frappe.db.sql("""select name
+		from `tabUser`
+		where name in ({0})
+		""".format(', '.join(['%s']*len(user_list))),tuple(user_list))
+
 
 @frappe.whitelist()
 def make_supplier_quotation(source_name, target_doc=None):
