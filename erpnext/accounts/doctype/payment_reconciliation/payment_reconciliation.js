@@ -193,8 +193,7 @@ erpnext.accounts.PaymentReconciliationController = frappe.ui.form.Controller.ext
 					const args = dialog.get_values()["allocation"];
 
 					args.forEach(d => {
-						frappe.model.set_value("Payment Reconciliation Allocation", d.docname,
-							"difference_account", d.difference_account);
+						frappe.model.set_value("Payment Reconciliation Allocation", d.docname, "difference_account", d.difference_account);
 					});
 
 					me.reconcile_payment_entries();
@@ -203,19 +202,30 @@ erpnext.accounts.PaymentReconciliationController = frappe.ui.form.Controller.ext
 				primary_action_label: __('Reconcile Entries')
 			});
 
-			this.frm.doc.allocation.forEach(d => {
-				if (d.difference_amount && !d.difference_account) {
-					dialog.fields_dict.allocation.df.data.push({
-						'docname': d.name,
-						'reference_name': d.reference_name,
-						'difference_amount': d.difference_amount,
-						'difference_account': d.difference_account,
+			frappe.call({
+				method: 'frappe.client.get',
+				args: {
+					doctype: 'Company',
+					name: me.frm.doc.company
+				},
+				async: false,
+				callback: function(data) {
+					me.frm.doc.allocation.forEach(d => {
+						if (d.difference_amount && !d.difference_account) {
+							dialog.fields_dict.allocation.df.data.push({
+								'docname': d.name,
+								'reference_name': d.reference_name,
+								'difference_amount': d.difference_amount,
+								'difference_account': data.message.exchange_gain_loss_account || d.difference_account,
+							});
+						}
 					});
 				}
 			});
 
 			this.data = dialog.fields_dict.allocation.df.data;
 			dialog.fields_dict.allocation.grid.refresh();
+
 			dialog.show();
 		} else {
 			this.reconcile_payment_entries();
