@@ -915,7 +915,8 @@
    "fieldname": "more_info",
    "fieldtype": "Section Break",
    "label": "More Information",
-   "oldfieldtype": "Section Break"
+   "oldfieldtype": "Section Break",
+   "hidden": 1
   },
   {
    "default": "Draft",
@@ -1184,7 +1185,7 @@
  "idx": 105,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-08-02 10:29:27.820436",
+ "modified": "2022-08-04 10:21:34.510200",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Purchase Order",
