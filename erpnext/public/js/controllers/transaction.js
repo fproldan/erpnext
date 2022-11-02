@@ -260,9 +260,13 @@ erpnext.TransactionController = erpnext.taxes_and_totals.extend({
 	},
 
 	setup_naming_series_by_company: function() {
-		if(!in_list(["Delivery Note", "Purchase Order", "Purchase Receipt", "Purchase Invoice", "Sales Order"], this.frm.doc.doctype)) {
-			return;
-		}
+		var doctype_list = [
+			'Delivery Note', 'Delivery Trip', 'Journal Entry', 'Material Request', 'Opportunity',
+			'Payment Entry', 'Payment Request', 'Purchase Invoice', 'Purchase Order', 'Purchase Receipt',
+			'Quotation', 'Request for Quotation', 'Sales Order', 'Stock Entry', 'Stock Reconciliation',
+			'Supplier Quotation', 'Timesheet', 'Warranty Claim', 'Work Order'
+		];
+		if(!in_list(doctype_list, this.frm.doc.doctype)) { return; }
 		const me = this;
 		frappe.call({
 			type: "GET",
