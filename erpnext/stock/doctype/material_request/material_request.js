@@ -69,6 +69,8 @@ frappe.ui.form.on('Material Request', {
 		});
 
 		erpnext.accounts.dimensions.setup_dimension_filters(frm, frm.doctype);
+
+		set_customer_query(frm);
 	},
 
 	company: function(frm) {
@@ -81,7 +83,6 @@ frappe.ui.form.on('Material Request', {
 
 	refresh: function(frm) {
 		frm.events.make_custom_buttons(frm);
-		frm.toggle_reqd('customer', frm.doc.material_request_type=="Customer Provided");
 	},
 
 	set_from_warehouse: function(frm) {
@@ -355,14 +356,33 @@ frappe.ui.form.on('Material Request', {
 		});
 	},
 	material_request_type: function(frm) {
-		frm.toggle_reqd('customer', frm.doc.material_request_type=="Customer Provided");
-
 		if (frm.doc.material_request_type !== 'Material Transfer' && frm.doc.set_from_warehouse) {
 			frm.set_value('set_from_warehouse', '');
 		}
 	},
+	tipo: function(frm) {
+		set_customer_query(frm);
+	}
 
 });
+
+function set_customer_query(frm) {
+	if (frm.doc.tipo == "Interno") {
+		frm.set_query("customer", function() {
+			return{
+				query: "erpnext.controllers.queries.customer_query",
+				filters: {'is_internal_customer': 1}
+			}
+		});
+	} else {
+		frm.set_query("customer", function() {
+			return{
+				query: "erpnext.controllers.queries.customer_query",
+				filters: {'is_internal_customer': 0}
+			}
+		});
+	}
+}
 
 frappe.ui.form.on("Material Request Item", {
 	qty: function (frm, doctype, name) {
