@@ -138,7 +138,48 @@ class Company(NestedSet):
 			self.name in frappe.local.enable_perpetual_inventory:
 			frappe.local.enable_perpetual_inventory[self.name] = self.enable_perpetual_inventory
 
+		self.create_default_naming_series()
+
 		frappe.clear_cache()
+
+	def create_default_naming_series(self):
+	    naming_series = frappe.get_doc("Naming Series")
+
+	    series_to_create = {
+			'Delivery Note': '{company}-MAT-DN-.YYYY.-',
+			'Delivery Trip': '{company}-MAT-DT-.YYYY.-',
+			'Journal Entry': '{company}-ACC-JV-.YYYY.-',
+			'Material Request': '{company}-MAT-MR-.YYYY.-',
+			'Opportunity': '{company}-CRM-OPP-.YYYY.-',
+			'Payment Entry': '{company}-ACC-PAY-.YYYY.-',
+			'Payment Request': '{company}-ACC-PRQ-.YYYY.-',
+			'Purchase Invoice': '{company}-ACC-PINV-.YYYY.-',
+			'Purchase Order': '{company}-PUR-ORD-.YYYY.-',
+			'Purchase Receipt': '{company}-MAT-PRE-.YYYY.-',
+			'Quotation': '{company}-SAL-QTN-.YYYY.-',
+			'Request for Quotation': '{company}-PUR-RFQ-.YYYY.-',
+			'Sales Order': '{company}-SAL-ORD-.YYYY.-',
+			'Stock Entry': '{company}-MAT-STE-.YYYY.-',
+			'Stock Reconciliation': '{company}-MAT-RECO-.YYYY.-',
+			'Supplier Quotation': '{company}-PUR-SQTN-.YYYY.-',
+			'Timesheet': '{company}-TS-.YYYY.-',
+			'Warranty Claim': '{company}-SER-WRN-.YYYY.-',
+			'Work Order': '{company}-MFG-WO-.YYYY.-'
+		}
+
+	    for key, value in series_to_create.items():
+	        naming_series.select_doc_for_series = key
+	        existing = naming_series.get_options() or ''
+
+	        serie = value.format(company=self.abbr)
+
+	        if serie not in existing:
+	            existing = existing + "\n{}".format(serie)
+
+	        naming_series.set_options = existing
+
+	        if existing != naming_series.get_options():
+	            naming_series.update_series(show_message=False)
 
 	def create_default_warehouses(self):
 		for wh_detail in [
