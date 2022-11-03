@@ -21,6 +21,7 @@
   "mr_qty_allowance",
   "column_break_12",
   "auto_insert_price_list_rate_if_missing",
+  "update_existing_price_list_rate",
   "allow_negative_stock",
   "show_barcode_field",
   "clean_description_html",
@@ -163,7 +164,7 @@
    "label": "Raise Material Request When Stock Reaches Re-order Level"
   },
   {
-   "default": "0",
+   "default": "1",
    "fieldname": "reorder_email_notify",
    "fieldtype": "Check",
    "label": "Notify by Email on Creation of Automatic Material Request"
@@ -290,6 +291,13 @@
    "fieldname": "mr_qty_allowance",
    "fieldtype": "Float",
    "label": "Over Transfer Allowance"
+  },
+  {
+   "default": "0",
+   "depends_on": "auto_insert_price_list_rate_if_missing",
+   "fieldname": "update_existing_price_list_rate",
+   "fieldtype": "Check",
+   "label": "Update Existing Price List Rate"
   }
  ],
  "icon": "icon-cog",
@@ -297,7 +305,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2021-06-29 17:02:26.683002",
+ "modified": "2022-08-16 12:40:20.816809",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Stock Settings",
@@ -314,6 +322,7 @@
   }
  ],
  "quick_entry": 1,
+ "route": "app/doctype/Stock%20Settings",
  "sort_field": "modified",
  "sort_order": "ASC",
  "track_changes": 1

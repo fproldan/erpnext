@@ -16,6 +16,7 @@
   "is_group",
   "cb0",
   "domain",
+  "color",
   "parent_company",
   "charts_section",
   "default_currency",
@@ -741,6 +742,11 @@
    "fieldtype": "Link",
    "label": "Repair and Maintenance Account",
    "options": "Account"
+  },
+  {
+   "fieldname": "color",
+   "fieldtype": "Color",
+   "label": "Color"
   }
  ],
  "icon": "fa fa-building",
@@ -748,7 +754,7 @@
  "image_field": "company_logo",
  "is_tree": 1,
  "links": [],
- "modified": "2021-05-12 16:51:08.187233",
+ "modified": "2022-10-27 09:32:06.405371",
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Company",
@@ -805,6 +811,7 @@
    "write": 1
   }
  ],
+ "route": "app/doctype/Company",
  "show_name_in_global_search": 1,
  "sort_field": "modified",
  "sort_order": "ASC",

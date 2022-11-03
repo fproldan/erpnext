@@ -41,7 +41,7 @@ def get_conditions(filters):
 	if filters.get("from_date") and filters.get("to_date"):
 		conditions += " and po.transaction_date between %(from_date)s and %(to_date)s"
 
-	for field in ['company', 'name', 'status']:
+	for field in ['company', 'name']:
 		if filters.get(field):
 			conditions += f" and po.{field} = %({field})s"
 
@@ -61,7 +61,6 @@ def get_conditions(filters):
 	if filters.get('project'):
 		conditions += " and poi.project = %(project)s"
 
-
 	return conditions
 
 def get_data(conditions, filters):
@@ -72,6 +71,8 @@ def get_data(conditions, filters):
 			poi.project,
 			po.name as purchase_order,
 			po.status, po.supplier, poi.item_code,
+			DATEDIFF(CURDATE(), poi.schedule_date) as delay_days,
+			IF(po.status in ('Completed','To Bill'), 0, (SELECT delay_days)) as delay,
 			poi.qty, poi.received_qty,
 			(poi.qty - poi.received_qty) AS pending_qty,
 			IFNULL(pii.qty, 0) as billed_qty,
@@ -106,6 +107,9 @@ def prepare_data(data, filters):
 		purchase_order_map = {}
 
 	for row in data:
+		if filters.get("delayed") and row["delay"] <= 0:
+			data.remove(row)
+
 		# sum data for chart
 		completed += row[completed_field]
 		pending += row[pending_field]
@@ -113,6 +117,8 @@ def prepare_data(data, filters):
 
 		# prepare data for report view
 		row["qty_to_bill"] = flt(row["qty"]) - flt(row["billed_qty"])
+
+		row["delay"] = 0 if row["delay"] and row["delay"] < 0 else row["delay"]
 
 		if filters.get("group_by_po"):
 			po_name = row["purchase_order"]
@@ -273,6 +279,12 @@ def get_columns(filters):
 			"width": 130,
 			"options": "Company:company:default_currency",
 			"convertible": "rate"
+		},
+		{
+			"label": _("Delay (in Days)"),
+			"fieldname": "delay",
+			"fieldtype": "Data",
+			"width": 100
 		},
 		{
 			"label": _("Warehouse"),

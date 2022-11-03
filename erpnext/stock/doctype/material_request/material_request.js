@@ -214,7 +214,8 @@ frappe.ui.form.on('Material Request', {
 					material_request_type: frm.doc.material_request_type,
 					plc_conversion_rate: 1,
 					rate: item.rate,
-					conversion_factor: item.conversion_factor
+					conversion_factor: item.conversion_factor,
+					purchase_user: item.purchase_user
 				},
 				overwrite_warehouse: overwrite_warehouse
 			},
@@ -284,6 +285,7 @@ frappe.ui.form.on('Material Request', {
 
 	make_purchase_order: function(frm) {
 		frappe.prompt(
+			[
 			{
 				label: __('For Default Supplier (Optional)'),
 				fieldname:'default_supplier',
@@ -297,11 +299,30 @@ frappe.ui.form.on('Material Request', {
 					}
 				}
 			},
+			{
+				label: __('Usuario de Compra Predeterminado'),
+				fieldname:'default_user',
+				fieldtype: 'Link',
+				options: 'User',
+				description: __('Seleccione un usuario de los usuarios predeterminados de los artículos a continuación. En la selección, se realizará una orden de compra contra los artículos que pertenecen al usuario seleccionado únicamente.'),
+				get_query: () => {
+					return{
+						query: "erpnext.stock.doctype.material_request.material_request.get_default_user_query",
+						filters: {'doc': frm.doc.name}
+					}
+				}
+			},
+			{
+				label: __('Incluir productos sin Usuario de Compra Predeterminado'),
+				fieldname:'include_null_default_user',
+				fieldtype: 'Check',
+			}
+			],
 			(values) => {
 				frappe.model.open_mapped_doc({
 					method: "erpnext.stock.doctype.material_request.material_request.make_purchase_order",
 					frm: frm,
-					args: { default_supplier: values.default_supplier },
+					args: { default_supplier: values.default_supplier, default_user: values.default_user, include_null_default_user: values.include_null_default_user},
 					run_link_triggers: true
 				});
 			},

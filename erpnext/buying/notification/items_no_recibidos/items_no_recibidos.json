@@ -1,0 +1,29 @@
+{
+ "attach_print": 0,
+ "channel": "System Notification",
+ "condition": "doc.per_received < 100",
+ "creation": "2022-06-13 12:39:04.454125",
+ "date_changed": "schedule_date",
+ "days_in_advance": 7,
+ "docstatus": 0,
+ "doctype": "Notification",
+ "document_type": "Purchase Order",
+ "enabled": 1,
+ "event": "Days After",
+ "idx": 0,
+ "is_standard": 1,
+ "message": "**Items no recibidos**\n\nLa Orden de Compra {{ doc.name }} con fecha de solicitud {{ doc.schedule_date }} no fue recibida.\n",
+ "modified": "2022-06-13 12:39:04.454125",
+ "modified_by": "Administrator",
+ "module": "Buying",
+ "name": "Items no recibidos",
+ "owner": "Administrator",
+ "recipients": [
+  {
+   "receiver_by_role": "Purchase User"
+  }
+ ],
+ "send_system_notification": 0,
+ "send_to_all_assignees": 0,
+ "subject": "Items no recibidos"
+}

@@ -173,11 +173,17 @@ class TransactionDeletionRecord(Document):
 
 		frappe.delete_doc('Communication', communication_names, ignore_permissions=True)
 
+
 @frappe.whitelist()
 def get_doctypes_to_be_ignored():
-	doctypes_to_be_ignored_list = ['Account', 'Cost Center', 'Warehouse', 'Budget',
+	doctypes_to_be_ignored_list = [
+		'Account', 'Cost Center', 'Warehouse', 'Budget',
 		'Party Account', 'Employee', 'Sales Taxes and Charges Template',
 		'Purchase Taxes and Charges Template', 'POS Profile', 'BOM',
 		'Company', 'Bank Account', 'Item Tax Template', 'Mode of Payment',
-		'Item Default', 'Customer', 'Supplier', 'GST Account']
+		'Item Default', 'Customer', 'Supplier',
+		'Punto de Venta', 'Impuesto de Retencion', 'Impuesto de Percepcion',
+		'Cheque', 'User', 'Role Profile', 'Issue Type', 'Service Level Agreement',
+		'Project Type', 'Activity Type', 'Activity Cost', 'Certificado AFIP', 'Department'
+	]
 	return doctypes_to_be_ignored_list

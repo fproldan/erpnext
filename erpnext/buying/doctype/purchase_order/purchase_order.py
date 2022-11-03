@@ -358,6 +358,14 @@ class PurchaseOrder(BuyingController):
 		else:
 			self.db_set("per_received", 0, update_modified=False)
 
+
+@frappe.whitelist()
+def establecer_motivo_de_rechazo(motivo_de_rechazo, name):
+	frappe.db.set_value("Purchase Order", name, 'motivo_de_rechazo', motivo_de_rechazo)
+	frappe.db.commit()
+	frappe.msgprint("Motivo de rechazo establecido.", alert=True, indicator='green')
+
+
 def item_last_purchase_rate(name, conversion_rate, item_code, conversion_factor= 1.0):
 	"""get last purchase rate for an item"""
 
