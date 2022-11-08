@@ -307,13 +307,19 @@ def make_purchase_order(source_name, target_doc=None, args=None):
 				purchase_user = get_item_defaults(d.item_code, target_doc.company).get('purchase_user')
 
 				if frappe.flags.args.include_null_default_user:
-					if frappe.flags.args.default_user == purchase_user or purchase_user is None:
+					if purchase_user in frappe.flags.args.default_user or purchase_user is None:
 						user_items.append(d)
 				else:
-					if frappe.flags.args.default_user == purchase_user:
+					if purchase_user in frappe.flags.args.default_user:
 						user_items.append(d)
 
-		if frappe.flags.args.default_supplier or frappe.flags.args.default_user:
+		if frappe.flags.args and not frappe.flags.args.default_user and frappe.flags.args.include_null_default_user:
+			for d in target_doc.items:
+				purchase_user = get_item_defaults(d.item_code, target_doc.company).get('purchase_user')
+				if purchase_user is None:
+					user_items.append(d)
+			
+		if frappe.flags.args.default_supplier or frappe.flags.args.default_user or frappe.flags.args.include_null_default_user:
 			target_doc.items = list(set(supplier_items + user_items ))
 
 		set_missing_values(source, target_doc)
@@ -479,18 +485,16 @@ def get_default_supplier_query(doctype, txt, searchfield, start, page_len, filte
 
 
 @frappe.whitelist()
-@frappe.validate_and_sanitize_search_inputs
-def get_default_user_query(doctype, txt, searchfield, start, page_len, filters):
-	doc = frappe.get_doc("Material Request", filters.get("doc"))
+def get_default_user_query(doc):
+	doc = frappe.get_doc("Material Request", doc)
 	user_list = []
 	for d in doc.items:
 		user_list.append(d.purchase_user)
 
-	return frappe.db.sql("""select name
-		from `tabUser`
-		where name in ({0})
-		""".format(', '.join(['%s']*len(user_list))),tuple(user_list))
-
+	users = frappe.db.sql("""select name from `tabUser` where name in ({0}) """.format(', '.join(['%s']*len(user_list))),tuple(user_list))
+	if users:
+		users = tuple([u[0] for u in users])
+	return users
 
 @frappe.whitelist()
 def make_supplier_quotation(source_name, target_doc=None):

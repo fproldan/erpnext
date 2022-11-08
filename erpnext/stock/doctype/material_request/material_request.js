@@ -303,14 +303,19 @@ frappe.ui.form.on('Material Request', {
 			{
 				label: __('Usuario de Compra Predeterminado'),
 				fieldname:'default_user',
-				fieldtype: 'Link',
-				options: 'User',
+				fieldtype: 'MultiSelectPills',
 				description: __('Seleccione un usuario de los usuarios predeterminados de los artículos a continuación. En la selección, se realizará una orden de compra contra los artículos que pertenecen al usuario seleccionado únicamente.'),
-				get_query: () => {
-					return{
-						query: "erpnext.stock.doctype.material_request.material_request.get_default_user_query",
-						filters: {'doc': frm.doc.name}
-					}
+				get_data: function(txt) {
+					var resp = null;
+					frappe.call({
+						method: 'erpnext.stock.doctype.material_request.material_request.get_default_user_query',
+						args: {doc: frm.doc.name },
+						async: false,
+						callback: function(r) {
+							resp = frappe.db.get_link_options("User", txt, {user_type: "System User", enabled: 1, name: ['in', r.message]});
+						}
+					});
+					return resp
 				}
 			},
 			{
