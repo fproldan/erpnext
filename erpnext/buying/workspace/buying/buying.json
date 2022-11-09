@@ -355,6 +355,15 @@
   },
   {
    "hidden": 0,
+   "is_query_report": 1,
+   "label": "Orden de compra con autorizacion pendiente",
+   "link_to": "Orden de compra con autorizacion pendiente",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
    "is_query_report": 0,
    "label": "Other Reports",
    "onboard": 0,
@@ -477,7 +486,7 @@
    "type": "Link"
   }
  ],
- "modified": "2022-06-14 20:25:06.987794",
+ "modified": "2022-11-09 11:27:16.640465",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Buying",
