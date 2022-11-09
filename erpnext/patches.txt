@@ -345,3 +345,4 @@ erpnext.patches.v13_0.update_production_plan_status
 erpnext.patches.v13_0.add_bom_domain
 erpnext.patches.v13_0.hr_offer_term
 erpnext.patches.v13_0.item_naming_series_not_mandatory
+erpnext.patches.v13_0.set_default_naming_series
