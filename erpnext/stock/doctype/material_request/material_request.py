@@ -319,8 +319,8 @@ def make_purchase_order(source_name, target_doc=None, args=None):
 				if purchase_user is None:
 					user_items.append(d)
 
-		if frappe.flags.args.default_supplier or frappe.flags.args.default_user or frappe.flags.args.include_null_default_user:
-			target_doc.items = list(set(supplier_items + user_items ))
+		if frappe.flags.args and (frappe.flags.args.default_supplier or frappe.flags.args.default_user or frappe.flags.args.include_null_default_user):
+			target_doc.items = list(set(supplier_items + user_items))
 
 		set_missing_values(source, target_doc)
 
