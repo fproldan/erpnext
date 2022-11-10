@@ -305,6 +305,7 @@ frappe.ui.form.on('Material Request', {
 				fieldname:'default_user',
 				fieldtype: 'Link',
 				options: 'User',
+				default: frappe.user,
 				description: __('Seleccione un usuario de los usuarios predeterminados de los artículos a continuación. En la selección, se realizará una orden de compra contra los artículos que pertenecen al usuario seleccionado únicamente.'),
 				get_query: () => {
 					return{
