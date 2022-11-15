@@ -10884,4 +10884,8 @@ Stock Reposting Settings,Configuración de reposición de inventario,
 Scheduling,Programación,
 Limit timeslot for Stock Reposting,Limitar la franja horaria para el traspaso de acciones,
 Limits don't apply on,Los límites no se aplican el,
+<<<<<<< HEAD
 Note: This Training Event is mandatory,Nota: Esta capacitación es obligatoria,
+=======
+Payment Terms Status for Sales Order,Estado de pago de ordenes de venta,
+>>>>>>> a80a4d6032 (feat: Payment Terms Status report (backport #29137)  (#412))
