@@ -65,7 +65,7 @@
  "icon": "fa fa-sitemap",
  "idx": 1,
  "links": [],
- "modified": "2021-10-29 11:37:59.975878",
+ "modified": "2022-11-10 08:47:53.336138",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Product Bundle",
@@ -96,7 +96,7 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "Sales User",
+   "role": "Sales Manager",
    "share": 1,
    "write": 1
   }
