@@ -80,20 +80,20 @@ frappe.ui.form.on('Asset', {
 
 		if (frm.doc.docstatus==1) {
 			if (in_list(["Submitted", "Partially Depreciated", "Fully Depreciated"], frm.doc.status)) {
-				frm.add_custom_button("Transfer Asset", function() {
+				frm.add_custom_button(__("Transfer Asset"), function() {
 					erpnext.asset.transfer_asset(frm);
 				}, __("Manage"));
 
-				frm.add_custom_button("Scrap Asset", function() {
+				frm.add_custom_button(__("Scrap Asset"), function() {
 					erpnext.asset.scrap_asset(frm);
 				}, __("Manage"));
 
-				frm.add_custom_button("Sell Asset", function() {
+				frm.add_custom_button(__("Sell Asset"), function() {
 					frm.trigger("make_sales_invoice");
 				}, __("Manage"));
 
 			} else if (frm.doc.status=='Scrapped') {
-				frm.add_custom_button("Restore Asset", function() {
+				frm.add_custom_button(__("Restore Asset"), function() {
 					erpnext.asset.restore_asset(frm);
 				}, __("Manage"));
 			}
