@@ -7,5 +7,6 @@ from erpnext.regional.united_arab_emirates.setup import add_print_formats, make_
 
 
 def setup(company=None, patch=True):
+	return
 	make_custom_fields()
 	add_print_formats()

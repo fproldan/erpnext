@@ -139,7 +139,7 @@
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-05-12 20:00:37.673779",
+ "modified": "2021-05-13 20:00:37.673779",
  "modified_by": "Administrator",
  "module": "Telephony",
  "name": "Call Log",
@@ -167,5 +167,5 @@
  "sort_order": "DESC",
  "title_field": "from",
  "track_changes": 1,
- "track_views": 1
+ "track_views": 0
 }

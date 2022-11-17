@@ -86,7 +86,7 @@
   }
  ],
  "links": [],
- "modified": "2021-05-12 19:59:07.926874",
+ "modified": "2022-10-17 19:26:16.275914",
  "modified_by": "Administrator",
  "module": "Projects",
  "name": "Activity Cost",
@@ -100,9 +100,13 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "Projects User",
+   "role": "Projects Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "role": "Projects User",
+   "select": 1
   }
  ],
  "restrict_to_domain": "Projects",
