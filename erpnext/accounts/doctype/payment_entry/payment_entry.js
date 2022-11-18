@@ -503,7 +503,7 @@ frappe.ui.form.on('Payment Entry', {
 			}
 		}
 
-		if (!frm.doc.target_exchange_rate) {
+		if (!frm.doc.target_exchange_rate && frm.doc.payment_type == 'Pay') {
 			frm.trigger('paid_to_account_currency');
 		}
 	},
@@ -514,7 +514,7 @@ frappe.ui.form.on('Payment Entry', {
 
 		frm.events.set_current_exchange_rate(frm, "target_exchange_rate", frm.doc.paid_to_account_currency, company_currency);
 		
-		if (!frm.doc.source_exchange_rate) {
+		if (!frm.doc.source_exchange_rate && frm.doc.payment_type == 'Receive') {
 			frm.trigger('paid_from_account_currency');
 		}
 	},
