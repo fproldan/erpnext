@@ -502,6 +502,11 @@ frappe.ui.form.on('Payment Entry', {
 					frm.doc.paid_from_account_currency, company_currency);
 			}
 		}
+
+		if (!frm.doc.target_exchange_rate) {
+			console.log('caca')
+			frm.trigger('paid_to_account_currency');
+		}
 	},
 
 	paid_to_account_currency: function(frm) {
