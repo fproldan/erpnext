@@ -1,0 +1,33 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2022-11-17 15:18:08.472582",
+ "disable_prepared_report": 0,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "json": "{\"filters\":[[\"Purchase Order\",\"status\",\"=\",\"Draft\"]],\"fields\":[[\"material_request\",\"Purchase Order Item\"],[\"docstatus\",\"Purchase Order\"],[\"item_name\",\"Purchase Order Item\"],[\"name\",\"Purchase Order\"],[\"supplier\",\"Purchase Order\"],[\"status\",\"Purchase Order\"],[\"owner\",\"Purchase Order\"],[\"schedule_date\",\"Purchase Order\"],[\"set_warehouse\",\"Purchase Order\"],[\"company\",\"Purchase Order\"],[\"_assign\",\"Purchase Order\"]],\"order_by\":\"`tabPurchase Order`.`modified` desc\",\"add_totals_row\":0,\"page_length\":20,\"column_widths\":{\"Purchase Order Item:material_request\":120,\"Purchase Order Item:item_name\":120,\"name\":120,\"supplier\":120,\"status\":120,\"owner\":120,\"schedule_date\":120,\"set_warehouse\":120,\"company\":120,\"_assign\":120},\"group_by\":null}",
+ "modified": "2022-11-17 15:19:09.472582",
+ "modified_by": "Administrator",
+ "module": "Buying",
+ "name": "Pendientes de recepci\u00f3n",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "ref_doctype": "Purchase Order",
+ "report_name": "Pendientes de recepci\u00f3n",
+ "report_type": "Report Builder",
+ "roles": [
+  {
+   "role": "Stock User"
+  },
+  {
+   "role": "Purchase Manager"
+  },
+  {
+   "role": "Purchase User"
+  }
+ ]
+}
