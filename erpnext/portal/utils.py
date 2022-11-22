@@ -86,7 +86,7 @@ def create_customer_or_supplier():
 	else:
 		party.update({
 			"supplier_name": fullname,
-			"supplier_group": "All Supplier Groups",
+			"supplier_group": frappe.get_value('Buying Settings', 1, 'supplier_group') or 'Todos los Grupos de proveedores',
 			"supplier_type": "Individual"
 		})
 
