@@ -70,7 +70,10 @@ def get_transaction_list(doctype, txt=None, filters=None, limit_start=0, limit_p
 			else:
 				filters.append(('customer', 'in', customers))
 		elif suppliers:
-			filters.append(('supplier', 'in', suppliers))
+			if doctype in ['Payment Entry']:
+				filters.append(('party_name', 'in', suppliers))
+			else:
+				filters.append(('supplier', 'in', suppliers))
 		elif not custom:
 			return []
 
@@ -148,7 +151,7 @@ def post_process(doctype, data):
 			doc.set_indicator()
 
 		doc.status_display = ", ".join(doc.status_display)
-		doc.items_preview = ", ".join(d.item_name for d in doc.items if d.item_name)
+		doc.items_preview = ", ".join(d.item_name for d in doc.items if d.get('items') and d.item_name)
 		result.append(doc)
 
 	return result
@@ -160,8 +163,8 @@ def get_customers_suppliers(doctype, user):
 
 	customer_field_name = get_customer_field_name(doctype)
 
-	has_customer_field = meta.has_field(customer_field_name)
-	has_supplier_field = meta.has_field('supplier')
+	has_customer_field = meta.has_field(customer_field_name) or doctype in ['Payment Entry']
+	has_supplier_field = meta.has_field('supplier') or doctype in ['Payment Entry']
 
 	if has_common(["Supplier", "Customer"], frappe.get_roles(user)):
 		contacts = frappe.db.sql("""
