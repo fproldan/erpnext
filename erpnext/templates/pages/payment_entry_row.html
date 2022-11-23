@@ -1,14 +1,15 @@
 <div class="web-list-item transaction-list-item">
 	<div class="row">
 		<div class="col-sm-4">
-			<span class="indicator small {{ doc.indicator_color or ("blue" if doc.docstatus==1 else "gray") }}">
-			{{ doc.name }}</span>
-			<div class="small text-muted transaction-time"
-				title="{{ frappe.utils.format_datetime(doc.modified, "medium") }}">
-				{{ frappe.utils.global_date_format(doc.modified) }}
-			</div>
+			<a style="text-decoration: none !important;color: inherit;" href="/{{ pathname }}/{{ doc.name }}">
+				<span class="indicator small {{ doc.indicator_color or ("blue" if doc.docstatus==1 else "gray") }}">{{ doc.name }}</span>
+				<div class="small text-muted transaction-time"
+					title="{{ frappe.utils.format_datetime(doc.modified, "medium") }}">
+					{{ frappe.utils.global_date_format(doc.modified) }}
+				</div>
+			</a>
 		</div>
-		<div class="col-sm-5">
+		<div class="col-sm-4">
 			<div class="small text-muted items-preview ellipsis ellipsis-width">
 				<ul>
 					{% for reference in doc.references %}
@@ -18,10 +19,15 @@
 			</div>
 		</div>
 		{% if doc.get('paid_amount') %}
-			<div class="col-sm-3 text-right bold">
+			<div class="col-sm-2 text-right bold">
 				{{ doc.get_formatted("paid_amount") }}
 			</div>
 		{% endif %}
+			<button onclick="location.href='/{{ pathname }}/{{ doc.name }}'" class="text-muted btn btn-default icon-btn" title="Imprimir" data-original-title="Impresión">
+				<svg class="icon icon-sm" style="">
+					<use class="" href="#icon-printer"></use>
+				</svg>
+			</button>	
+		</div>
 	</div>
-	<a class="transaction-item-link" href="/{{ pathname }}/{{ doc.name }}">Link</a>
 </div>

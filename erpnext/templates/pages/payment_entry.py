@@ -8,6 +8,11 @@ from frappe.utils import cint, quoted
 from frappe.website.render import resolve_path
 from frappe.model.document import get_controller, Document
 from frappe import _
+from frappe.modules.utils import get_module_app
+from frappe.utils import flt, has_common
+from frappe.utils.user import is_website_user
+from erpnext.controllers.website_list_for_contact import *
+
 
 no_cache = 1
 
@@ -31,7 +36,7 @@ def get_context(context, **dict_params):
     
 
 @frappe.whitelist(allow_guest=True)
-def get(doctype, txt=None, limit_start=0, limit=1, pathname=None, **kwargs):
+def get(doctype, txt=None, limit_start=0, limit=20, pathname=None, **kwargs):
     """Returns processed HTML page for a standard listing."""
     limit_start = cint(limit_start)
     raw_result = get_list_data(doctype, txt, limit_start, limit=limit + 1, **kwargs)
@@ -95,8 +100,6 @@ def get_list_data(doctype, txt=None, limit_start=0, fields=None, cmd=None, limit
     if list_context.filters:
         filters.update(list_context.filters)
 
-    _get_list = list_context.get_list or get_list
-
     kwargs = dict(doctype=doctype, txt=txt, filters=filters,
         limit_start=limit_start, limit_page_length=limit,
         order_by = list_context.order_by or 'modified desc')
@@ -105,7 +108,7 @@ def get_list_data(doctype, txt=None, limit_start=0, fields=None, cmd=None, limit
     if not list_context.get_list and (list_context.allow_guest or meta.allow_guest_to_view):
         kwargs['ignore_permissions'] = True
 
-    raw_result = _get_list(**kwargs)
+    raw_result = get_transaction_list(**kwargs)
 
     # list context to be used if called as rendered list
     frappe.flags.list_context = list_context
@@ -191,30 +194,42 @@ def get_list_context(context, doctype, web_form_name=None):
 
     return list_context
 
-def get_list(doctype, txt, filters, limit_start, limit_page_length=20, ignore_permissions=False,
-    fields=None, order_by=None):
-    meta = frappe.get_meta(doctype)
-    if not filters:
-        filters = []
 
-    if not fields:
-        fields = "distinct *"
+def get_transaction_list(doctype, txt=None, filters=None, limit_start=0, limit_page_length=20, order_by="modified", custom=False):
+    user = frappe.session.user
+    ignore_permissions = False
 
-    or_filters = []
+    if not filters: filters = []
 
-    if txt:
-        if meta.search_fields:
-            for f in meta.get_search_fields():
-                if f == 'name' or meta.get_field(f).fieldtype in ('Data', 'Text', 'Small Text', 'Text Editor'):
-                    or_filters.append([doctype, f, "like", "%" + txt + "%"])
-        else:
-            if isinstance(filters, dict):
-                filters["name"] = ("like", "%" + txt + "%")
+    filters.append((doctype, 'docstatus', '=', 1))
+
+    if (user != 'Guest' and is_website_user()):
+        parties_doctype = doctype
+        # find party for this contact
+        customers, suppliers = get_customers_suppliers(parties_doctype, user)
+
+        if customers:
+            if doctype == 'Quotation':
+                filters.append(('quotation_to', '=', 'Customer'))
+                filters.append(('party_name', 'in', customers))
             else:
-                filters.append([doctype, "name", "like", "%" + txt + "%"])
+                filters.append(('customer', 'in', customers))
+        elif suppliers:
+            filters.append(('supplier', 'in', suppliers))
+        elif not custom:
+            return []
 
-    return frappe.get_list(doctype, fields = fields,
-        filters=filters, or_filters=or_filters, limit_start=limit_start,
-        limit_page_length = limit_page_length, ignore_permissions=ignore_permissions,
-        order_by=order_by)
+        # Since customers and supplier do not have direct access to internal doctypes
+        ignore_permissions = True
 
+        if not customers and not suppliers and custom:
+            ignore_permissions = False
+            filters = []
+
+    transactions = get_list_for_transactions(doctype, txt, filters, limit_start, limit_page_length,
+        fields='name', ignore_permissions=ignore_permissions, order_by='modified desc')
+
+    if custom:
+        return transactions
+
+    return post_process(doctype, transactions)
