@@ -14,8 +14,6 @@ from frappe.utils.user import is_website_user
 from erpnext.controllers.website_list_for_contact import *
 
 
-no_cache = 1
-
 def get_context(context, **dict_params):
     """Returns context for a list standard list page.
     Will also update `get_list_context` from the doctype module file"""
@@ -25,6 +23,8 @@ def get_context(context, **dict_params):
     context.title = 'Entradas de Pago'
     context.parents = [{"route":"me", "title":_("My Account")}]
     context.show_sidebar = True
+    context.show_search = True
+    context.no_cache = 1
     context.meta = frappe.get_meta(doctype)
     context.update(get_list_context(context, doctype) or {})
     context.doctype = doctype
