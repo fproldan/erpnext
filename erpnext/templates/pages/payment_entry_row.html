@@ -23,11 +23,11 @@
 				{{ doc.get_formatted("paid_amount") }}
 			</div>
 		{% endif %}
-			<button onclick="location.href='/{{ pathname }}/{{ doc.name }}'" class="text-muted btn btn-default icon-btn" title="Imprimir" data-original-title="Impresión">
+		<button onclick="javascript:window.open('/printview?doctype={{ doc.doctype}}&name={{ doc.name }}&format=Orden de Pago', '_blank');" class="text-muted btn btn-default icon-btn" title="Imprimir" data-original-title="Impresión">
 				<svg class="icon icon-sm" style="">
 					<use class="" href="#icon-printer"></use>
 				</svg>
-			</button>	
+			</button>
 		</div>
 	</div>
 </div>
