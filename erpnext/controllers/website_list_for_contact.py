@@ -115,6 +115,12 @@ def get_list_for_transactions(doctype, txt, filters, limit_start, limit_page_len
 				for item in frappe.get_all(child_doctype, {"item_name": ['like', "%" + txt + "%"]}):
 					child = frappe.get_doc(child_doctype, item.name)
 					or_filters.append([doctype, "name", "=", child.parent])
+		if meta.get_field('references'):
+			if meta.get_field('references').options:
+				child_doctype = meta.get_field('references').options
+				for reference in frappe.get_all(child_doctype, {"bill_no": ['like', "%" + txt + "%"]}):
+					child = frappe.get_doc(child_doctype, reference.name)
+					or_filters.append([doctype, "name", "=", child.parent])
 
 	if or_filters:
 		for r in frappe.get_list(doctype, fields=fields,filters=filters, or_filters=or_filters,
@@ -122,6 +128,11 @@ def get_list_for_transactions(doctype, txt, filters, limit_start, limit_page_len
 			ignore_permissions=ignore_permissions, order_by=order_by):
 			data.append(r)
 
+		if not data:
+			for r in frappe.get_list(doctype, fields=fields,filters=or_filters, 
+				limit_start=limit_start, limit_page_length=limit_page_length,
+				ignore_permissions=ignore_permissions, order_by=order_by):
+				data.append(r)
 	return data
 
 def rfq_transaction_list(parties_doctype, doctype, parties, limit_start, limit_page_length):
