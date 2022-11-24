@@ -20,7 +20,7 @@
 			</div>
 		{% endif %}
 		<div class="col-sm-2 text-right bold">
-			<button onclick="location.href='/printview?doctype={{ doc.doctype}}&name={{ doc.name }}&format=Standard'" class="text-muted btn btn-default icon-btn" title="Imprimir" data-original-title="Impresión">
+			<button onclick="javascript:window.open('/printview?doctype={{ doc.doctype}}&name={{ doc.name }}&format=Standard', '_blank');" class="text-muted btn btn-default icon-btn" title="Imprimir" data-original-title="Impresión">
 				<svg class="icon icon-sm" style="">
 					<use class="" href="#icon-printer"></use>
 				</svg>
