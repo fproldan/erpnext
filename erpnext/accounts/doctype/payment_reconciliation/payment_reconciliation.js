@@ -9,7 +9,7 @@ erpnext.accounts.PaymentReconciliationController = frappe.ui.form.Controller.ext
 		this.frm.set_query("party_type", function() {
 			return {
 				"filters": {
-					"name": ["in", Object.keys(frappe.boot.party_account_types)],
+					"name": ["in", ["Customer", "Employee", "Supplier"]],
 				}
 			}
 		});
