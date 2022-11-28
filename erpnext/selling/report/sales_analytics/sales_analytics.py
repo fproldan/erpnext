@@ -104,6 +104,14 @@ class Analytics(object):
 			self.get_sales_transactions_based_on_project()
 			self.get_rows()
 
+	def get_rate(self, entry):
+		if self.filters.get('values_in_usd_posing_date'):
+			from erpnext.setup.utils import get_exchange_rate
+			if entry['currency'] != 'USD':
+				conversion_rate = get_exchange_rate(entry['currency'], "USD", str(entry['posting_date']), "for_buying")
+				entry['value_field'] = entry['value_field'] * conversion_rate
+		return entry
+
 	def get_sales_transactions_based_on_canal_de_venta(self):
 		if self.filters["value_quantity"] == 'Value':
 			value_field = "base_net_total"
@@ -139,8 +147,6 @@ class Analytics(object):
 				""".format(date_field=self.date_field, value_field=value_field, doctype=self.filters.doc_type, compa=self.filters.company, f_date=self.filters.from_date, t_date=self.filters.to_date, sep=self.sep)
 
 		self.entries = frappe.db.sql(query, as_dict=1)
-		print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-		print(self.entries)
 		self.get_teams()
 
 	def get_sales_transactions_based_on_customers_or_suppliers(self):
@@ -157,7 +163,7 @@ class Analytics(object):
 			entity_name = "supplier_name as entity_name"
 
 		self.entries = frappe.get_all(self.filters.doc_type,
-			fields=[entity, entity_name, value_field, self.date_field],
+			fields=[entity, entity_name, value_field, self.date_field, 'conversion_rate', 'currency'],
 			filters={
 				"docstatus": 1,
 				"company": self.filters.company,
@@ -167,6 +173,7 @@ class Analytics(object):
 
 		self.entity_names = {}
 		for d in self.entries:
+			d = self.get_rate(d)
 			self.entity_names.setdefault(d.entity, d.entity_name)
 
 	def get_sales_transactions_based_on_items(self):
