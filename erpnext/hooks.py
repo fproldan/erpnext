@@ -176,6 +176,12 @@ website_route_rules = [
 			"parents": [{"label": _("Quotations"), "route": "quotations"}]
 		}
 	},
+	{"from_route": "/payments/<path:name>", "to_route": "order",
+		"defaults": {
+			"doctype": "Payment Entry",
+			"parents": [{"label": _("Payments"), "route": "payments"}]
+		}
+	},
 	{"from_route": "/shipments", "to_route": "Delivery Note"},
 	{"from_route": "/shipments/<path:name>", "to_route": "order",
 		"defaults": {

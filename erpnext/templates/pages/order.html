@@ -52,8 +52,23 @@
 	</div>
 </div>
 
+{% if doc.doctype == 'Payment Entry' %}
+<div class="pt-2">
+	<p class="small my-3">
+		<b>Método de Pago:</b> {{ doc.mode_of_payment or '' }}
+	</p>
+</div>
+{% endif %}
+
 <p class="small my-3">
-	{%- set party_name = doc.supplier_name if doc.doctype in ['Supplier Quotation', 'Purchase Invoice', 'Purchase Order'] else doc.customer_name %}
+	{% if doc.doctype in ['Supplier Quotation', 'Purchase Invoice', 'Purchase Order'] %}
+		{%- set party_name = doc.supplier_name %}
+	{% elif doc.doctype in ['Payment Entry'] %}
+		{%- set party_name = doc.party_name  %}
+	{% else %}
+		{%- set party_name = doc.customer_name %}
+	{% endif %}
+	
 	<b>{{ party_name }}</b>
 
 	{% if doc.contact_display and doc.contact_display != party_name %}
@@ -66,6 +81,43 @@
 {{ doc._header }}
 {% endif %}
 
+
+{% if doc.doctype == 'Payment Entry' %}
+<div class="order-container">
+	<!-- items -->
+	<table class="order-item-table w-100 table">
+		<thead class="order-items order-item-header">
+			<th width="50%">
+				{{ _("Comprobantes") }}
+			</th>
+			<th width="50%" class="text-right">
+				{{ _("Pagado") }}
+			</th>
+		</thead>
+		<tbody>
+		{% for reference in doc.references %}
+			{% set datos_comprobante = frappe.db.get_value('Purchase Invoice', reference.reference_name, ['tipo_de_comprobante', 'bill_date']) %}
+			<tr class="order-items">
+				<td>
+					<h6>{{ datos_comprobante[0] }} - {{ reference.bill_no }}</h6>
+					Fecha: {{ frappe.utils.formatdate(datos_comprobante[1], 'dd/MM/Y') }} 
+				</td>
+				<td class="text-right">
+					<h6>$ {{ reference.allocated_amount }}</h6>
+					Total Comprobante: $ {{ reference.total_amount }}
+				</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	<!-- taxes -->-
+	<div class="order-taxes d-flex justify-content-end">
+		<table>
+			{% include "erpnext/templates/includes/order/order_taxes.html" %}
+		</table>
+	</div>
+</div>
+{% else %}
 <div class="order-container">
 	<!-- items -->
 	<table class="order-item-table w-100 table">
@@ -107,15 +159,15 @@
 		</table>
 	</div>
 </div>
+{% endif %}
 
-{% if enabled_checkout and ((doc.doctype=="Sales Order" and doc.per_billed <= 0)
-	or (doc.doctype=="Sales Invoice" and doc.outstanding_amount > 0)) %}
+{% if enabled_checkout and ((doc.doctype=="Sales Order" and doc.per_billed <= 0) or (doc.doctype=="Sales Invoice" and doc.outstanding_amount > 0)) %}
 
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<div class="row">
 			<div class="form-column col-sm-6 address-title">
-				<strong>Payment</strong>
+				<strong>{{ _("Payment") }}</strong>
 			</div>
 		</div>
 	</div>
