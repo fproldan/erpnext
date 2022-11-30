@@ -96,13 +96,14 @@ def get_transaction_list(doctype, txt=None, filters=None, limit_start=0, limit_p
 
 	return post_process(doctype, transactions)
 
-def get_list_for_transactions(doctype, txt, filters, limit_start, limit_page_length=20,
-	ignore_permissions=False, fields=None, order_by=None):
+def get_list_for_transactions(doctype, txt, filters, limit_start, limit_page_length=20, ignore_permissions=False, fields=None, order_by=None, **kwargs):
 	""" Get List of transactions like Invoices, Orders """
 	from frappe.www.list import get_list
 	meta = frappe.get_meta(doctype)
 	data = []
 	or_filters = []
+	and_filters = []
+	and_data = []
 
 	for d in get_list(doctype, txt, filters=filters, fields="name", limit_start=limit_start,
 		limit_page_length=limit_page_length, ignore_permissions=ignore_permissions, order_by="modified desc"):
@@ -115,12 +116,19 @@ def get_list_for_transactions(doctype, txt, filters, limit_start, limit_page_len
 				for item in frappe.get_all(child_doctype, {"item_name": ['like', "%" + txt + "%"]}):
 					child = frappe.get_doc(child_doctype, item.name)
 					or_filters.append([doctype, "name", "=", child.parent])
-		if meta.get_field('references'):
+
+	if kwargs:
+		# Payment entry filter by bill_no
+		if meta.get_field('references') and kwargs.get('bill_no'):
 			if meta.get_field('references').options:
 				child_doctype = meta.get_field('references').options
-				for reference in frappe.get_all(child_doctype, {"bill_no": ['like', "%" + txt + "%"]}):
+				for reference in frappe.get_all(child_doctype, {"bill_no": ['like', "%" + kwargs['bill_no'] + "%"]}):
 					child = frappe.get_doc(child_doctype, reference.name)
-					or_filters.append([doctype, "name", "=", child.parent])
+					and_filters.append([doctype, "name", "=", child.parent])
+
+		# By posting_date
+		if meta.get_field('posting_date'):
+			and_filters.append([doctype, "posting_date", "=", kwargs.get('posting_date')])
 
 	if or_filters:
 		for r in frappe.get_list(doctype, fields=fields,filters=filters, or_filters=or_filters,
@@ -128,11 +136,14 @@ def get_list_for_transactions(doctype, txt, filters, limit_start, limit_page_len
 			ignore_permissions=ignore_permissions, order_by=order_by):
 			data.append(r)
 
-		if not data:
-			for r in frappe.get_list(doctype, fields=fields,filters=or_filters, 
-				limit_start=limit_start, limit_page_length=limit_page_length,
-				ignore_permissions=ignore_permissions, order_by=order_by):
-				data.append(r)
+	if and_filters:
+		for r in frappe.get_list(doctype, fields=fields, filters=filters, or_filters=and_filters,
+			limit_start=limit_start, limit_page_length=limit_page_length,
+			ignore_permissions=ignore_permissions, order_by=order_by):
+			and_data.append(r)
+	
+	if and_data or any(kwargs.values()):
+		return [d for d in data if d in and_data]
 	return data
 
 def rfq_transaction_list(parties_doctype, doctype, parties, limit_start, limit_page_length):
