@@ -1,6 +1,6 @@
 <div class="web-list-item transaction-list-item">
 	<div class="row">
-		<div class="col-sm-4">
+		<div class="col-sm-3">
 			<a style="text-decoration: none !important;color: inherit;" href="/{{ pathname }}/{{ doc.name }}">
 				<span class="indicator small {{ doc.indicator_color or ("blue" if doc.docstatus==1 else "gray") }}">{{ doc.name }}</span>
 				<div class="small text-muted transaction-time"
@@ -11,21 +11,23 @@
 		</div>
 		<div class="col-sm-4">
 			<div class="small text-muted items-preview ellipsis ellipsis-width">
-				<ul>
 					{% for reference in doc.references %}
 						{% if reference.bill_no %}
-							<li>{{ reference.bill_no }}</li>
+							{% set datos_comprobante = frappe.db.get_value('Purchase Invoice', reference.reference_name, ['tipo_de_comprobante', 'bill_date']) %}
+								{{ datos_comprobante[0] }}: {{ reference.bill_no }} <span {% if reference.total_amount > 0 %}class="text-success"{% else %}class="text-danger"{% endif %}>${{ reference.total_amount }}</span><br>
+								{{ frappe.utils.formatdate(datos_comprobante[1], 'dd/MM/Y') }} 
+								<hr>
 						{% endif %}
 					{% endfor %}
-				</ul>
 			</div>
 		</div>
-		{% if doc.get('paid_amount') %}
-			<div class="col-sm-2 text-right bold">
-				{{ doc.get_formatted("paid_amount") }}
-			</div>
-		{% endif %}
-		<button onclick="javascript:window.open('/printview?doctype={{ doc.doctype}}&name={{ doc.name }}&format=Orden de Pago', '_blank');" class="text-muted btn btn-default icon-btn" title="Imprimir" data-original-title="Impresión">
+		<div class="col-sm-2 text-right bold">
+			{{ doc.get_formatted("total_allocated_amount") }}
+		</div>
+		<div class="col-sm-2 text-right bold">
+			{{ doc.get_formatted("paid_amount") }}
+		</div>
+		<button onclick="javascript:window.open('/printview?doctype={{ doc.doctype }}&name={{ doc.name }}&format=Orden de Pago', '_blank');" class="text-muted btn btn-default icon-btn" title="Imprimir" data-original-title="Impresión">
 				<svg class="icon icon-sm" style="">
 					<use class="" href="#icon-printer"></use>
 				</svg>
