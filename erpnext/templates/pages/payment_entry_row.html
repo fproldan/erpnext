@@ -13,7 +13,9 @@
 			<div class="small text-muted items-preview ellipsis ellipsis-width">
 				<ul>
 					{% for reference in doc.references %}
-						<li>{{ reference.bill_no }}</li>
+						{% if reference.bill_no %}
+							<li>{{ reference.bill_no }}</li>
+						{% endif %}
 					{% endfor %}
 				</ul>
 			</div>
