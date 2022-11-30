@@ -8,12 +8,24 @@
 {% else %}
 	<div class="website-list" data-doctype="{{ doctype }}"
 		data-txt="{{ txt or '[notxt]' | e }}">
-		<!-- {% if not hide_filters -%}
-			{% include "templates/includes/list/filters.html" %}
-		{%- endif %} -->
+
 		{% if result_heading_template %}{% include result_heading_template %}{% endif %}
 
 		<div class="result">
+			<div class="row">
+				<div class="col-sm-3">
+					<b>Documento</b>
+				</div>
+				<div class="col-sm-4">
+					<b>Comprobantes</b>
+				</div>
+				<div class="col-sm-2 text-right bold">
+					<b>Monto Total</b> 
+				</div>
+				<div class="col-sm-2 text-right bold">
+					<b>Monto Pagado</b>
+				</div>
+			</div>
 			{% for item in result %}
 				{{ item }}
 			{% endfor %}

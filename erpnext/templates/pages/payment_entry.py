@@ -20,7 +20,7 @@ def get_context(context, **dict_params):
     frappe.local.form_dict.update(dict_params)
     frappe.local.form_dict.doctype = 'Payment Entry'
     doctype = frappe.local.form_dict.doctype
-    context.title = 'Entradas de Pago'
+    context.title = 'Pagos'
     context.parents = [{"route":"me", "title":_("My Account")}]
     context.show_sidebar = True
     context.show_search = True
@@ -94,8 +94,7 @@ def get_list_data(doctype, txt=None, bill_no=None, posting_date=None, limit_star
 
     filters = prepare_filters(doctype, controller, kwargs)
     list_context = get_list_context(frappe._dict(), doctype, web_form_name)
-    list_context.title_field = getattr(controller, 'website',
-        {}).get('page_title_field', meta.title_field or 'name')
+    list_context.title_field = getattr(controller, 'website', {}).get('page_title_field', meta.title_field or 'name')
 
     if list_context.filters:
         filters.update(list_context.filters)

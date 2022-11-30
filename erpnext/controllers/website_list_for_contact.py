@@ -141,7 +141,7 @@ def get_list_for_transactions(doctype, txt, filters, limit_start, limit_page_len
 			limit_start=limit_start, limit_page_length=limit_page_length,
 			ignore_permissions=ignore_permissions, order_by=order_by):
 			and_data.append(r)
-	
+
 	if and_data or any(kwargs.values()):
 		return [d for d in data if d in and_data]
 	return data
@@ -215,7 +215,12 @@ def has_website_permission(doc, ptype, user, verbose=False):
 	if customers:
 		return frappe.db.exists(doctype, get_customer_filter(doc, customers))
 	elif suppliers:
-		fieldname = 'suppliers' if doctype == 'Request for Quotation' else 'supplier'
+		if doctype == 'Request for Quotation':
+			fieldname = 'suppliers' 
+		elif doctype == 'Payment Entry':
+			fieldname = 'party_name'
+		else:
+			fieldname = 'supplier'
 		return frappe.db.exists(doctype, {
 			'name': doc.name,
 			fieldname: ["in", suppliers]
