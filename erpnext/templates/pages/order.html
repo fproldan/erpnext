@@ -81,6 +81,15 @@
 {{ doc._header }}
 {% endif %}
 
+{% if doc.doctype == 'Purchase Order' %}
+<div class="pt-2 pb-5 float-right">
+	<h5>Nuevo pacto de entrega:</h5> 
+	<form action="" style="display: flex;">
+		<input name='nuevo_pacto_entrega' class='form-control' type='date' format="yyyy-mm-dd" style='max-width: 200px; display: inline-block; margin-right: 10px;' value='{{ doc.nuevo_pacto_entrega }}'>
+		<input type='submit' class='btn btn-sm btn-light btn-primary' value="{{ _("Guardar") }}">
+	</form>
+</div>
+{% endif %}
 
 {% if doc.doctype == 'Payment Entry' %}
 <div class="order-container">

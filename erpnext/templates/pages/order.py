@@ -44,6 +44,12 @@ def get_context(context):
 		loyalty_program_details = get_loyalty_program_details_with_points(context.doc.customer, customer_loyalty_program)
 		context.available_loyalty_points = int(loyalty_program_details.get("loyalty_points"))
 
+	if frappe.form_dict.get('nuevo_pacto_entrega') and context.doc.doctype == 'Purchase Order':
+		context.doc.nuevo_pacto_entrega = frappe.form_dict.get('nuevo_pacto_entrega')
+		context.doc.save(ignore_permissions=True)
+		frappe.db.commit()
+
+
 def get_attachments(dt, dn):
         return frappe.get_all("File",
 			fields=["name", "file_name", "file_url", "is_private"],
