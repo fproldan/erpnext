@@ -33,8 +33,8 @@ def get_context(context, **dict_params):
     context.posting_date = frappe.local.form_dict.posting_date
     frappe.local.form_dict.fields = ['name', 'docstatus', 'posting_date']
     context.update(get(**frappe.local.form_dict))
-    context.template = 'templates/pages/payment_entry.html'
-    context.list_template = 'templates/pages/payment_entry_list.html'
+    context.template = 'templates/pages/payments.html'
+    context.list_template = 'templates/pages/payments_list.html'
     
 
 @frappe.whitelist(allow_guest=True)
@@ -53,7 +53,7 @@ def get(doctype, txt=None, bill_no=None, posting_date=None, limit_start=0, limit
     if not raw_result: return {"result": []}
 
     result = []
-    row_template = 'templates/pages/payment_entry_row.html'
+    row_template = 'templates/pages/payments_row.html'
     list_view_fields = [df for df in meta.fields if df.fieldname in ['title', 'status', 'posting_date', 'mode_of_payment', 'paid_amount']]
 
     for doc in raw_result:
