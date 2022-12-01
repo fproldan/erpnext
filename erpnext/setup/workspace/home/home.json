@@ -17,6 +17,77 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "Reportes 1",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Tablero de solicitudes",
+   "link_to": "Tablero de solicitudes",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Tablero de pendientes de autorizaci\u00f3n",
+   "link_to": "Orden de compra con autorizacion pendiente",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Tablero de pendientes de recepci\u00f3n",
+   "link_to": "Pendientes de recepci\u00f3n",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Pedidos entregados parcialmente",
+   "link_to": "Pendientes de autorizaci\u00f3n",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Pedidos vencidos",
+   "link_to": "Purchase Order Analysis",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Lista de precios",
+   "link_to": "Lista de precios",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Maestro materiales",
+   "link_to": "stock-balance",
+   "link_type": "Page",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Accounting",
    "onboard": 0,
    "type": "Card Break"
@@ -213,7 +284,7 @@
    "type": "Link"
   }
  ],
- "modified": "2022-08-01 12:50:09.734805",
+ "modified": "2022-11-22 09:23:05.424634",
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Home",
