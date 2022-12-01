@@ -435,7 +435,6 @@ erpnext.buying.PurchaseOrderController = erpnext.buying.BuyingController.extend(
 					allow_child_item_selection: true,
 					child_fielname: "items",
 					child_columns: ["item_code", "qty", "purchase_user"],
-					child_filters: [['purchase_user', 'in', [frappe.user.name, '']]]
 				})
 			}, __("Get Items From"));
 

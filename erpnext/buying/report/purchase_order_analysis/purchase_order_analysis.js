@@ -70,6 +70,12 @@ frappe.query_reports["Purchase Order Analysis"] = {
 			"label": __("Group by Purchase Order"),
 			"fieldtype": "Check",
 			"default": 0
+		},
+		{
+			"fieldname": "delayed",
+			"label": __("Atrasadas"),
+			"fieldtype": "Check",
+			"default": 0
 		}
 	],
 
@@ -79,6 +85,10 @@ frappe.query_reports["Purchase Order Analysis"] = {
 
 		if (in_list(format_fields, column.fieldname) && data && data[column.fieldname] > 0) {
 			value = "<span style='color:green'>" + value + "</span>";
+		}
+
+		if (column.fieldname == "delay" && data && data[column.fieldname] > 0) {
+			value = "<span style='color:red;'>" + value + "</span>";
 		}
 		return value;
 	}

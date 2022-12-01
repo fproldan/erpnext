@@ -99,6 +99,9 @@ def prepare_data(data, filters):
 		sales_order_map = {}
 
 	for row in data:
+		if filters.get("delayed") and row["delay"] <= 0:
+			data.remove(row)
+
 		# sum data for chart
 		completed += row["billed_amount"]
 		pending += row["pending_amount"]
