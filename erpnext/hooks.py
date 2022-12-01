@@ -254,6 +254,7 @@ has_website_permission = {
 	"Sales Order": "erpnext.controllers.website_list_for_contact.has_website_permission",
 	"Quotation": "erpnext.controllers.website_list_for_contact.has_website_permission",
 	"Sales Invoice": "erpnext.controllers.website_list_for_contact.has_website_permission",
+	"Retencion": "erpnext.controllers.website_list_for_contact.has_website_permission",
 	"Supplier Quotation": "erpnext.controllers.website_list_for_contact.has_website_permission",
 	"Purchase Order": "erpnext.controllers.website_list_for_contact.has_website_permission",
 	"Purchase Invoice": "erpnext.controllers.website_list_for_contact.has_website_permission",
