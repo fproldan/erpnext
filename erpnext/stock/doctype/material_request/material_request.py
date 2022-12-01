@@ -94,6 +94,7 @@ class MaterialRequest(BuyingController):
 		self.update_requested_qty_in_production_plan()
 		if self.material_request_type == 'Purchase':
 			self.validate_budget()
+		self.assign_purchase_users()
 
 	def before_save(self):
 		self.set_status(update=True)
@@ -106,6 +107,17 @@ class MaterialRequest(BuyingController):
 		check_on_hold_or_closed_status(self.doctype, self.name)
 
 		self.set_status(update=True, status='Cancelled')
+
+	def assign_purchase_users(self):
+		from frappe.desk.form.assign_to import add as add_assignemnt
+		
+		assign_to = [item.purchase_user for item in self.items if item.purchase_user]
+		if assign_to:
+			add_assignemnt({
+				'doctype': self.doctype,
+				'name': self.name,
+				'assign_to': assign_to
+			})
 
 	def check_modified_date(self):
 		mod_db = frappe.db.sql("""select modified from `tabMaterial Request` where name = %s""",
@@ -280,14 +292,35 @@ def make_purchase_order(source_name, target_doc=None, args=None):
 		args = json.loads(args)
 
 	def postprocess(source, target_doc):
+		supplier_items = []
+		user_items = []
+
 		if frappe.flags.args and frappe.flags.args.default_supplier:
 			# items only for given default supplier
-			supplier_items = []
 			for d in target_doc.items:
 				default_supplier = get_item_defaults(d.item_code, target_doc.company).get('default_supplier')
 				if frappe.flags.args.default_supplier == default_supplier:
 					supplier_items.append(d)
-			target_doc.items = supplier_items
+
+		if frappe.flags.args and frappe.flags.args.default_user:
+			for d in target_doc.items:
+				purchase_user = get_item_defaults(d.item_code, target_doc.company).get('purchase_user')
+
+				if frappe.flags.args.include_null_default_user:
+					if frappe.flags.args.default_user == purchase_user or purchase_user is None:
+						user_items.append(d)
+				else:
+					if frappe.flags.args.default_user == purchase_user:
+						user_items.append(d)
+
+		if frappe.flags.args and not frappe.flags.args.default_user and frappe.flags.args.include_null_default_user:
+			for d in target_doc.items:
+				purchase_user = get_item_defaults(d.item_code, target_doc.company).get('purchase_user')
+				if purchase_user is None:
+					user_items.append(d)
+
+		if frappe.flags.args and (frappe.flags.args.default_supplier or frappe.flags.args.default_user or frappe.flags.args.include_null_default_user):
+			target_doc.items = list(set(supplier_items + user_items))
 
 		set_missing_values(source, target_doc)
 
@@ -397,25 +430,42 @@ def get_material_requests_based_on_supplier(doctype, txt, searchfield, start, pa
 		conditions += "and mr.transaction_date between '{0}' and '{1}' ".format(date[0], date[1])
 
 	supplier = filters.get("supplier")
-	supplier_items = get_items_based_on_default_supplier(supplier)
 
-	if not supplier_items:
-		frappe.throw(_("{0} is not the default supplier for any items.").format(supplier))
+	if supplier:
+		supplier_items = get_items_based_on_default_supplier(supplier)
 
-	material_requests = frappe.db.sql("""select distinct mr.name, transaction_date,company
-		from `tabMaterial Request` mr, `tabMaterial Request Item` mr_item
-		where mr.name = mr_item.parent
-			and mr_item.item_code in ({0})
-			and mr.material_request_type = 'Purchase'
-			and mr.per_ordered < 99.99
-			and mr.docstatus = 1
-			and mr.status != 'Stopped'
-			and mr.company = '{1}'
-			{2}
-		order by mr_item.item_code ASC
-		limit {3} offset {4} """ \
-		.format(', '.join(['%s']*len(supplier_items)), filters.get("company"), conditions, page_len, start),
-		tuple(supplier_items), as_dict=1)
+		if not supplier_items:
+			frappe.throw(_("{0} is not the default supplier for any items.").format(supplier))
+
+		material_requests = frappe.db.sql("""select distinct mr.name, transaction_date,company
+			from `tabMaterial Request` mr, `tabMaterial Request Item` mr_item
+			where mr.name = mr_item.parent
+				and mr_item.item_code in ({0})
+				and mr.material_request_type = 'Purchase'
+				and mr.per_ordered < 99.99
+				and mr.docstatus = 1
+				and mr.status != 'Stopped'
+				and mr.company = '{1}'
+				{2}
+			order by mr_item.item_code ASC
+			limit {3} offset {4} """ \
+			.format(', '.join(['%s']*len(supplier_items)), filters.get("company"), conditions, page_len, start),
+			tuple(supplier_items), as_dict=1)
+	else:
+		print(frappe.session.user)
+		material_requests = frappe.db.sql("""select distinct mr.name, mr.transaction_date, mr.company, mr.status, mr.schedule_date
+			from `tabMaterial Request` mr, `tabMaterial Request Item` mr_item
+			where mr.name = mr_item.parent
+				and mr.material_request_type = 'Purchase'
+				and mr.per_ordered < 100
+				and mr.docstatus = 1
+				and mr.status != 'Stopped'
+				and mr.company = '{0}'
+				and (mr_item.purchase_user='{1}' or mr_item.purchase_user IS NULL)
+				{2}
+			order by mr_item.item_code ASC
+			limit {3} offset {4} """ \
+			.format(filters.get("company"), frappe.session.user, conditions, page_len, start), as_dict=1)
 
 	return material_requests
 
@@ -432,6 +482,21 @@ def get_default_supplier_query(doctype, txt, searchfield, start, page_len, filte
 		where parent in ({0}) and
 		default_supplier IS NOT NULL
 		""".format(', '.join(['%s']*len(item_list))),tuple(item_list))
+
+
+@frappe.whitelist()
+@frappe.validate_and_sanitize_search_inputs
+def get_default_user_query(doctype, txt, searchfield, start, page_len, filters):
+	doc = frappe.get_doc("Material Request", filters.get("doc"))
+	user_list = []
+	for d in doc.items:
+		user_list.append(d.purchase_user)
+
+	return frappe.db.sql("""select name
+		from `tabUser`
+		where name in ({0})
+		""".format(', '.join(['%s']*len(user_list))),tuple(user_list))
+
 
 @frappe.whitelist()
 def make_supplier_quotation(source_name, target_doc=None):

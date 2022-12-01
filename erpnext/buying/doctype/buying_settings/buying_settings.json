@@ -22,7 +22,15 @@
   "subcontract",
   "backflush_raw_materials_of_subcontract_based_on",
   "column_break_11",
-  "over_transfer_allowance"
+  "over_transfer_allowance",
+  "configuracion_validacion_de_oc_por_montos_section",
+  "rol_aprobar_rs",
+  "rol_aprobar_do",
+  "rol_aprobar_ga",
+  "aprobar",
+  "column_break_23",
+  "rs_monto_menor_a",
+  "do_monto_menor_igual_a"
  ],
  "fields": [
   {
@@ -133,6 +141,49 @@
    "in_list_view": 1,
    "label": "Condici\u00f3n de IVA Predeterminada",
    "options": "Condicion de IVA"
+  },
+  {
+   "fieldname": "configuracion_validacion_de_oc_por_montos_section",
+   "fieldtype": "Section Break",
+   "label": "Configuracion Validacion de OC por montos"
+  },
+  {
+   "fieldname": "column_break_23",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "rs_monto_menor_a",
+   "fieldtype": "Currency",
+   "label": "RS Monto menor a"
+  },
+  {
+   "fieldname": "do_monto_menor_igual_a",
+   "fieldtype": "Currency",
+   "label": "DO Monto menor igual a"
+  },
+  {
+   "fieldname": "rol_aprobar_rs",
+   "fieldtype": "Link",
+   "label": "Rol Aprobar RS",
+   "options": "Role"
+  },
+  {
+   "fieldname": "rol_aprobar_do",
+   "fieldtype": "Link",
+   "label": "Rol Aprobar DO",
+   "options": "Role"
+  },
+  {
+   "fieldname": "rol_aprobar_ga",
+   "fieldtype": "Link",
+   "label": "Rol Aprobar GA",
+   "options": "Role"
+  },
+  {
+   "fieldname": "aprobar",
+   "fieldtype": "Link",
+   "label": "Aprobar",
+   "options": "Role"
   }
  ],
  "icon": "fa fa-cog",
@@ -140,7 +191,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2022-08-09 12:33:19.707518",
+ "modified": "2022-10-27 10:40:36.596767",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Buying Settings",
@@ -156,6 +207,7 @@
    "write": 1
   }
  ],
+ "route": "app/doctype/Buying%20Settings",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

@@ -419,12 +419,18 @@ erpnext.buying.PurchaseOrderController = erpnext.buying.BuyingController.extend(
 						schedule_date: undefined,
 						status: undefined
 					},
-					get_query_filters: {
-						material_request_type: "Purchase",
-						docstatus: 1,
-						status: ["!=", "Stopped"],
-						per_ordered: ["<", 100],
-						company: me.frm.doc.company
+					get_query: function() {
+						var filters = {
+							material_request_type: "Purchase",
+							docstatus: 1,
+							status: ["!=", "Stopped"],
+							per_ordered: ["<", 100],
+							company: me.frm.doc.company
+						};
+						return {
+							query: "erpnext.stock.doctype.material_request.material_request.get_material_requests_based_on_supplier",
+							filters: filters
+						};
 					},
 					allow_child_item_selection: true,
 					child_fielname: "items",

@@ -220,6 +220,10 @@ erpnext.TransactionController = erpnext.taxes_and_totals.extend({
 			});
 		}
 
+		if (this.frm.fields_dict.naming_series) {
+			this.setup_naming_series_by_company();
+		}
+
 	},
 	onload: function() {
 		var me = this;
@@ -253,6 +257,32 @@ erpnext.TransactionController = erpnext.taxes_and_totals.extend({
 		if(!this.frm.doc.is_return && this.frm.doc.return_against) {
 			this.frm.set_value('return_against', '');
 		}
+	},
+
+	setup_naming_series_by_company: function() {
+		var doctype_list = [
+			'Delivery Note', 'Delivery Trip', 'Journal Entry', 'Material Request', 'Opportunity',
+			'Payment Entry', 'Payment Request', 'Purchase Invoice', 'Purchase Order', 'Purchase Receipt',
+			'Quotation', 'Request for Quotation', 'Sales Order', 'Stock Entry', 'Stock Reconciliation',
+			'Supplier Quotation', 'Timesheet', 'Warranty Claim', 'Work Order'
+		];
+		if(!in_list(doctype_list, this.frm.doc.doctype)) { return; }
+		const me = this;
+		frappe.call({
+			type: "GET",
+			method: "erpnext.setup.doctype.naming_series.naming_series.get_naming_series_for_company",
+			args: {
+				doctype: me.frm.doc.doctype,
+				company: me.frm.doc.company,
+			},
+			callback: function(r){
+				if(r.message){
+					me.frm.set_df_property("naming_series", "options", r.message.split("\n"));
+					me.frm.set_value("naming_series", r.message.split("\n")[0]);
+					me.frm.refresh_field("naming_series");
+				}
+			}
+		});
 	},
 
 	setup_quality_inspection: function() {
@@ -915,6 +945,8 @@ erpnext.TransactionController = erpnext.taxes_and_totals.extend({
 		if(this.frm.doc.company) {
 			erpnext.last_selected_company = this.frm.doc.company;
 		}
+
+		this.setup_naming_series_by_company();
 	},
 
 	transaction_date: function() {

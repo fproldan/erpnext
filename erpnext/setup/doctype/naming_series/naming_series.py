@@ -221,3 +221,19 @@ def get_default_naming_series(doctype):
 			NamingSeriesNotSetError)
 	else:
 		return out
+
+@frappe.whitelist()
+def get_naming_series_for_company(doctype, company):
+	naming_series = frappe.get_meta(doctype).get_field("naming_series").options or ""
+	naming_series_split = naming_series.split("\n")
+	abbr = frappe.get_value('Company', company, 'abbr') + '-'
+
+	out = []
+	for ns in naming_series_split:
+		if abbr in ns:
+			out.append(ns)
+
+	if out:
+		return '\n'.join(out)
+	return naming_series
+
