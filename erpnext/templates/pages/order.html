@@ -86,7 +86,7 @@
 	<h5>Nuevo pacto de entrega:</h5> 
 	<form action="" style="display: flex;">
 		<input name='nuevo_pacto_entrega' class='form-control' type='date' format="yyyy-mm-dd" style='max-width: 200px; display: inline-block; margin-right: 10px;' value='{{ doc.nuevo_pacto_entrega }}'>
-		<input type='submit' class='btn btn-sm btn-light btn-primary' value="{{ _("Guardar") }}">
+		<input type='submit' class='btn btn-sm btn-light btn-primary' value="{{ _("Modificar") }}">
 	</form>
 </div>
 {% endif %}
@@ -108,7 +108,7 @@
 			{% set datos_comprobante = frappe.db.get_value('Purchase Invoice', reference.reference_name, ['tipo_de_comprobante', 'bill_date']) %}
 			<tr class="order-items">
 				<td>
-					<h6>{{ datos_comprobante[0] }} - {{ reference.bill_no }}</h6>
+					<a href="/purchase-invoices/{{ reference.reference_name }}" target="_blank"><h6>{{ datos_comprobante[0] }}: {{ reference.bill_no }}</h6></a>
 					Fecha: {{ frappe.utils.formatdate(datos_comprobante[1], 'dd/MM/Y') }} 
 				</td>
 				<td class="text-right">
@@ -119,7 +119,7 @@
 		{% endfor %}
 		</tbody>
 	</table>
-	<!-- taxes -->-
+	<!-- taxes -->
 	<div class="order-taxes d-flex justify-content-end">
 		<table>
 			{% include "erpnext/templates/includes/order/order_taxes.html" %}
@@ -171,7 +171,6 @@
 {% endif %}
 
 {% if enabled_checkout and ((doc.doctype=="Sales Order" and doc.per_billed <= 0) or (doc.doctype=="Sales Invoice" and doc.outstanding_amount > 0)) %}
-
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<div class="row">
@@ -217,6 +216,58 @@
 </div>
 {% endif %}
 
+{% if doc.doctype == 'Payment Entry' and doc.retenciones %}
+<div class="order-container pt-10">
+	<table class="order-item-table w-100 table">
+		<thead class="order-items order-item-header">
+			<th width="40%">
+				{{ _("Retenciones") }}
+			</th>
+			<th width="20%" class="text-right">
+			</th>
+			<th width="20%" class="text-right">
+			</th>
+			<th width="20%" class="text-right">
+			</th>
+		</thead>
+		<tbody>
+		{% for retencion in doc.retenciones %}
+		<tr class="order-items">
+			<td>
+				{{ retencion.retencion_name }}
+			</td>
+			<td class="text-right">
+				{{ retencion.retencion }}
+			</td>
+			<td class="text-right">
+				$ {{ retencion.monto }}
+			</td>
+			<td class="text-right">
+				<button onclick="javascript:window.open('/printview?doctype=Retencion&name={{ retencion.retencion_name }}&format=Retencion', '_blank');" class="text-muted btn btn-default icon-btn" title="Imprimir" data-original-title="Impresión">
+					<svg class="icon icon-sm" style="">
+						<use class="" href="#icon-printer"></use>
+					</svg>
+				</button>
+			</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	<div class="order-taxes d-flex justify-content-end">
+		<table>
+			<tr>
+				<th class="text-left item-grand-total" colspan="1">
+					{{ _("Total Retenciones") }}
+				</th>
+				<th class="text-right item-grand-total totals" colspan="3">
+					$ {{ doc.retenciones | sum(attribute='monto') }}
+				</th>
+			</tr>
+
+		</table>
+	</div>
+</div>
+{% endif %}
 
 {% if attachments %}
 <div class="order-item-table">

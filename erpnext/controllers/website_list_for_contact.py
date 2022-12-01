@@ -212,6 +212,8 @@ def get_customers_suppliers(doctype, user):
 
 def has_website_permission(doc, ptype, user, verbose=False):
 	doctype = doc.doctype
+	if doctype == 'Retencion':
+		return True
 	customers, suppliers = get_customers_suppliers(doctype, user)
 	if customers:
 		return frappe.db.exists(doctype, get_customer_filter(doc, customers))
