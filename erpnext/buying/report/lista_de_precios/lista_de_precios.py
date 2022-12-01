@@ -80,7 +80,11 @@ def execute(filters=None):
     for d in data:
         item_purchase_user = frappe.db.get_value("Item Default", {"parent": d['item_code'], "company": filters.company}, 'purchase_user')
         item_group_purchase_user = frappe.db.get_value("Item Default", {"parent": d['item_group'], "company": filters.company}, 'purchase_user')
-        d.update({"purchase_user": item_purchase_user or item_group_purchase_user})
+        purchase_user = item_purchase_user or item_group_purchase_user
+        d.update({"purchase_user": purchase_user})
+
+    if filters.get('purchase_user'):
+        data = [d for d in data if d['purchase_user'] == filters.get('purchase_user')]
     return get_columns(), data
 
 
