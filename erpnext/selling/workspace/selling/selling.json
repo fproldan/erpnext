@@ -302,7 +302,6 @@
    "hidden": 0,
    "is_query_report": 0,
    "label": "Sales Commission",
-   "link_count": 0,
    "link_to": "Sales Commission",
    "link_type": "DocType",
    "onboard": 0,
@@ -312,7 +311,6 @@
    "hidden": 0,
    "is_query_report": 0,
    "label": "Process Sales Commission",
-   "link_count": 0,
    "link_to": "Process Sales Commission",
    "link_type": "DocType",
    "onboard": 0,
@@ -411,6 +409,15 @@
    "is_query_report": 1,
    "label": "Item-wise Sales History",
    "link_to": "Item-wise Sales History",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Payment Terms Status for Sales Order",
+   "link_to": "Payment Terms Status for Sales Order",
    "link_type": "Report",
    "onboard": 0,
    "type": "Link"
@@ -543,7 +550,7 @@
    "type": "Link"
   }
  ],
- "modified": "2021-10-29 11:34:37.707494",
+ "modified": "2022-10-14 13:18:08.414325",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Selling",
