@@ -11,14 +11,23 @@
 		</div>
 		<div class="col-sm-4">
 			<div class="small text-muted items-preview ellipsis ellipsis-width">
-					{% for reference in doc.references %}
-						{% if reference.bill_no %}
-							{% set datos_comprobante = frappe.db.get_value('Purchase Invoice', reference.reference_name, ['tipo_de_comprobante', 'bill_date']) %}
-								{{ datos_comprobante[0] }}: {{ reference.bill_no }} <span {% if reference.total_amount > 0 %}class="text-success"{% else %}class="text-danger"{% endif %}>${{ reference.total_amount }}</span><br>
-								{{ frappe.utils.formatdate(datos_comprobante[1], 'dd/MM/Y') }} 
-								<hr>
-						{% endif %}
-					{% endfor %}
+				{% for reference in doc.references %}
+					{% if reference.bill_no %}
+						{% set datos_comprobante = frappe.db.get_value('Purchase Invoice', reference.reference_name, ['tipo_de_comprobante', 'bill_date']) %}
+							<div>
+								<b>{{ datos_comprobante[0] }}:</b> {{ reference.bill_no }} <span {% if reference.total_amount > 0 %}class="text-success float-right"{% else %}class="text-danger float-right"{% endif %}>${{ reference.total_amount }}</span>
+								<br>
+								{{ frappe.utils.formatdate(datos_comprobante[1], 'dd/MM/Y') }}
+							</div>
+					{% endif %}
+				{% endfor %}
+
+				{% if doc.references and doc.references|length > 1 %}
+					<hr style="margin-top:5px;margin-bottom:5px;" />
+				{% endif %}
+				{% for retencion in doc.retenciones %}
+					{{ retencion.retencion }} <span class="text-danger float-right">${{ retencion.monto }}</span><br>
+				{% endfor %}
 			</div>
 		</div>
 		<div class="col-sm-2 text-right bold">

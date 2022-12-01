@@ -104,6 +104,7 @@ def get_list_for_transactions(doctype, txt, filters, limit_start, limit_page_len
 	or_filters = []
 	and_filters = []
 	and_data = []
+	filters_exists = any(kwargs.values())
 
 	for d in get_list(doctype, txt, filters=filters, fields="name", limit_start=limit_start,
 		limit_page_length=limit_page_length, ignore_permissions=ignore_permissions, order_by="modified desc"):
@@ -117,7 +118,7 @@ def get_list_for_transactions(doctype, txt, filters, limit_start, limit_page_len
 					child = frappe.get_doc(child_doctype, item.name)
 					or_filters.append([doctype, "name", "=", child.parent])
 
-	if kwargs:
+	if filters_exists:
 		# Payment entry filter by bill_no
 		if meta.get_field('references') and kwargs.get('bill_no'):
 			if meta.get_field('references').options:
@@ -142,7 +143,7 @@ def get_list_for_transactions(doctype, txt, filters, limit_start, limit_page_len
 			ignore_permissions=ignore_permissions, order_by=order_by):
 			and_data.append(r)
 
-	if and_data or any(kwargs.values()):
+	if and_data or filters_exists:
 		return [d for d in data if d in and_data]
 	return data
 
