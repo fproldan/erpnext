@@ -349,8 +349,11 @@ class BOM(WebsiteGenerator):
 			d.base_rate = flt(d.rate) * flt(self.conversion_rate)
 			d.base_amount = flt(d.amount) * flt(self.conversion_rate)
 
-			last_purchase_rate_usd = self.get_last_purchase_rate_usd(d.item_code)
-			print(d.item_code, last_purchase_rate_usd)
+			if hasattr(d, 'precio_usd'):
+				last_purchase_rate_usd = self.get_last_purchase_rate_usd(d.item_code)
+				if last_purchase_rate_usd:
+					d.precio_usd = last_purchase_rate_usd
+					d.importe_usd = flt(d.rate) * flt(d.qty)
 
 			if save:
 				d.db_update()
