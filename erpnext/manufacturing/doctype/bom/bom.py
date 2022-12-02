@@ -259,7 +259,7 @@ class BOM(WebsiteGenerator):
 			 'image'		: item and args['image'] or '',
 			 'stock_uom'	: item and args['stock_uom'] or '',
 			 'uom'			: item and args['stock_uom'] or '',
- 			 'conversion_factor': 1,
+			 'conversion_factor': 1,
 			 'bom_no'		: args['bom_no'],
 			 'rate'			: rate,
 			 'qty'			: args.get("qty") or args.get("stock_qty") or 1,
@@ -301,6 +301,26 @@ class BOM(WebsiteGenerator):
 								.format(self.rm_cost_as_per, arg["item_code"]), alert=True)
 		return flt(rate) * flt(self.plc_conversion_rate or 1) / (self.conversion_rate or 1)
 
+	def get_last_purchase_rate_usd(self, item_code):
+		query = """
+			SELECT purchase_invoice.name as purchase_invoice_name, purchase_invoice_item.item_code AS item_code, purchase_invoice_item.item_name AS item_name, purchase_invoice_item.rate AS rate,
+				   purchase_invoice.conversion_rate as conversion_rate, purchase_invoice.posting_date AS posting_date, purchase_invoice.currency as currency
+			FROM `tabPurchase Invoice` purchase_invoice, `tabPurchase Invoice Item` purchase_invoice_item
+			WHERE purchase_invoice_item.parent = purchase_invoice.name
+			AND purchase_invoice.docstatus = 1
+			AND purchase_invoice.company = %s
+			AND purchase_invoice_item.item_code = %s
+			ORDER BY purchase_invoice.posting_date DESC, purchase_invoice.posting_time DESC
+			LIMIT 1
+		"""
+		rows = frappe.db.sql(query, (self.company, item_code), as_dict=1)
+
+		for row in rows:
+			if row['currency'] != 'USD':
+				conversion_rate = get_exchange_rate(row['currency'], "USD", str(row['posting_date']), "for_buying")
+				return row['rate'] * conversion_rate
+		return None
+
 	@frappe.whitelist()
 	def update_cost(self, update_parent=True, from_child_bom=False, update_hour_rate = True, save=True):
 		if self.docstatus == 2:
@@ -328,6 +348,9 @@ class BOM(WebsiteGenerator):
 			d.amount = flt(d.rate) * flt(d.qty)
 			d.base_rate = flt(d.rate) * flt(self.conversion_rate)
 			d.base_amount = flt(d.amount) * flt(self.conversion_rate)
+
+			last_purchase_rate_usd = self.get_last_purchase_rate_usd(d.item_code)
+			print(d.item_code, last_purchase_rate_usd)
 
 			if save:
 				d.db_update()
@@ -929,7 +952,7 @@ def validate_bom_no(item, bom_no):
 				rm_item_exists = True
 		if bom.item.lower() == item.lower() or \
 			bom.item.lower() == cstr(frappe.db.get_value("Item", item, "variant_of")).lower():
- 				rm_item_exists = True
+				rm_item_exists = True
 		if not rm_item_exists:
 			frappe.throw(_("BOM {0} does not belong to Item {1}").format(bom_no, item))
 
