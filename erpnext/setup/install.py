@@ -34,6 +34,7 @@ def after_install():
 	add_standard_navbar_items()
 	add_app_name()
 	add_non_standard_user_types()
+	add_usuarios_reducidos_user_types()
 	add_canal_de_venta()
 	frappe.db.commit()
 
@@ -171,6 +172,13 @@ def add_standard_navbar_items():
 def add_app_name():
 	frappe.db.set_value('System Settings', None, 'app_name', 'ERPNext')
 
+def add_usuarios_reducidos_user_types():
+	user_types = get_user_types_data()
+
+	for user_type, data in iteritems(user_types):
+		create_custom_role(data)
+		create_user_type(user_type, data)
+
 def add_non_standard_user_types():
 	user_types = get_user_types_data()
 
@@ -185,25 +193,46 @@ def add_non_standard_user_types():
 		create_user_type(user_type, data)
 
 def get_user_types_data():
-	return {}
 	return {
-		'Employee Self Service': {
-			'role': 'Employee Self Service',
-			'apply_user_permission_on': 'Employee',
-			'user_id_field': 'user_id',
-			'doctypes': {
-				'Salary Slip': ['read'],
-				'Employee': ['read', 'write'],
-				'Expense Claim': ['read', 'write', 'create', 'delete'],
-				'Leave Application': ['read', 'write', 'create', 'delete'],
-				'Attendance Request': ['read', 'write', 'create', 'delete'],
-				'Compensatory Leave Request': ['read', 'write', 'create', 'delete'],
-				'Employee Tax Exemption Declaration': ['read', 'write', 'create', 'delete'],
-				'Employee Tax Exemption Proof Submission': ['read', 'write', 'create', 'delete'],
-				'Timesheet': ['read', 'write', 'create', 'delete', 'submit', 'cancel', 'amend']
-			}
+		'Usuario de Ventas Reducido': {
+			'role': 'Sales User',
+			'doctypes': {},
+			'is_standard': 1,
+		},
+		'Usuario de Soporte Reducido': {
+			'role': 'Support Team',
+			'doctypes': {},
+			'is_standard': 1,
+		},
+		'Usuario de Proyecto Reducido': {
+			'role': 'Projects User',
+			'doctypes': {},
+			'is_standard': 1,
+		},
+		'Usuario Contador': {
+			'role': 'Usuario Contador',
+			'doctypes': {},
+			'is_standard': 1,
 		}
 	}
+	# return {
+	# 	'Employee Self Service': {
+	# 		'role': 'Employee Self Service',
+	# 		'apply_user_permission_on': 'Employee',
+	# 		'user_id_field': 'user_id',
+	# 		'doctypes': {
+	# 			'Salary Slip': ['read'],
+	# 			'Employee': ['read', 'write'],
+	# 			'Expense Claim': ['read', 'write', 'create', 'delete'],
+	# 			'Leave Application': ['read', 'write', 'create', 'delete'],
+	# 			'Attendance Request': ['read', 'write', 'create', 'delete'],
+	# 			'Compensatory Leave Request': ['read', 'write', 'create', 'delete'],
+	# 			'Employee Tax Exemption Declaration': ['read', 'write', 'create', 'delete'],
+	# 			'Employee Tax Exemption Proof Submission': ['read', 'write', 'create', 'delete'],
+	# 			'Timesheet': ['read', 'write', 'create', 'delete', 'submit', 'cancel', 'amend']
+	# 		}
+	# 	}
+	# }
 
 def create_custom_role(data):
 	if data.get('role') and not frappe.db.exists('Role', data.get('role')):
@@ -223,6 +252,7 @@ def create_user_type(user_type, data):
 		doc.update({
 			'name': user_type,
 			'role': data.get('role'),
+			'is_standard': data.get('is_standard') or 0,
 			'user_id_field': data.get('user_id_field'),
 			'apply_user_permission_on': data.get('apply_user_permission_on')
 		})
