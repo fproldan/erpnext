@@ -198,21 +198,25 @@ def get_user_types_data():
 			'role': 'Sales User',
 			'doctypes': {},
 			'is_standard': 1,
+			'blocked_modules': ['Support', 'HR', 'Utilities', 'Custom', 'Website']
 		},
 		'Usuario de Soporte Reducido': {
 			'role': 'Support Team',
 			'doctypes': {},
 			'is_standard': 1,
+			'blocked_modules': []
 		},
 		'Usuario de Proyecto Reducido': {
 			'role': 'Projects User',
 			'doctypes': {},
 			'is_standard': 1,
+			'blocked_modules': []
 		},
 		'Usuario Contador': {
 			'role': 'Usuario Contador',
 			'doctypes': {},
 			'is_standard': 1,
+			'blocked_modules': []
 		}
 	}
 	# return {
