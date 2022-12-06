@@ -21,10 +21,18 @@
 		{% if doc.doctype == 'Purchase Order' and False %}
 		<a class="dropdown-item" href="/api/method/erpnext.buying.doctype.purchase_order.purchase_order.make_purchase_invoice_from_portal?purchase_order_name={{ doc.name }}" data-action="make_purchase_invoice">{{ _("Make Purchase Invoice") }}</a>
 		{% endif %}
-		<a class="dropdown-item" href='/printview?doctype={{ doc.doctype}}&name={{ doc.name }}&format={{ print_format }}'
-			target="_blank" rel="noopener noreferrer">
-			{{ _("Print") }}
-		</a>
+		{% if doc.doctype == 'Payment Entry' %}
+			<a class="dropdown-item" href='/printview?doctype={{ doc.doctype }}&name={{ doc.name }}&format=Orden de Pago' target="_blank" rel="noopener noreferrer">Orden de Pago</a>
+			<a class="dropdown-item {% if not doc.has_retencion('IVA') %}disabled{% endif %}" href='/printview?doctype={{ doc.doctype }}&name={{ doc.name }}&format=Orden de Pago' target="_blank" rel="noopener noreferrer">IVA</a>
+			<a class="dropdown-item {% if not doc.has_retencion('Ingresos Brutos') %}disabled{% endif %}" href='/printview?doctype={{ doc.doctype }}&name={{ doc.name }}&format=Orden de Pago' target="_blank" rel="noopener noreferrer">IIBB</a>
+			<a class="dropdown-item {% if not doc.has_retencion('Ganancias') %}disabled{% endif %}" href='/printview?doctype={{ doc.doctype }}&name={{ doc.name }}&format=Orden de Pago' target="_blank" rel="noopener noreferrer">Ganancias</a>
+			<a class="dropdown-item {% if not doc.has_retencion('Seguridad Social') %}disabled{% endif %}" href='/printview?doctype={{ doc.doctype }}&name={{ doc.name }}&format=Orden de Pago' target="_blank" rel="noopener noreferrer">SUSS</a>
+		{% else %}
+			<a class="dropdown-item" href='/printview?doctype={{ doc.doctype}}&name={{ doc.name }}&format={{ print_format }}'
+				target="_blank" rel="noopener noreferrer">
+				{{ _("Print") }}
+			</a>
+		{% endif %}
 	</ul>
 </div>
 

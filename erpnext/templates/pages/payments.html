@@ -16,7 +16,7 @@
 <div class="pt-2 pb-2">
 	<form action="" style="display: flex;">
 		<select name='company' class="form-control" style='max-width: 200px; display: inline-block; margin-right: 10px;' >
-			<option value=""></option>
+			<option value="">{{ _('Company') }}</option>
 			{% for company in companies %}
 				<option value="{{ company.name }}" {% if company.name == frappe.form_dict.company %}selected{% endif %}>{{ company.name }}</option>
 			{% endfor %}

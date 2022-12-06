@@ -36,11 +36,18 @@
 		<div class="col-sm-2 text-right bold">
 			{{ doc.get_formatted("paid_amount") }}
 		</div>
-		<button onclick="javascript:window.open('/printview?doctype={{ doc.doctype }}&name={{ doc.name }}&format=Orden de Pago', '_blank');" class="text-muted btn btn-default icon-btn" title="Imprimir" data-original-title="Impresión">
-				<svg class="icon icon-sm" style="">
-					<use class="" href="#icon-printer"></use>
-				</svg>
+		<div class="dropdown">
+			<button class="btn-xs btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+				<span><svg class="icon icon-sm" style=""><use class="" href="#icon-printer"></use></svg></span>
+				<b class="caret"></b>
 			</button>
+			<ul class="dropdown-menu dropdown-menu-right" role="menu">
+				<a class="dropdown-item" href='/printview?doctype={{ doc.doctype }}&name={{ doc.name }}&format=Orden de Pago' target="_blank" rel="noopener noreferrer">Orden de Pago</a>
+				<a class="dropdown-item {% if not doc.has_retencion('IVA') %}disabled{% endif %}" href='/printview?doctype={{ doc.doctype }}&name={{ doc.name }}&format=Orden de Pago' target="_blank" rel="noopener noreferrer">IVA</a>
+				<a class="dropdown-item {% if not doc.has_retencion('Ingresos Brutos') %}disabled{% endif %}" href='/printview?doctype={{ doc.doctype }}&name={{ doc.name }}&format=Orden de Pago' target="_blank" rel="noopener noreferrer">IIBB</a>
+				<a class="dropdown-item {% if not doc.has_retencion('Ganancias') %}disabled{% endif %}" href='/printview?doctype={{ doc.doctype }}&name={{ doc.name }}&format=Orden de Pago' target="_blank" rel="noopener noreferrer">Ganancias</a>
+				<a class="dropdown-item {% if not doc.has_retencion('Seguridad Social') %}disabled{% endif %}" href='/printview?doctype={{ doc.doctype }}&name={{ doc.name }}&format=Orden de Pago' target="_blank" rel="noopener noreferrer">SUSS</a>
+			</ul>
 		</div>
 	</div>
 </div>
