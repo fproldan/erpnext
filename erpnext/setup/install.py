@@ -36,8 +36,8 @@ def after_install():
 	add_non_standard_user_types()
 	add_usuarios_reducidos_user_types()
 	add_canal_de_venta()
+	create_usuario_contador()
 	frappe.db.commit()
-
 
 def check_setup_wizard_not_completed():
 	if cint(frappe.db.get_single_value('System Settings', 'setup_complete') or 0):
@@ -171,6 +171,27 @@ def add_standard_navbar_items():
 
 def add_app_name():
 	frappe.db.set_value('System Settings', None, 'app_name', 'ERPNext')
+
+def create_usuario_contador():
+	install_docs = [
+		{
+			'doctype':'User',
+			'name':'Contador',
+			'first_name':'Contador',
+			'email':'contador@contador.com',
+			'enabled': 1,
+			'roles': [{'role': 'Usuario Contador'}],
+			'thread_notify': 0,
+			'send_me_a_copy': 0,
+			'user_type': 'Usuario Contador'
+		},
+	]
+
+	for d in install_docs:
+		try:
+			frappe.get_doc(d).insert()
+		except frappe.NameError:
+			pass
 
 def add_usuarios_reducidos_user_types():
 	user_types = get_user_types_data()
