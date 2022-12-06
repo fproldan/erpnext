@@ -15,6 +15,12 @@
 {% block page_content %}
 <div class="pt-2 pb-2">
 	<form action="" style="display: flex;">
+		<select name='company' class="form-control" style='max-width: 200px; display: inline-block; margin-right: 10px;' >
+			<option value=""></option>
+			{% for company in companies %}
+				<option value="{{ company.name }}" {% if company.name == frappe.form_dict.company %}selected{% endif %}>{{ company.name }}</option>
+			{% endfor %}
+		</select>
 		<input name='txt' placeholder="Nombre" class='form-control' type='text' style='max-width: 200px; display: inline-block; margin-right: 10px;' value='{{ frappe.form_dict.txt or ''}}'>
 		<input name='bill_no' placeholder="Número de factura" class='form-control' type='text' style='max-width: 200px; display: inline-block; margin-right: 10px;' value='{{ frappe.form_dict.bill_no or ''}}'>
 		<input name='posting_date' class='form-control' type='date' format="yyyy-mm-dd" style='max-width: 200px; display: inline-block; margin-right: 10px;' value='{{ frappe.form_dict.posting_date or ''}}'>

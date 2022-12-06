@@ -128,8 +128,12 @@ def get_list_for_transactions(doctype, txt, filters, limit_start, limit_page_len
 					and_filters.append([doctype, "name", "=", child.parent])
 
 		# By posting_date
-		if meta.get_field('posting_date'):
+		if meta.get_field('posting_date') and kwargs.get('posting_date'):
 			and_filters.append([doctype, "posting_date", "=", kwargs.get('posting_date')])
+
+		# By company
+		if meta.get_field('company') and kwargs.get('company'):
+			and_filters.append([doctype, "company", "=", kwargs.get('company')])
 
 	if or_filters:
 		for r in frappe.get_list(doctype, fields=fields,filters=filters, or_filters=or_filters,
