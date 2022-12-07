@@ -173,25 +173,28 @@ def add_app_name():
 	frappe.db.set_value('System Settings', None, 'app_name', 'ERPNext')
 
 def create_usuario_contador():
-	install_docs = [
-		{
-			'doctype':'User',
-			'name':'Contador',
-			'first_name':'Contador',
-			'email':'contador@contador.com',
-			'enabled': 1,
-			'roles': [{'role': 'Usuario Contador'}],
-			'thread_notify': 0,
-			'send_me_a_copy': 0,
-			'user_type': 'Usuario Contador'
-		},
-	]
+	from frappe.utils.password import update_password as _update_password
+	data = {
+		'doctype':'User',
+		'name':'Contador',
+		'first_name':'Contador',
+		'email':'contador@contador.com',
+		'enabled': 1,
+		'roles': [{'role': 'Usuario Contador'}],
+		'thread_notify': 0,
+		'send_me_a_copy': 0,
+		'user_type': 'Usuario Contador',
+	}
 
-	for d in install_docs:
-		try:
-			frappe.get_doc(d).insert()
-		except frappe.NameError:
-			pass
+	try:
+		contador = frappe.get_doc(data).insert()
+	except frappe.NameError:
+		pass
+	else:
+		_update_password(user=contador.name, pwd='contador', logout_all_sessions=True)
+		update_site_config('usuario_contador', 1)
+		frappe.db.commit()
+
 
 def add_usuarios_reducidos_user_types():
 	user_types = get_user_types_data()
