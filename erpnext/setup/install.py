@@ -33,7 +33,7 @@ def after_install():
 	add_company_to_session_defaults()
 	add_standard_navbar_items()
 	add_app_name()
-	add_non_standard_user_types()
+	# add_non_standard_user_types()
 	add_usuarios_reducidos_user_types()
 	add_canal_de_venta()
 	create_usuario_contador()
