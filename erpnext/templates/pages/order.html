@@ -23,10 +23,22 @@
 		{% endif %}
 		{% if doc.doctype == 'Payment Entry' %}
 			<a class="dropdown-item" href='/printview?doctype={{ doc.doctype }}&name={{ doc.name }}&format=Orden de Pago' target="_blank" rel="noopener noreferrer">Orden de Pago</a>
-			<a class="dropdown-item {% if not doc.has_retencion('IVA') %}disabled{% endif %}" href='/printview?doctype={{ doc.doctype }}&name={{ doc.name }}&format=Orden de Pago' target="_blank" rel="noopener noreferrer">IVA</a>
-			<a class="dropdown-item {% if not doc.has_retencion('Ingresos Brutos') %}disabled{% endif %}" href='/printview?doctype={{ doc.doctype }}&name={{ doc.name }}&format=Orden de Pago' target="_blank" rel="noopener noreferrer">IIBB</a>
-			<a class="dropdown-item {% if not doc.has_retencion('Ganancias') %}disabled{% endif %}" href='/printview?doctype={{ doc.doctype }}&name={{ doc.name }}&format=Orden de Pago' target="_blank" rel="noopener noreferrer">Ganancias</a>
-			<a class="dropdown-item {% if not doc.has_retencion('Seguridad Social') %}disabled{% endif %}" href='/printview?doctype={{ doc.doctype }}&name={{ doc.name }}&format=Orden de Pago' target="_blank" rel="noopener noreferrer">SUSS</a>
+
+			{% set ret_iibb = doc.has_retencion('Ingresos Brutos') %}
+			{% if ret_iibb|length > 1%}
+				<a class="dropdown-item {% if not ret_iibb %}disabled{% endif %}" href='/api/method/frappe.utils.print_format.download_multi_pdf?doctype=Retencion&name={{ ret_iibb|json}}&format=Retencion' target="_blank" rel="noopener noreferrer">IIBB</a>
+			{% else %}
+				<a class="dropdown-item {% if not ret_iibb %}disabled{% endif %}" href='/printview?doctype=Retencion&name={{ ret_iibb[0] }}&format=Retencion' target="_blank" rel="noopener noreferrer">IIBB</a>
+			{% endif %}
+
+			{% set ret_iva = doc.has_retencion('IVA') %}
+			<a class="dropdown-item {% if not ret_iva %}disabled{% endif %}" href='/printview?doctype=Retencion&name={{ ret_iva[0] }}&format=Retencion' target="_blank" rel="noopener noreferrer">IVA</a>
+			
+			{% set ret_ganancias = doc.has_retencion('Ganancias') %}
+			<a class="dropdown-item {% if not ret_ganancias %}disabled{% endif %}" href='/printview?doctype=Retencion&name={{ ret_ganancias[0] }}&format=Retencion' target="_blank" rel="noopener noreferrer">Ganancias</a>
+
+			{% set ret_suss = doc.has_retencion('Seguridad Social') %}
+			<a class="dropdown-item {% if not ret_suss %}disabled{% endif %}" href='/printview?doctype=Retencion&name={{ ret_suss[0] }}&format=Retencion' target="_blank" rel="noopener noreferrer">SUSS</a>
 		{% else %}
 			<a class="dropdown-item" href='/printview?doctype={{ doc.doctype}}&name={{ doc.name }}&format={{ print_format }}'
 				target="_blank" rel="noopener noreferrer">
@@ -60,14 +72,6 @@
 	</div>
 </div>
 
-{% if doc.doctype == 'Payment Entry' %}
-<div class="pt-2">
-	<p class="small my-3">
-		<b>Método de Pago:</b> {{ doc.mode_of_payment or '' }}
-	</p>
-</div>
-{% endif %}
-
 <p class="small my-3">
 	{% if doc.doctype in ['Supplier Quotation', 'Purchase Invoice', 'Purchase Order'] %}
 		{%- set party_name = doc.supplier_name %}
@@ -84,6 +88,47 @@
 		{{ doc.contact_display }}
 	{% endif %}
 </p>
+
+{% if doc.doctype == 'Payment Entry' %}
+	<div class="small row my-3">
+		<div class="col-3"><b>Método de Pago:</b> {{ doc.mode_of_payment or '' }}</div>
+		<div class="col-3">{% if doc.reference_no %}<b>Número de referencia:</b> {{ doc.reference_no }}{% endif %}</div>
+		<div class="col-3">{% if doc.reference_date %}<b>Fecha de referencia:</b> {{ frappe.utils.formatdate(doc.reference_date, 'dd/MM/Y') }}{% endif %}</div>
+	</div>
+	{% if doc.cheques %}
+		<div class="pt-2 pb-5">
+			<table class="order-item-table w-100 table">
+				<thead class="order-items order-item-header">
+					<th width="40%">
+						{{ _("Cheque") }}
+					</th>
+					<th width="30%">
+						{{ _("Fecha") }}
+					</th>
+					<th width="30%" class="text-right">
+						{{ _("Importe") }}
+					</th>
+				</thead>
+				<tbody>
+					{% for cheque in doc.cheques %}
+						<tr class="order-items">
+							<td>
+								{{ cheque.cheque }} 
+							</td>
+							<td>
+								{{ frappe.utils.formatdate(cheque.fecha, 'dd/MM/Y') }}
+							</td>
+							<td class="text-right">
+								$ {{ cheque.importe }} 
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	{% endif %}
+{% endif %}
+
 
 {% if doc._header %}
 {{ doc._header }}

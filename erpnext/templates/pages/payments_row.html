@@ -43,10 +43,18 @@
 			</button>
 			<ul class="dropdown-menu dropdown-menu-right" role="menu">
 				<a class="dropdown-item" href='/printview?doctype={{ doc.doctype }}&name={{ doc.name }}&format=Orden de Pago' target="_blank" rel="noopener noreferrer">Orden de Pago</a>
-				<a class="dropdown-item {% if not doc.has_retencion('IVA') %}disabled{% endif %}" href='/printview?doctype={{ doc.doctype }}&name={{ doc.name }}&format=Orden de Pago' target="_blank" rel="noopener noreferrer">IVA</a>
-				<a class="dropdown-item {% if not doc.has_retencion('Ingresos Brutos') %}disabled{% endif %}" href='/printview?doctype={{ doc.doctype }}&name={{ doc.name }}&format=Orden de Pago' target="_blank" rel="noopener noreferrer">IIBB</a>
-				<a class="dropdown-item {% if not doc.has_retencion('Ganancias') %}disabled{% endif %}" href='/printview?doctype={{ doc.doctype }}&name={{ doc.name }}&format=Orden de Pago' target="_blank" rel="noopener noreferrer">Ganancias</a>
-				<a class="dropdown-item {% if not doc.has_retencion('Seguridad Social') %}disabled{% endif %}" href='/printview?doctype={{ doc.doctype }}&name={{ doc.name }}&format=Orden de Pago' target="_blank" rel="noopener noreferrer">SUSS</a>
+
+				{% set ret_iibb = doc.has_retencion('Ingresos Brutos') %}
+				<a class="dropdown-item {% if not ret_iibb %}disabled{% endif %}" href='/api/method/frappe.utils.print_format.download_multi_pdf?doctype=Retencion&name={{ ret_iibb }}&format=Retencion' target="_blank" rel="noopener noreferrer">IIBB</a>
+
+				{% set ret_iva = doc.has_retencion('IVA') %}
+				<a class="dropdown-item {% if not ret_iva %}disabled{% endif %}" href='/printview?doctype=Retencion&name={{ ret_iva[0] }}&format=Retencion' target="_blank" rel="noopener noreferrer">IVA</a>
+				
+				{% set ret_ganancias = doc.has_retencion('Ganancias') %}
+				<a class="dropdown-item {% if not ret_ganancias %}disabled{% endif %}" href='/printview?doctype=Retencion&name={{ ret_ganancias[0] }}&format=Retencion' target="_blank" rel="noopener noreferrer">Ganancias</a>
+
+				{% set ret_suss = doc.has_retencion('Seguridad Social') %}
+				<a class="dropdown-item {% if not ret_suss %}disabled{% endif %}" href='/printview?doctype=Retencion&name={{ ret_suss[0] }}&format=Retencion' target="_blank" rel="noopener noreferrer">SUSS</a>
 			</ul>
 		</div>
 	</div>
