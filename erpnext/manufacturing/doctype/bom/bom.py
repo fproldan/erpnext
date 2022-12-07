@@ -320,7 +320,7 @@ class BOM(WebsiteGenerator):
 				conversion_rate = get_exchange_rate(row['currency'], "USD", str(row['posting_date']), "for_buying")
 				return row['rate'] * conversion_rate
 			else:
-				return row['rate'] * row['conversion_rate']
+				return row['rate'] / row['conversion_rate']
 		return None
 
 	@frappe.whitelist()
