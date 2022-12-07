@@ -1037,7 +1037,7 @@ class PaymentEntry(AccountsController):
 		return current_tax_fraction
 
 	def has_retencion(self, catetoria):
-		return [r.name for r in self.retenciones if frappe.db.get_value('Retencion', r.retencion_name, 'categoria') == catetoria]
+		return [r.retencion_name for r in self.retenciones if frappe.db.get_value('Retencion', r.retencion_name, 'categoria') == catetoria]
 
 def validate_inclusive_tax(tax, doc):
 	def _on_previous_row_error(row_range):
