@@ -105,7 +105,7 @@ class Analytics(object):
 			self.get_rows()
 
 	def get_rate(self, entry):
-		if self.filters.get('values_in_usd_posing_date'):
+		if self.filters.get('values_in_usd_posing_date') and self.filters["value_quantity"] == 'Value':
 			from erpnext.setup.utils import get_exchange_rate
 			date_field = 'posting_date'
 			if self.filters.doc_type == "Sales Order":
