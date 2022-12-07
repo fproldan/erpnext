@@ -107,8 +107,13 @@ class Analytics(object):
 	def get_rate(self, entry):
 		if self.filters.get('values_in_usd_posing_date'):
 			from erpnext.setup.utils import get_exchange_rate
+			
+			date_field = 'posting_date'
+			if self.filters.doc_type == "Sales Order":
+				date_field = 'transaction_date'
+
 			if entry['currency'] != 'USD':
-				conversion_rate = get_exchange_rate(entry['currency'], "USD", str(entry['posting_date']), "for_buying")
+				conversion_rate = get_exchange_rate(entry['currency'], "USD", str(entry[date_field]), "for_buying")
 				entry['value_field'] = entry['value_field'] * conversion_rate
 		return entry
 
