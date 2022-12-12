@@ -222,25 +222,25 @@ def get_user_types_data():
 			'role': 'Sales User',
 			'doctypes': {},
 			'is_standard': 1,
-			'blocked_modules': ['Support', 'HR', 'Utilities', 'Custom', 'Website']
+			'blocked_modules': ['Support', 'Website', 'HR', 'Accounting', 'Utilities', 'Custom']
 		},
 		'Usuario de Soporte Reducido': {
 			'role': 'Support Team',
 			'doctypes': {},
 			'is_standard': 1,
-			'blocked_modules': []
+			'blocked_modules': ['CRM', 'HR', 'Utilities', 'Custom']
 		},
 		'Usuario de Proyecto Reducido': {
 			'role': 'Projects User',
 			'doctypes': {},
 			'is_standard': 1,
-			'blocked_modules': []
+			'blocked_modules': ['Buying', 'Selling', 'CRM', 'Support', 'Website', 'HR', 'Utilities', 'Custom']
 		},
 		'Usuario Contador': {
 			'role': 'Usuario Contador',
 			'doctypes': {},
 			'is_standard': 1,
-			'blocked_modules': []
+			'blocked_modules': ['CRM', 'Support', 'Website', 'HR', 'Utilities', 'Custom']
 		}
 	}
 	# return {
