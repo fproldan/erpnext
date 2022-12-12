@@ -222,7 +222,7 @@ def get_user_types_data():
 			'role': 'Sales User',
 			'doctypes': {},
 			'is_standard': 1,
-			'blocked_modules': ['Support', 'Website', 'HR', 'Accounting', 'Utilities', 'Custom']
+			'blocked_modules': ['Support', 'Website', 'HR', 'Accounts', 'Utilities', 'Custom']
 		},
 		'Usuario de Soporte Reducido': {
 			'role': 'Support Team',
