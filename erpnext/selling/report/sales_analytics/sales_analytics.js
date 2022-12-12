@@ -65,6 +65,11 @@ frappe.query_reports["Sales Analytics"] = {
 			],
 			default: "Monthly",
 			reqd: 1
+		},
+		{
+			"fieldname": "values_in_usd_posing_date",
+			"label": __("Valor en USD a la fecha del documento"),
+			"fieldtype": "Check",
 		}
 	],
 	after_datatable_render: function(datatable_obj) {
