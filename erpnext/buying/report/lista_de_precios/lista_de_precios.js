@@ -31,6 +31,20 @@ frappe.query_reports["Lista de precios"] = {
 			"options": "Brand",
 		},
 		{
+			"fieldname": "purchase_user",
+			"label": __("Usuario de compra predeterminado"),
+			"fieldtype": "Link",
+			"options": "User",
+			"get_query": function() {
+                return {
+                    "doctype": "User",
+                    "filters": {
+                        "user_type": "System User",
+                    }
+                }
+            }
+		},
+		{
 			"fieldname": "historico",
 			"label": __("Histórico"),
 			"fieldtype": "Check",

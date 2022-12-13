@@ -66,6 +66,20 @@ frappe.query_reports["Purchase Order Analysis"] = {
 			}
 		},
 		{
+			"fieldname": "purchase_user",
+			"label": __("Usuario de compra predeterminado"),
+			"fieldtype": "Link",
+			"options": "User",
+			"get_query": function() {
+                return {
+                    "doctype": "User",
+                    "filters": {
+                        "user_type": "System User",
+                    }
+                }
+            }
+		},
+		{
 			"fieldname": "group_by_po",
 			"label": __("Group by Purchase Order"),
 			"fieldtype": "Check",
@@ -76,7 +90,7 @@ frappe.query_reports["Purchase Order Analysis"] = {
 			"label": __("Atrasadas"),
 			"fieldtype": "Check",
 			"default": 0
-		}
+		},
 	],
 
 	"formatter": function (value, row, column, data, default_formatter) {
