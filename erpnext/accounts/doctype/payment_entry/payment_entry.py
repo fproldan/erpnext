@@ -1036,6 +1036,9 @@ class PaymentEntry(AccountsController):
 
 		return current_tax_fraction
 
+	def has_retencion(self, catetoria):
+		return [r.retencion_name for r in self.retenciones if frappe.db.get_value('Retencion', r.retencion_name, 'categoria') == catetoria]
+
 def validate_inclusive_tax(tax, doc):
 	def _on_previous_row_error(row_range):
 		throw(_("To include tax in row {0} in Item rate, taxes in rows {1} must also be included").format(tax.idx, row_range))
@@ -1115,7 +1118,12 @@ def get_outstanding_reference_documents(args):
 					party_account_currency,	company_currency, d.posting_date
 				)
 		if d.voucher_type in ("Purchase Invoice"):
-			d["bill_no"] = frappe.db.get_value(d.voucher_type, d.voucher_no, "bill_no")
+			punto_de_venta = frappe.db.get_value(d.voucher_type, d.voucher_no, "punto_de_venta")
+			bill_no = frappe.db.get_value(d.voucher_type, d.voucher_no, "bill_no")
+			if punto_de_venta:
+				d["bill_no"] = f"{punto_de_venta}-{bill_no}"
+			else:
+				d["bill_no"] = bill_no
 
 	# Get all SO / PO which are not fully billed or aginst which full advance not paid
 	orders_to_be_billed = []
@@ -1419,6 +1427,9 @@ def get_reference_details(reference_doctype, reference_name, party_account_curre
 		if reference_doctype in ("Sales Invoice", "Purchase Invoice"):
 			outstanding_amount = ref_doc.get("outstanding_amount")
 			bill_no = ref_doc.get("bill_no")
+			punto_de_venta = ref_doc.get("punto_de_venta")
+			if punto_de_venta:
+				bill_no = f"{punto_de_venta}-{bill_no}"
 		elif reference_doctype == "Expense Claim":
 			outstanding_amount = flt(ref_doc.get("total_sanctioned_amount")) + flt(ref_doc.get("total_taxes_and_charges"))\
 				- flt(ref_doc.get("total_amount_reimbursed")) - flt(ref_doc.get("total_advance_amount"))
@@ -1512,6 +1523,9 @@ def get_bill_no_and_update_amounts(reference_doctype, ref_doc, total_amount, exc
 	if reference_doctype in ("Sales Invoice", "Purchase Invoice"):
 		outstanding_amount = ref_doc.get("outstanding_amount")
 		bill_no = ref_doc.get("bill_no")
+		punto_de_venta = ref_doc.get("punto_de_venta")
+		if punto_de_venta:
+			bill_no = f"{punto_de_venta}-{bill_no}"
 	elif reference_doctype == "Expense Claim":
 		outstanding_amount = flt(ref_doc.get("total_sanctioned_amount")) + flt(ref_doc.get("total_taxes_and_charges"))\
 			- flt(ref_doc.get("total_amount_reimbursed")) - flt(ref_doc.get("total_advance_amount"))
@@ -1574,6 +1588,11 @@ def get_payment_entry(dt, dn, party_amount=None, bank_account=None, bank_amount=
 		pe.set("bank_account", bank_account)
 		pe.set_bank_account_data()
 
+	bill_no = doc.get('bill_no')
+	punto_de_venta = doc.get('punto_de_venta')
+	if punto_de_venta:
+		bill_no = f'{punto_de_venta}-{bill_no}'
+
 	# only Purchase Invoice can be blocked individually
 	if doc.doctype == "Purchase Invoice" and doc.invoice_is_blocked():
 		frappe.msgprint(_('{0} is on hold till {1}').format(doc.name, doc.release_date))
@@ -1589,7 +1608,7 @@ def get_payment_entry(dt, dn, party_amount=None, bank_account=None, bank_amount=
 				pe.append("references", {
 					'reference_doctype': 'Sales Invoice',
 					'reference_name': doc.get('sales_invoice'),
-					"bill_no": doc.get("bill_no"),
+					"bill_no":bill_no,
 					"due_date": doc.get("due_date"),
 					'total_amount': doc.get('outstanding_amount'),
 					'outstanding_amount': doc.get('outstanding_amount'),
@@ -1598,7 +1617,7 @@ def get_payment_entry(dt, dn, party_amount=None, bank_account=None, bank_amount=
 				pe.append("references", {
 					'reference_doctype': dt,
 					'reference_name': dn,
-					"bill_no": doc.get("bill_no"),
+					"bill_no": bill_no,
 					"due_date": doc.get("due_date"),
 					'total_amount': doc.get('dunning_amount'),
 					'outstanding_amount': doc.get('dunning_amount'),
@@ -1608,7 +1627,7 @@ def get_payment_entry(dt, dn, party_amount=None, bank_account=None, bank_amount=
 				pe.append("references", {
 					'reference_doctype': dt,
 					'reference_name': dn,
-					"bill_no": doc.get("bill_no"),
+					"bill_no": bill_no,
 					"due_date": doc.get("due_date"),
 					'total_amount': grand_total,
 					'outstanding_amount': outstanding_amount,
@@ -1793,10 +1812,14 @@ def get_reference_as_per_payment_terms(payment_schedule, dt, dn, doc, grand_tota
 				payment_term.precision('payment_amount'))
 
 		if payment_term_outstanding:
+			bill_no = doc.get('bill_no')
+			punto_de_venta = doc.get('punto_de_venta')
+			if punto_de_venta:
+				bill_no = f'{punto_de_venta}-{bill_no}'
 			references.append({
 				'reference_doctype': dt,
 				'reference_name': dn,
-				'bill_no': doc.get('bill_no'),
+				'bill_no': bill_no,
 				'due_date': doc.get('due_date'),
 				'total_amount': grand_total,
 				'outstanding_amount': outstanding_amount,
