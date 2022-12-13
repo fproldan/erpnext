@@ -176,6 +176,12 @@ website_route_rules = [
 			"parents": [{"label": _("Quotations"), "route": "quotations"}]
 		}
 	},
+	{"from_route": "/payments/<path:name>", "to_route": "order",
+		"defaults": {
+			"doctype": "Payment Entry",
+			"parents": [{"label": _("Payments"), "route": "payments"}]
+		}
+	},
 	{"from_route": "/shipments", "to_route": "Delivery Note"},
 	{"from_route": "/shipments/<path:name>", "to_route": "order",
 		"defaults": {
@@ -248,9 +254,11 @@ has_website_permission = {
 	"Sales Order": "erpnext.controllers.website_list_for_contact.has_website_permission",
 	"Quotation": "erpnext.controllers.website_list_for_contact.has_website_permission",
 	"Sales Invoice": "erpnext.controllers.website_list_for_contact.has_website_permission",
+	"Retencion": "erpnext.controllers.website_list_for_contact.has_website_permission",
 	"Supplier Quotation": "erpnext.controllers.website_list_for_contact.has_website_permission",
 	"Purchase Order": "erpnext.controllers.website_list_for_contact.has_website_permission",
 	"Purchase Invoice": "erpnext.controllers.website_list_for_contact.has_website_permission",
+	"Payment Entry": "erpnext.controllers.website_list_for_contact.has_website_permission",
 	"Material Request": "erpnext.controllers.website_list_for_contact.has_website_permission",
 	"Delivery Note": "erpnext.controllers.website_list_for_contact.has_website_permission",
 	"Issue": "erpnext.support.doctype.issue.issue.has_website_permission",
