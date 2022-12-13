@@ -174,6 +174,7 @@ def add_app_name():
 
 def create_usuario_contador():
 	from frappe.utils.password import update_password as _update_password
+	from frappe.limits import update_limits
 	data = {
 		'doctype':'User',
 		'name':'Contador',
@@ -192,7 +193,7 @@ def create_usuario_contador():
 		pass
 	else:
 		_update_password(user=contador.name, pwd='contador', logout_all_sessions=True)
-		update_site_config('usuario_contador', 1)
+		update_limits({'usuario_contador': 1})
 		frappe.db.commit()
 
 
