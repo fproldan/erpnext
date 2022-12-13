@@ -222,25 +222,25 @@ def get_user_types_data():
 			'role': 'Sales User',
 			'doctypes': {},
 			'is_standard': 1,
-			'blocked_modules': ['Support', 'Website', 'HR', 'Accounts', 'Utilities', 'Custom']
+			'blocked_modules': ['Support', 'Website', 'HR', 'Accounts', 'Utilities', 'Custom', 'Core']
 		},
 		'Usuario de Soporte Reducido': {
 			'role': 'Support Team',
 			'doctypes': {},
 			'is_standard': 1,
-			'blocked_modules': ['CRM', 'HR', 'Utilities', 'Custom']
+			'blocked_modules': ['CRM', 'HR', 'Utilities', 'Custom', 'Core']
 		},
 		'Usuario de Proyecto Reducido': {
 			'role': 'Projects User',
 			'doctypes': {},
 			'is_standard': 1,
-			'blocked_modules': ['Buying', 'Selling', 'CRM', 'Support', 'Website', 'HR', 'Utilities', 'Custom']
+			'blocked_modules': ['Buying', 'Selling', 'CRM', 'Support', 'Website', 'HR', 'Utilities', 'Custom', 'Core']
 		},
 		'Usuario Contador': {
 			'role': 'Usuario Contador',
 			'doctypes': {},
 			'is_standard': 1,
-			'blocked_modules': ['CRM', 'Support', 'Website', 'HR', 'Utilities', 'Custom']
+			'blocked_modules': ['CRM', 'Support', 'Website', 'HR', 'Utilities', 'Custom', 'Core']
 		}
 	}
 	# return {
