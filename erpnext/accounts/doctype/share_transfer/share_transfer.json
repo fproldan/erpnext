@@ -190,7 +190,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-05-12 20:01:41.697874",
+ "modified": "2021-05-13 20:01:41.697874",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Share Transfer",
@@ -236,6 +236,11 @@
    "share": 1,
    "submit": 1,
    "write": 1
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Contador"
   }
  ],
  "restrict_to_domain": "Contabilidad Avanzada",

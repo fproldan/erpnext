@@ -13,7 +13,7 @@
    "label": "Description"
   }
  ],
- "modified": "2019-05-27 18:35:33.354571",
+ "modified": "2019-05-28 18:35:33.354571",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Warehouse Type",
@@ -99,6 +99,11 @@
    "report": 1,
    "role": "Manufacturing User",
    "share": 1
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Contador"
   }
  ],
  "quick_entry": 1,

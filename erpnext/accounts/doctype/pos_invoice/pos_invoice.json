@@ -1566,7 +1566,7 @@
  "icon": "fa fa-file-text",
  "is_submittable": 1,
  "links": [],
- "modified": "2021-08-27 20:12:57.306772",
+ "modified": "2021-08-28 20:12:57.306772",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "POS Invoice",
@@ -1609,6 +1609,11 @@
    "permlevel": 1,
    "read": 1,
    "role": "All"
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Contador"
   }
  ],
  "read_only": 1,

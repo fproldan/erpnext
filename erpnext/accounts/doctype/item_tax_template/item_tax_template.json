@@ -39,7 +39,7 @@
   }
  ],
  "links": [],
- "modified": "2021-03-08 19:50:21.416513",
+ "modified": "2021-03-09 19:50:21.416513",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Item Tax Template",
@@ -77,6 +77,11 @@
    "report": 1,
    "role": "Accounts User",
    "share": 1
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Contador"
   }
  ],
  "show_name_in_global_search": 1,

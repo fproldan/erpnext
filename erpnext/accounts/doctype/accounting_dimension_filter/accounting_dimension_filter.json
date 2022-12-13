@@ -108,7 +108,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-02-03 12:04:58.678402",
+ "modified": "2021-02-04 12:04:58.678402",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Accounting Dimension Filter",
@@ -149,6 +149,11 @@
    "role": "Accounts Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Contador"
   }
  ],
  "quick_entry": 1,

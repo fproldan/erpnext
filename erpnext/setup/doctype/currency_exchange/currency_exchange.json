@@ -247,7 +247,7 @@
  "issingle": 0, 
  "istable": 0, 
  "max_attachments": 0, 
- "modified": "2018-05-15 11:23:35.639039", 
+ "modified": "2018-05-16 11:23:35.639039", 
  "modified_by": "Administrator", 
  "module": "Setup", 
  "name": "Currency Exchange", 
@@ -328,6 +328,11 @@
    "share": 0, 
    "submit": 0, 
    "write": 0
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Contador"
   }
  ], 
  "quick_entry": 1, 

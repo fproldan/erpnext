@@ -116,7 +116,7 @@
   }
  ],
  "links": [],
- "modified": "2021-02-15 20:30:56.256403",
+ "modified": "2021-02-16 20:30:56.256403",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Payment Term",
@@ -157,6 +157,11 @@
    "role": "Accounts User",
    "share": 1,
    "write": 1
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Contador"
   }
  ],
  "quick_entry": 1,

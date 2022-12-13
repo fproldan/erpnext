@@ -147,7 +147,7 @@
   }
  ],
  "links": [],
- "modified": "2021-08-13 10:53:44.205774",
+ "modified": "2021-08-14 10:53:44.205774",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Subscription Plan",
@@ -188,6 +188,11 @@
    "role": "Accounts User",
    "share": 1,
    "write": 1
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Contador"
   }
  ],
  "restrict_to_domain": "Subscription",

@@ -86,7 +86,7 @@
   }
  ],
  "links": [],
- "modified": "2020-05-01 18:32:01.420488",
+ "modified": "2020-05-02 18:32:01.420488",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Journal Entry Template",
@@ -124,6 +124,11 @@
    "report": 1,
    "role": "Auditor",
    "share": 1
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Contador"
   }
  ],
  "search_fields": "voucher_type, company",

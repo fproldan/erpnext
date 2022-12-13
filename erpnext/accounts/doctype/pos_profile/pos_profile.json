@@ -377,7 +377,7 @@
    "link_fieldname": "pos_profile"
   }
  ],
- "modified": "2021-08-10 11:12:46.156724",
+ "modified": "2021-08-11 11:12:46.156724",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "POS Profile",
@@ -400,6 +400,11 @@
    "read": 1,
    "report": 1,
    "role": "Accounts User"
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Contador"
   }
  ],
  "restrict_to_domain": "Retail",

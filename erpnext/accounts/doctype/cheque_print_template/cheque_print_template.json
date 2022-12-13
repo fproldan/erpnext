@@ -1025,7 +1025,7 @@
  "issingle": 0, 
  "istable": 0, 
  "max_attachments": 0, 
- "modified": "2016-06-24 20:19:11.694932", 
+ "modified": "2016-06-25 20:19:11.694932", 
  "modified_by": "Administrator", 
  "module": "Accounts", 
  "name": "Cheque Print Template", 
@@ -1091,6 +1091,11 @@
    "share": 1, 
    "submit": 0, 
    "write": 1
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Contador"
   }
  ], 
  "quick_entry": 0, 

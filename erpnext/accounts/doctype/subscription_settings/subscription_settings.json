@@ -32,7 +32,7 @@
  ],
  "issingle": 1,
  "links": [],
- "modified": "2021-05-12 20:01:49.069747",
+ "modified": "2021-05-13 20:01:49.069747",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Subscription Settings",
@@ -67,6 +67,11 @@
    "role": "Accounts User",
    "share": 1,
    "write": 1
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Contador"
   }
  ],
  "quick_entry": 1,

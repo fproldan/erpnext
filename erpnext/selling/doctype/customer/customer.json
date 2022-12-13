@@ -521,7 +521,7 @@
    "link_fieldname": "party"
   }
  ],
- "modified": "2021-11-07 17:38:54.196663",
+ "modified": "2021-11-08 17:38:54.196663",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Customer",
@@ -597,6 +597,11 @@
    "read": 1,
    "report": 1,
    "role": "Accounts Manager"
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Contador"
   }
  ],
  "quick_entry": 1,

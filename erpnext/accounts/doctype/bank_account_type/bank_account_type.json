@@ -19,7 +19,7 @@
   }
  ],
  "links": [],
- "modified": "2020-04-10 21:13:09.137898",
+ "modified": "2020-04-11 21:13:09.137898",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Bank Account Type",
@@ -60,6 +60,11 @@
    "role": "Accounts User",
    "share": 1,
    "write": 1
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Contador"
   }
  ],
  "quick_entry": 1,
