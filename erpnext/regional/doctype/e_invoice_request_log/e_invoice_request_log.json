@@ -63,7 +63,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-05-13 20:00:40.118192",
+ "modified": "2021-05-14 20:00:40.118192",
  "modified_by": "Administrator",
  "module": "Regional",
  "name": "E Invoice Request Log",
@@ -95,11 +95,6 @@
    "report": 1,
    "role": "Accounts Manager",
    "share": 1
-  },
-  {
-   "read": 1,
-   "report": 1,
-   "role": "Usuario Contador"
   }
  ],
  "restrict_to_domain": "Regional",

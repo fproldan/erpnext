@@ -1310,7 +1310,7 @@
  "idx": 146,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-09-29 13:10:09.761714",
+ "modified": "2021-09-29 14:10:09.761714",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Delivery Note",
@@ -1368,11 +1368,6 @@
    "read": 1,
    "role": "Stock Manager",
    "write": 1
-  },
-  {
-   "read": 1,
-   "report": 1,
-   "role": "Usuario Contador"
   }
  ],
  "search_fields": "status,customer,customer_name, territory,base_grand_total",

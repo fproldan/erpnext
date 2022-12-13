@@ -287,7 +287,7 @@
   }
  ],
  "links": [],
- "modified": "2021-11-17 09:22:30.606688",
+ "modified": "2021-11-18 09:22:30.606688",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Process Statement Of Accounts",
@@ -316,11 +316,6 @@
    "role": "Accounts Manager",
    "share": 1,
    "write": 1
-  },
-  {
-   "read": 1,
-   "report": 1,
-   "role": "Usuario Contador"
   }
  ],
  "sort_field": "modified",

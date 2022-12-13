@@ -125,7 +125,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-05-13 19:59:37.287082",
+ "modified": "2021-05-14 19:59:37.287082",
  "modified_by": "Administrator",
  "module": "Assets",
  "name": "Asset Value Adjustment",
@@ -175,11 +175,6 @@
    "share": 1,
    "submit": 1,
    "write": 1
-  },
-  {
-   "read": 1,
-   "report": 1,
-   "role": "Usuario Contador"
   }
  ],
  "quick_entry": 1,

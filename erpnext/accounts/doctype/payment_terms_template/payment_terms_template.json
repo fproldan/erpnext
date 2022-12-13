@@ -64,7 +64,7 @@
   }
  ],
  "links": [],
- "modified": "2021-10-28 13:00:56.339579",
+ "modified": "2021-10-28 14:00:56.339579",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Payment Terms Template",
@@ -105,11 +105,6 @@
    "role": "Accounts Manager",
    "share": 1,
    "write": 1
-  },
-  {
-   "read": 1,
-   "report": 1,
-   "role": "Usuario Contador"
   }
  ],
  "sort_field": "modified",

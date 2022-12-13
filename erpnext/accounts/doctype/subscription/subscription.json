@@ -265,7 +265,7 @@
  "index_web_pages_for_search": 1,
  "links": [],
  "allow_import": 1,
- "modified": "2021-05-14 20:01:48.651678",
+ "modified": "2021-05-14 21:01:48.651678",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Subscription",
@@ -306,11 +306,6 @@
    "role": "Accounts Manager",
    "share": 1,
    "write": 1
-  },
-  {
-   "read": 1,
-   "report": 1,
-   "role": "Usuario Contador"
   }
  ],
  "restrict_to_domain": "Subscription",

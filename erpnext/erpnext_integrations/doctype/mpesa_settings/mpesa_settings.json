@@ -103,7 +103,7 @@
   }
  ],
  "links": [],
- "modified": "2021-10-15 14:06:08.737069",
+ "modified": "2021-10-16 14:06:08.737069",
  "modified_by": "Administrator",
  "module": "ERPNext Integrations",
  "name": "Mpesa Settings",
@@ -144,11 +144,6 @@
    "role": "Accounts User",
    "share": 1,
    "write": 1
-  },
-  {
-   "read": 1,
-   "report": 1,
-   "role": "Usuario Contador"
   }
  ],
  "restrict_to_domain": "Thrash",

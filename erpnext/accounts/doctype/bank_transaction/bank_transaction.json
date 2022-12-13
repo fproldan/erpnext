@@ -192,7 +192,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-04-15 17:31:58.963529",
+ "modified": "2021-04-15 18:31:58.963529",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Bank Transaction",
@@ -238,11 +238,6 @@
    "share": 1,
    "submit": 1,
    "write": 1
-  },
-  {
-   "read": 1,
-   "report": 1,
-   "role": "Usuario Contador"
   }
  ],
  "sort_field": "date",

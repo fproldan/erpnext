@@ -312,7 +312,7 @@
  "issingle": 0, 
  "istable": 0, 
  "max_attachments": 0, 
- "modified": "2018-08-22 16:15:34.660715", 
+ "modified": "2018-08-23 16:15:34.660715", 
  "modified_by": "Administrator", 
  "module": "Accounts", 
  "name": "Exchange Rate Revaluation", 
@@ -375,11 +375,6 @@
    "share": 1, 
    "submit": 1, 
    "write": 1
-  },
-  {
-   "read": 1,
-   "report": 1,
-   "role": "Usuario Contador"
   }
  ], 
  "quick_entry": 0, 

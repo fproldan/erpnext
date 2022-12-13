@@ -22,7 +22,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-07-16 11:52:31.540711",
+ "modified": "2021-07-17 11:52:31.540711",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Tax Category",
@@ -60,11 +60,6 @@
    "report": 1,
    "role": "Accounts User",
    "share": 1
-  },
-  {
-   "read": 1,
-   "report": 1,
-   "role": "Usuario Contador"
   }
  ],
  "quick_entry": 1,

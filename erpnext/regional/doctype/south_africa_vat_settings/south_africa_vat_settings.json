@@ -29,7 +29,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-06-09 12:54:30.739225",
+ "modified": "2022-06-09 13:54:30.739225",
  "modified_by": "Administrator",
  "module": "Regional",
  "name": "South Africa VAT Settings",
@@ -67,11 +67,6 @@
    "report": 1,
    "role": "Auditor",
    "share": 1
-  },
-  {
-   "read": 1,
-   "report": 1,
-   "role": "Usuario Contador"
   }
  ],
  "quick_entry": 1,

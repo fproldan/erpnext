@@ -24,7 +24,7 @@
  ],
  "issingle": 1,
  "links": [],
- "modified": "2021-08-11 11:12:38.878364",
+ "modified": "2021-08-12 11:12:38.878364",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "POS Settings",
@@ -53,11 +53,6 @@
    "role": "Sales User",
    "share": 1,
    "write": 1
-  },
-  {
-   "read": 1,
-   "report": 1,
-   "role": "Usuario Contador"
   }
  ],
  "quick_entry": 1,

@@ -521,7 +521,7 @@
  "idx": 176,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-09-10 15:31:14.484029",
+ "modified": "2021-09-10 16:31:14.484029",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Journal Entry",
@@ -564,11 +564,6 @@
    "read": 1,
    "report": 1,
    "role": "Auditor"
-  },
-  {
-   "read": 1,
-   "report": 1,
-   "role": "Usuario Contador"
   }
  ],
  "search_fields": "voucher_type,posting_date, due_date, cheque_no",

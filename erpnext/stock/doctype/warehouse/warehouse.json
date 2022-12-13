@@ -245,7 +245,7 @@
  "idx": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2021-04-10 19:54:56.263965",
+ "modified": "2021-04-11 19:54:56.263965",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Warehouse",
@@ -297,11 +297,6 @@
   {
    "read": 1,
    "role": "Manufacturing User"
-  },
-  {
-   "read": 1,
-   "report": 1,
-   "role": "Usuario Contador"
   }
  ],
  "show_name_in_global_search": 1,

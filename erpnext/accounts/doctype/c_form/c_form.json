@@ -435,7 +435,7 @@
  "issingle": 0, 
  "istable": 0, 
  "max_attachments": 0, 
- "modified": "2018-08-23 14:44:30.558767", 
+ "modified": "2018-08-23 15:44:30.558767", 
  "modified_by": "Administrator", 
  "module": "Accounts", 
  "name": "C-Form", 
@@ -497,11 +497,6 @@
    "share": 0, 
    "submit": 0, 
    "write": 0
-  },
-  {
-   "read": 1,
-   "report": 1,
-   "role": "Usuario Contador"
   }
  ], 
  "quick_entry": 0, 

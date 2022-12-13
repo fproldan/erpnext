@@ -62,7 +62,7 @@
   }
  ],
  "links": [],
- "modified": "2021-05-13 20:01:40.919758",
+ "modified": "2021-05-14 20:01:40.919758",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Accounting Period",
@@ -103,11 +103,6 @@
    "role": "Accounts User",
    "share": 1,
    "write": 1
-  },
-  {
-   "read": 1,
-   "report": 1,
-   "role": "Usuario Contador"
   }
  ],
  "restrict_to_domain": "Contabilidad Avanzada",

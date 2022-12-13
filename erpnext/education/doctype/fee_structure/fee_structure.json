@@ -159,7 +159,7 @@
  "icon": "fa fa-flag",
  "is_submittable": 1,
  "links": [],
- "modified": "2020-06-17 15:34:57.295010",
+ "modified": "2020-06-17 16:34:57.295010",
  "modified_by": "Administrator",
  "module": "Education",
  "name": "Fee Structure",
@@ -205,11 +205,6 @@
    "share": 1,
    "submit": 1,
    "write": 1
-  },
-  {
-   "read": 1,
-   "report": 1,
-   "role": "Usuario Contador"
   }
  ],
  "restrict_to_domain": "Education",

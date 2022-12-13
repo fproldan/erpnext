@@ -278,7 +278,7 @@
   }
  ],
  "links": [],
- "modified": "2021-05-08 16:20:22.039078",
+ "modified": "2021-05-09 16:20:22.039078",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Promotional Scheme",
@@ -331,11 +331,6 @@
    "role": "Accounts User",
    "share": 1,
    "write": 1
-  },
-  {
-   "read": 1,
-   "report": 1,
-   "role": "Usuario Contador"
   }
  ],
  "sort_field": "modified",

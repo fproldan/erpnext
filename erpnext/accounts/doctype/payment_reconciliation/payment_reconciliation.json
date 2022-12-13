@@ -177,7 +177,7 @@
  "icon": "icon-resize-horizontal",
  "issingle": 1,
  "links": [],
- "modified": "2021-08-30 14:05:51.977861",
+ "modified": "2021-08-30 15:05:51.977861",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Payment Reconciliation",
@@ -198,11 +198,6 @@
    "role": "Accounts User",
    "share": 1,
    "write": 1
-  },
-  {
-   "read": 1,
-   "report": 1,
-   "role": "Usuario Contador"
   }
  ],
  "sort_field": "modified",

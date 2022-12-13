@@ -273,7 +273,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2020-07-19 05:11:49.905457",
+ "modified": "2020-07-19 06:11:49.905457",
  "modified_by": "Administrator",
  "module": "Education",
  "name": "Fee Schedule",
@@ -319,11 +319,6 @@
    "share": 1,
    "submit": 1,
    "write": 1
-  },
-  {
-   "read": 1,
-   "report": 1,
-   "role": "Usuario Contador"
   }
  ],
  "restrict_to_domain": "Education",

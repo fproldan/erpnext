@@ -131,7 +131,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-10-21 08:39:10.000084",
+ "modified": "2021-10-22 08:39:10.000084",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Apertura de Caja",
@@ -192,11 +192,6 @@
    "share": 1,
    "submit": 1,
    "write": 1
-  },
-  {
-   "read": 1,
-   "report": 1,
-   "role": "Usuario Contador"
   }
  ],
  "sort_field": "modified",

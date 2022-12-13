@@ -90,7 +90,7 @@
  "istable": 0, 
  "max_attachments": 0, 
  "menu_index": 0, 
- "modified": "2017-11-11 18:56:33.824534", 
+ "modified": "2017-11-12 18:56:33.824534", 
  "modified_by": "Administrator", 
  "module": "Education", 
  "name": "Fee Category", 
@@ -156,11 +156,6 @@
    "share": 1, 
    "submit": 0, 
    "write": 1
-  },
-  {
-   "read": 1,
-   "report": 1,
-   "role": "Usuario Contador"
   }
  ], 
  "quick_entry": 1, 
