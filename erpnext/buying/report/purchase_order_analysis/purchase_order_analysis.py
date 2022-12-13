@@ -61,6 +61,9 @@ def get_conditions(filters):
 	if filters.get('project'):
 		conditions += " and poi.project = %(project)s"
 
+	if filters.get('purchase_user'):
+		conditions += "AND ifnull(id.purchase_user, id2.purchase_user)='{}'".format(filters.get('purchase_user'))
+
 	return conditions
 
 def get_data(conditions, filters):
@@ -81,12 +84,15 @@ def get_data(conditions, filters):
 			(poi.billed_amt * IFNULL(po.conversion_rate, 1)) as billed_amount,
 			(poi.base_amount - (poi.billed_amt * IFNULL(po.conversion_rate, 1))) as pending_amount,
 			po.set_warehouse as warehouse,
-			po.company, poi.name
+			po.company, poi.name,
+			ifnull(id.purchase_user, id2.purchase_user) as item_purchase_user
 		FROM
 			`tabPurchase Order` po,
 			`tabPurchase Order Item` poi
-		LEFT JOIN `tabPurchase Invoice Item` pii
-			ON pii.po_detail = poi.name
+		LEFT JOIN `tabPurchase Invoice Item` pii ON pii.po_detail = poi.name
+		JOIN `tabItem` i ON i.name=poi.item_code
+		LEFT JOIN `tabItem Default` id ON id.parent=poi.item_code AND id.company="{company}"
+		LEFT JOIN `tabItem Default` id2 ON id2.parent=i.item_group AND id.company="{company}"
 		WHERE
 			poi.parent = po.name
 			and po.status not in ('Stopped', 'Closed')
@@ -94,7 +100,7 @@ def get_data(conditions, filters):
 			{0}
 		GROUP BY poi.name
 		ORDER BY po.transaction_date ASC
-	""".format(conditions), filters, as_dict=1)
+	""".format(conditions, company=filters.get("company")), filters, as_dict=1)
 
 	return data
 
@@ -299,6 +305,13 @@ def get_columns(filters):
 			"fieldtype": "Link",
 			"options": "Company",
 			"width": 100
+		},
+		{
+			"label": _("Usuario de compra predeterminado"),
+			"fieldname": "item_purchase_user",
+			"fieldtype": "Link",
+			"options": "User",
+			"width": 150
 		}
 	])
 

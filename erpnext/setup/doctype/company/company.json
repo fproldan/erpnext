@@ -789,10 +789,6 @@
    "role": "Stock User"
   },
   {
-   "read": 1,
-   "role": "Projects User"
-  },
-  {
    "create": 1,
    "delete": 1,
    "email": 1,
@@ -803,6 +799,10 @@
    "role": "Accounts Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "role": "Projects User",
+   "select": 1
   }
  ],
  "route": "app/doctype/Company",
