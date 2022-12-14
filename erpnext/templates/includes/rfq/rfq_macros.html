@@ -3,8 +3,7 @@
 {% macro item_name_and_description(d, doc) %}
     <div class="row">
         <div class="col-3">
-        	{% set image = frappe.db.get_value('Item', d.item_code, 'image') %}
-			{{ product_image(image) }}
+			{{ product_image(d.image) }}
         </div>
         <div class="col-9">
             {{ d.item_code }}
