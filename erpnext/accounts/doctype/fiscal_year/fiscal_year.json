@@ -82,7 +82,7 @@
  "icon": "fa fa-calendar",
  "idx": 1,
  "links": [],
- "modified": "2020-11-07 12:16:53.081573",
+ "modified": "2022-12-14 09:26:26.804581",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Fiscal Year",
@@ -124,6 +124,7 @@
    "role": "Usuario Contador"
   }
  ],
+ "route": "app/doctype/Fiscal%20Year",
  "show_name_in_global_search": 1,
  "sort_field": "name",
  "sort_order": "DESC"
