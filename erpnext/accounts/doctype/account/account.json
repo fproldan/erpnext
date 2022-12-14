@@ -199,7 +199,7 @@
  "idx": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2022-12-14 09:47:21.349691",
+ "modified": "2022-12-14 10:47:21.349691",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Account",
@@ -257,6 +257,7 @@
   {
    "read": 1,
    "report": 1,
+   "export": 1,
    "role": "Usuario Contador"
   }
  ],

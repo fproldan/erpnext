@@ -439,7 +439,7 @@
    "link_fieldname": "party"
   }
  ],
- "modified": "2021-09-09 18:37:56.522233",
+ "modified": "2021-09-09 19:37:56.522233",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Supplier",
@@ -500,6 +500,7 @@
   {
    "read": 1,
    "report": 1,
+   "export": 1,
    "role": "Usuario Contador"
   }
  ],

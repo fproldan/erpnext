@@ -713,7 +713,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-08-05 08:57:45.018591",
+ "modified": "2021-08-06 08:57:45.018591",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Payment Entry",
@@ -754,6 +754,7 @@
   {
    "read": 1,
    "report": 1,
+   "export": 1,
    "role": "Usuario Contador"
   }
  ],

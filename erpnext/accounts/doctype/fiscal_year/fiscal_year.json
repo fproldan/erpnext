@@ -82,7 +82,7 @@
  "icon": "fa fa-calendar",
  "idx": 1,
  "links": [],
- "modified": "2022-12-14 09:26:26.804581",
+ "modified": "2022-12-15 09:26:26.804581",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Fiscal Year",
@@ -121,6 +121,7 @@
   },
   {
    "read": 1,
+   "export": 1,
    "role": "Usuario Contador"
   }
  ],
