@@ -199,7 +199,7 @@
  "idx": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2022-12-15 12:53:43.690155",
+ "modified": "2022-12-14 09:47:21.349691",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Account",
@@ -260,6 +260,7 @@
    "role": "Usuario Contador"
   }
  ],
+ "route": "app/doctype/Account",
  "search_fields": "account_number",
  "show_name_in_global_search": 1,
  "sort_field": "modified",
