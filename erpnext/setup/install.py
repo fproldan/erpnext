@@ -241,7 +241,7 @@ def get_user_types_data():
 			'role': 'Usuario Contador',
 			'doctypes': {},
 			'is_standard': 1,
-			'blocked_modules': ['CRM', 'Support', 'Website', 'HR', 'Utilities', 'Custom', 'Core']
+			'blocked_modules': ['CRM', 'Support', 'Website', 'HR', 'Utilities', 'Custom', 'Core', 'Buying', 'Selling', 'Projects']
 		}
 	}
 	# return {
