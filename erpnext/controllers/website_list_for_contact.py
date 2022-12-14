@@ -70,10 +70,7 @@ def get_transaction_list(doctype, txt=None, filters=None, limit_start=0, limit_p
 			else:
 				filters.append(('customer', 'in', customers))
 		elif suppliers:
-			if doctype in ['Payment Entry']:
-				filters.append(('party_name', 'in', suppliers))
-			else:
-				filters.append(('supplier', 'in', suppliers))
+			filters.append(('supplier', 'in', suppliers))
 		elif not custom:
 			return []
 
@@ -96,15 +93,13 @@ def get_transaction_list(doctype, txt=None, filters=None, limit_start=0, limit_p
 
 	return post_process(doctype, transactions)
 
-def get_list_for_transactions(doctype, txt, filters, limit_start, limit_page_length=20, ignore_permissions=False, fields=None, order_by=None, **kwargs):
+def get_list_for_transactions(doctype, txt, filters, limit_start, limit_page_length=20,
+	ignore_permissions=False, fields=None, order_by=None):
 	""" Get List of transactions like Invoices, Orders """
 	from frappe.www.list import get_list
 	meta = frappe.get_meta(doctype)
 	data = []
 	or_filters = []
-	and_filters = []
-	and_data = []
-	filters_exists = any(kwargs.values())
 
 	for d in get_list(doctype, txt, filters=filters, fields="name", limit_start=limit_start,
 		limit_page_length=limit_page_length, ignore_permissions=ignore_permissions, order_by="modified desc"):
@@ -118,37 +113,12 @@ def get_list_for_transactions(doctype, txt, filters, limit_start, limit_page_len
 					child = frappe.get_doc(child_doctype, item.name)
 					or_filters.append([doctype, "name", "=", child.parent])
 
-	if filters_exists:
-		# Payment entry filter by bill_no
-		if meta.get_field('references') and kwargs.get('bill_no'):
-			if meta.get_field('references').options:
-				child_doctype = meta.get_field('references').options
-				for reference in frappe.get_all(child_doctype, {"bill_no": ['like', "%" + kwargs['bill_no'] + "%"]}):
-					child = frappe.get_doc(child_doctype, reference.name)
-					and_filters.append([doctype, "name", "=", child.parent])
-
-		# By posting_date
-		if meta.get_field('posting_date') and kwargs.get('posting_date'):
-			and_filters.append([doctype, "posting_date", "=", kwargs.get('posting_date')])
-
-		# By company
-		if meta.get_field('company') and kwargs.get('company'):
-			and_filters.append([doctype, "company", "=", kwargs.get('company')])
-
 	if or_filters:
 		for r in frappe.get_list(doctype, fields=fields,filters=filters, or_filters=or_filters,
 			limit_start=limit_start, limit_page_length=limit_page_length,
 			ignore_permissions=ignore_permissions, order_by=order_by):
 			data.append(r)
 
-	if and_filters:
-		for r in frappe.get_list(doctype, fields=fields, filters=filters, or_filters=and_filters,
-			limit_start=limit_start, limit_page_length=limit_page_length,
-			ignore_permissions=ignore_permissions, order_by=order_by):
-			and_data.append(r)
-
-	if and_data or filters_exists:
-		return [d for d in data if d in and_data]
 	return data
 
 def rfq_transaction_list(parties_doctype, doctype, parties, limit_start, limit_page_length):
@@ -178,8 +148,7 @@ def post_process(doctype, data):
 			doc.set_indicator()
 
 		doc.status_display = ", ".join(doc.status_display)
-		if doc.get('items'):
-			doc.items_preview = ", ".join(d.item_name for d in doc.items if d.get('items') and d.item_name)
+		doc.items_preview = ", ".join(d.item_name for d in doc.items if d.item_name)
 		result.append(doc)
 
 	return result
@@ -191,8 +160,8 @@ def get_customers_suppliers(doctype, user):
 
 	customer_field_name = get_customer_field_name(doctype)
 
-	has_customer_field = meta.has_field(customer_field_name) or doctype in ['Payment Entry']
-	has_supplier_field = meta.has_field('supplier') or doctype in ['Payment Entry']
+	has_customer_field = meta.has_field(customer_field_name)
+	has_supplier_field = meta.has_field('supplier')
 
 	if has_common(["Supplier", "Customer"], frappe.get_roles(user)):
 		contacts = frappe.db.sql("""
@@ -216,18 +185,11 @@ def get_customers_suppliers(doctype, user):
 
 def has_website_permission(doc, ptype, user, verbose=False):
 	doctype = doc.doctype
-	if doctype == 'Retencion':
-		return True
 	customers, suppliers = get_customers_suppliers(doctype, user)
 	if customers:
 		return frappe.db.exists(doctype, get_customer_filter(doc, customers))
 	elif suppliers:
-		if doctype == 'Request for Quotation':
-			fieldname = 'suppliers' 
-		elif doctype == 'Payment Entry':
-			fieldname = 'party_name'
-		else:
-			fieldname = 'supplier'
+		fieldname = 'suppliers' if doctype == 'Request for Quotation' else 'supplier'
 		return frappe.db.exists(doctype, {
 			'name': doc.name,
 			fieldname: ["in", suppliers]
