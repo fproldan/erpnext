@@ -104,6 +104,20 @@ class Analytics(object):
 			self.get_sales_transactions_based_on_project()
 			self.get_rows()
 
+	def get_rate(self, entry):
+		if self.filters.get('values_in_usd_posing_date') and self.filters["value_quantity"] == 'Value':
+			from erpnext.setup.utils import get_exchange_rate
+			date_field = 'posting_date'
+			if self.filters.doc_type == "Sales Order":
+				date_field = 'transaction_date'
+
+			if entry['currency'] != 'USD':
+				conversion_rate = get_exchange_rate(entry['currency'], "USD", str(entry[date_field]), "for_buying")
+				entry['value_field'] = entry['value_field'] * conversion_rate
+			else:
+				entry['value_field'] = entry['value_field'] / entry['conversion_rate']
+		return entry
+
 	def get_sales_transactions_based_on_canal_de_venta(self):
 		if self.filters["value_quantity"] == 'Value':
 			value_field = "base_net_total"
@@ -115,13 +129,13 @@ class Analytics(object):
 		if self.filters.doc_type == "Sales Invoice":
 			query = """
 					SELECT * from (
-						select s.canal_de_venta as entity, s.{value_field} as value_field, s.{date_field}
+						select s.canal_de_venta as entity, s.{value_field} as value_field, s.{date_field}, s.conversion_rate, s.currency
 						from `tab{doctype}` s
 						where s.docstatus = 1 and s.company = '{compa}'
 						and s.{date_field} between '{f_date}' and '{t_date}'
 						and ifnull(s.canal_de_venta, "") != ""
 						union all
-						select concat(s.canal_de_venta, '{sep}', s.punto_de_venta) as entity, s.{value_field} as value_field, s.{date_field}
+						select concat(s.canal_de_venta, '{sep}', s.punto_de_venta) as entity, s.{value_field} as value_field, s.{date_field}, s.conversion_rate, s.currency
 						from `tab{doctype}` s
 						where s.docstatus = 1 and s.company = '{compa}'
 						and s.{date_field} between '{f_date}' and '{t_date}'
@@ -130,7 +144,7 @@ class Analytics(object):
 				""".format(date_field=self.date_field, value_field=value_field, doctype=self.filters.doc_type, compa=self.filters.company, f_date=self.filters.from_date, t_date=self.filters.to_date, sep=self.sep)
 		else:
 			query = """
-					SELECT s.canal_de_venta as entity, s.{value_field} as value_field, s.{date_field}
+					SELECT s.canal_de_venta as entity, s.{value_field} as value_field, s.{date_field}, s.conversion_rate, s.currency
 						from `tab{doctype}` s
 						where s.docstatus = 1 and s.company = '{compa}'
 						and s.{date_field} between '{f_date}' and '{t_date}'
@@ -139,8 +153,8 @@ class Analytics(object):
 				""".format(date_field=self.date_field, value_field=value_field, doctype=self.filters.doc_type, compa=self.filters.company, f_date=self.filters.from_date, t_date=self.filters.to_date, sep=self.sep)
 
 		self.entries = frappe.db.sql(query, as_dict=1)
-		print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-		print(self.entries)
+		for d in self.entries:
+			d = self.get_rate(d)
 		self.get_teams()
 
 	def get_sales_transactions_based_on_customers_or_suppliers(self):
@@ -157,7 +171,7 @@ class Analytics(object):
 			entity_name = "supplier_name as entity_name"
 
 		self.entries = frappe.get_all(self.filters.doc_type,
-			fields=[entity, entity_name, value_field, self.date_field],
+			fields=[entity, entity_name, value_field, self.date_field, 'conversion_rate', 'currency'],
 			filters={
 				"docstatus": 1,
 				"company": self.filters.company,
@@ -167,6 +181,7 @@ class Analytics(object):
 
 		self.entity_names = {}
 		for d in self.entries:
+			d = self.get_rate(d)
 			self.entity_names.setdefault(d.entity, d.entity_name)
 
 	def get_sales_transactions_based_on_items(self):
@@ -177,7 +192,7 @@ class Analytics(object):
 			value_field = 'stock_qty'
 
 		self.entries = frappe.db.sql("""
-			select i.item_code as entity, i.item_name as entity_name, i.stock_uom, i.{value_field} as value_field, s.{date_field}
+			select i.item_code as entity, i.item_name as entity_name, i.stock_uom, i.{value_field} as value_field, s.{date_field}, s.conversion_rate, s.currency
 			from `tab{doctype} Item` i , `tab{doctype}` s
 			where s.name = i.parent and i.docstatus = 1 and s.company = %s
 			and s.{date_field} between %s and %s
@@ -187,6 +202,7 @@ class Analytics(object):
 
 		self.entity_names = {}
 		for d in self.entries:
+			d = self.get_rate(d)
 			self.entity_names.setdefault(d.entity, d.entity_name)
 
 	def get_sales_transactions_based_on_customer_or_territory_group(self):
@@ -204,13 +220,15 @@ class Analytics(object):
 			entity_field = "territory as entity"
 
 		self.entries = frappe.get_all(self.filters.doc_type,
-			fields=[entity_field, value_field, self.date_field],
+			fields=[entity_field, value_field, self.date_field, 'conversion_rate', 'currency'],
 			filters={
 				"docstatus": 1,
 				"company": self.filters.company,
 				self.date_field: ('between', [self.filters.from_date, self.filters.to_date])
 			}
 		)
+		for d in self.entries:
+			d = self.get_rate(d)
 		self.get_groups()
 
 	def get_sales_transactions_based_on_item_group(self):
@@ -220,13 +238,14 @@ class Analytics(object):
 			value_field = "qty"
 
 		self.entries = frappe.db.sql("""
-			select i.item_group as entity, i.{value_field} as value_field, s.{date_field}
+			select i.item_group as entity, i.{value_field} as value_field, s.{date_field}, s.conversion_rate, s.currency
 			from `tab{doctype} Item` i , `tab{doctype}` s
 			where s.name = i.parent and i.docstatus = 1 and s.company = %s
 			and s.{date_field} between %s and %s
 		""".format(date_field=self.date_field, value_field=value_field, doctype=self.filters.doc_type),
 		(self.filters.company, self.filters.from_date, self.filters.to_date), as_dict=1)
-
+		for d in self.entries:
+			d = self.get_rate(d)
 		self.get_groups()
 
 	def get_sales_transactions_based_on_project(self):
@@ -238,7 +257,7 @@ class Analytics(object):
 		entity = "project as entity"
 
 		self.entries = frappe.get_all(self.filters.doc_type,
-			fields=[entity, value_field, self.date_field],
+			fields=[entity, value_field, self.date_field, 'conversion_rate', 'currency'],
 			filters={
 				"docstatus": 1,
 				"company": self.filters.company,
@@ -246,6 +265,8 @@ class Analytics(object):
 				self.date_field: ('between', [self.filters.from_date, self.filters.to_date])
 			}
 		)
+		for d in self.entries:
+			d = self.get_rate(d)
 
 	def get_rows(self):
 		self.data = []

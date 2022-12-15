@@ -325,6 +325,7 @@
    "label": "Expected Delivery Date"
   },
   {
+   "collapsible": 1,
    "fieldname": "operations_section",
    "fieldtype": "Section Break",
    "label": "Operations",
@@ -336,7 +337,7 @@
    "fieldname": "transfer_material_against",
    "fieldtype": "Select",
    "label": "Transfer Material Against",
-   "options": "\nWork Order\nJob Card"
+   "options": "Work Order\nJob Card"
   },
   {
    "fieldname": "operations",
@@ -572,7 +573,7 @@
  "image_field": "image",
  "is_submittable": 1,
  "links": [],
- "modified": "2022-02-24 15:14:03.844937",
+ "modified": "2022-02-25 15:14:03.844937",
  "modified_by": "Administrator",
  "module": "Manufacturing",
  "restrict_to_domain": "Manufacturing",
