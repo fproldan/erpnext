@@ -11,6 +11,7 @@ from erpnext.payroll.doctype.gratuity_rule.gratuity_rule import get_gratuity_rul
 
 
 def setup(company=None, patch=True):
+	return
 	make_custom_fields()
 	add_print_formats()
 	add_custom_roles_for_reports()
