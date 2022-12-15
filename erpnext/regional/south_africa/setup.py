@@ -9,6 +9,7 @@ from frappe.permissions import add_permission, update_permission_property
 
 
 def setup(company=None, patch=True):
+	return
 	make_custom_fields()
 	add_permissions()
 

@@ -40,6 +40,11 @@ frappe.query_reports["Reporte Stock Bajo"] = {
 			"fieldname": "only_shortage",
 			"label": __("Solo Bajos de Stock"),
 			"fieldtype": "Check",
+		},
+		{
+			"fieldname": "group_by_item",
+			"label": __("Sumarizado por producto"),
+			"fieldtype": "Check",
 		}
 	],
 	"formatter": function(value, row, column, data, default_formatter) {

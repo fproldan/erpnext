@@ -191,7 +191,7 @@ frappe.ui.form.on('Payment Entry', {
 		frm.toggle_display("source_exchange_rate",
 			(frm.doc.paid_amount && frm.doc.paid_from_account_currency != company_currency));
 
-		frm.toggle_display("target_exchange_rate", (frm.doc.received_amount &&
+		frm.toggle_display("target_exchange_rate", ((frm.doc.received_amount || frm.doc.paid_amount)  &&
 			frm.doc.paid_to_account_currency != company_currency &&
 			frm.doc.paid_from_account_currency != frm.doc.paid_to_account_currency));
 
@@ -502,14 +502,21 @@ frappe.ui.form.on('Payment Entry', {
 					frm.doc.paid_from_account_currency, company_currency);
 			}
 		}
+
+		if (!frm.doc.target_exchange_rate && frm.doc.payment_type == 'Pay') {
+			frm.trigger('paid_to_account_currency');
+		}
 	},
 
 	paid_to_account_currency: function(frm) {
 		if(!frm.doc.paid_to_account_currency) return;
 		var company_currency = frappe.get_doc(":Company", frm.doc.company).default_currency;
 
-		frm.events.set_current_exchange_rate(frm, "target_exchange_rate",
-			frm.doc.paid_to_account_currency, company_currency);
+		frm.events.set_current_exchange_rate(frm, "target_exchange_rate", frm.doc.paid_to_account_currency, company_currency);
+		
+		if (!frm.doc.source_exchange_rate && frm.doc.payment_type == 'Receive') {
+			frm.trigger('paid_from_account_currency');
+		}
 	},
 
 	set_current_exchange_rate: function(frm, exchange_rate_field, from_currency, to_currency) {
