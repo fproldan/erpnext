@@ -199,7 +199,7 @@
  "idx": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2022-12-14 10:47:21.349691",
+ "modified": "2022-12-14 11:47:21.349691",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Account",
@@ -218,13 +218,6 @@
    "role": "Accounts User",
    "share": 1,
    "write": 1
-  },
-  {
-   "email": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Auditor"
   },
   {
    "email": 1,

@@ -47,6 +47,5 @@ def add_permissions():
 			roles= [
 				dict(role='Accounts User'),
 				dict(role='Accounts Manager'),
-				dict(role='Auditor')
 			]
 		)).insert()

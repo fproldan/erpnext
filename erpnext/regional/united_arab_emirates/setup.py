@@ -145,7 +145,6 @@ def add_custom_roles_for_reports():
 			roles= [
 				dict(role='Accounts User'),
 				dict(role='Accounts Manager'),
-				dict(role='Auditor')
 			]
 		)).insert()
 

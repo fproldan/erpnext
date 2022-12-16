@@ -9,7 +9,7 @@
  "filters": [],
  "idx": 0,
  "is_standard": "Yes",
- "modified": "2021-06-02 18:59:55.470621",
+ "modified": "2021-06-03 18:59:55.470621",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "COGS By Item Group",
@@ -24,9 +24,6 @@
   },
   {
    "role": "Accounts Manager"
-  },
-  {
-   "role": "Auditor"
   }
  ]
 }

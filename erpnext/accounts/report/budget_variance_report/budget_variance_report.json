@@ -7,7 +7,7 @@
  "doctype": "Report", 
  "idx": 3, 
  "is_standard": "Yes", 
- "modified": "2017-02-24 20:19:06.964033", 
+ "modified": "2017-02-24 21:19:06.964033", 
  "modified_by": "Administrator", 
  "module": "Accounts", 
  "name": "Budget Variance Report", 
@@ -18,9 +18,6 @@
  "roles": [
   {
    "role": "Accounts Manager"
-  }, 
-  {
-   "role": "Auditor"
   }, 
   {
    "role": "Accounts User"

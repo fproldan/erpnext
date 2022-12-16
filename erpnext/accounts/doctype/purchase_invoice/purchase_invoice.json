@@ -1405,7 +1405,7 @@
  "idx": 204,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-02-08 11:32:00.412591",
+ "modified": "2022-02-08 12:32:00.412591",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Purchase Invoice",
@@ -1445,13 +1445,6 @@
    "share": 1,
    "submit": 1,
    "write": 1
-  },
-  {
-   "email": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Auditor"
   },
   {
    "permlevel": 1,
