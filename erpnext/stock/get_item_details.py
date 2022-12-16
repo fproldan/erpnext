@@ -336,6 +336,7 @@ def get_basic_details(args, item, overwrite_warehouse=True):
 		"weight_per_unit": args.get("weight_per_unit") or item.get("weight_per_unit"),
 		"weight_uom": args.get("weight_uom") or item.get("weight_uom"),
 		"porcentaje_comision": comision,
+		"grant_commission": item.get("grant_commission"),
 	})
 
 	if item.get("enable_deferred_revenue") or item.get("enable_deferred_expense"):
