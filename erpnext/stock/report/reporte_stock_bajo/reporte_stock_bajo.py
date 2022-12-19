@@ -46,15 +46,15 @@ def get_data(conditions, filters):
 	if filters.get('group_by_item'):
 		having = ""
 		if filters.get("only_shortage"):
-			having += "HAVING SUM(bin.actual_qty - item.safety_stock) < 1"
+			having += "HAVING SUM(bin.actual_qty) - item.safety_stock < 1"
 			
 		data = frappe.db.sql("""
 			SELECT
 				"Todos los Almacenes" AS warehouse,
 				bin.item_code,
 				SUM(bin.actual_qty) AS actual_qty,
-				SUM(item.safety_stock) AS safety_stock,
-				SUM(bin.actual_qty - item.safety_stock) AS low_stock,
+				item.safety_stock AS safety_stock,
+				SUM(bin.actual_qty) - item.safety_stock AS low_stock,
 				item.item_name
 			FROM
 				`tabBin` bin,
@@ -104,7 +104,7 @@ def get_columns():
 			"fieldname": "item_code",
 			"fieldtype": "Link",
 			"options": "Item",
-			"width": 400
+			"width": 500
 		},
 		{
 			"label": _("Cantidad"),
