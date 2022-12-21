@@ -273,7 +273,6 @@ has_website_permission = {
 	"Patient Encounter": "erpnext.healthcare.web_form.prescription.prescription.has_website_permission",
 	"Patient Appointment": "erpnext.healthcare.web_form.patient_appointments.patient_appointments.has_website_permission",
 	"Patient": "erpnext.healthcare.web_form.personal_details.personal_details.has_website_permission",
-	"Supplier": "erpnext.controllers.website_list_for_contact.has_website_permission"
 }
 
 dump_report_map = "erpnext.startup.report_data_map.data_map"

@@ -12,7 +12,11 @@ from erpnext.e_commerce.doctype.e_commerce_settings.e_commerce_settings import s
 def get_context(context):
 	context.no_cache = 1
 	context.show_sidebar = True
-	context.doc = frappe.get_doc(frappe.form_dict.doctype, frappe.form_dict.name)
+
+	if frappe.db.exists(frappe.form_dict.doctype, frappe.form_dict.name):
+		context.doc = frappe.get_doc(frappe.form_dict.doctype, frappe.form_dict.name)
+	else:
+		frappe.throw(_("Not Permitted"), frappe.PermissionError)
 
 	if show_attachments():
 		context.attachments = get_attachments(frappe.form_dict.doctype, frappe.form_dict.name)
@@ -26,7 +30,7 @@ def get_context(context):
 	else:
 		context.print_format = "Standard"
 
-	if not frappe.has_website_permission(context.doc):
+	if frappe.form_dict.name not in frappe.has_website_permission(context.doc):
 		frappe.throw(_("Not Permitted"), frappe.PermissionError)
 
 	# if frappe.form_dict.get('nuevo_pacto_entrega') and context.doc.doctype == 'Purchase Order':

@@ -156,6 +156,13 @@ class Supplier(TransactionBase):
 				except frappe.NameError:
 					pass
 
+	def has_website_permission(self, ptype, user, verbose=False):
+		from erpnext.controllers.website_list_for_contact import get_customers_suppliers
+		customers, suppliers = get_customers_suppliers(self.doctype, user)
+		if suppliers:
+			return suppliers
+		return []
+
 @frappe.whitelist()
 @frappe.validate_and_sanitize_search_inputs
 def get_supplier_primary_contact(doctype, txt, searchfield, start, page_len, filters):

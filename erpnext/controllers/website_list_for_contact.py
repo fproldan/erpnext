@@ -230,9 +230,10 @@ def has_website_permission(doc, ptype, user, verbose=False):
 		elif doctype == 'Payment Entry':
 			fieldname = 'party_name'
 		elif doctype == 'Supplier':
-			fieldname = 'name'
+			return suppliers
 		else:
 			fieldname = 'supplier'
+
 		return frappe.db.exists(doctype, {
 			'name': doc.name,
 			fieldname: ["in", suppliers]
