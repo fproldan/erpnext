@@ -13,6 +13,7 @@ def get_context(context):
 	context.no_cache = 1
 	context.show_sidebar = True
 	context.doc = frappe.get_doc(frappe.form_dict.doctype, frappe.form_dict.name)
+
 	if hasattr(context.doc, "set_indicator"):
 		context.doc.set_indicator()
 
@@ -21,9 +22,7 @@ def get_context(context):
 
 	context.parents = frappe.form_dict.parents
 	context.title = frappe.form_dict.name
-	context.payment_ref = frappe.db.get_value("Payment Request",
-		{"reference_name": frappe.form_dict.name}, "name")
-
+	context.payment_ref = frappe.db.get_value("Payment Request", {"reference_name": frappe.form_dict.name}, "name")
 	context.enabled_checkout = frappe.get_doc("E Commerce Settings").enable_checkout
 
 	default_print_format = frappe.db.get_value('Property Setter', dict(property='default_print_format', doc_type=frappe.form_dict.doctype), "value")

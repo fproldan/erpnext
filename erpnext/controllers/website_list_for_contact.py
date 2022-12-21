@@ -192,7 +192,7 @@ def get_customers_suppliers(doctype, user):
 	customer_field_name = get_customer_field_name(doctype)
 
 	has_customer_field = meta.has_field(customer_field_name) or doctype in ['Payment Entry']
-	has_supplier_field = meta.has_field('supplier') or doctype in ['Payment Entry']
+	has_supplier_field = meta.has_field('supplier') or doctype in ['Payment Entry', 'Supplier']
 
 	if has_common(["Supplier", "Customer"], frappe.get_roles(user)):
 		contacts = frappe.db.sql("""
@@ -216,9 +216,12 @@ def get_customers_suppliers(doctype, user):
 
 def has_website_permission(doc, ptype, user, verbose=False):
 	doctype = doc.doctype
+	
 	if doctype == 'Retencion':
 		return True
+	
 	customers, suppliers = get_customers_suppliers(doctype, user)
+
 	if customers:
 		return frappe.db.exists(doctype, get_customer_filter(doc, customers))
 	elif suppliers:
@@ -226,6 +229,8 @@ def has_website_permission(doc, ptype, user, verbose=False):
 			fieldname = 'suppliers' 
 		elif doctype == 'Payment Entry':
 			fieldname = 'party_name'
+		elif doctype == 'Supplier':
+			fieldname = 'name'
 		else:
 			fieldname = 'supplier'
 		return frappe.db.exists(doctype, {

@@ -1,0 +1,70 @@
+{% extends "templates/web.html" %}
+{% from "erpnext/templates/includes/order/order_macros.html" import item_name_and_description %}
+
+{% block breadcrumbs %}
+	{% include "templates/includes/breadcrumbs.html" %}
+{% endblock %}
+
+{% block title %}{{ doc.name }}{% endblock %}
+
+{% block header %}
+	<h2 class="m-0">{{ doc.name }}</h2>
+{% endblock %}
+
+
+{% block page_content %}
+
+
+<div class="order-container pt-5">
+	<form>
+		<div class="form-group">
+	    	<label for="tax_id">CUIT/CUIL</label>
+	    	<input type="text" class="form-control" id="tax_id" placeholder="CUIT/CUIL" value='{{ doc.tax_id }}'>
+	  	</div>
+	  	<div class="form-group">
+	   		<label for="supplier_name">Razón Social</label>
+	    	<input type="text" class="form-control" id="supplier_name" placeholder="Another input" value='{{ doc.supplier_name }}'>
+	  	</div>
+	  	<div class="form-group">
+		  	<div class="form-row">
+			    <div class="col">
+			    	<label for="tax_id">CUIT/CUIL</label>
+			    	<input type="text" class="form-control" placeholder="First name">
+			    </div>
+			    <div class="col">
+			    	<label for="tax_id">CUIT/CUIL</label>
+			    	<input type="text" class="form-control" placeholder="Last name">
+			    </div>
+			</div>
+		</div>
+
+	  	<input type='submit' class='btn btn-sm btn-light btn-primary' value="{{ _('Modificar') }}">
+	</form>
+</div>
+
+
+{% if attachments %}
+	<div class="order-item-table">
+		<div class="row order-items order-item-header text-muted">
+			<div class="col-sm-12 h6 text-uppercase">
+				{{ _("Attachments") }}
+			</div>
+		</div>
+		<div class="row order-items">
+			<div class="col-sm-12">
+				{% for attachment in attachments %}
+				<p class="small">
+					<a href="{{ attachment.file_url }}" target="blank"> {{ attachment.file_name }} </a>
+				</p>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+{% endif %}
+
+
+{% endblock %}
+
+{% block script %}
+	<script> {% include "templates/pages/supplier.js" %} </script>
+{% endblock %}
