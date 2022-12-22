@@ -33,6 +33,8 @@ override_doctype_class = {
 	'Address': 'erpnext.accounts.custom.address.ERPNextAddress'
 }
 
+user_types_reducidos = ['Usuario de Ventas Reducido', 'Usuario de Soporte Reducido', 'Usuario de Proyecto Reducido', 'Usuario Contador']
+
 welcome_email = "erpnext.setup.utils.welcome_email"
 
 # setup wizard
