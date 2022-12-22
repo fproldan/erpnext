@@ -352,3 +352,4 @@ erpnext.patches.v13_0.item_naming_series_not_mandatory
 execute:frappe.delete_doc('Report', 'Project Profitability', ignore_missing=True, force=True)
 erpnext.patches.v13_0.agregar_usuarios_reducidos
 erpnext.patches.v13_0.agregar_usuario_contador
+erpnext.patches.v13_0.release_1_6
