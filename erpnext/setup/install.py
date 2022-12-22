@@ -185,6 +185,7 @@ def create_usuario_contador():
 		'thread_notify': 0,
 		'send_me_a_copy': 0,
 		'user_type': 'Usuario Contador',
+		'send_welcome_email': 0
 	}
 
 	try:
