@@ -12,6 +12,8 @@
   "supplier",
   "supplier_name",
   "tax_id",
+  "tipo_de_documento_proveedor",
+  "condicion_de_iva_proveedor",
   "due_date",
   "tax_withholding_category",
   "column_break1",
@@ -1399,13 +1401,29 @@
    "hidden": 1,
    "label": "Ignore Default Payment Terms Template",
    "read_only": 1
+  },
+  {
+   "fetch_from": "supplier.tipo_de_documento_proveedor",
+   "fieldname": "tipo_de_documento_proveedor",
+   "fieldtype": "Link",
+   "label": "Tipo de Documento",
+   "options": "Tipo de Documento",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "supplier.condicion_de_iva_proveedor",
+   "fieldname": "condicion_de_iva_proveedor",
+   "fieldtype": "Link",
+   "label": "Condicion de IVA",
+   "options": "Condicion de IVA",
+   "read_only": 1
   }
  ],
  "icon": "fa fa-file-text",
  "idx": 204,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-02-08 12:32:00.412591",
+ "modified": "2022-12-19 13:45:07.109394",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Purchase Invoice",
@@ -1453,12 +1471,13 @@
    "write": 1
   },
   {
+   "export": 1,
    "read": 1,
    "report": 1,
-   "export": 1,
    "role": "Usuario Contador"
   }
  ],
+ "route": "app/doctype/Purchase%20Invoice",
  "search_fields": "posting_date, supplier, bill_no, base_grand_total, outstanding_amount",
  "show_name_in_global_search": 1,
  "sort_field": "modified",
