@@ -1478,9 +1478,9 @@
    "write": 1
   },
   {
-   "export": 1,
    "read": 1,
    "report": 1,
+   "export": 1,
    "role": "Usuario Contador"
   }
  ],
