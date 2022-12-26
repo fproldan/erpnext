@@ -9,7 +9,7 @@
  "filters": [],
  "idx": 3,
  "is_standard": "Yes",
- "modified": "2022-12-06 14:42:33.270287",
+ "modified": "2022-12-07 14:42:33.270287",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "General Ledger",
@@ -24,9 +24,6 @@
   },
   {
    "role": "Accounts Manager"
-  },
-  {
-   "role": "Auditor"
   },
   {
    "role": "Usuario Contador"

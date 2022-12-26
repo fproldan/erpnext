@@ -353,4 +353,5 @@ execute:frappe.delete_doc('Report', 'Project Profitability', ignore_missing=True
 erpnext.patches.v13_0.agregar_usuarios_reducidos
 erpnext.patches.v13_0.agregar_usuario_contador
 erpnext.patches.v13_0.release_1_6
+execute:frappe.delete_doc('Role', 'Auditor', ignore_missing=True, force=True)
 erpnext.patches.v13_0.complete_purchase_invoice_new_fields

@@ -7,7 +7,7 @@
  "doctype": "Report", 
  "idx": 3, 
  "is_standard": "Yes", 
- "modified": "2017-02-24 20:19:26.257552", 
+ "modified": "2017-02-24 21:19:26.257552", 
  "modified_by": "Administrator", 
  "module": "Accounts", 
  "name": "Bank Clearance Summary", 
@@ -21,9 +21,6 @@
   }, 
   {
    "role": "Accounts Manager"
-  }, 
-  {
-   "role": "Auditor"
   }
  ]
 }

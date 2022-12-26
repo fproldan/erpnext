@@ -7,7 +7,7 @@
  "doctype": "Report", 
  "idx": 3, 
  "is_standard": "Yes", 
- "modified": "2018-02-21 01:28:31.261299", 
+ "modified": "2018-02-22 01:28:31.261299", 
  "modified_by": "Administrator", 
  "module": "Accounts", 
  "name": "Purchase Invoice Trends", 
@@ -24,9 +24,6 @@
   }, 
   {
    "role": "Accounts Manager"
-  }, 
-  {
-   "role": "Auditor"
   }
  ]
 }

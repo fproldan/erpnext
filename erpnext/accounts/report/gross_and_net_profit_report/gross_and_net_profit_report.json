@@ -7,7 +7,7 @@
  "doctype": "Report", 
  "idx": 0, 
  "is_standard": "Yes", 
- "modified": "2019-02-08 10:58:55.763090", 
+ "modified": "2019-02-08 11:58:55.763090", 
  "modified_by": "Administrator", 
  "module": "Accounts", 
  "name": "Gross and Net Profit Report", 
@@ -22,9 +22,6 @@
   }, 
   {
    "role": "Accounts Manager"
-  }, 
-  {
-   "role": "Auditor"
   }
  ]
 }
