@@ -7,7 +7,7 @@
  "doctype": "Report", 
  "idx": 2, 
  "is_standard": "Yes", 
- "modified": "2017-02-24 20:09:19.748690", 
+ "modified": "2017-02-24 21:09:19.748690", 
  "modified_by": "Administrator", 
  "module": "Accounts", 
  "name": "Cash Flow", 
@@ -21,9 +21,6 @@
   }, 
   {
    "role": "Accounts Manager"
-  }, 
-  {
-   "role": "Auditor"
   }
  ]
 }

@@ -7,7 +7,7 @@
  "doctype": "Report", 
  "idx": 3, 
  "is_standard": "Yes", 
- "modified": "2017-02-24 20:17:31.238117", 
+ "modified": "2017-02-24 21:17:31.238117", 
  "modified_by": "Administrator", 
  "module": "Accounts", 
  "name": "Item-wise Purchase Register", 
@@ -21,9 +21,6 @@
   }, 
   {
    "role": "Purchase User"
-  }, 
-  {
-   "role": "Auditor"
   }, 
   {
    "role": "Accounts Manager"
