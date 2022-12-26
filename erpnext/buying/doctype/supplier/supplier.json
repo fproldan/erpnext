@@ -111,7 +111,8 @@
    "fieldname": "tax_id",
    "fieldtype": "Data",
    "label": "Tax ID",
-   "allow_in_quick_entry": 1
+   "allow_in_quick_entry": 1,
+   "mandatory_depends_on": "eval:doc.condicion_de_iva_proveedor && doc.condicion_de_iva_proveedor !='Consumidor Final'"
   },
   {
    "fieldname": "tax_category",
@@ -439,7 +440,11 @@
    "link_fieldname": "party"
   }
  ],
+<<<<<<< HEAD
  "modified": "2021-09-08 18:37:56.522233",
+=======
+ "modified": "2021-09-09 21:37:56.522233",
+>>>>>>> f978163de9 (Problema en Libro de IVA con datos incompletos en Proveedor (#530))
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Supplier",
