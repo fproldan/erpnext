@@ -218,7 +218,7 @@ def get_transaction_list(doctype, company=None, txt=None, bill_no=None, posting_
             else:
                 filters.append(('customer', 'in', customers))
         elif suppliers:
-            filters.append(('party_name', 'in', suppliers))
+            filters.append(('party', 'in', suppliers))
         elif not custom:
             return []
 
