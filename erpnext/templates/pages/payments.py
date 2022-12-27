@@ -20,7 +20,7 @@ def get_context(context, **dict_params):
     frappe.local.form_dict.update(dict_params)
     frappe.local.form_dict.doctype = 'Payment Entry'
     doctype = frappe.local.form_dict.doctype
-    context.companies = frappe.get_all('Company', fields='name')
+    context.companies = frappe.get_all('Company', filters={'exclude_in_portal': 0}, fields='name')
     context.title = 'Pagos'
     context.parents = [{"route":"me", "title":_("My Account")}]
     context.show_sidebar = True
