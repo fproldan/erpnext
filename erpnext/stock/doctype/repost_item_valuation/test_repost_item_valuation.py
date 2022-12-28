@@ -6,6 +6,8 @@ import unittest
 import frappe
 from frappe.utils import nowdate
 
+from erpnext.controllers.stock_controller import create_item_wise_repost_entries
+from erpnext.stock.doctype.purchase_receipt.test_purchase_receipt import make_purchase_receipt
 from erpnext.stock.doctype.repost_item_valuation.repost_item_valuation import (
 	in_configured_timeslot,
 )
@@ -160,3 +162,4 @@ class TestRepostItemValuation(unittest.TestCase):
 		self.assertRaises(PendingRepostingError, stock_settings.save)
 
 		riv.set_status("Skipped")
+

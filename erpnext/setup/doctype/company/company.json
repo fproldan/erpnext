@@ -12,8 +12,9 @@
   "details",
   "company_name",
   "abbr",
-  "change_abbr",
   "is_group",
+  "exclude_in_portal",
+  "data_6",
   "cb0",
   "domain",
   "color",
@@ -126,13 +127,8 @@
    "label": "Abbr",
    "oldfieldname": "abbr",
    "oldfieldtype": "Data",
-   "reqd": 1
-  },
-  {
-   "depends_on": "eval:!doc.__islocal && in_list(frappe.user_roles, \"System Manager\")",
-   "fieldname": "change_abbr",
-   "fieldtype": "Button",
-   "label": "Change Abbreviation"
+   "reqd": 1,
+   "set_only_once": 1
   },
   {
    "bold": 1,
@@ -747,6 +743,16 @@
    "fieldname": "color",
    "fieldtype": "Color",
    "label": "Color"
+  },
+  {
+   "default": "0",
+   "fieldname": "exclude_in_portal",
+   "fieldtype": "Check",
+   "label": "Excluir en el portal"
+  },
+  {
+   "fieldname": "data_6",
+   "fieldtype": "Data"
   }
  ],
  "icon": "fa fa-building",
@@ -754,7 +760,7 @@
  "image_field": "company_logo",
  "is_tree": 1,
  "links": [],
- "modified": "2022-10-28 09:32:06.405371",
+ "modified": "2022-12-27 12:46:26.432743",
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Company",

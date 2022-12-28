@@ -18,13 +18,33 @@
 		<b class="caret"></b>
 	</button>
 	<ul class="dropdown-menu dropdown-menu-right" role="menu">
-		{% if doc.doctype == 'Purchase Order' %}
+		{% if doc.doctype == 'Purchase Order' and False %}
 		<a class="dropdown-item" href="/api/method/erpnext.buying.doctype.purchase_order.purchase_order.make_purchase_invoice_from_portal?purchase_order_name={{ doc.name }}" data-action="make_purchase_invoice">{{ _("Make Purchase Invoice") }}</a>
 		{% endif %}
-		<a class="dropdown-item" href='/printview?doctype={{ doc.doctype}}&name={{ doc.name }}&format={{ print_format }}'
-			target="_blank" rel="noopener noreferrer">
-			{{ _("Print") }}
-		</a>
+		{% if doc.doctype == 'Payment Entry' %}
+			<a class="dropdown-item" href='/printview?doctype={{ doc.doctype }}&name={{ doc.name }}&format=Orden de Pago' target="_blank" rel="noopener noreferrer">Orden de Pago</a>
+
+			{% set ret_iibb = doc.has_retencion('Ingresos Brutos') %}
+			{% if ret_iibb|length > 1%}
+				<a class="dropdown-item {% if not ret_iibb %}disabled{% endif %}" href='/api/method/frappe.utils.print_format.download_multi_pdf?doctype=Retencion&name={{ ret_iibb|json}}&format=Retencion' target="_blank" rel="noopener noreferrer">IIBB</a>
+			{% else %}
+				<a class="dropdown-item {% if not ret_iibb %}disabled{% endif %}" href='/printview?doctype=Retencion&name={{ ret_iibb[0] }}&format=Retencion' target="_blank" rel="noopener noreferrer">IIBB</a>
+			{% endif %}
+
+			{% set ret_iva = doc.has_retencion('IVA') %}
+			<a class="dropdown-item {% if not ret_iva %}disabled{% endif %}" href='/printview?doctype=Retencion&name={{ ret_iva[0] }}&format=Retencion' target="_blank" rel="noopener noreferrer">IVA</a>
+			
+			{% set ret_ganancias = doc.has_retencion('Ganancias') %}
+			<a class="dropdown-item {% if not ret_ganancias %}disabled{% endif %}" href='/printview?doctype=Retencion&name={{ ret_ganancias[0] }}&format=Retencion' target="_blank" rel="noopener noreferrer">Ganancias</a>
+
+			{% set ret_suss = doc.has_retencion('Seguridad Social') %}
+			<a class="dropdown-item {% if not ret_suss %}disabled{% endif %}" href='/printview?doctype=Retencion&name={{ ret_suss[0] }}&format=Retencion' target="_blank" rel="noopener noreferrer">SUSS</a>
+		{% else %}
+			<a class="dropdown-item" href='/printview?doctype={{ doc.doctype}}&name={{ doc.name }}&format={{ print_format }}'
+				target="_blank" rel="noopener noreferrer">
+				{{ _("Print") }}
+			</a>
+		{% endif %}
 	</ul>
 </div>
 
@@ -53,7 +73,14 @@
 </div>
 
 <p class="small my-3">
-	{%- set party_name = doc.supplier_name if doc.doctype in ['Supplier Quotation', 'Purchase Invoice', 'Purchase Order'] else doc.customer_name %}
+	{% if doc.doctype in ['Supplier Quotation', 'Purchase Invoice', 'Purchase Order'] %}
+		{%- set party_name = doc.supplier_name %}
+	{% elif doc.doctype in ['Payment Entry'] %}
+		{%- set party_name = doc.party_name  %}
+	{% else %}
+		{%- set party_name = doc.customer_name %}
+	{% endif %}
+	
 	<b>{{ party_name }}</b>
 
 	{% if doc.contact_display and doc.contact_display != party_name %}
@@ -62,10 +89,97 @@
 	{% endif %}
 </p>
 
+{% if doc.doctype == 'Payment Entry' %}
+	<div class="small row my-3">
+		<div class="col-3"><b>Método de Pago:</b> {{ doc.mode_of_payment or '' }}</div>
+		<div class="col-3">{% if doc.reference_no %}<b>Número de referencia:</b> {{ doc.reference_no }}{% endif %}</div>
+		<div class="col-3">{% if doc.reference_date %}<b>Fecha de referencia:</b> {{ frappe.utils.formatdate(doc.reference_date, 'dd/MM/Y') }}{% endif %}</div>
+	</div>
+	{% if doc.cheques %}
+		<div class="pt-2 pb-5">
+			<table class="order-item-table w-100 table">
+				<thead class="order-items order-item-header">
+					<th width="40%">
+						{{ _("Cheque") }}
+					</th>
+					<th width="30%">
+						{{ _("Fecha") }}
+					</th>
+					<th width="30%" class="text-right">
+						{{ _("Importe") }}
+					</th>
+				</thead>
+				<tbody>
+					{% for cheque in doc.cheques %}
+						<tr class="order-items">
+							<td>
+								{{ cheque.cheque }} 
+							</td>
+							<td>
+								{{ frappe.utils.formatdate(cheque.fecha, 'dd/MM/Y') }}
+							</td>
+							<td class="text-right">
+								$ {{ cheque.importe }} 
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	{% endif %}
+{% endif %}
+
+
 {% if doc._header %}
 {{ doc._header }}
 {% endif %}
 
+{% if doc.doctype == 'Purchase Order' %}
+<div class="pt-2 pb-5 float-right">
+	<h5>Nuevo pacto de entrega:</h5> 
+	<form action="" style="display: flex;">
+		<input name='nuevo_pacto_entrega' class='form-control' type='date' format="yyyy-mm-dd" style='max-width: 200px; display: inline-block; margin-right: 10px;' value='{{ doc.nuevo_pacto_entrega }}'>
+		<input type='submit' class='btn btn-sm btn-light btn-primary' value="{{ _("Modificar") }}">
+	</form>
+</div>
+{% endif %}
+
+{% if doc.doctype == 'Payment Entry' %}
+<div class="order-container">
+	<!-- items -->
+	<table class="order-item-table w-100 table">
+		<thead class="order-items order-item-header">
+			<th width="50%">
+				{{ _("Comprobantes") }}
+			</th>
+			<th width="50%" class="text-right">
+				{{ _("Pagado") }}
+			</th>
+		</thead>
+		<tbody>
+		{% for reference in doc.references %}
+			{% set datos_comprobante = frappe.db.get_value('Purchase Invoice', reference.reference_name, ['tipo_de_comprobante', 'bill_date']) %}
+			<tr class="order-items">
+				<td>
+					<a href="/purchase-invoices/{{ reference.reference_name }}" target="_blank"><h6>{{ datos_comprobante[0] }}: {{ reference.bill_no }}</h6></a>
+					Fecha: {{ frappe.utils.formatdate(datos_comprobante[1], 'dd/MM/Y') }} 
+				</td>
+				<td class="text-right">
+					<h6>$ {{ reference.allocated_amount }}</h6>
+					Total Comprobante: $ {{ reference.total_amount }}
+				</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	<!-- taxes -->
+	<div class="order-taxes d-flex justify-content-end">
+		<table>
+			{% include "erpnext/templates/includes/order/order_taxes.html" %}
+		</table>
+	</div>
+</div>
+{% else %}
 <div class="order-container">
 	<!-- items -->
 	<table class="order-item-table w-100 table">
@@ -107,15 +221,14 @@
 		</table>
 	</div>
 </div>
+{% endif %}
 
-{% if enabled_checkout and ((doc.doctype=="Sales Order" and doc.per_billed <= 0)
-	or (doc.doctype=="Sales Invoice" and doc.outstanding_amount > 0)) %}
-
+{% if enabled_checkout and ((doc.doctype=="Sales Order" and doc.per_billed <= 0) or (doc.doctype=="Sales Invoice" and doc.outstanding_amount > 0)) %}
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<div class="row">
 			<div class="form-column col-sm-6 address-title">
-				<strong>Payment</strong>
+				<strong>{{ _("Payment") }}</strong>
 			</div>
 		</div>
 	</div>
@@ -156,6 +269,58 @@
 </div>
 {% endif %}
 
+{% if doc.doctype == 'Payment Entry' and doc.retenciones %}
+<div class="order-container pt-10">
+	<table class="order-item-table w-100 table">
+		<thead class="order-items order-item-header">
+			<th width="40%">
+				{{ _("Retenciones") }}
+			</th>
+			<th width="20%" class="text-right">
+			</th>
+			<th width="20%" class="text-right">
+			</th>
+			<th width="20%" class="text-right">
+			</th>
+		</thead>
+		<tbody>
+		{% for retencion in doc.retenciones %}
+		<tr class="order-items">
+			<td>
+				{{ retencion.retencion_name }}
+			</td>
+			<td class="text-right">
+				{{ retencion.retencion }}
+			</td>
+			<td class="text-right">
+				$ {{ retencion.monto }}
+			</td>
+			<td class="text-right">
+				<button onclick="javascript:window.open('/printview?doctype=Retencion&name={{ retencion.retencion_name }}&format=Retencion', '_blank');" class="text-muted btn btn-default icon-btn" title="Imprimir" data-original-title="Impresión">
+					<svg class="icon icon-sm" style="">
+						<use class="" href="#icon-printer"></use>
+					</svg>
+				</button>
+			</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	<div class="order-taxes d-flex justify-content-end">
+		<table>
+			<tr>
+				<th class="text-left item-grand-total" colspan="1">
+					{{ _("Total Retenciones") }}
+				</th>
+				<th class="text-right item-grand-total totals" colspan="3">
+					$ {{ doc.retenciones | sum(attribute='monto') }}
+				</th>
+			</tr>
+
+		</table>
+	</div>
+</div>
+{% endif %}
 
 {% if attachments %}
 <div class="order-item-table">
