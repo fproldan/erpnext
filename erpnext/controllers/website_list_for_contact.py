@@ -136,15 +136,16 @@ def get_list_for_transactions(doctype, txt, filters, limit_start, limit_page_len
 			and_filters.append([doctype, "company", "=", kwargs.get('company')])
 
 		# By Paid status
-		if doctype == 'Purchase Invoice' and kwargs.get('paid'):
-			if kwargs.get('paid') == '1':
-				and_filters.append([doctype, "status", "=", 'Paid'])
-			elif kwargs.get('paid') == '0':
-				and_filters.append([doctype, "status", "!=", 'Paid'])
+		if doctype == 'Purchase Invoice' and kwargs.get('status'):
+			and_filters.append([doctype, "status", "=", kwargs.get('status')])
 
 		# By Bill No
 		if meta.get_field('bill_no') and kwargs.get('bill_no'):
 			and_filters.append([doctype, "bill_no", "like", kwargs.get('bill_no')])
+
+		# By Bill Date
+		if meta.get_field('bill_date') and kwargs.get('bill_date'):
+			and_filters.append([doctype, "bill_date", "=", kwargs.get('bill_date')])
 
 	if or_filters:
 		for r in frappe.get_list(doctype, fields=fields,filters=filters, or_filters=or_filters,

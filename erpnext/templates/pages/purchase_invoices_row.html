@@ -1,27 +1,30 @@
 <div class="web-list-item transaction-list-item">
 	<div class="row">
-		<div class="col-sm-3">
-			<a style="text-decoration: none !important;color: inherit;" href="/{{ pathname }}/{{ doc.name }}">
-				<span class="indicator small {{ doc.indicator_color or ("blue" if doc.docstatus==1 else "gray") }}">{{ doc.name }}</span>
+		<div class="col-sm-4">
+			<a style="text-decoration: none !important;color: inherit;" href="/{{ pathname }}/{{ doc.name }}" data-toggle="tooltip" data-placement="top" title="{{ _(doc.status) }}">
+				{% if doc.status == 'Unpaid' %}
+					<span class="indicator small orange">{{ doc.name }}</span>
+				{% elif doc.status == 'Paid' %}
+					<span class="indicator small green">{{ doc.name }}</span>
+				{% elif doc.status == 'Overdue' %}
+					<span class="indicator small red">{{ doc.name }}</span>
+				{% elif doc.status == 'Partly Paid' %}
+					<span class="indicator small yellow">{{ doc.name }}</span>
+				{% else %}
+					<span class="indicator small blue">{{ doc.name }}</span>
+				{% endif %}
 				<div class="small text-muted transaction-time"
 					title="{{ frappe.utils.format_datetime(doc.modified, "medium") }}">
 					{{ frappe.utils.global_date_format(doc.modified) }}
 				</div>
 			</a>
 		</div>
-		<div class="col-sm-3">
+		<div class="col-sm-4">
 			{% for item in doc.items %}
 				{% if item.purchase_order %}
 					<a href="purchase_orders/{{ item.purchase_order }}" target="_blank">{{ item.purchase_order }}</a> 
 				{% endif %}
 			{% endfor %}
-		</div>
-		<div class="col-sm-2 text-right bold">
-			{% if doc.status == 'Paid' %}
-				<span class="text-success">Si</span>
-			{% else %}
-				<span class="text-danger">No</span>
-			{% endif %}
 		</div>
 		<div class="col-sm-2 text-right bold">
 			{{ doc.get_formatted("grand_total") }}
