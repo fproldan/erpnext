@@ -22,7 +22,7 @@
 		<div class="col-sm-4">
 			{% for item in doc.items %}
 				{% if item.purchase_order %}
-					<a href="purchase_orders/{{ item.purchase_order }}" target="_blank">{{ item.purchase_order }}</a> 
+					<a href="purchase_orders/{{ item.purchase_order }}" class="small" target="_blank">{{ item.purchase_order }}</a><br>
 				{% endif %}
 			{% endfor %}
 		</div>
