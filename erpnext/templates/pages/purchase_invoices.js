@@ -10,6 +10,8 @@ frappe.ready(function() {
 			company: "{{ company or '' }}",
 			bill_no: "{{ bill_no or '' }}",
 			posting_date: "{{ posting_date or '' }}",
+			status: "{{ status or '' }}",
+			bill_date: "{{ bill_date or '' }}",
 			limit_start: next_start,
 			pathname: location.pathname,
 		});
@@ -17,7 +19,7 @@ frappe.ready(function() {
 		data.pathname = location.pathname;
 		btn.prop("disabled", true);
 		return $.ajax({
-			url:"/api/method/erpnext.templates.pages.payments.get",
+			url:"/api/method/erpnext.templates.pages.purchase_invoices.get",
 			data: data,
 			statusCode: {
 				200: function(data) {
