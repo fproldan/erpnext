@@ -19,17 +19,29 @@
 				</div>
 			</a>
 		</div>
-		<div class="col-sm-4">
+		<div class="col-sm-3 small">
+			<b>Fecha de Emisión</b><br>
+			{{ frappe.utils.formatdate(doc.transaction_date, 'dd/MM/Y') }}
+			<hr style="margin-top:5px;margin-bottom:5px;" />
+			
+			<b>Solicitado Para</b><br>
+			{{ frappe.utils.formatdate(doc.schedule_date, 'dd/MM/Y') }}
+			<hr style="margin-top:5px;margin-bottom:5px;" />
+			
+			<b>Nuevo Pacto de Entrega</b><br>
+			{{ frappe.utils.formatdate(doc.nuevo_pacto_entrega, 'dd/MM/Y') }}
+		</div>
+		<div class="col-sm-2">
 			{% for item in doc.items %}
 				{% if item.purchase_order %}
 					<a href="purchase_orders/{{ item.purchase_order }}" class="small" target="_blank">{{ item.purchase_order }}</a><br>
 				{% endif %}
 			{% endfor %}
 		</div>
-		<div class="col-sm-2 text-right bold">
+		<div class="col-sm-2">
 			{{ doc.get_formatted("grand_total") }}
 		</div>
-		<div class="col-sm-1 text-right bold">
+		<div class="col-sm-1">
 			<button onclick="javascript:window.open('/printview?doctype={{ doc.doctype}}&name={{ doc.name }}&format=Standard', '_blank');" class="text-muted btn btn-default icon-btn" title="Imprimir" data-original-title="Impresión">
 				<svg class="icon icon-sm" style="">
 					<use class="" href="#icon-printer"></use>
