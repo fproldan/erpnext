@@ -18,10 +18,10 @@ def get_context(context, **dict_params):
     """Returns context for a list standard list page.
     Will also update `get_list_context` from the doctype module file"""
     frappe.local.form_dict.update(dict_params)
-    frappe.local.form_dict.doctype = 'Payment Entry'
+    frappe.local.form_dict.doctype = 'Purchase Invoice'
     doctype = frappe.local.form_dict.doctype
     context.companies = frappe.get_all('Company', filters={'exclude_in_portal': 0}, fields='name')
-    context.title = 'Pagos'
+    context.title = 'Facturas de compra'
     context.parents = [{"route":"me", "title":_("My Account")}]
     context.show_sidebar = True
     context.show_search = True
@@ -33,18 +33,20 @@ def get_context(context, **dict_params):
     context.txt = frappe.local.form_dict.txt
     context.bill_no = frappe.local.form_dict.bill_no
     context.posting_date = frappe.local.form_dict.posting_date
-    frappe.local.form_dict.fields = ['name', 'docstatus', 'posting_date']
+    context.bill_date = frappe.local.form_dict.bill_date
+    context.status = frappe.local.form_dict.status
+    frappe.local.form_dict.fields = ['name', 'docstatus', 'posting_date', 'bill_date']
     context.update(get(**frappe.local.form_dict))
-    context.template = 'templates/pages/payments.html'
-    context.list_template = 'templates/pages/payments_list.html'
+    context.template = 'templates/pages/purchase_invoices.html'
+    context.list_template = 'templates/pages/purchase_invoices_list.html'
     
 
 @frappe.whitelist(allow_guest=True)
-def get(doctype, company=None, txt=None, bill_no=None, posting_date=None, limit_start=0, limit=20, pathname=None, **kwargs):
+def get(doctype, company=None, txt=None, bill_no=None, posting_date=None, status=None, bill_date=None, limit_start=0, limit=20, pathname=None, **kwargs):
     """Returns processed HTML page for a standard listing."""
     limit_start = cint(limit_start)
 
-    raw_result = get_list_data(doctype, company, txt, bill_no, posting_date, limit_start, limit=limit + 1, **kwargs)
+    raw_result = get_list_data(doctype, company, txt, bill_no, posting_date, status, bill_date, limit_start, limit=limit + 1, **kwargs)
     show_more = len(raw_result) > limit
     if show_more:
         raw_result = raw_result[:-1]
@@ -55,8 +57,8 @@ def get(doctype, company=None, txt=None, bill_no=None, posting_date=None, limit_
     if not raw_result: return {"result": []}
 
     result = []
-    row_template = 'templates/pages/payments_row.html'
-    list_view_fields = [df for df in meta.fields if df.fieldname in ['title', 'status', 'posting_date', 'mode_of_payment', 'paid_amount']]
+    row_template = 'templates/pages/purchase_invoices_row.html'
+    list_view_fields = [df for df in meta.fields if df.fieldname in ['title', 'status', 'posting_date']]
 
     for doc in raw_result:
         doc.doctype = doctype
@@ -83,7 +85,7 @@ def get(doctype, company=None, txt=None, bill_no=None, posting_date=None, limit_
     }
 
 @frappe.whitelist(allow_guest=True)
-def get_list_data(doctype, company=None, txt=None, bill_no=None, posting_date=None, limit_start=0, fields=None, cmd=None, limit=20, web_form_name=None, **kwargs):
+def get_list_data(doctype, company=None, txt=None, bill_no=None, posting_date=None, status=None, bill_date=None, limit_start=0, fields=None, cmd=None, limit=20, web_form_name=None, **kwargs):
     """Returns processed HTML page for a standard listing."""
     limit_start = cint(limit_start)
 
@@ -102,7 +104,7 @@ def get_list_data(doctype, company=None, txt=None, bill_no=None, posting_date=No
         filters.update(list_context.filters)
 
     kwargs = dict(
-        doctype=doctype, company=company, txt=txt, bill_no=bill_no, posting_date=posting_date, filters=filters,
+        doctype=doctype, company=company, txt=txt, bill_no=bill_no, posting_date=posting_date, status=status, bill_date=bill_date, filters=filters,
         limit_start=limit_start, limit_page_length=limit,
         order_by=list_context.order_by or 'modified desc'
     )
@@ -198,7 +200,7 @@ def get_list_context(context, doctype, web_form_name=None):
     return list_context
 
 
-def get_transaction_list(doctype, company=None, txt=None, bill_no=None, posting_date=None, filters=None, limit_start=0, limit_page_length=20, order_by="modified", custom=False):
+def get_transaction_list(doctype, company=None, txt=None, bill_no=None, posting_date=None, status=None, bill_date=None, filters=None, limit_start=0, limit_page_length=20, order_by="modified", custom=False):
     user = frappe.session.user
     ignore_permissions = False
 
@@ -233,7 +235,7 @@ def get_transaction_list(doctype, company=None, txt=None, bill_no=None, posting_
             filters = []
 
     transactions = get_list_for_transactions(doctype, txt, filters, limit_start, limit_page_length,
-        fields='name', ignore_permissions=ignore_permissions, order_by='modified desc', bill_no=bill_no, posting_date=posting_date, company=company)
+        fields='name', ignore_permissions=ignore_permissions, order_by='modified desc', bill_no=bill_no, posting_date=posting_date, company=company, status=status, bill_date=bill_date)
 
     if custom:
         return transactions
