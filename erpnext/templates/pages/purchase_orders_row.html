@@ -32,10 +32,8 @@
 			{{ frappe.utils.formatdate(doc.nuevo_pacto_entrega, 'dd/MM/Y') }}
 		</div>
 		<div class="col-sm-2">
-			{% for item in doc.items %}
-				{% if item.purchase_order %}
-					<a href="purchase_orders/{{ item.purchase_order }}" class="small" target="_blank">{{ item.purchase_order }}</a><br>
-				{% endif %}
+			{% for warehouse in doc.get_warehouses() %}
+				<span class="small">{{ warehouse }}</span><br>
 			{% endfor %}
 		</div>
 		<div class="col-sm-2">

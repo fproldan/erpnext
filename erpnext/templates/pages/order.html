@@ -179,6 +179,54 @@
 		</table>
 	</div>
 </div>
+{% elif doc.doctype == 'Purchase Order' %}
+<div class="order-container">
+	<!-- items -->
+	<table class="order-item-table w-100 table">
+		<thead class="order-items order-item-header">
+			<th width="40%">
+				{{ _("Item") }}
+			</th>
+			<th width="20%" class="text-right">
+				{{ _("Warehouse") }}
+			</th>
+			<th width="20%" class="text-right">
+				{{ _("Quantity") }}
+			</th>
+			<th width="20%" class="text-right">
+				{{ _("Amount") }}
+			</th>
+		</thead>
+		<tbody>
+		{% for d in doc.items %}
+		<tr class="order-items">
+			<td>
+				{{ item_name_and_description(d) }}
+			</td>
+			<td>
+				{{ d.warehouse }}
+			</td>
+			<td class="text-right">
+				{{ d.qty }}
+				{% if d.delivered_qty is defined and d.delivered_qty != None %}
+				<p class="text-muted small">{{ _("Delivered") }}&nbsp;{{ d.delivered_qty }}</p>
+				{% endif %}
+			</td>
+			<td class="text-right">
+				{{ d.get_formatted("amount")	 }}
+				<p class="text-muted small">{{ _("Rate:") }}&nbsp;{{ d.get_formatted("rate") }}</p>
+			</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	<!-- taxes -->
+	<div class="order-taxes d-flex justify-content-end">
+		<table>
+			{% include "erpnext/templates/includes/order/order_taxes.html" %}
+		</table>
+	</div>
+</div>
 {% else %}
 <div class="order-container">
 	<!-- items -->
