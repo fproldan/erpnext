@@ -297,7 +297,9 @@ erpnext.selling.SellingController = erpnext.TransactionController.extend({
 
 		var total_incentives = 0.0;
 		$.each(this.frm.doc["items"] || [], function(i, item) {
-			total_incentives += flt(item.importe_comision);
+			if (item.grant_commission) {
+				total_incentives += flt(item.importe_comision);
+			}
 		});
 
 		if (total_incentives) {
