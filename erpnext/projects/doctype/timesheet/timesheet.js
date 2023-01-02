@@ -47,6 +47,9 @@ frappe.ui.form.on("Timesheet", {
 			if(frm.doc.per_billed < 100 && frm.doc.total_billable_hours && frm.doc.total_billable_hours > frm.doc.total_billed_hours){
 				frm.add_custom_button(__('Create Sales Invoice'), function() { frm.trigger("make_invoice") },
 					"fa fa-file-text");
+
+				frm.add_custom_button(__('Vincular con Factura de Venta'), function() { frm.trigger("link_invoice") },
+					"fa fa-file-text");
 			}
 
 			if(!frm.doc.salary_slip && frm.doc.employee && false){
@@ -160,6 +163,51 @@ frappe.ui.form.on("Timesheet", {
 			});
 		}
 		frm.refresh_fields();
+	},
+
+	link_invoice: function(frm) {
+		let fields = [{
+			"fieldtype": "Link",
+			"label": __("Sales Invoice"),
+			"fieldname": "sales_invoice",
+			"options": "Sales Invoice",
+			'reqd': 1,
+			get_query: () => {
+				return {
+					filters: {
+						docstatus: 1,
+						customer: frm.doc.customer,
+					},
+				};
+			},
+		}];
+
+		let dialog = new frappe.ui.Dialog({
+			title: __("Vincular con Factura de Venta"),
+			fields: fields
+		});
+
+		dialog.set_primary_action(__('Vincular'), () => {
+			var args = dialog.get_values();
+			if(!args) return;
+			dialog.hide();
+			return frappe.call({
+				type: "GET",
+				method: "erpnext.projects.doctype.timesheet.timesheet.link_sales_invoice",
+				args: {
+					"source_name": frm.doc.name,
+					"sales_invoice": args.sales_invoice,
+				},
+				freeze: true,
+				callback: function(r) {
+					if(!r.exc) {
+						frappe.model.sync(r.message);
+						frappe.set_route("Form", r.message.doctype, r.message.name);
+					}
+				}
+			});
+		});
+		dialog.show();
 	},
 
 	make_invoice: function(frm) {

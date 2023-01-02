@@ -305,6 +305,35 @@ def get_timesheet_data(name, project):
 	}
 
 @frappe.whitelist()
+def link_sales_invoice(source_name, sales_invoice):
+	target = frappe.get_doc("Sales Invoice", sales_invoice)
+	timesheet = frappe.get_doc('Timesheet', source_name)
+
+	if not timesheet.total_billable_hours:
+		frappe.throw(_("Invoice can't be made for zero billing hour"))
+
+	if timesheet.total_billable_hours == timesheet.total_billed_hours:
+		frappe.throw(_("Invoice already created for all billing hours"))
+
+	for time_log in timesheet.time_logs:
+		if time_log.is_billable:
+			target.append('timesheets', {
+				'time_sheet': timesheet.name,
+				'billing_hours': time_log.billing_hours,
+				'billing_amount': time_log.billing_amount,
+				'timesheet_detail': time_log.name,
+				'activity_type': time_log.activity_type,
+				'description': time_log.description
+			})
+			target.save()
+			frappe.db.commit()
+
+	target.run_method("calculate_billing_amount_for_timesheet")
+	target.run_method("set_missing_values")
+
+	return target
+
+@frappe.whitelist()
 def make_sales_invoice(source_name, item_code=None, customer=None, currency=None):
 	target = frappe.new_doc("Sales Invoice")
 	timesheet = frappe.get_doc('Timesheet', source_name)
