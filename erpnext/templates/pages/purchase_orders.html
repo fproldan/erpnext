@@ -30,8 +30,8 @@
 
 		<select name='status' class="form-control" style='max-width: 200px; display: inline-block; margin-right: 10px;' >
 			<option value="">{{ _('Estado') }}</option>
-				<option value="Overdue" {% if "Overdue" == frappe.form_dict.status %}selected{% endif %}>Pendiente de Confirmación</option>
-				<option value="Unpaid" {% if "Unpaid" == frappe.form_dict.status %}selected{% endif %}>Pendiente de Entrega</option>
+				<option value="Pendiente de Confirmación" {% if "Pendiente de Confirmación" == frappe.form_dict.status %}selected{% endif %}>Pendiente de Confirmación</option>
+				<option value="Pendiente de Entrega" {% if "Pendiente de Entrega" == frappe.form_dict.status %}selected{% endif %}>Pendiente de Entrega</option>
 		</select>
 		<input type='submit' class='btn btn-sm btn-light btn-search' value="{{ _("Search") }}">
 	</form>
