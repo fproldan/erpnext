@@ -142,6 +142,17 @@
 		<input type='submit' class='btn btn-sm btn-light btn-primary' value="{{ _("Modificar") }}">
 	</form>
 </div>
+
+{% endif %}
+
+{% if doc.doctype == 'Purchase Order' and doc.status == 'Pendiente de Confirmacion' and doc.aprobado_por_proveedor == 0 %}
+<div class="pt-2 pb-5 float-left">
+	<h5>Aprobar Orden de Compra:</h5> 
+	<form action="" style="display: flex;">
+		<input name='aprobado_por_proveedor' class='form-control' type='checkbox'  style='display: inline-block;width: 30px!important; height: 30px;'>
+		<input type='submit' class='btn btn-sm btn-light btn-primary' value="{{ _("Aprobar") }}">
+	</form>
+</div>
 {% endif %}
 
 {% if doc.doctype == 'Payment Entry' %}

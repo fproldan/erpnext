@@ -2,7 +2,6 @@
 // For license information, please see license.txt
 
 frappe.ready(function(){
-
 	var loyalty_points_input = document.getElementById("loyalty-point-to-redeem");
 	var loyalty_points_status = document.getElementById("loyalty-points-status");
 	if (loyalty_points_input) {

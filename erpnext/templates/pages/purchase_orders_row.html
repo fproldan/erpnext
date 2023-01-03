@@ -2,7 +2,9 @@
 	<div class="row">
 		<div class="col-sm-4">
 			<a style="text-decoration: none !important;color: inherit;" href="/{{ pathname }}/{{ doc.name }}" data-toggle="tooltip" data-placement="top" title="{{ _(doc.status) }}">
-				{% if doc.status == 'Unpaid' %}
+				{% if doc.status == 'Pendiente de Confirmacion' %}
+					<span class="indicator small grey">{{ doc.name }}</span>
+				{% elif doc.status == 'Unpaid' %}
 					<span class="indicator small orange">{{ doc.name }}</span>
 				{% elif doc.status == 'Paid' %}
 					<span class="indicator small green">{{ doc.name }}</span>

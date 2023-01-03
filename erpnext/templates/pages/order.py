@@ -21,8 +21,7 @@ def get_context(context):
 
 	context.parents = frappe.form_dict.parents
 	context.title = frappe.form_dict.name
-	context.payment_ref = frappe.db.get_value("Payment Request",
-		{"reference_name": frappe.form_dict.name}, "name")
+	context.payment_ref = frappe.db.get_value("Payment Request", {"reference_name": frappe.form_dict.name}, "name")
 
 	context.enabled_checkout = frappe.get_doc("E Commerce Settings").enable_checkout
 
@@ -39,16 +38,22 @@ def get_context(context):
 	if context.doc.get('customer'):
 		customer_loyalty_program = frappe.db.get_value("Customer", context.doc.customer, "loyalty_program")
 		if customer_loyalty_program:
-			from erpnext.accounts.doctype.loyalty_program.loyalty_program import (
-				get_loyalty_program_details_with_points,
-			)
+			from erpnext.accounts.doctype.loyalty_program.loyalty_program import get_loyalty_program_details_with_points
 			loyalty_program_details = get_loyalty_program_details_with_points(context.doc.customer, customer_loyalty_program)
 			context.available_loyalty_points = int(loyalty_program_details.get("loyalty_points"))
 
-	if frappe.form_dict.get('nuevo_pacto_entrega') and context.doc.doctype == 'Purchase Order':
-		context.doc.nuevo_pacto_entrega = frappe.form_dict.get('nuevo_pacto_entrega')
-		context.doc.save(ignore_permissions=True)
-		frappe.db.commit()
+	if context.doc.doctype == 'Purchase Order':
+		if frappe.form_dict.get('nuevo_pacto_entrega'):
+			context.doc.nuevo_pacto_entrega = frappe.form_dict.get('nuevo_pacto_entrega')
+			context.doc.save(ignore_permissions=True)
+			frappe.db.commit()
+
+		if frappe.form_dict.get('aprobado_por_proveedor'):
+			context.doc.aprobado_por_proveedor = 1
+			context.doc.save(ignore_permissions=True)
+			frappe.db.commit()
+			context.doc.set_status(update=True)
+			frappe.db.commit()
 
 
 def get_attachments(dt, dn):
