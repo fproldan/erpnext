@@ -1275,8 +1275,10 @@ erpnext.TransactionController = erpnext.taxes_and_totals.extend({
 
 	calculate_incentives: function(frm, cdt, cdn) {
 		var child = locals[cdt][cdn];
-		var importe_comision = flt((child.porcentaje_comision * child.net_amount) / 100.0)
-		frappe.model.set_value(cdt, cdn, "importe_comision", importe_comision);
+		if (child.grant_commission) {
+			var importe_comision = flt((child.porcentaje_comision * child.net_amount) / 100.0)
+			frappe.model.set_value(cdt, cdn, "importe_comision", importe_comision);
+		}
 	},
 
 	calculate_total_incentives: function() {
@@ -1284,7 +1286,9 @@ erpnext.TransactionController = erpnext.taxes_and_totals.extend({
 			var total_incentives = 0.0;
 
 			$.each(this.frm.doc["items"] || [], function(i, item) {
-				total_incentives += flt(item.importe_comision);
+				if (item.grant_commission) {
+					total_incentives += flt(item.importe_comision);
+				}
 			});
 
 			$.each(this.frm.doc["sales_team"] || [], function(i, item) {
