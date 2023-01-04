@@ -44,7 +44,7 @@ frappe.ready(function(){
 frappe.ready(function() {
     var $form = $("form[id='frmFileUp']");
 
-    $form.on("change", "[type='file']", function() {
+    $form.on("change", "[type='file']", function(e) {
       var $input = $(this);
       var input = $input.get(0);
       
@@ -59,19 +59,35 @@ frappe.ready(function() {
 
         window.file_reading = false;
       }
+
+      if (e.target.files.length) {
+        $(this).next('.custom-file-label').html(e.target.files[0].name);
+      }
     });
 
     $("#btn_upload").click(function(e) {
       var filedata = $('#select_files').prop('filedata');
-	    return $.ajax({
-        url: "/api/method/erpnext.templates.pages.order.attach_file_to_po",
-        data: {"files": JSON.stringify(filedata), "docname": "{{ docname }}"},
-        async: false,
-      }).done(function() {
+      
+      if (!filedata) {
+      	frappe.msgprint("Seleccione un archivo");
       	e.preventDefault();
-			}).fail(function() {
-				e.preventDefault();
-			});
+      } else {
+      	return $.ajax({
+	        url: "/api/method/erpnext.templates.pages.order.attach_file_to_po",
+	        data: {"files": JSON.stringify(filedata), "docname": "{{ docname }}"},
+	        async: false,
+	      }).done(function() {
+		      $("form[id='frmFileUp']")[0].reset();
+		      $('#select_files').next('.custom-file-label').html('Elegir archivo');
+					frappe.msgprint("Archivo adjuntado");
+					//location.reload();
+				}).fail(function() {
+					$("form[id='frmFileUp']")[0].reset();
+					$('#select_files').next('.custom-file-label').html('Elegir archivo');
+					frappe.msgprint("Ocurrió un problema");
+					//location.reload();
+				});
+      }
     });
   });
 

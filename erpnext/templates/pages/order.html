@@ -392,8 +392,15 @@
 	<div class="row order-items">
 		<div class="col-sm-12">
 			<form id="frmFileUp" action="" style="display: flex;">
-	  			<input type="file" id="select_files" style='display: inline-block;'>
-	  			<button class="btn btn-sm btn-light btn-primary" id="btn_upload">Adjuntar</button>
+				<div class="input-group mb-3">
+				  <div class="input-group-prepend">
+				    <span class="input-group-text" id="btn_upload">Adjuntar</span>
+				  </div>
+				  <div class="custom-file">
+				    <input type="file" class="custom-file-input" id="select_files" aria-describedby="inputGroupFileAddon01" lang="es">
+				    <label class="custom-file-label" for="select_files" data-browse="Buscar">Elegir archivo</label>
+				  </div>
+				</div>
 			</form>
 		</div>
 	</div>
