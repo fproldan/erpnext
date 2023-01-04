@@ -2088,6 +2088,12 @@
    "permlevel": 1,
    "read": 1,
    "role": "All"
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "export": 1,
+   "role": "Usuario Contador"
   }
  ],
  "quick_entry": 1,
