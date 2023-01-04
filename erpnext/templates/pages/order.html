@@ -147,10 +147,10 @@
 
 {% if doc.doctype == 'Purchase Order' and doc.status == 'Pendiente de Confirmacion' and doc.aprobado_por_proveedor == 0 %}
 <div class="pt-2 pb-5 float-left">
-	<h5>Aprobar Orden de Compra:</h5> 
+	<h5>Confirmar Orden de Compra:</h5> 
 	<form action="" style="display: flex;">
 		<input name='aprobado_por_proveedor' class='form-control' type='checkbox'  style='display: inline-block;width: 30px!important; height: 30px;'>
-		<input type='submit' class='btn btn-sm btn-light btn-primary' value="{{ _("Aprobar") }}">
+		<input type='submit' class='btn btn-sm btn-light btn-primary' value="Confirmar">
 	</form>
 </div>
 {% endif %}
@@ -381,8 +381,28 @@
 </div>
 {% endif %}
 
+
+{% if doc.doctype == 'Purchase Order' %}
+<div class="order-container pt-10">
+	<div class="row order-items order-item-header text-muted">
+		<div class="col-sm-12 h6 text-uppercase">
+			{{ _("Adjuntar Archivo") }}
+		</div>
+	</div>
+	<div class="row order-items">
+		<div class="col-sm-12">
+			<form id="frmFileUp" action="" style="display: flex;">
+	  			<input type="file" id="select_files" style='display: inline-block;'>
+	  			<button class="btn btn-sm btn-light btn-primary" id="btn_upload">Adjuntar</button>
+			</form>
+		</div>
+	</div>
+</div>
+{% endif %}
+
+
 {% if attachments %}
-<div class="order-item-table">
+<div class="order-item-table pt-10">
 	<div class="row order-items order-item-header text-muted">
 		<div class="col-sm-12 h6 text-uppercase">
 			{{ _("Attachments") }}

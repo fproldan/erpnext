@@ -39,3 +39,51 @@ frappe.ready(function(){
 		}
 	}
 })
+
+
+frappe.ready(function() {
+    var $form = $("form[id='frmFileUp']");
+
+    $form.on("change", "[type='file']", function() {
+      var $input = $(this);
+      var input = $input.get(0);
+      
+      if(input.files.length) {
+        input.filedata = {"files_data" : []};
+
+        window.file_reading = true;
+
+        $.each(input.files, function(key, value) {
+          setupReader(value, input);
+        });
+
+        window.file_reading = false;
+      }
+    });
+
+    $("#btn_upload").click(function(e) {
+      var filedata = $('#select_files').prop('filedata');
+	    return $.ajax({
+        url: "/api/method/erpnext.templates.pages.order.attach_file_to_po",
+        data: {"files": JSON.stringify(filedata), "docname": "{{ docname }}"},
+        async: false,
+      }).done(function() {
+      	e.preventDefault();
+			}).fail(function() {
+				e.preventDefault();
+			});
+    });
+  });
+
+  function setupReader(file, input) {
+      var name = file.name;
+      var reader = new FileReader();  
+      reader.onload = function(e) {
+      input.filedata.files_data.push({
+        "__file_attachment": 1,
+        "filename": file.name,
+        "dataurl": reader.result
+      })
+    }
+    reader.readAsDataURL(file);
+  }
