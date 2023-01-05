@@ -105,7 +105,7 @@ def get_list_for_transactions(doctype, txt, filters, limit_start, limit_page_len
 	and_filters = []
 	and_data = []
 	filters_exists = any(kwargs.values())
-	print(filters)
+
 	for d in get_list(doctype, txt, filters=filters, fields="name", limit_start=limit_start,
 		limit_page_length=limit_page_length, ignore_permissions=ignore_permissions, order_by="modified desc"):
 		data.append(d)
