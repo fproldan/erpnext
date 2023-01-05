@@ -175,6 +175,12 @@ website_route_rules = [
 			"parents": [{"label": _("Purchase Invoice"), "route": "purchase_invoices"}]
 		}
 	},
+	{"from_route": "/purchase_orders/<path:name>", "to_route": "order",
+		"defaults": {
+			"doctype": "Purchase Order",
+			"parents": [{"label": _("Purchase Order"), "route": "purchase_orders"}]
+		}
+	},
 	{"from_route": "/quotations", "to_route": "Quotation"},
 	{"from_route": "/quotations/<path:name>", "to_route": "order",
 		"defaults": {
