@@ -609,7 +609,7 @@ def update_status(status, name):
 	po.update_delivered_qty_in_sales_order()
 
 @frappe.whitelist()
-def approve(status, name):
+def approve(name):
 	po = frappe.get_doc("Purchase Order", name)
 	po.aprobado_por_proveedor = 1
 	po.save(ignore_permissions=True)

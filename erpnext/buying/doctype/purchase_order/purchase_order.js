@@ -549,7 +549,7 @@ erpnext.buying.PurchaseOrderController = erpnext.buying.BuyingController.extend(
 	approve_purchase_order: function() {
 		frappe.call({
 			method: "erpnext.buying.doctype.purchase_order.purchase_order.approve",
-			args: {status: status, name: cur_frm.doc.name},
+			args: {name: cur_frm.doc.name},
 			callback: function(r) {
 				cur_frm.reload_doc();
 			}
