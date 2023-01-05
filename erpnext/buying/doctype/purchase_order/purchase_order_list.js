@@ -3,23 +3,23 @@ frappe.listview_settings['Purchase Order'] = {
 		"supplier_name", "per_received", "per_billed", "status"],
 	get_indicator: function (doc) {
 		if (doc.status === "Closed") {
-			return [__("Closed"), "green", "status,=,Closed"];
+			return [__("Closed"), "green", "status,=,Closed|aprobado_por_proveedor,==,1"];
 		} else if (doc.status === "On Hold") {
-			return [__("On Hold"), "orange", "status,=,On Hold"];
+			return [__("On Hold"), "orange", "status,=,On Hold|aprobado_por_proveedor,==,1"];
 		} else if (doc.status === "Delivered") {
-			return [__("Delivered"), "green", "status,=,Closed"];
+			return [__("Delivered"), "green", "status,=,Closed|aprobado_por_proveedor,==,1"];
+		} else if (doc.status === "Pendiente de Confirmacion") {
+			return [__("Pendiente de Confirmacion"), "grey", "status,=,Pendiente de Confirmacion"];
 		} else if (flt(doc.per_received, 2) < 100 && doc.status !== "Closed") {
 			if (flt(doc.per_billed, 2) < 100) {
-				return [__("To Receive and Bill"), "orange",
-					"per_received,<,100|per_billed,<,100|status,!=,Closed"];
+				return [__("To Receive and Bill"), "orange", "per_received,<,100|per_billed,<,100|status,!=,Closed|aprobado_por_proveedor,==,1"];
 			} else {
-				return [__("To Receive"), "orange",
-					"per_received,<,100|per_billed,=,100|status,!=,Closed"];
+				return [__("To Receive"), "orange", "per_received,<,100|per_billed,=,100|status,!=,Closed|aprobado_por_proveedor,==,1"];
 			}
 		} else if (flt(doc.per_received, 2) >= 100 && flt(doc.per_billed, 2) < 100 && doc.status !== "Closed") {
-			return [__("To Bill"), "orange", "per_received,=,100|per_billed,<,100|status,!=,Closed"];
+			return [__("To Bill"), "orange", "per_received,=,100|per_billed,<,100|status,!=,Closed|aprobado_por_proveedor,==,1"];
 		} else if (flt(doc.per_received, 2) >= 100 && flt(doc.per_billed, 2) == 100 && doc.status !== "Closed") {
-			return [__("Completed"), "green", "per_received,=,100|per_billed,=,100|status,!=,Closed"];
+			return [__("Completed"), "green", "per_received,=,100|per_billed,=,100|status,!=,Closed|aprobado_por_proveedor,==,1"];
 		}
 	},
 	onload: function (listview) {
