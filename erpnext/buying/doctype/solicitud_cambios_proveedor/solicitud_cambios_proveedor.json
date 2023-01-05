@@ -9,7 +9,8 @@
   "proveedor",
   "usuario",
   "nota",
-  "archivo"
+  "archivo",
+  "status"
  ],
  "fields": [
   {
@@ -29,7 +30,6 @@
   {
    "fieldname": "archivo",
    "fieldtype": "Attach",
-   "in_list_view": 1,
    "label": "Archivo",
    "reqd": 1
   },
@@ -40,11 +40,20 @@
    "label": "Usuario",
    "options": "User",
    "reqd": 1
+  },
+  {
+   "default": "Pendiente",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Estado",
+   "options": "Pendiente\nAprobado\nRechazado",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-01-04 11:37:37.607053",
+ "modified": "2023-01-04 11:57:06.568556",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Solicitud Cambios Proveedor",
