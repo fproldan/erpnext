@@ -596,6 +596,15 @@ def update_status(status, name):
 	po.update_delivered_qty_in_sales_order()
 
 @frappe.whitelist()
+def approve(name):
+	po = frappe.get_doc("Purchase Order", name)
+	po.aprobado_por_proveedor = 1
+	po.save(ignore_permissions=True)
+	frappe.db.commit()
+	po.set_status(update=True)
+	frappe.db.commit()
+
+@frappe.whitelist()
 def make_inter_company_sales_order(source_name, target_doc=None):
 	from erpnext.accounts.doctype.sales_invoice.sales_invoice import make_inter_company_transaction
 	return make_inter_company_transaction("Purchase Order", source_name, target_doc)
