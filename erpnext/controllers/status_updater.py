@@ -48,14 +48,15 @@ status_map = {
 	],
 	"Purchase Order": [
 		["Draft", None],
-		["To Receive and Bill", "eval:self.per_received < 100 and self.per_billed < 100 and self.docstatus == 1"],
-		["To Bill", "eval:self.per_received >= 100 and self.per_billed < 100 and self.docstatus == 1"],
-		["To Receive", "eval:self.per_received < 100 and self.per_billed == 100 and self.docstatus == 1"],
-		["Completed", "eval:self.per_received >= 100 and self.per_billed == 100 and self.docstatus == 1"],
-		["Delivered", "eval:self.status=='Delivered'"],
+		["To Receive and Bill", "eval:self.per_received < 100 and self.per_billed < 100 and self.docstatus == 1 and self.aprobado_por_proveedor == 1"],
+		["To Bill", "eval:self.per_received >= 100 and self.per_billed < 100 and self.docstatus == 1 and self.aprobado_por_proveedor == 1"],
+		["To Receive", "eval:self.per_received < 100 and self.per_billed == 100 and self.docstatus == 1 and self.aprobado_por_proveedor == 1"],
+		["Pendiente de Confirmacion", "eval:self.docstatus==1 and self.aprobado_por_proveedor == 0"],
+		["Completed", "eval:self.per_received >= 100 and self.per_billed == 100 and self.docstatus == 1 and self.aprobado_por_proveedor == 1"],
+		["Delivered", "eval:self.status=='Delivered' and self.aprobado_por_proveedor == 1"],
 		["Cancelled", "eval:self.docstatus==2"],
-		["On Hold", "eval:self.status=='On Hold'"],
-		["Closed", "eval:self.status=='Closed'"],
+		["On Hold", "eval:self.status=='On Hold' and self.aprobado_por_proveedor == 1"],
+		["Closed", "eval:self.status=='Closed' and self.aprobado_por_proveedor == 1"],
 	],
 	"Delivery Note": [
 		["Draft", None],
@@ -151,8 +152,7 @@ class StatusUpdater(Document):
 					self.status = s[0]
 					break
 				elif s[1].startswith("eval:"):
-					if frappe.safe_eval(s[1][5:], None, { "self": self.as_dict(), "getdate": getdate,
-							"nowdate": nowdate, "get_value": frappe.db.get_value }):
+					if frappe.safe_eval(s[1][5:], None, { "self": self.as_dict(), "getdate": getdate, "nowdate": nowdate, "get_value": frappe.db.get_value }):
 						self.status = s[0]
 						break
 				elif getattr(self, s[1])():

@@ -2,7 +2,6 @@
 // For license information, please see license.txt
 
 frappe.ready(function(){
-
 	var loyalty_points_input = document.getElementById("loyalty-point-to-redeem");
 	var loyalty_points_status = document.getElementById("loyalty-points-status");
 	if (loyalty_points_input) {
@@ -40,3 +39,67 @@ frappe.ready(function(){
 		}
 	}
 })
+
+
+frappe.ready(function() {
+    var $form = $("form[id='frmFileUp']");
+
+    $form.on("change", "[type='file']", function(e) {
+      var $input = $(this);
+      var input = $input.get(0);
+      
+      if(input.files.length) {
+        input.filedata = {"files_data" : []};
+
+        window.file_reading = true;
+
+        $.each(input.files, function(key, value) {
+          setupReader(value, input);
+        });
+
+        window.file_reading = false;
+      }
+
+      if (e.target.files.length) {
+        $(this).next('.custom-file-label').html(e.target.files[0].name);
+      }
+    });
+
+    $("#btn_upload").click(function(e) {
+      var filedata = $('#select_files').prop('filedata');
+      
+      if (!filedata) {
+      	frappe.msgprint("Seleccione un archivo");
+      	e.preventDefault();
+      } else {
+      	return $.ajax({
+	        url: "/api/method/erpnext.templates.pages.order.attach_file_to_po",
+	        data: {"files": JSON.stringify(filedata), "docname": "{{ docname }}"},
+	        async: false,
+	      }).done(function() {
+		      $("form[id='frmFileUp']")[0].reset();
+		      $('#select_files').next('.custom-file-label').html('Elegir archivo');
+					frappe.msgprint("Archivo adjuntado");
+					//location.reload();
+				}).fail(function() {
+					$("form[id='frmFileUp']")[0].reset();
+					$('#select_files').next('.custom-file-label').html('Elegir archivo');
+					frappe.msgprint("Ocurrió un problema");
+					//location.reload();
+				});
+      }
+    });
+  });
+
+  function setupReader(file, input) {
+      var name = file.name;
+      var reader = new FileReader();  
+      reader.onload = function(e) {
+      input.filedata.files_data.push({
+        "__file_attachment": 1,
+        "filename": file.name,
+        "dataurl": reader.result
+      })
+    }
+    reader.readAsDataURL(file);
+  }

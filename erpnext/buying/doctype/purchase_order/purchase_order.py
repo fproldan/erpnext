@@ -358,6 +358,9 @@ class PurchaseOrder(BuyingController):
 		else:
 			self.db_set("per_received", 0, update_modified=False)
 
+	def get_warehouses(self):
+		return list(set([i.warehouse for i in self.items]))
+
 
 @frappe.whitelist()
 def establecer_motivo_de_rechazo(motivo_de_rechazo, name):

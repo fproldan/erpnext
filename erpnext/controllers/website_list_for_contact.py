@@ -147,6 +147,25 @@ def get_list_for_transactions(doctype, txt, filters, limit_start, limit_page_len
 		if meta.get_field('bill_date') and kwargs.get('bill_date'):
 			and_filters.append([doctype, "bill_date", "=", kwargs.get('bill_date')])
 
+		# By Transaction Date	
+		if meta.get_field('transaction_date') and kwargs.get('transaction_date'):
+			and_filters.append([doctype, "transaction_date", "=", kwargs.get('transaction_date')])
+
+		# By Schedule Date
+		if meta.get_field('schedule_date') and kwargs.get('schedule_date'):
+			and_filters.append([doctype, "schedule_date", "=", kwargs.get('schedule_date')])
+
+		# By Nuevo Pacto Entrega
+		if meta.get_field('nuevo_pacto_entrega') and kwargs.get('nuevo_pacto_entrega'):
+			and_filters.append([doctype, "nuevo_pacto_entrega", "=", kwargs.get('nuevo_pacto_entrega')])
+
+		# By PO status
+		if doctype == 'Purchase Order' and kwargs.get('status'):
+			if kwargs.get('status') == "Pendiente de Entrega":
+				and_filters.append([doctype, "status", "in", ["To Receive and Bill", "To Receive"]])
+			else:
+				and_filters.append([doctype, "status", "=", kwargs.get('status')])
+
 	if or_filters:
 		for r in frappe.get_list(doctype, fields=fields,filters=filters, or_filters=or_filters,
 			limit_start=limit_start, limit_page_length=limit_page_length,
