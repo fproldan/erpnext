@@ -495,7 +495,7 @@
    "type": "Link"
   }
  ],
- "modified": "2023-01-04 10:42:59.232230",
+ "modified": "2023-01-10 14:49:02.648118",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Buying",
@@ -541,6 +541,15 @@
    "label": "Dashboard",
    "link_to": "Compras",
    "type": "Dashboard"
+  },
+  {
+   "color": "Yellow",
+   "doc_view": "List",
+   "format": "{} Pending",
+   "label": "Cambios de Proveedor",
+   "link_to": "Solicitud Cambios Proveedor",
+   "stats_filter": "{\n    \"status\":[\"in\", [\"Pendiente\"]]\n}",
+   "type": "DocType"
   }
  ],
  "shortcuts_label": ""
