@@ -8,6 +8,7 @@ class SolicitudCambiosProveedor(Document):
 	pass
 
 
+
 @frappe.whitelist()
 def cambiar_estado(doctype, docname, estado):
 	doc = frappe.get_doc(doctype, docname)

@@ -3,6 +3,7 @@
 
 frappe.ui.form.on('Solicitud Cambios Proveedor', {
 	refresh: function(frm) {
+		set_readonly_fields(frm);
 		if (frm.doc.status == 'Pendiente') {
 			frm.add_custom_button("Aprobar", function() {
 	            cambiar_estado(frm, "Aprobado")
@@ -30,4 +31,11 @@ function cambiar_estado(frm, estado) {
             }
         }
     });
+}
+
+function set_readonly_fields(frm) {
+	frm.set_df_property('proveedor', "read_only", frm.doc.__islocal ? 0 : 1);
+	frm.set_df_property('usuario', "read_only", frm.doc.__islocal ? 0 : 1);
+	frm.set_df_property('nota', "read_only", frm.doc.__islocal ? 0 : 1);
+	frm.set_df_property('archivo', "disabled", frm.doc.__islocal ? 0 : 1);
 }

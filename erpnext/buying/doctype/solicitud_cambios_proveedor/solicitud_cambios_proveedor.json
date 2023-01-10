@@ -45,15 +45,17 @@
    "default": "Pendiente",
    "fieldname": "status",
    "fieldtype": "Select",
+   "hidden": 1,
    "in_list_view": 1,
    "label": "Estado",
    "options": "Pendiente\nAprobado\nRechazado",
+   "read_only": 1,
    "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-01-04 11:57:06.568556",
+ "modified": "2023-01-10 09:06:23.771136",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Solicitud Cambios Proveedor",
@@ -98,6 +100,18 @@
    "report": 1,
    "role": "Purchase User",
    "share": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Supplier",
+   "share": 1,
+   "write": 1
   }
  ],
  "route": "app/doctype/Solicitud%20Cambios%20Proveedor",
