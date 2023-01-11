@@ -262,7 +262,8 @@
    "fieldtype": "Section Break",
    "label": "Costing and Billing",
    "oldfieldtype": "Section Break",
-   "options": "fa fa-money"
+   "options": "fa fa-money",
+   "permlevel": 1
   },
   {
    "fieldname": "estimated_costing",
@@ -338,6 +339,7 @@
    "fieldtype": "Section Break",
    "label": "Margin",
    "oldfieldtype": "Column Break",
+   "permlevel": 1,
    "width": "50%"
   },
   {
@@ -457,8 +459,7 @@
  "idx": 29,
  "index_web_pages_for_search": 1,
  "links": [],
- "max_attachments": 0,
- "modified": "2021-05-13 19:59:06.195060",
+ "modified": "2023-01-05 09:36:26.178222",
  "modified_by": "Administrator",
  "module": "Projects",
  "name": "Project",
@@ -476,10 +477,14 @@
    "write": 1
   },
   {
-   "permlevel": 1,
    "read": 1,
    "report": 1,
    "role": "All"
+  },
+  {
+   "export": 1,
+   "read": 1,
+   "role": "Usuario Contador"
   },
   {
    "create": 1,
@@ -492,11 +497,24 @@
    "role": "Projects Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "permlevel": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Projects Manager",
+   "share": 1,
+   "write": 1
   }
  ],
  "quick_entry": 1,
- "search_fields": "project_name,customer, status, priority, is_active",
  "restrict_to_domain": "Projects",
+ "route": "app/doctype/Project",
+ "search_fields": "project_name,customer, status, priority, is_active",
  "show_name_in_global_search": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
