@@ -88,7 +88,7 @@
  "issingle": 0, 
  "istable": 0, 
  "max_attachments": 0, 
- "modified": "2018-04-26 13:00:49.457439", 
+ "modified": "2018-04-28 15:00:49.457439", 
  "modified_by": "Administrator", 
  "module": "Setup", 
  "name": "Party Type", 
@@ -151,6 +151,12 @@
    "share": 1, 
    "submit": 0, 
    "write": 0
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "export": 1,
+   "role": "Usuario Contador"
   }
  ], 
  "quick_entry": 0, 
