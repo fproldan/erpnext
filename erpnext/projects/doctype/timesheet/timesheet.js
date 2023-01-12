@@ -48,8 +48,9 @@ frappe.ui.form.on("Timesheet", {
 				frm.add_custom_button(__('Create Sales Invoice'), function() { frm.trigger("make_invoice") },
 					"fa fa-file-text");
 
-				frm.add_custom_button(__('Vincular con factura'), function() { frm.trigger("link_invoice") },
-					"fa fa-file-text");
+				if (frappe.user.has_role('Projects Manager')) {
+					frm.add_custom_button(__('Vincular con factura'), function() { frm.trigger("link_invoice") }, "fa fa-file-text");
+				}
 			}
 
 			if(!frm.doc.salary_slip && frm.doc.employee && false){
