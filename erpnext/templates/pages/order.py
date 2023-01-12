@@ -48,7 +48,7 @@ def get_context(context):
             context.doc.save(ignore_permissions=True)
             frappe.db.commit()
 
-        if frappe.form_dict.get('aprobar_rechazar_por_proveedor'):
+        if frappe.form_dict.get('aprobar_rechazar_por_proveedor') and  context.doc.status == 'Pendiente de Confirmacion' and  context.doc.aprobado_por_proveedor == 0:
             if frappe.form_dict.get('aprobar_rechazar_por_proveedor') == 'aprobar':
                 context.doc.aprobado_por_proveedor = 1
                 context.doc.save(ignore_permissions=True)
