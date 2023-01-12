@@ -21,6 +21,10 @@
 		{% if doc.doctype == 'Purchase Order' and False %}
 		<a class="dropdown-item" href="/api/method/erpnext.buying.doctype.purchase_order.purchase_order.make_purchase_invoice_from_portal?purchase_order_name={{ doc.name }}" data-action="make_purchase_invoice">{{ _("Make Purchase Invoice") }}</a>
 		{% endif %}
+		{% if doc.doctype == 'Purchase Order' and doc.status == 'Pendiente de Confirmacion' and doc.aprobado_por_proveedor == 0 %}
+			<a class="dropdown-item" href="?aprobar_rechazar_por_proveedor=aprobar" data-action="make_purchase_invoice">Aprobar</a>
+			<a class="dropdown-item" href="?aprobar_rechazar_por_proveedor=rechazar" data-action="make_purchase_invoice">Rechazar</a>
+		{% endif %}
 		{% if doc.doctype == 'Payment Entry' %}
 			<a class="dropdown-item" href='/printview?doctype={{ doc.doctype }}&name={{ doc.name }}&format=Orden de Pago' target="_blank" rel="noopener noreferrer">Orden de Pago</a>
 
@@ -134,7 +138,7 @@
 {{ doc._header }}
 {% endif %}
 
-{% if doc.doctype == 'Purchase Order' %}
+{% if doc.doctype == 'Purchase Order' and doc.docstatus != 2 %}
 <div class="pt-2 pb-5 float-right">
 	<h5>Nuevo pacto de entrega:</h5> 
 	<form action="" style="display: flex;">
@@ -143,16 +147,6 @@
 	</form>
 </div>
 
-{% endif %}
-
-{% if doc.doctype == 'Purchase Order' and doc.status == 'Pendiente de Confirmacion' and doc.aprobado_por_proveedor == 0 %}
-<div class="pt-2 pb-5 float-left">
-	<h5>Confirmar Orden de Compra:</h5> 
-	<form action="" style="display: flex;">
-		<input name='aprobado_por_proveedor' class='form-control' type='checkbox'  style='display: inline-block;width: 30px!important; height: 30px;'>
-		<input type='submit' class='btn btn-sm btn-light btn-primary' value="Confirmar">
-	</form>
-</div>
 {% endif %}
 
 {% if doc.doctype == 'Payment Entry' %}

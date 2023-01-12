@@ -48,13 +48,19 @@ def get_context(context):
             context.doc.save(ignore_permissions=True)
             frappe.db.commit()
 
-        if frappe.form_dict.get('aprobado_por_proveedor'):
-            context.doc.aprobado_por_proveedor = 1
-            context.doc.save(ignore_permissions=True)
-            frappe.db.commit()
-            context.doc.set_status(update=True)
-            frappe.db.commit()
+        if frappe.form_dict.get('aprobar_rechazar_por_proveedor') and  context.doc.status == 'Pendiente de Confirmacion' and  context.doc.aprobado_por_proveedor == 0:
+            if frappe.form_dict.get('aprobar_rechazar_por_proveedor') == 'aprobar':
+                context.doc.aprobado_por_proveedor = 1
+                context.doc.save(ignore_permissions=True)
+                frappe.db.commit()
+                context.doc.set_status(update=True)
+                frappe.db.commit()
 
+            if frappe.form_dict.get('aprobar_rechazar_por_proveedor') == 'rechazar':
+                context.doc.flags.ignore_permissions = True
+                context.doc.cancel()
+                frappe.db.set_value(context.doc.doctype, context.doc.name, 'motivo_de_rechazo', 'Cancelado por Proveedor')
+                frappe.db.commit()
 
 def get_attachments(dt, dn):
     return frappe.get_all("File", fields=["name", "file_name", "file_url", "is_private"], filters={"attached_to_name": dn, "attached_to_doctype": dt, "is_private": 0})
