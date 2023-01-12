@@ -48,7 +48,7 @@ frappe.ui.form.on("Timesheet", {
 				frm.add_custom_button(__('Create Sales Invoice'), function() { frm.trigger("make_invoice") },
 					"fa fa-file-text");
 
-				frm.add_custom_button(__('Vincular con Factura de Venta'), function() { frm.trigger("link_invoice") },
+				frm.add_custom_button(__('Vincular con factura'), function() { frm.trigger("link_invoice") },
 					"fa fa-file-text");
 			}
 
@@ -173,12 +173,18 @@ frappe.ui.form.on("Timesheet", {
 			"options": "Sales Invoice",
 			'reqd': 1,
 			get_query: () => {
-				return {
-					filters: {
+				if (frm.doc.customer) {
+					var f = {
 						docstatus: 1,
 						customer: frm.doc.customer,
-					},
+					}
+				} else {
+					var f = {
+						docstatus: 1,
+					}
 				};
+
+				return {filters: f};
 			},
 		}];
 

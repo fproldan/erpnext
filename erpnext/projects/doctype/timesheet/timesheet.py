@@ -315,8 +315,10 @@ def link_sales_invoice(source_name, sales_invoice):
 	if timesheet.total_billable_hours == timesheet.total_billed_hours:
 		frappe.throw(_("Invoice already created for all billing hours"))
 
+	target_ts = [ts.time_sheet for ts in target.timesheets]
+
 	for time_log in timesheet.time_logs:
-		if time_log.is_billable:
+		if time_log.is_billable and timesheet.name not in target_ts:
 			target.append('timesheets', {
 				'time_sheet': timesheet.name,
 				'billing_hours': time_log.billing_hours,
@@ -325,11 +327,20 @@ def link_sales_invoice(source_name, sales_invoice):
 				'activity_type': time_log.activity_type,
 				'description': time_log.description
 			})
-			target.save()
+			target.flags.force = True
+			target.flags.ignore_validate_update_after_submit = True
+			target.save(ignore_permissions=True)
 			frappe.db.commit()
 
+	target = frappe.get_doc(target.doctype, target.name)
+	target.flags.force = True
+	target.flags.ignore_validate_update_after_submit = True
+	target.run_method("update_timesheet_billing_for_project")
 	target.run_method("calculate_billing_amount_for_timesheet")
+	target.run_method("update_time_sheet", target.name)
 	target.run_method("set_missing_values")
+	target.save(ignore_permissions=True)
+	frappe.db.commit()
 
 	return target
 
