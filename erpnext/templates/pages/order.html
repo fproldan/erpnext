@@ -134,7 +134,7 @@
 {{ doc._header }}
 {% endif %}
 
-{% if doc.doctype == 'Purchase Order' %}
+{% if doc.doctype == 'Purchase Order' and doc.docstatus != 2 %}
 <div class="pt-2 pb-5 float-right">
 	<h5>Nuevo pacto de entrega:</h5> 
 	<form action="" style="display: flex;">
