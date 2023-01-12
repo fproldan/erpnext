@@ -147,9 +147,13 @@
 
 {% if doc.doctype == 'Purchase Order' and doc.status == 'Pendiente de Confirmacion' and doc.aprobado_por_proveedor == 0 %}
 <div class="pt-2 pb-5 float-left">
-	<h5>Confirmar Orden de Compra:</h5> 
+	<h5>Confirmar/Rechazar Orden de Compra:</h5> 
 	<form action="" style="display: flex;">
-		<input name='aprobado_por_proveedor' class='form-control' type='checkbox'  style='display: inline-block;width: 30px!important; height: 30px;'>
+		<select name='aprobar_rechazar_por_proveedor' class="form-control">
+			<option value="">Seleccione una opción</option>
+			<option value="aprobar">Aprobar</option>
+			<option value="rechazar">Rechazar</option>
+		</select>
 		<input type='submit' class='btn btn-sm btn-light btn-primary' value="Confirmar">
 	</form>
 </div>
