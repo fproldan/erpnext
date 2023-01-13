@@ -306,31 +306,35 @@ def get_timesheet_data(name, project):
 
 @frappe.whitelist()
 def link_sales_invoice(source_name, sales_invoice):
-	target = frappe.get_doc("Sales Invoice", sales_invoice)
-	timesheet = frappe.get_doc('Timesheet', source_name)
+	import json
+	source_names = json.loads(source_name)
+	
+	for source_name in source_names:
+		target = frappe.get_doc("Sales Invoice", sales_invoice)
+		timesheet = frappe.get_doc('Timesheet', source_name)
 
-	if not timesheet.total_billable_hours:
-		frappe.throw(_("Invoice can't be made for zero billing hour"))
+		if not timesheet.total_billable_hours:
+			frappe.throw(_("Invoice can't be made for zero billing hour"))
 
-	if timesheet.total_billable_hours == timesheet.total_billed_hours:
-		frappe.throw(_("Invoice already created for all billing hours"))
+		if timesheet.total_billable_hours == timesheet.total_billed_hours:
+			frappe.throw(_("Invoice already created for all billing hours"))
 
-	target_ts = [ts.time_sheet for ts in target.timesheets]
+		target_ts = [ts.time_sheet for ts in target.timesheets]
 
-	for time_log in timesheet.time_logs:
-		if time_log.is_billable and timesheet.name not in target_ts:
-			target.append('timesheets', {
-				'time_sheet': timesheet.name,
-				'billing_hours': time_log.billing_hours,
-				'billing_amount': time_log.billing_amount,
-				'timesheet_detail': time_log.name,
-				'activity_type': time_log.activity_type,
-				'description': time_log.description
-			})
-			target.flags.force = True
-			target.flags.ignore_validate_update_after_submit = True
-			target.save(ignore_permissions=True)
-			frappe.db.commit()
+		for time_log in timesheet.time_logs:
+			if time_log.is_billable and timesheet.name not in target_ts:
+				target.append('timesheets', {
+					'time_sheet': timesheet.name,
+					'billing_hours': time_log.billing_hours,
+					'billing_amount': time_log.billing_amount,
+					'timesheet_detail': time_log.name,
+					'activity_type': time_log.activity_type,
+					'description': time_log.description
+				})
+				target.flags.force = True
+				target.flags.ignore_validate_update_after_submit = True
+				target.save(ignore_permissions=True)
+				frappe.db.commit()
 
 	target = frappe.get_doc(target.doctype, target.name)
 	target.flags.force = True

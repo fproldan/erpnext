@@ -202,7 +202,7 @@ frappe.ui.form.on("Timesheet", {
 				type: "GET",
 				method: "erpnext.projects.doctype.timesheet.timesheet.link_sales_invoice",
 				args: {
-					"source_name": frm.doc.name,
+					"source_name": [frm.doc.name],
 					"sales_invoice": args.sales_invoice,
 				},
 				freeze: true,
