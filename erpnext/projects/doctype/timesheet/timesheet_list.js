@@ -55,17 +55,9 @@ function link_invoices(listview, customers, status) {
 				"options": "Sales Invoice",
 				'reqd': 1,
 				get_query: () => {
-					if (false) {  // frm.doc.customer
-						var f = {
-							docstatus: 1,
-							customer: frm.doc.customer,
-						}
-					} else {
-						var f = {
-							docstatus: 1,
-						}
-					};
-
+					var f = {
+						docstatus: 1,
+					}
 					return {filters: f};
 				},
 			}];

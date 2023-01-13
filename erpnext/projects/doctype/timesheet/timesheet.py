@@ -308,9 +308,28 @@ def get_timesheet_data(name, project):
 def link_sales_invoice(source_name, sales_invoice):
 	import json
 	source_names = json.loads(source_name)
+
+	target = frappe.get_doc("Sales Invoice", sales_invoice)
+
+	customers = [frappe.get_value('Timesheet', source_name, 'customer') for source_name in source_names]
+	companies = [frappe.get_value('Timesheet', source_name, 'company') for source_name in source_names]
+	customers = list(filter(None, customers))
+	companies = list(filter(None, customers))
 	
+	if len(list(set(customers))) > 1:
+		frappe.throw(_("Los Registro de Horas deben ser del mismo cliente o no poseer cliente"))
+
+	if len(list(set(companies))) > 1:
+		frappe.throw(_("Los Registro de Horas deben pertenecer a la misma Compañia"))
+
+	if customers and customers[0] != target.customer:
+		frappe.throw(_("La Factura de Venta seleccionada no corresponde al Cliente de los Registro de Horas"))
+
+	if companies and companies[0] != target.company:
+		frappe.throw(_("La Factura de Venta seleccionada no correspondea la Compañia de los Registro de Horas"))
+
 	for source_name in source_names:
-		target = frappe.get_doc("Sales Invoice", sales_invoice)
+		
 		timesheet = frappe.get_doc('Timesheet', source_name)
 
 		if not timesheet.total_billable_hours:

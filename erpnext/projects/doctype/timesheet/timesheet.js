@@ -178,10 +178,12 @@ frappe.ui.form.on("Timesheet", {
 					var f = {
 						docstatus: 1,
 						customer: frm.doc.customer,
+						company: frm.doc.company,
 					}
 				} else {
 					var f = {
 						docstatus: 1,
+						company: frm.doc.company,
 					}
 				};
 
