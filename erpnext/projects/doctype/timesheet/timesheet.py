@@ -358,7 +358,7 @@ def link_sales_invoice(source_name, sales_invoice):
 	customers = [frappe.get_value('Timesheet', source_name, 'customer') for source_name in source_names]
 	companies = [frappe.get_value('Timesheet', source_name, 'company') for source_name in source_names]
 	customers = list(filter(None, customers))
-	companies = list(filter(None, customers))
+	companies = list(filter(None, companies))
 	
 	if len(list(set(customers))) > 1:
 		frappe.throw(_("Los Registro de Horas deben ser del mismo cliente o no poseer cliente"))
@@ -370,7 +370,7 @@ def link_sales_invoice(source_name, sales_invoice):
 		frappe.throw(_("La Factura de Venta seleccionada no corresponde al Cliente de los Registro de Horas"))
 
 	if companies and companies[0] != target.company:
-		frappe.throw(_("La Factura de Venta seleccionada no correspondea la Compañia de los Registro de Horas"))
+		frappe.throw(_("La Factura de Venta seleccionada no corresponde a la Compañia de los Registro de Horas"))
 
 	for source_name in source_names:
 		
