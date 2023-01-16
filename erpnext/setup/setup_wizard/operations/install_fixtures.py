@@ -81,6 +81,7 @@ def install(country=None):
 		{'doctype': 'Domain', 'domain': 'Shopify'},
 		{'doctype': 'Domain', 'domain': 'Mercadopago'},
 		{'doctype': 'Domain', 'domain': 'BOM'},
+		{'doctype': 'Domain', 'domain': 'Compre Ahora'},
 
 		# ensure at least an empty Address Template exists for this Country
 		{'doctype':"Address Template", "country": country},
