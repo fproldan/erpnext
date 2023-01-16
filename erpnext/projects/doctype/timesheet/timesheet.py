@@ -305,6 +305,50 @@ def get_timesheet_data(name, project):
 	}
 
 @frappe.whitelist()
+def unlink_sales_invoice(source_name):
+	import json
+	source_names = json.loads(source_name)
+
+	try:
+		for source_name in source_names:
+			timesheet = frappe.get_doc('Timesheet', source_name)
+			for time_log in timesheet.time_logs:
+				sales_invoice = frappe.get_doc('Sales Invoice', time_log.sales_invoice)
+				sales_invoice.ignore_validate_update_after_submit = True
+
+				# Delete the ts in sales invoice
+				for ts in sales_invoice.timesheets:
+					if ts.time_sheet == timesheet.name:
+						ts.flags.ignore_validate_update_after_submit = True
+						ts.cancel()
+						ts.delete()
+						frappe.db.commit()
+
+				# Update the amounts in sales invoice
+				sales_invoice = frappe.get_doc('Sales Invoice', time_log.sales_invoice)
+				sales_invoice.flags.ignore_validate_update_after_submit = True
+				sales_invoice.run_method("update_timesheet_billing_for_project")
+				sales_invoice.run_method("calculate_billing_amount_for_timesheet")
+				sales_invoice.run_method("update_time_sheet", sales_invoice.name)
+				sales_invoice.run_method("set_missing_values")
+				sales_invoice.save(ignore_permissions=True)
+				frappe.db.commit()
+
+				# Unlink sales invoice in timesheet
+				time_log.sales_invoice = None
+				timesheet.calculate_total_amounts()
+				timesheet.calculate_percentage_billed()
+				timesheet.flags.ignore_validate_update_after_submit = True
+				timesheet.set_status()
+				timesheet.db_update_all()
+				frappe.db.commit()
+	except Exception as e:
+		return f"Ocurrió un error: {e}"
+	else:
+		return "Factura desvinculada con éxito"
+
+
+@frappe.whitelist()
 def link_sales_invoice(source_name, sales_invoice):
 	import json
 	source_names = json.loads(source_name)

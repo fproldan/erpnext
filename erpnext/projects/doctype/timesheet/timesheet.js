@@ -53,6 +53,10 @@ frappe.ui.form.on("Timesheet", {
 				}
 			}
 
+			if (frappe.user.has_role('Projects Manager') && frm.doc.time_logs && frm.doc.time_logs[0].sales_invoice) {
+				frm.add_custom_button(__('Desvincular factura'), function() { frm.trigger("unlink_invoice") }, "fa fa-file-text");
+			}
+
 			if(!frm.doc.salary_slip && frm.doc.employee && false){
 				frm.add_custom_button(__('Create Salary Slip'), function() { frm.trigger("make_salary_slip") },
 					"fa fa-file-text");
@@ -217,6 +221,22 @@ frappe.ui.form.on("Timesheet", {
 			});
 		});
 		dialog.show();
+	},
+
+	unlink_invoice: function(frm) {
+		return frappe.call({
+			type: "GET",
+			method: "erpnext.projects.doctype.timesheet.timesheet.unlink_sales_invoice",
+			args: {
+				"source_name": [frm.doc.name],
+			},
+			freeze: true,
+			callback: function(r) {
+				if(r.message) {
+					frappe.msgprint(r.message)
+				}
+			}
+		});
 	},
 
 	make_invoice: function(frm) {
