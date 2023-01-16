@@ -371,7 +371,7 @@ def link_sales_invoice(source_name, sales_invoice):
 
 	if companies:
 		if len(companies) > 1:
-			frappe.throw(_("Se seleccionaron Registro de Horas de Compañias difernetes"))
+			frappe.throw(_("Se seleccionaron Registro de Horas de Compañias diferentes"))
 
 		if companies[0] != target.company:
 			frappe.throw(_("La Factura de Venta seleccionada no corresponde a la Compañia de los Registro de Horas"))
