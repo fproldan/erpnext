@@ -19,7 +19,7 @@ frappe.ready(function() {
 		data.pathname = location.pathname;
 		btn.prop("disabled", true);
 		return $.ajax({
-			url:"/api/method/erpnext.templates.pages.purchase_invoices.get",
+			url:"/api/method/erpnext.templates.pages.purchase_orders.get",
 			data: data,
 			statusCode: {
 				200: function(data) {
