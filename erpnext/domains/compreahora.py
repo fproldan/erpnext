@@ -1,6 +1,6 @@
 data = {
     'modules': [
-        'Compre Ahora'
+        'Compreahora'
     ],
     'restricted_roles': [
         'Gerente de Compre Ahora',
