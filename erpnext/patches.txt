@@ -346,8 +346,8 @@ erpnext.patches.v13_0.hr_offer_term
 erpnext.patches.v13_0.item_naming_series_not_mandatory
 erpnext.patches.v13_0.set_default_naming_series
 execute:frappe.delete_doc('Report', 'Project Profitability', ignore_missing=True, force=True)
-erpnext.patches.v13_0.complete_purchase_invoice_new_fields
 execute:frappe.delete_doc('Role', 'Auditor', ignore_missing=True, force=True)
+erpnext.patches.v13_0.complete_purchase_invoice_new_fields
 execute:frappe.delete_doc('Page', "patient-progress", force=True)
 execute:frappe.delete_doc('Page', "patient-history", force=True)
 execute:frappe.delete_doc('Page', "patient_history", force=True)
