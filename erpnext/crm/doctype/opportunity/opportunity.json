@@ -13,6 +13,7 @@
  "field_order": [
   "from_section",
   "naming_series",
+  "tax_id",
   "opportunity_from",
   "party_name",
   "customer_name",
@@ -425,12 +426,19 @@
    "fieldtype": "Link",
    "label": "Print Language",
    "options": "Language"
+  },
+  {
+   "fieldname": "tax_id",
+   "fieldtype": "Data",
+   "label": "Cuit",
+   "reqd": 1,
+   "search_index": 1
   }
  ],
  "icon": "fa fa-info-sign",
  "idx": 195,
  "links": [],
- "modified": "2021-06-04 10:11:22.831139",
+ "modified": "2023-01-17 14:05:56.785641",
  "modified_by": "Administrator",
  "module": "CRM",
  "name": "Opportunity",
@@ -462,6 +470,7 @@
   }
  ],
  "restrict_to_domain": "CRM",
+ "route": "app/doctype/Opportunity",
  "search_fields": "status,transaction_date,party_name,opportunity_type,territory,company",
  "sender_field": "contact_email",
  "show_name_in_global_search": 1,

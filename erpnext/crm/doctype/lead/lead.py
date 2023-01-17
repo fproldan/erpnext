@@ -255,7 +255,8 @@ def make_opportunity(source_name, target_doc=None):
 				"lead_name": "contact_display",
 				"company_name": "customer_name",
 				"email_id": "contact_email",
-				"mobile_no": "contact_mobile"
+				"mobile_no": "contact_mobile",
+				"tax_id": "tax_id",
 			}
 		}}, target_doc, set_missing_values)
 
