@@ -1049,3 +1049,8 @@ def validate_item_default_company_links(item_defaults: List[ItemDefault]) -> Non
 							frappe.bold(item_default.company),
 							frappe.bold(frappe.unscrub(field))
 						), title=_("Invalid Item Defaults"))
+
+
+@frappe.whitelist()
+def get_jph_attibute(attribute_id):
+	return ["", "2", "3", "4"]

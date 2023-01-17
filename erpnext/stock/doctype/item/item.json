@@ -34,6 +34,19 @@
   "over_delivery_receipt_allowance",
   "over_billing_allowance",
   "image",
+  "atributos_section",
+  "familia_id",
+  "rubro_id",
+  "sub_rubro_id",
+  "articulo_id",
+  "column_break_28",
+  "tipo_id",
+  "marca_id",
+  "color_id",
+  "column_break_32",
+  "talle_id",
+  "reflectivo",
+  "idnitro4",
   "section_break_11",
   "brand",
   "description",
@@ -944,6 +957,70 @@
    "fieldtype": "Check",
    "label": "Published in Website",
    "read_only": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "atributos_section",
+   "fieldtype": "Section Break",
+   "label": "Atributos"
+  },
+  {
+   "fieldname": "familia_id",
+   "fieldtype": "Select",
+   "label": "Familia"
+  },
+  {
+   "fieldname": "rubro_id",
+   "fieldtype": "Select",
+   "label": "Rubro"
+  },
+  {
+   "fieldname": "sub_rubro_id",
+   "fieldtype": "Select",
+   "label": "Sub Rubro"
+  },
+  {
+   "fieldname": "articulo_id",
+   "fieldtype": "Select",
+   "label": "Art\u00edculo"
+  },
+  {
+   "fieldname": "tipo_id",
+   "fieldtype": "Select",
+   "label": "Tipo"
+  },
+  {
+   "fieldname": "marca_id",
+   "fieldtype": "Select",
+   "label": "Marca"
+  },
+  {
+   "fieldname": "color_id",
+   "fieldtype": "Select",
+   "label": "Color"
+  },
+  {
+   "fieldname": "talle_id",
+   "fieldtype": "Select",
+   "label": "Talle"
+  },
+  {
+   "fieldname": "reflectivo",
+   "fieldtype": "Select",
+   "label": "Reflectivo"
+  },
+  {
+   "fieldname": "idnitro4",
+   "fieldtype": "Select",
+   "label": "idNitro5"
+  },
+  {
+   "fieldname": "column_break_28",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_32",
+   "fieldtype": "Column Break"
   }
  ],
  "icon": "fa fa-tag",
@@ -951,8 +1028,7 @@
  "image_field": "image",
  "index_web_pages_for_search": 1,
  "links": [],
- "max_attachments": 0,
- "modified": "2022-07-09 14:39:59.534877",
+ "modified": "2023-01-17 15:51:46.965146",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Item",
@@ -1016,6 +1092,7 @@
   }
  ],
  "quick_entry": 1,
+ "route": "app/doctype/Item",
  "search_fields": "item_name,description,item_group,customer_code",
  "show_name_in_global_search": 1,
  "show_preview_popup": 1,
