@@ -1,0 +1,40 @@
+<div class="web-list-item transaction-list-item">
+	<div class="row">
+		<div class="col-sm-4">
+			<a style="text-decoration: none !important;color: inherit;" href="/{{ pathname }}/{{ doc.name }}" data-toggle="tooltip" data-placement="top" title="{{ _(doc.status) }}">
+				{% if doc.status == 'Unpaid' %}
+					<span class="indicator small orange">{{ doc.name }}</span>
+				{% elif doc.status == 'Paid' %}
+					<span class="indicator small green">{{ doc.name }}</span>
+				{% elif doc.status == 'Overdue' %}
+					<span class="indicator small red">{{ doc.name }}</span>
+				{% elif doc.status == 'Partly Paid' %}
+					<span class="indicator small yellow">{{ doc.name }}</span>
+				{% else %}
+					<span class="indicator small blue">{{ doc.name }}</span>
+				{% endif %}
+				<div class="small text-muted transaction-time"
+					title="{{ frappe.utils.format_datetime(doc.modified, "medium") }}">
+					{{ frappe.utils.global_date_format(doc.modified) }}
+				</div>
+			</a>
+		</div>
+		<div class="col-sm-4">
+			{% for item in doc.items %}
+				{% if item.purchase_order %}
+					<a href="purchase_orders/{{ item.purchase_order }}" class="small" target="_blank">{{ item.purchase_order }}</a><br>
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div class="col-sm-2 text-right bold">
+			{{ doc.get_formatted("grand_total") }}
+		</div>
+		<div class="col-sm-1 text-right bold">
+			<button onclick="javascript:window.open('/printview?doctype={{ doc.doctype}}&name={{ doc.name }}&format=Standard', '_blank');" class="text-muted btn btn-default icon-btn" title="Imprimir" data-original-title="Impresión">
+				<svg class="icon icon-sm" style="">
+					<use class="" href="#icon-printer"></use>
+				</svg>
+			</button>
+		</div>
+	</div>
+</div>
