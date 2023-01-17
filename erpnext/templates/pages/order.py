@@ -62,6 +62,7 @@ def get_context(context):
                 frappe.db.set_value(context.doc.doctype, context.doc.name, 'motivo_de_rechazo', 'Cancelado por Proveedor')
                 frappe.db.commit()
 
+
 def get_attachments(dt, dn):
     return frappe.get_all("File", fields=["name", "file_name", "file_url", "is_private"], filters={"attached_to_name": dn, "attached_to_doctype": dt, "is_private": 0})
 
