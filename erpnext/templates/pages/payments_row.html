@@ -43,7 +43,7 @@
 			</button>
 			<ul class="dropdown-menu dropdown-menu-right" role="menu">
 				<a class="dropdown-item" href='/printview?doctype={{ doc.doctype }}&name={{ doc.name }}&format=Orden de Pago' target="_blank" rel="noopener noreferrer">Orden de Pago</a>
-
+				
 				{% set ret_iibb = doc.has_retencion('Ingresos Brutos') %}
 				<a class="dropdown-item {% if not ret_iibb %}disabled{% endif %}" href='/api/method/frappe.utils.print_format.download_multi_pdf?doctype=Retencion&name={{ ret_iibb|json }}&format=Retencion' target="_blank" rel="noopener noreferrer">IIBB</a>
 
