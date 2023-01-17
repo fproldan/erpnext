@@ -359,6 +359,9 @@ class PurchaseOrder(BuyingController):
 		else:
 			self.db_set("per_received", 0, update_modified=False)
 
+	def get_warehouses(self):
+		return list(set([i.warehouse for i in self.items]))
+
 
 @frappe.whitelist()
 def establecer_motivo_de_rechazo(motivo_de_rechazo, name):
@@ -604,6 +607,15 @@ def update_status(status, name):
 	po = frappe.get_doc("Purchase Order", name)
 	po.update_status(status)
 	po.update_delivered_qty_in_sales_order()
+
+@frappe.whitelist()
+def approve(name):
+	po = frappe.get_doc("Purchase Order", name)
+	po.aprobado_por_proveedor = 1
+	po.save(ignore_permissions=True)
+	frappe.db.commit()
+	po.set_status(update=True)
+	frappe.db.commit()
 
 @frappe.whitelist()
 def make_inter_company_sales_order(source_name, target_doc=None):
