@@ -225,6 +225,8 @@ def get_transaction_list(doctype, company=None, txt=None, transaction_date=None,
                 filters.append(('party', 'in', suppliers))
             elif doctype == 'Purchase Invoice':
                 filters.append(('supplier', 'in', suppliers))
+            elif doctype == 'Purchase Order':
+                filters.append(('supplier', 'in', suppliers))
         elif not custom:
             return []
 
