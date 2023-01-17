@@ -49,6 +49,7 @@ frappe.ready(function() {
       var input = $input.get(0);
       
       if(input.files.length) {
+
         input.filedata = {"files_data" : []};
 
         window.file_reading = true;
@@ -67,26 +68,24 @@ frappe.ready(function() {
 
     $("#btn_upload").click(function(e) {
       var filedata = $('#select_files').prop('filedata');
-      
+      console.log(filedata)
       if (!filedata) {
       	frappe.msgprint("Seleccione un archivo");
       	e.preventDefault();
       } else {
-      	return $.ajax({
-	        url: "/api/method/erpnext.templates.pages.order.attach_file_to_po",
-	        data: {"files": JSON.stringify(filedata), "docname": "{{ docname }}"},
-	        async: false,
-	      }).done(function() {
-		      $("form[id='frmFileUp']")[0].reset();
-		      $('#select_files').next('.custom-file-label').html('Elegir archivo');
-					frappe.msgprint("Archivo adjuntado");
-					//location.reload();
-				}).fail(function() {
-					$("form[id='frmFileUp']")[0].reset();
-					$('#select_files').next('.custom-file-label').html('Elegir archivo');
-					frappe.msgprint("Ocurrió un problema");
-					//location.reload();
-				});
+      	frappe.call({
+	        method: "erpnext.templates.pages.order.attach_file_to_po",
+	        args: {"files": JSON.stringify(filedata), "docname": "{{ docname }}"},
+	        freeze: true,
+	        freeze_message: __("Adjuntando archivo..."),
+	        callback: function(r){
+	          if(!r.exc) {
+	            frappe.msgprint("Archivo adjuntado");
+	          } else {
+	            frappe.msgprint("Archivo no adjuntado. <br /> " + r.exc);
+	          }
+	        }
+	      });
       }
     });
   });
