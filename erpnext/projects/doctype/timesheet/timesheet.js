@@ -215,7 +215,9 @@ frappe.ui.form.on("Timesheet", {
 				callback: function(r) {
 					if(!r.exc) {
 						frappe.model.sync(r.message);
+
 						frm.reload_doc();
+						frappe.msgprint("Registro de Horas vinculado");
 					}
 				}
 			});
