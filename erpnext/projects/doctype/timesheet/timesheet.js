@@ -215,7 +215,7 @@ frappe.ui.form.on("Timesheet", {
 				callback: function(r) {
 					if(!r.exc) {
 						frappe.model.sync(r.message);
-						frappe.set_route("Form", r.message.doctype, r.message.name);
+						frm.reload_doc();
 					}
 				}
 			});
