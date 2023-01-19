@@ -21,10 +21,6 @@
 		{% if doc.doctype == 'Purchase Order' and False %}
 		<a class="dropdown-item" href="/api/method/erpnext.buying.doctype.purchase_order.purchase_order.make_purchase_invoice_from_portal?purchase_order_name={{ doc.name }}" data-action="make_purchase_invoice">{{ _("Make Purchase Invoice") }}</a>
 		{% endif %}
-		{% if doc.doctype == 'Purchase Order' and doc.status == 'Pendiente de Confirmacion' and doc.aprobado_por_proveedor == 0 %}
-			<a class="dropdown-item" href="?aprobar_rechazar_por_proveedor=aprobar" data-action="make_purchase_invoice">Aprobar</a>
-			<a class="dropdown-item" href="?aprobar_rechazar_por_proveedor=rechazar" data-action="make_purchase_invoice">Rechazar</a>
-		{% endif %}
 		{% if doc.doctype == 'Payment Entry' %}
 			<a class="dropdown-item" href='/printview?doctype={{ doc.doctype }}&name={{ doc.name }}&format=Orden de Pago' target="_blank" rel="noopener noreferrer">Orden de Pago</a>
 
@@ -138,16 +134,31 @@
 {{ doc._header }}
 {% endif %}
 
-{% if doc.doctype == 'Purchase Order' and doc.docstatus != 2 %}
-<div class="pt-2 pb-5 float-right">
-	<h5>Nuevo pacto de entrega:</h5> 
-	<form action="" style="display: flex;">
-		<input name='nuevo_pacto_entrega' class='form-control' type='date' format="yyyy-mm-dd" style='max-width: 200px; display: inline-block; margin-right: 10px;' value='{{ doc.nuevo_pacto_entrega }}'>
-		<input type='submit' class='btn btn-sm btn-light btn-primary' value="{{ _("Modificar") }}">
-	</form>
-</div>
 
+{% if doc.doctype == 'Purchase Order' %}
+<div class="row pt-2 pb-5">
+	<div class="col-6">
+		{% if doc.doctype == 'Purchase Order' and doc.status == 'Pendiente de Confirmacion' and doc.aprobado_por_proveedor == 0 %}
+			<h5>Aprobar / Rechazar</h5> 
+			<a type="button" class="btn btn-success" href="?aprobar_rechazar_por_proveedor=aprobar">Aprobar</a>
+			<a type="button" class="btn btn-danger" href="?aprobar_rechazar_por_proveedor=rechazar">Rechazar</a>
+		{% endif %}
+	</div>
+	<div class="col-6">
+		{% if doc.docstatus != 2 %}
+
+			<div class="float-right">
+			<h5>Nuevo pacto de entrega:</h5> 
+			<form action="" style="display: flex;">
+				<input name='nuevo_pacto_entrega' class='form-control' type='date' format="yyyy-mm-dd" style='max-width: 200px; display: inline-block; margin-right: 10px;' value='{{ doc.nuevo_pacto_entrega }}'>
+				<input type='submit' class='btn btn-sm btn-light btn-primary' value="{{ _("Modificar") }}">
+			</form>
+			</div>
+		{% endif %}
+	</div>
+</div>
 {% endif %}
+
 
 {% if doc.doctype == 'Payment Entry' %}
 <div class="order-container">
