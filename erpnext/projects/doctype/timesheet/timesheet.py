@@ -305,6 +305,117 @@ def get_timesheet_data(name, project):
 	}
 
 @frappe.whitelist()
+def unlink_sales_invoice(source_name):
+	import json
+	source_names = json.loads(source_name)
+
+	try:
+		for source_name in source_names:
+			timesheet = frappe.get_doc('Timesheet', source_name)
+			for time_log in timesheet.time_logs:
+				sales_invoice = frappe.get_doc('Sales Invoice', time_log.sales_invoice)
+				sales_invoice.ignore_validate_update_after_submit = True
+
+				# Delete the ts in sales invoice
+				for ts in sales_invoice.timesheets:
+					if ts.time_sheet == timesheet.name:
+						ts.flags.ignore_validate_update_after_submit = True
+						ts.cancel()
+						ts.delete()
+						frappe.db.commit()
+
+				# Update the amounts in sales invoice
+				sales_invoice = frappe.get_doc('Sales Invoice', time_log.sales_invoice)
+				sales_invoice.flags.ignore_validate_update_after_submit = True
+				sales_invoice.run_method("update_timesheet_billing_for_project")
+				sales_invoice.run_method("calculate_billing_amount_for_timesheet")
+				sales_invoice.run_method("update_time_sheet", sales_invoice.name)
+				sales_invoice.run_method("set_missing_values")
+				sales_invoice.save(ignore_permissions=True)
+				frappe.db.commit()
+
+				# Unlink sales invoice in timesheet
+				time_log.sales_invoice = None
+				timesheet.calculate_total_amounts()
+				timesheet.calculate_percentage_billed()
+				timesheet.flags.ignore_validate_update_after_submit = True
+				timesheet.set_status()
+				timesheet.db_update_all()
+				frappe.db.commit()
+	except Exception as e:
+		return f"Ocurrió un error: {e}"
+	else:
+		return "Factura desvinculada con éxito"
+
+
+@frappe.whitelist()
+def link_sales_invoice(source_name, sales_invoice):
+	import json
+	source_names = json.loads(source_name)
+
+	target = frappe.get_doc("Sales Invoice", sales_invoice)
+
+	customers = [frappe.get_value('Timesheet', source_name, 'customer') for source_name in source_names]
+	companies = [frappe.get_value('Timesheet', source_name, 'company') for source_name in source_names]
+	customers = list(filter(None, customers))
+	companies = list(filter(None, companies))
+	
+	if len(list(set(customers))) > 1:
+		frappe.throw(_("Los Registro de Horas deben ser del mismo cliente o no poseer cliente"))
+
+	if len(list(set(companies))) > 1:
+		frappe.throw(_("Los Registro de Horas deben pertenecer a la misma Compañia"))
+
+	if customers and customers[0] != target.customer:
+		frappe.throw(_("La Factura de Venta seleccionada no corresponde al Cliente de los Registro de Horas"))
+
+	if companies:
+		if len(companies) > 1:
+			frappe.throw(_("Se seleccionaron Registro de Horas de Compañias diferentes"))
+
+		if companies[0] != target.company:
+			frappe.throw(_("La Factura de Venta seleccionada no corresponde a la Compañia de los Registro de Horas"))
+
+	for source_name in source_names:
+		
+		timesheet = frappe.get_doc('Timesheet', source_name)
+
+		if not timesheet.total_billable_hours:
+			frappe.throw(_("Invoice can't be made for zero billing hour"))
+
+		if timesheet.total_billable_hours == timesheet.total_billed_hours:
+			frappe.throw(_("Invoice already created for all billing hours"))
+
+		target_ts = [ts.time_sheet for ts in target.timesheets]
+
+		for time_log in timesheet.time_logs:
+			if time_log.is_billable and timesheet.name not in target_ts:
+				target.append('timesheets', {
+					'time_sheet': timesheet.name,
+					'billing_hours': time_log.billing_hours,
+					'billing_amount': time_log.billing_amount,
+					'timesheet_detail': time_log.name,
+					'activity_type': time_log.activity_type,
+					'description': time_log.description
+				})
+				target.flags.force = True
+				target.flags.ignore_validate_update_after_submit = True
+				target.save(ignore_permissions=True)
+				frappe.db.commit()
+
+	target = frappe.get_doc(target.doctype, target.name)
+	target.flags.force = True
+	target.flags.ignore_validate_update_after_submit = True
+	target.run_method("update_timesheet_billing_for_project")
+	target.run_method("calculate_billing_amount_for_timesheet")
+	target.run_method("update_time_sheet", target.name)
+	target.run_method("set_missing_values")
+	target.save(ignore_permissions=True)
+	frappe.db.commit()
+
+	return target
+
+@frappe.whitelist()
 def make_sales_invoice(source_name, item_code=None, customer=None, currency=None):
 	target = frappe.new_doc("Sales Invoice")
 	timesheet = frappe.get_doc('Timesheet', source_name)
