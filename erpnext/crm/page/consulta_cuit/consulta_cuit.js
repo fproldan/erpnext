@@ -65,7 +65,13 @@ erpnext.ConsultaCuit = class ConsultaCuit {
 					me.crear_iniciativa(cuit_values);
 				});
 			}
-			
+
+			console.log(cuit_values)
+			if (cuit_values['lead'] && !cuit_values['lead']['assign']) {
+				this.page.add_inner_button(__('Autoasignar'), function() {
+					me.autoasignar(cuit_values);
+				});
+			}
 		});
 	}
 
@@ -95,6 +101,24 @@ erpnext.ConsultaCuit = class ConsultaCuit {
 	crear_iniciativa(cuit_values) {
 		let values = this.form.get_values();
 		this.crear_entidad('Lead', values['tax_id']);
+	}
+
+	autoasignar(cuit_values) {
+		let values = this.form.get_values();
+		frappe.call({
+			type: "GET",
+			method: "erpnext.crm.utils.autoasignar",
+			args: {
+				"name": cuit_values['lead']['base_name'],
+				"user": frappe.user.name,
+			},
+			freeze: true,
+			callback: function(r) {
+				if(!r.exc) {
+					frappe.msgprint(r.message)
+				}
+			}
+		});
 	}
 
 	render(cuit_values) {

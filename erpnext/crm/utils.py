@@ -54,6 +54,7 @@ def get_cuit(tax_id):
 	if lead:
 		resp['lead'] = {
 			'name': getlink('Lead', lead.name),
+			'base_name': lead.name,
 			'lead_name': lead.lead_name,
 			'assign': ",".join(getlink('User', a) for a in json.loads(lead._assign or '[]'))
 		}
@@ -65,12 +66,11 @@ def get_cuit(tax_id):
 		}
 		
 	if lead:
-		if lead._assign:
-			resp['estado_cuit'] = 'Activo'
-			resp['estado_cuit_class'] = 'text-success'
-		else:
-			resp['estado_cuit'] = 'Inactivo'
-			resp['estado_cuit_class'] = 'text-secondary'
+		resp['estado_cuit'] = 'Activo'
+		resp['estado_cuit_class'] = 'text-success'
+	else:
+		resp['estado_cuit'] = 'Inactivo'
+		resp['estado_cuit_class'] = 'text-secondary'
 
 	if customer and customer.disabled:
 		resp['estado_cuit'] = 'Inhabilitado'
@@ -84,3 +84,14 @@ def crear_entidad(doctype, tax_id):
 	target = frappe.new_doc(doctype)
 	target.tax_id = tax_id
 	return target
+
+
+@frappe.whitelist()
+def autoasignar(name, user):
+	from frappe.desk.form.assign_to import add as add_assignemnt
+	add_assignemnt({
+		'doctype': 'Lead',
+		'name': name,
+		'assign_to': user
+	})
+	frappe.db.commit()
