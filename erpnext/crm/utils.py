@@ -46,7 +46,7 @@ def get_cuit(tax_id):
 		'lead': '',
 		'estado_cuit': '',
 		'estado_cuit_class': '',
-		'image': 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAYAAAA8AXHiAAABDUlEQVR42u3SMQEAAAQAMJJLLAMFnM4tw3I6KuBZioVYiIVYYiEWYiEWiIVYiAViIRZigViIhVggFmIhFoiFWIgFYiEWYoFYiIVYIBZiIRaIhViIBWIhFmKBWIiFWCAWYiEWiIVYiAViIRZigViIhVggFmIhFoiFWIgFYiEWYoFYiIVYIBZiIRaIhViIBWIhFmKBWIiFWCAWYiEWiIVYiAViIRZigViIhViIJRZiIRZigViIhVggFmIhFoiFWIgFYiEWYoFYiIVYIBZiIRaIhViIBWIhFmKBWIiFWCAWYiEWiIVYiAViIRZigViIhVggFmIhFoiFWIgFYiEWYoFYiIVYIBZiIRaIhViIBbcFLWBrWJ62hbQAAAAASUVORK5CYII=',
+		'image': 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAYAAAA8AXHiAAABDklEQVR42u3SMQEAAAQAMJJL4VJWAadzy7Cc6Qp4lmIhFmIhlliIhViIBWIhFmKBWIiFWCAWYiEWiIVYiAViIRZigViIhVggFmIhFoiFWIgFYiEWYoFYiIVYIBZiIRaIhViIBWIhFmKBWIiFWCAWYiEWiIVYiAViIRZigViIhVggFmIhFoiFWIgFYiEWYoFYiIVYIBZiIRaIhViIBWIhFmKBWIiFWCAWYiEWYomFWIiFWCAWYiEWiIVYiAViIRZigViIhVggFmIhFoiFWIgFYiEWYoFYiIVYIBZiIRaIhViIBWIhFmKBWIiFWCAWYiEWiIVYiAViIRZigViIhVggFmIhFoiFWIgFYiEWYsFtAbdmWALgJXnzAAAAAElFTkSuQmCC',
 	}
 
 	if not customer and not lead:
@@ -63,6 +63,7 @@ def get_cuit(tax_id):
 	if customer:
 		resp['customer'] = {
 			'name': getlink('Customer', customer.name),
+			'base_name': customer.name,
 			'customer_name': customer.customer_name,
 		}
 		if customer.image:
@@ -86,6 +87,15 @@ def get_cuit(tax_id):
 def crear_entidad(doctype, tax_id):
 	target = frappe.new_doc(doctype)
 	target.tax_id = tax_id
+	return target
+
+
+@frappe.whitelist()
+def crear_cotizacion(quotation_to, party_name):
+	target = frappe.new_doc('Quotation')
+
+	target.quotation_to = quotation_to
+	target.party_name = party_name
 	return target
 
 

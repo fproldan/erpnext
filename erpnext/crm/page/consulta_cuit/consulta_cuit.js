@@ -54,6 +54,10 @@ erpnext.ConsultaCuit = class ConsultaCuit {
 			let me = this;
 			this.page.clear_inner_toolbar();
 
+			this.page.add_inner_button(__('Verificar estado NOSIS'), function() {
+				me.verificar_nosis(cuit_values);
+			});
+
 			if (!cuit_values['customer']) {
 				this.page.add_inner_button(__('Crear cliente'), function() {
 					me.crear_cliente(cuit_values);
@@ -66,12 +70,28 @@ erpnext.ConsultaCuit = class ConsultaCuit {
 				});
 			}
 
+			if (cuit_values['lead']) {
+				this.page.add_inner_button(__('Crear cotización desde inciativa'), function() {
+					me.crear_cotizacion_iniciativa(cuit_values);
+				});
+			}
+
+			if (cuit_values['customer']) {
+				this.page.add_inner_button(__('Crear cotización desde cliente'), function() {
+					me.crear_cotizacion_cliente(cuit_values);
+				});
+			}
+
 			if (cuit_values['lead'] && !cuit_values['lead']['assign']) {
 				this.page.add_inner_button(__('Autoasignar'), function() {
 					me.autoasignar(cuit_values);
 				});
 			}
 		});
+	}
+
+	verificar_nosis(cuit_values) {
+
 	}
 
 	crear_entidad(doctype, tax_id) {
@@ -92,6 +112,24 @@ erpnext.ConsultaCuit = class ConsultaCuit {
 		});
 	}
 
+	crear_cotizacion(quotation_to, party_name) {
+		return frappe.call({
+			type: "GET",
+			method: "erpnext.crm.utils.crear_cotizacion",
+			args: {
+				"quotation_to": quotation_to,
+				"party_name": party_name,
+			},
+			freeze: true,
+			callback: function(r) {
+				if(!r.exc) {
+					frappe.model.sync(r.message);
+					frappe.set_route("Form", r.message.doctype, r.message.name);
+				}
+			}
+		});
+	}
+
 	crear_cliente(cuit_values) {
 		let values = this.form.get_values();
 		this.crear_entidad('Customer', values['tax_id']);
@@ -100,6 +138,16 @@ erpnext.ConsultaCuit = class ConsultaCuit {
 	crear_iniciativa(cuit_values) {
 		let values = this.form.get_values();
 		this.crear_entidad('Lead', values['tax_id']);
+	}
+
+	crear_cotizacion_iniciativa(cuit_values) {
+		let values = this.form.get_values();
+		this.crear_cotizacion('Lead', cuit_values['lead']['base_name']);
+	}
+
+	crear_cotizacion_cliente(cuit_values) {
+		let values = this.form.get_values();
+		this.crear_cotizacion('Customer', cuit_values['customer']['base_name']);
 	}
 
 	autoasignar(cuit_values) {
@@ -131,6 +179,12 @@ erpnext.ConsultaCuit = class ConsultaCuit {
                     <div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
                         <h5 class="border-bottom pb-2">Estado de Cuenta</h5>
                         <h4 class="text-center ${cuit_values['estado_cuit_class']}" style="margin-bottom: 0px;">${cuit_values['estado_cuit']}</h4>
+                    </div>
+                </div>
+                <div class="col-lg-4 d-flex align-items-stretch">
+                    <div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
+                        <h5 class="border-bottom pb-2">Última verificación de NOSIS (días)</h5>
+                        <h4 class="text-center text-muted" style="margin-bottom: 0px;">0</h4>
                     </div>
                 </div>
             </div>
