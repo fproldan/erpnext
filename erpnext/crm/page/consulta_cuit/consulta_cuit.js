@@ -56,36 +56,36 @@ erpnext.ConsultaCuit = class ConsultaCuit {
 
 			this.page.add_inner_button(__('Verificar estado NOSIS'), function() {
 				me.verificar_nosis(cuit_values);
-			});
+			}, __('Acciones'));
 
 			if (!cuit_values['customer']) {
 				this.page.add_inner_button(__('Crear cliente'), function() {
 					me.crear_cliente(cuit_values);
-				});
+				}, __('Acciones'));
 			}
 
 			if (!cuit_values['lead']) {
 				this.page.add_inner_button(__('Crear iniciativa'), function() {
 					me.crear_iniciativa(cuit_values);
-				});
+				}, __('Acciones'));
 			}
 
 			if (cuit_values['lead']) {
 				this.page.add_inner_button(__('Crear cotización desde inciativa'), function() {
 					me.crear_cotizacion_iniciativa(cuit_values);
-				});
+				}, __('Acciones'));
 			}
 
 			if (cuit_values['customer']) {
 				this.page.add_inner_button(__('Crear cotización desde cliente'), function() {
 					me.crear_cotizacion_cliente(cuit_values);
-				});
+				}, __('Acciones'));
 			}
 
 			if (cuit_values['lead'] && !cuit_values['lead']['assign']) {
 				this.page.add_inner_button(__('Autoasignar'), function() {
 					me.autoasignar(cuit_values);
-				});
+				}, __('Acciones'));
 			}
 		});
 	}
