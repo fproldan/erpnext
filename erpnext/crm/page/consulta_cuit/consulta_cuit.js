@@ -41,10 +41,14 @@ erpnext.ConsultaCuit = class ConsultaCuit {
 		
 		// set working state
 		this.form.get_field('preview').html(`
-			<div class="text-muted margin-top">
+			<h5 class="text-muted margin-top">
 				${__("Fetching...")}
-			</div>
+			</h5>
 		`);
+
+		if (!values['tax_id']) {
+			return
+		}
 
 		frappe.call('erpnext.crm.utils.get_cuit', {tax_id: values['tax_id']}).then(r => {
 			let cuit_values = r.message;
@@ -184,7 +188,7 @@ erpnext.ConsultaCuit = class ConsultaCuit {
                 <div class="col-lg-4 d-flex align-items-stretch">
                     <div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
                         <h5 class="border-bottom pb-2">Última verificación de NOSIS (días)</h5>
-                        <h4 class="text-center text-muted" style="margin-bottom: 0px;">0</h4>
+                        <h4 class="text-center text-muted" style="margin-bottom: 0px;">${cuit_values['last_nosis']}</h4>
                     </div>
                 </div>
             </div>
@@ -238,12 +242,14 @@ erpnext.ConsultaCuit = class ConsultaCuit {
 							<div>
 								<table class="table table-bordered">
 									<tr>
-										<th width="33%">Razon Social</th>
-										<th width="33%">Iniciativa</th>
-										<th width="33%">Asignado</th>
+										<th width="25%">Razon Social</th>
+										<th width="25%">Fecha</th>
+										<th width="25%">Iniciativa</th>
+										<th width="25%">Asignado</th>
 									</tr>
 									<tr>
 										<td>${cuit_values['lead']['lead_name']}</td>
+										<td>${frappe.datetime.get_datetime_as_string_es(cuit_values['lead']['creation'])}</td>
 										<td>${cuit_values['lead']['name']}</td>
 										<td>${cuit_values['lead']['assign']}</td>
 									</tr>

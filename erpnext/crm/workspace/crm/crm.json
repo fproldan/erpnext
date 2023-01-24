@@ -364,7 +364,7 @@
    "type": "Link"
   }
  ],
- "modified": "2023-01-24 18:32:36.067739",
+ "modified": "2023-01-24 18:40:16.216041",
  "modified_by": "Administrator",
  "module": "CRM",
  "name": "CRM",
@@ -408,6 +408,12 @@
    "label": "Consulta de CUIT",
    "link_to": "consulta-cuit",
    "type": "Page"
+  },
+  {
+   "doc_view": "List",
+   "label": "Verificacion NOSIS",
+   "link_to": "Verificacion NOSIS",
+   "type": "DocType"
   }
  ]
 }

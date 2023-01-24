@@ -41,12 +41,22 @@ def get_cuit(tax_id):
 	else:
 		lead = frappe.get_doc('Lead', leads['name'])
 
+
+	nosis = (frappe.get_all('Verificacion NOSIS', {'cuit': tax_id}, order_by='-fecha') or [{}])[0]
+	if not nosis:
+		nosis = None
+		last_nosis = '-'
+	else:
+		nosis = frappe.get_doc('Verificacion NOSIS', nosis['name'])
+		last_nosis = nosis.get_dias()
+
 	resp = {
 		'customer': '',
 		'lead': '',
-		'estado_cuit': '',
+		'estado_cuit': '-',
 		'estado_cuit_class': '',
 		'image': 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAYAAAA8AXHiAAABDklEQVR42u3SMQEAAAQAMJJL4VJWAadzy7Cc6Qp4lmIhFmIhlliIhViIBWIhFmKBWIiFWCAWYiEWiIVYiAViIRZigViIhVggFmIhFoiFWIgFYiEWYoFYiIVYIBZiIRaIhViIBWIhFmKBWIiFWCAWYiEWiIVYiAViIRZigViIhVggFmIhFoiFWIgFYiEWYoFYiIVYIBZiIRaIhViIBWIhFmKBWIiFWCAWYiEWYomFWIiFWCAWYiEWiIVYiAViIRZigViIhVggFmIhFoiFWIgFYiEWYoFYiIVYIBZiIRaIhViIBWIhFmKBWIiFWCAWYiEWiIVYiAViIRZigViIhVggFmIhFoiFWIgFYiEWYsFtAbdmWALgJXnzAAAAAElFTkSuQmCC',
+		'last_nosis': last_nosis
 	}
 
 	if not customer and not lead:
@@ -57,7 +67,8 @@ def get_cuit(tax_id):
 			'name': getlink('Lead', lead.name),
 			'base_name': lead.name,
 			'lead_name': lead.lead_name,
-			'assign': ",".join(getlink('User', a) for a in json.loads(lead._assign or '[]'))
+			'assign': ",".join(getlink('User', a) for a in json.loads(lead._assign or '[]')),
+			'creation': lead.creation,
 		}
 
 	if customer:
