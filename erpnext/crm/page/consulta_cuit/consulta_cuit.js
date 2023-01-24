@@ -118,7 +118,7 @@ erpnext.ConsultaCuit = class ConsultaCuit {
 			method: "erpnext.crm.utils.crear_cotizacion",
 			args: {
 				"quotation_to": quotation_to,
-				"party_name": party_name,
+				"party_name": party_name ,
 			},
 			freeze: true,
 			callback: function(r) {
