@@ -1053,4 +1053,39 @@ def validate_item_default_company_links(item_defaults: List[ItemDefault]) -> Non
 
 @frappe.whitelist()
 def get_jph_attibute(attribute_id):
-	return ["", "2", "3", "4"]
+	import requests
+	LOGIN_URL = 'https://n4s-dev.jphlions.com/auth/api/v1/auth/local/login'
+	API_URL = 'https://n4s-dev.jphlions.com/api/valores_articulos/custom/obtener_valores_articulos'
+	HEADERS = {"Authorization": "Basic bGlvbnM6SnBoMTM1"}
+	LOGIN_BODY = {
+		"client_id": 11,
+		"email": "Diamo@erp.com",
+		"password": "Diamo135!"
+	}
+
+	login = requests.post(LOGIN_URL, headers=HEADERS, data=LOGIN_BODY)
+
+	if login.status_code != 200:
+		return []
+
+	login_data = login.json()
+
+	ATTRIBUTES = {
+		'familia_id': 1,
+		'rubro_id': 2,
+		'sub_rubro_id': 3,
+		'articulo_id': 4, 
+		'tipo_id': 5,
+		'marca_id': 6,
+		'color_id': 7,
+		'talle_id': 8,
+		'reflectivo': 9,
+	}
+
+	HEADERS['token'] = login_data['token']
+	data = requests.get(API_URL + f'?id_tipo={ATTRIBUTES[attribute_id]}', headers=HEADERS)
+
+	if data.status_code != 200:
+		return []
+
+	return [d['nombrecito'] for d in data.json()]

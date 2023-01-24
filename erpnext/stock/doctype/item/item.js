@@ -805,7 +805,7 @@ frappe.ui.form.on("UOM Conversion Detail", {
 
 
 function set_jph_attributes_values(frm) {
-	let attributes = ['familia_id', 'rubro_id', 'sub_rubro_id', 'articulo_id', 'tipo_id', 'marca_id', 'color_id', 'talle_id', 'reflectivo', 'idnitro4']
+	let attributes = ['familia_id', 'rubro_id', 'sub_rubro_id', 'articulo_id', 'tipo_id', 'marca_id', 'color_id', 'talle_id', 'reflectivo']
 
 	$(attributes).each(function(index) {
 		var fieldname = attributes[index];

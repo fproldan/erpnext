@@ -38,15 +38,14 @@
   "familia_id",
   "rubro_id",
   "sub_rubro_id",
-  "articulo_id",
   "column_break_28",
+  "articulo_id",
   "tipo_id",
   "marca_id",
-  "color_id",
   "column_break_32",
+  "color_id",
   "talle_id",
   "reflectivo",
-  "idnitro4",
   "section_break_11",
   "brand",
   "description",
@@ -1010,11 +1009,6 @@
    "label": "Reflectivo"
   },
   {
-   "fieldname": "idnitro4",
-   "fieldtype": "Select",
-   "label": "idNitro5"
-  },
-  {
    "fieldname": "column_break_28",
    "fieldtype": "Column Break"
   },
@@ -1028,7 +1022,7 @@
  "image_field": "image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-01-17 15:51:46.965146",
+ "modified": "2023-01-17 15:53:46.965146",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Item",
