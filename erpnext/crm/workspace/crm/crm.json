@@ -14,6 +14,7 @@
  "hide_custom": 0,
  "icon": "crm",
  "idx": 0,
+ "is_default": 0,
  "is_standard": 1,
  "label": "CRM",
  "links": [
@@ -363,7 +364,7 @@
    "type": "Link"
   }
  ],
- "modified": "2021-06-13 13:38:36.871352",
+ "modified": "2023-01-24 18:32:36.067739",
  "modified_by": "Administrator",
  "module": "CRM",
  "name": "CRM",
@@ -401,6 +402,12 @@
    "label": "Dashboard",
    "link_to": "CRM",
    "type": "Dashboard"
+  },
+  {
+   "doc_view": "",
+   "label": "Consulta de CUIT",
+   "link_to": "consulta-cuit",
+   "type": "Page"
   }
  ]
 }
