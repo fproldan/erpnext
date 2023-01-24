@@ -45,7 +45,8 @@ def get_cuit(tax_id):
 		'customer': '',
 		'lead': '',
 		'estado_cuit': '',
-		'estado_cuit_class': ''
+		'estado_cuit_class': '',
+		'image': 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAYAAAA8AXHiAAABDUlEQVR42u3SMQEAAAQAMJJLLAMFnM4tw3I6KuBZioVYiIVYYiEWYiEWiIVYiAViIRZigViIhVggFmIhFoiFWIgFYiEWYoFYiIVYIBZiIRaIhViIBWIhFmKBWIiFWCAWYiEWiIVYiAViIRZigViIhVggFmIhFoiFWIgFYiEWYoFYiIVYIBZiIRaIhViIBWIhFmKBWIiFWCAWYiEWiIVYiAViIRZigViIhViIJRZiIRZigViIhVggFmIhFoiFWIgFYiEWYoFYiIVYIBZiIRaIhViIBWIhFmKBWIiFWCAWYiEWiIVYiAViIRZigViIhVggFmIhFoiFWIgFYiEWYoFYiIVYIBZiIRaIhViIBbcFLWBrWJ62hbQAAAAASUVORK5CYII=',
 	}
 
 	if not customer and not lead:
@@ -64,6 +65,8 @@ def get_cuit(tax_id):
 			'name': getlink('Customer', customer.name),
 			'customer_name': customer.customer_name,
 		}
+		if customer.image:
+			resp['image'] = customer.image
 		
 	if lead:
 		resp['estado_cuit'] = 'Activo'
@@ -89,9 +92,11 @@ def crear_entidad(doctype, tax_id):
 @frappe.whitelist()
 def autoasignar(name, user):
 	from frappe.desk.form.assign_to import add as add_assignemnt
+
 	add_assignemnt({
 		'doctype': 'Lead',
 		'name': name,
-		'assign_to': user
+		'assign_to': [user]
 	})
 	frappe.db.commit()
+	return f"Usuario {user} asignado a la Iniciativa {name}"

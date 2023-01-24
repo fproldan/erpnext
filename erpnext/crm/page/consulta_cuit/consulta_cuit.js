@@ -66,7 +66,6 @@ erpnext.ConsultaCuit = class ConsultaCuit {
 				});
 			}
 
-			console.log(cuit_values)
 			if (cuit_values['lead'] && !cuit_values['lead']['assign']) {
 				this.page.add_inner_button(__('Autoasignar'), function() {
 					me.autoasignar(cuit_values);
@@ -104,7 +103,7 @@ erpnext.ConsultaCuit = class ConsultaCuit {
 	}
 
 	autoasignar(cuit_values) {
-		let values = this.form.get_values();
+		let me = this;
 		frappe.call({
 			type: "GET",
 			method: "erpnext.crm.utils.autoasignar",
@@ -115,7 +114,8 @@ erpnext.ConsultaCuit = class ConsultaCuit {
 			freeze: true,
 			callback: function(r) {
 				if(!r.exc) {
-					frappe.msgprint(r.message)
+					frappe.msgprint(r.message);
+					me.fetch_and_render();
 				}
 			}
 		});
@@ -127,12 +127,10 @@ erpnext.ConsultaCuit = class ConsultaCuit {
 
 		let estado_cuenta = `
 		 	<div class="row">
-                <div class="col-lg-12 d-flex align-items-stretch">
+                <div class="col-lg-4 d-flex align-items-stretch">
                     <div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
                         <h5 class="border-bottom pb-2">Estado de Cuenta</h5>
-                        <div id="shopify-product-list">
-                            <h4 class="text-center ${cuit_values['estado_cuit_class']}" style="margin-bottom: 0px;">${cuit_values['estado_cuit']}</h4>
-                        </div>
+                        <h4 class="text-center ${cuit_values['estado_cuit_class']}" style="margin-bottom: 0px;">${cuit_values['estado_cuit']}</h4>
                     </div>
                 </div>
             </div>
@@ -140,7 +138,7 @@ erpnext.ConsultaCuit = class ConsultaCuit {
 		if (cuit_values['customer']) {
 			customer_html = `
 				<div class="row">
-                	<div class="col-lg-12 d-flex align-items-stretch">
+                	<div class="col-lg-9 d-flex align-items-stretch">
                     	<div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
                     		<h5 class="border-bottom pb-2">Cliente</h5>
 							<div>
@@ -157,6 +155,11 @@ erpnext.ConsultaCuit = class ConsultaCuit {
 							</div>
 						</div>
 					</div>
+					<div class="col-lg-3 d-flex align-items-stretch">
+	                    <div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
+	                        <img src="${cuit_values['image']}" class="img-fluid">
+	                    </div>
+	                </div>
 				</div>
 			`;
 		} else {
