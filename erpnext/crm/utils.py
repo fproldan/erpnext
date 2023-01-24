@@ -21,3 +21,66 @@ def update_lead_phone_numbers(contact, method):
 			lead = frappe.get_doc("Lead", contact_lead)
 			lead.db_set("phone", phone)
 			lead.db_set("mobile_no", mobile_no)
+
+
+@frappe.whitelist()
+def get_cuit(tax_id):
+	import json
+	from frappe.utils.csvutils import getlink
+
+	customer = (frappe.db.get_all('Customer', {'tax_id': tax_id}) or [{}])[0]
+	
+	if not customer:
+		customer = None
+	else:
+		customer = frappe.get_doc('Customer', customer['name'])
+
+	leads = (frappe.get_all('Lead', {'tax_id': tax_id}) or [{}])[0]
+	if not leads:
+		lead = None
+	else:
+		lead = frappe.get_doc('Lead', leads['name'])
+
+	resp = {
+		'customer': '',
+		'lead': '',
+		'estado_cuit': '',
+		'estado_cuit_class': ''
+	}
+
+	if not customer and not lead:
+		return resp
+
+	if lead:
+		resp['lead'] = {
+			'name': getlink('Lead', lead.name),
+			'lead_name': lead.lead_name,
+			'assign': ",".join(getlink('User', a) for a in json.loads(lead._assign or '[]'))
+		}
+
+	if customer:
+		resp['customer'] = {
+			'name': getlink('Customer', customer.name),
+			'customer_name': customer.customer_name,
+		}
+		
+	if lead:
+		if lead._assign:
+			resp['estado_cuit'] = 'Activo'
+			resp['estado_cuit_class'] = 'text-success'
+		else:
+			resp['estado_cuit'] = 'Inactivo'
+			resp['estado_cuit_class'] = 'text-secondary'
+
+	if customer and customer.disabled:
+		resp['estado_cuit'] = 'Inhabilitado'
+		resp['estado_cuit_class'] = 'text-danger'
+
+	return resp
+
+
+@frappe.whitelist()
+def crear_entidad(doctype, tax_id):
+	target = frappe.new_doc(doctype)
+	target.tax_id = tax_id
+	return target
