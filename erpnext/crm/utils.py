@@ -62,7 +62,13 @@ def get_cuit(tax_id):
 	if not customer and not lead:
 		return resp
 
+
+	quotation_search = []
+	q_assign = []
+	l_assign = []
+
 	if lead:
+		quotation_search.append(lead.name)
 		resp['lead'] = {
 			'name': getlink('Lead', lead.name),
 			'base_name': lead.name,
@@ -70,8 +76,10 @@ def get_cuit(tax_id):
 			'assign': ",".join(getlink('User', a) for a in json.loads(lead._assign or '[]')),
 			'creation': lead.creation,
 		}
+		l_assign += json.loads(l._assign or '[]')
 
 	if customer:
+		quotation_search.append(customer.name)
 		resp['customer'] = {
 			'name': getlink('Customer', customer.name),
 			'base_name': customer.name,
@@ -80,7 +88,25 @@ def get_cuit(tax_id):
 		if customer.image:
 			resp['image'] = customer.image
 		
-	if lead:
+	
+	quotations = [frappe.get_doc('Quotation', quotation['name']) for quotation in frappe.get_all('Quotation', {'party_name': ('in', quotation_search)})]
+	
+	if quotations:
+		resp['quotations'] = [{
+			'name': getlink('Quotation', quotation.name),
+			'base_name': quotation.name,
+			'transaction_date': quotation.transaction_date,
+			'quotation_to': quotation.quotation_to,
+			'party_name': quotation.party_name,
+			'assign':  ",".join(getlink('User', a) for a in json.loads(quotation._assign or '[]')),
+		} for quotation in quotations]
+
+		for q in quotations:
+			q_assign += json.loads(q._assign or '[]')
+	
+
+
+	if q_assign or l_assign:
 		resp['estado_cuit'] = 'Activo'
 		resp['estado_cuit_class'] = 'text-success'
 	else:

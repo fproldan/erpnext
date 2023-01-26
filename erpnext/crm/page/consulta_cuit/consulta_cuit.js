@@ -176,6 +176,7 @@ erpnext.ConsultaCuit = class ConsultaCuit {
 	render(cuit_values) {
 		let customer_html = '';
 		let lead_html = '';
+		let quotation_html = '';
 
 		let estado_cuenta = `
 		 	<div class="row">
@@ -272,10 +273,59 @@ erpnext.ConsultaCuit = class ConsultaCuit {
 			`
 		}
 
+		if (cuit_values['quotations']) {
+			let q_html = ``;
+
+			for (let i = 0; i < cuit_values['quotations'].length; i++) {
+
+				q_html += `
+					<tr>
+						<td>${cuit_values['quotations'][i]['name']}</td>
+						<td>${cuit_values['quotations'][i]['transaction_date']}</td>
+						<td>${cuit_values['quotations'][i]['name']}</td>
+						<td>${cuit_values['quotations'][i]['assign']}</td>
+					</tr>
+				`
+			}
+
+			quotation_html = `
+				<div class="row">
+                	<div class="col-lg-12 d-flex align-items-stretch">
+                    	<div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
+                    		<h5 class="border-bottom pb-2">Cotizaciones</h5>
+							<div>
+								<table class="table table-bordered">
+									<tr>
+										<th width="25%">Nombre</th>
+										<th width="25%">Fecha</th>
+										<th width="25%">Cotizacion</th>
+										<th width="25%">Asignado</th>
+									</tr>
+									${q_html}
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			`;
+		} else {
+			quotation_html = `
+				<div class="row">
+                	<div class="col-lg-12 d-flex align-items-stretch">
+                    	<div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
+                    		<h5 class="border-bottom pb-2">Cotizaciones</h5>
+							<h5 class="text-muted">No hay Cotizaciones con ese CUIT</h5>
+						</div>
+					</div>
+				</div>
+			`
+		}
+
 		let html = `
 			${estado_cuenta}
 			${customer_html}
 			${lead_html}
+			${quotation_html}
 		`;
 
 		this.form.get_field('preview').html(html);
