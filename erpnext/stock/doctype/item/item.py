@@ -1088,4 +1088,4 @@ def get_jph_attibute(attribute_id):
 	if data.status_code != 200:
 		return []
 
-	return [d['nombrecito'] for d in data.json()]
+	return [d['nombre'] for d in data.json()]
