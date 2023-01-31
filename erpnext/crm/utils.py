@@ -27,13 +27,26 @@ def update_lead_phone_numbers(contact, method):
 def get_cuit(tax_id):
 	import json
 	from frappe.utils.csvutils import getlink
+	from frappe.contacts.doctype.contact.contact import get_contact_details
+	from erpnext.accounts.party import get_default_contact
 
 	customer = (frappe.db.get_all('Customer', {'tax_id': tax_id}) or [{}])[0]
 	
+	contact_details = {
+		'contact_person': '',
+		'contact_display': '',
+		'contact_email': '',
+		'contact_mobile': '',
+		'contact_phone': '',
+	}
+
 	if not customer:
 		customer = None
 	else:
 		customer = frappe.get_doc('Customer', customer['name'])
+		contact = get_default_contact(customer.doctype, customer.name, '')
+		if contact:
+			contact_details = get_contact_details(contact)
 
 	leads = (frappe.get_all('Lead', {'tax_id': tax_id}) or [{}])[0]
 	if not leads:
@@ -84,6 +97,7 @@ def get_cuit(tax_id):
 			'name': getlink('Customer', customer.name),
 			'base_name': customer.name,
 			'customer_name': customer.customer_name,
+			'contact': contact_details,
 		}
 		if customer.image:
 			resp['image'] = customer.image

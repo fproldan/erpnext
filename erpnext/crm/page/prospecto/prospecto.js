@@ -177,7 +177,7 @@ erpnext.Prospecto = class Prospecto {
 		let customer_html = '';
 		let lead_html = '';
 		let quotation_html = '';
-
+		console.log(cuit_values)
 		let estado_cuenta = `
 		 	<div class="row">
                 <div class="col-lg-4 d-flex align-items-stretch">
@@ -203,12 +203,18 @@ erpnext.Prospecto = class Prospecto {
 							<div>
 								<table class="table table-bordered">
 									<tr>
-										<th width="33%">Razon Social</th>
-										<th width="33%">Cliente</th>
+										<th width="20%">Razon Social</th>
+										<th width="20%">Cliente</th>
+										<th width="20%">Nombre Contacto</th>
+										<th width="20%">Celular Contacto</th>
+										<th width="20%">Mail Contacto</th>
 									</tr>
 									<tr>
 										<td>${cuit_values['customer']['customer_name']}</td>
 										<td>${cuit_values['customer']['name']}</td>
+										<td>${cuit_values['customer']['contact']['contact_person']}</td>
+										<td>${cuit_values['customer']['contact']['contact_mobile']}</td>
+										<td>${cuit_values['customer']['contact']['contact_email']}</td>
 									</tr>
 								</table>
 							</div>
