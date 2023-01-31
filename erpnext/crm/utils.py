@@ -32,7 +32,15 @@ def get_cuit(tax_id):
 
 	customer = (frappe.db.get_all('Customer', {'tax_id': tax_id}) or [{}])[0]
 	
-	contact_details = {
+	customer_contact_details = {
+		'contact_person': '',
+		'contact_display': '',
+		'contact_email': '',
+		'contact_mobile': '',
+		'contact_phone': '',
+	}
+
+	lead_contact_details = {
 		'contact_person': '',
 		'contact_display': '',
 		'contact_email': '',
@@ -44,15 +52,18 @@ def get_cuit(tax_id):
 		customer = None
 	else:
 		customer = frappe.get_doc('Customer', customer['name'])
-		contact = get_default_contact(customer.doctype, customer.name, '')
-		if contact:
-			contact_details = get_contact_details(contact)
+		customer_contact = get_default_contact(customer.doctype, customer.name, '')
+		if customer_contact:
+			customer_contact_details = get_contact_details(customer_contact)
 
 	leads = (frappe.get_all('Lead', {'tax_id': tax_id}) or [{}])[0]
 	if not leads:
 		lead = None
 	else:
 		lead = frappe.get_doc('Lead', leads['name'])
+		lead_contact = get_default_contact(lead.doctype, lead.name, '')
+		if lead_contact:
+			lead_contact_details = get_contact_details(lead_contact)
 
 
 	nosis = (frappe.get_all('Verificacion NOSIS', {'cuit': tax_id}, order_by='-fecha') or [{}])[0]
@@ -88,6 +99,7 @@ def get_cuit(tax_id):
 			'lead_name': lead.lead_name,
 			'assign': ",".join(getlink('User', a) for a in json.loads(lead._assign or '[]')),
 			'creation': lead.creation,
+			'contact': lead_contact_details,
 		}
 		l_assign += json.loads(lead._assign or '[]')
 
@@ -97,7 +109,7 @@ def get_cuit(tax_id):
 			'name': getlink('Customer', customer.name),
 			'base_name': customer.name,
 			'customer_name': customer.customer_name,
-			'contact': contact_details,
+			'contact': customer_contact_details,
 		}
 		if customer.image:
 			resp['image'] = customer.image
@@ -106,20 +118,34 @@ def get_cuit(tax_id):
 	quotations = [frappe.get_doc('Quotation', quotation['name']) for quotation in frappe.get_all('Quotation', {'party_name': ('in', quotation_search)})]
 	
 	if quotations:
-		resp['quotations'] = [{
-			'name': getlink('Quotation', quotation.name),
-			'base_name': quotation.name,
-			'transaction_date': quotation.transaction_date,
-			'quotation_to': quotation.quotation_to,
-			'party_name': quotation.party_name,
-			'assign':  ",".join(getlink('User', a) for a in json.loads(quotation._assign or '[]')),
-		} for quotation in quotations]
+		quotation_contact_details = {
+			'contact_person': '',
+			'contact_display': '',
+			'contact_email': '',
+			'contact_mobile': '',
+			'contact_phone': '',
+		}
+
+		resp['quotations'] = []
+
+		for quotation in quotations:
+			quotation_contact = get_default_contact(lead.doctype, lead.name, '')
+			if quotation_contact:
+				quotation_contact_details = get_contact_details(quotation_contact)
+
+			resp['quotations'].append({
+				'name': getlink('Quotation', quotation.name),
+				'base_name': quotation.name,
+				'transaction_date': quotation.transaction_date,
+				'quotation_to': quotation.quotation_to,
+				'party_name': quotation.party_name,
+				'assign':  ",".join(getlink('User', a) for a in json.loads(quotation._assign or '[]')),
+				'contact': quotation_contact_details,
+			})
 
 		for q in quotations:
 			q_assign += json.loads(q._assign or '[]')
 	
-
-
 	if q_assign or l_assign:
 		resp['estado_cuit'] = 'Activo'
 		resp['estado_cuit_class'] = 'text-success'

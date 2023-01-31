@@ -58,6 +58,10 @@ erpnext.Prospecto = class Prospecto {
 			let me = this;
 			this.page.clear_inner_toolbar();
 
+			this.page.add_button(__('Condiciones comerciales'), function() {
+				console.log('')
+			});
+
 			this.page.add_inner_button(__('Verificar estado NOSIS'), function() {
 				me.verificar_nosis(cuit_values);
 			}, __('Acciones'));
@@ -91,6 +95,10 @@ erpnext.Prospecto = class Prospecto {
 					me.autoasignar(cuit_values);
 				}, __('Acciones'));
 			}
+
+			this.page.add_inner_button(__('Evento'), function() {
+				me.verificar_nosis(cuit_values);
+			}, __('Tarea'));
 		});
 	}
 
@@ -192,6 +200,12 @@ erpnext.Prospecto = class Prospecto {
                         <h4 class="text-center text-muted" style="margin-bottom: 0px;">${cuit_values['last_nosis']}</h4>
                     </div>
                 </div>
+                <div class="col-lg-4 d-flex align-items-stretch">
+                    <div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
+                        <h5 class="border-bottom pb-2">Evidencia objetiva</h5>
+                        <h4 class="text-center text-muted" style="margin-bottom: 0px;">-</h4>
+                    </div>
+                </div>
             </div>
 		`
 		if (cuit_values['customer']) {
@@ -203,11 +217,11 @@ erpnext.Prospecto = class Prospecto {
 							<div>
 								<table class="table table-bordered">
 									<tr>
-										<th width="20%">Razon Social</th>
-										<th width="20%">Cliente</th>
-										<th width="20%">Nombre Contacto</th>
-										<th width="20%">Celular Contacto</th>
-										<th width="20%">Mail Contacto</th>
+										<th>Razon Social</th>
+										<th>Cliente</th>
+										<th>Nombre Contacto</th>
+										<th>Celular Contacto</th>
+										<th>Mail Contacto</th>
 									</tr>
 									<tr>
 										<td>${cuit_values['customer']['customer_name']}</td>
@@ -249,15 +263,21 @@ erpnext.Prospecto = class Prospecto {
 							<div>
 								<table class="table table-bordered">
 									<tr>
-										<th width="25%">Razon Social</th>
-										<th width="25%">Fecha</th>
-										<th width="25%">Iniciativa</th>
-										<th width="25%">Asignado</th>
+										<th>Razon Social</th>
+										<th>Fecha</th>
+										<th>Iniciativa</th>
+										<th>Nombre Contacto</th>
+										<th>Celular Contacto</th>
+										<th>Mail Contacto</th>
+										<th>Asignado</th>
 									</tr>
 									<tr>
 										<td>${cuit_values['lead']['lead_name']}</td>
 										<td>${frappe.datetime.get_datetime_as_string_es(cuit_values['lead']['creation'])}</td>
 										<td>${cuit_values['lead']['name']}</td>
+										<td>${cuit_values['lead']['contact']['contact_person']}</td>
+										<td>${cuit_values['lead']['contact']['contact_mobile']}</td>
+										<td>${cuit_values['lead']['contact']['contact_email']}</td>
 										<td>${cuit_values['lead']['assign']}</td>
 									</tr>
 								</table>
@@ -289,6 +309,9 @@ erpnext.Prospecto = class Prospecto {
 						<td>${cuit_values['quotations'][i]['name']}</td>
 						<td>${cuit_values['quotations'][i]['transaction_date']}</td>
 						<td>${cuit_values['quotations'][i]['name']}</td>
+						<td>${cuit_values['quotations'][i]['contact']['contact_person']}</td>
+						<td>${cuit_values['quotations'][i]['contact']['contact_mobile']}</td>
+						<td>${cuit_values['quotations'][i]['contact']['contact_email']}</td>
 						<td>${cuit_values['quotations'][i]['assign']}</td>
 					</tr>
 				`
@@ -302,10 +325,13 @@ erpnext.Prospecto = class Prospecto {
 							<div>
 								<table class="table table-bordered">
 									<tr>
-										<th width="25%">Nombre</th>
-										<th width="25%">Fecha</th>
-										<th width="25%">Cotizacion</th>
-										<th width="25%">Asignado</th>
+										<th>Nombre</th>
+										<th>Fecha</th>
+										<th>Cotizacion</th>
+										<th>Nombre Contacto</th>
+										<th>Celular Contacto</th>
+										<th>Mail Contacto</th>
+										<th>Asignado</th>
 									</tr>
 									${q_html}
 								</table>
