@@ -4,16 +4,25 @@
  "docstatus": 0,
  "doctype": "Page",
  "idx": 0,
- "modified": "2023-01-31 09:10:09.565209",
+ "modified": "2023-01-31 11:21:50.881582",
  "modified_by": "Administrator",
  "module": "CRM",
- "name": "Prospecto",
+ "name": "prospecto",
  "owner": "Administrator",
  "page_name": "prospecto",
  "restrict_to_domain": "CRM",
  "roles": [
   {
    "role": "System Manager"
+  },
+  {
+   "role": "Sales User"
+  },
+  {
+   "role": "Sales Manager"
+  },
+  {
+   "role": "Sales Master Manager"
   }
  ],
  "script": null,
