@@ -96,9 +96,21 @@ erpnext.Prospecto = class Prospecto {
 				}, __('Acciones'));
 			}
 
-			this.page.add_inner_button(__('Evento'), function() {
-				me.verificar_nosis(cuit_values);
-			}, __('Tarea'));
+			if (cuit_values['lead']) {
+				let create_event = () => {
+					const args = {
+						doc: cuit_values['lead']['base_name'],
+						reference_doctype: 'Lead',
+						reference_document: cuit_values['lead']['base_name'],
+					};
+					return new frappe.views.InteractionComposer(args);
+				};
+
+				this.page.add_inner_button(__('Evento'), function() {
+					create_event('calendar');
+					me.fetch_and_render();
+				}, __('Tarea'));
+			}
 		});
 	}
 
@@ -185,7 +197,7 @@ erpnext.Prospecto = class Prospecto {
 		let customer_html = '';
 		let lead_html = '';
 		let quotation_html = '';
-		console.log(cuit_values)
+		let lead_events_html = '';
 		let estado_cuenta = `
 		 	<div class="row">
                 <div class="col-lg-4 d-flex align-items-stretch">
@@ -286,8 +298,70 @@ erpnext.Prospecto = class Prospecto {
 					</div>
 				</div>
 			`;
+
+			if (cuit_values['lead']['events'] && !cuit_values['lead']['assign'] || cuit_values['lead']['assign'].includes(frappe.session.user)) {
+				let event_html = ``;
+
+				for (let i = 0; i < cuit_values['lead']['events'].length; i++) {
+
+					event_html += `
+						<tr>
+							<td>${frappe.datetime.get_datetime_as_string_es(cuit_values['lead']['events'][i]['communication_date'])}</td>
+							<td>${cuit_values['lead']['events'][i]['sender_full_name']}</td>
+							<td>${cuit_values['lead']['events'][i]['event_category']}</td>
+							<td>${cuit_values['lead']['events'][i]['subject']}</td>
+							<td>${cuit_values['lead']['events'][i]['content']}</td>
+						</tr>
+					`
+				}
+
+				lead_events_html = `
+					<div class="row">
+	                	<div class="col-lg-12 d-flex align-items-stretch">
+	                    	<div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
+	                    		<h5 class="border-bottom pb-2">Histórico</h5>
+								<div>
+									<table class="table table-bordered">
+										<tr>
+											<th width="20%">Fecha</th>
+											<th width="10%">Usuario</th>
+											<th width="10%">Categoría</th>
+											<th width="30%">Asunto</th>
+											<th width="30%">Contenido</th>
+										</tr>
+										${event_html}
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				`;
+			} else {
+				lead_events_html = `
+					<div class="row">
+	                	<div class="col-lg-12 d-flex align-items-stretch">
+	                    	<div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
+	                    		<h5 class="border-bottom pb-2">Histórico</h5>
+								<h5 class="text-muted">No hay Histórico en esta Iniciativa</h5>
+							</div>
+						</div>
+					</div>
+				`
+			}
+			
 		} else {
 			lead_html = `
+				<div class="row">
+                	<div class="col-lg-12 d-flex align-items-stretch">
+                    	<div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
+                    		<h5 class="border-bottom pb-2">Histórico</h5>
+							<h5 class="text-muted">No hay Histórico en esta Iniciativa</h5>
+						</div>
+					</div>
+				</div>
+			`
+
+			lead_events_html = `
 				<div class="row">
                 	<div class="col-lg-12 d-flex align-items-stretch">
                     	<div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
@@ -357,6 +431,7 @@ erpnext.Prospecto = class Prospecto {
 			${estado_cuenta}
 			${customer_html}
 			${lead_html}
+			${lead_events_html}
 			${quotation_html}
 		`;
 

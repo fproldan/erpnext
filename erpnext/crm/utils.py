@@ -1,4 +1,5 @@
 import frappe
+from frappe import _
 
 
 def update_lead_phone_numbers(contact, method):
@@ -28,6 +29,7 @@ def get_cuit(tax_id):
 	import json
 	from frappe.utils.csvutils import getlink
 	from frappe.contacts.doctype.contact.contact import get_contact_details
+	from frappe.desk.form.load import get_communication_data
 	from erpnext.accounts.party import get_default_contact
 
 	customer = (frappe.db.get_all('Customer', {'tax_id': tax_id}) or [{}])[0]
@@ -92,6 +94,12 @@ def get_cuit(tax_id):
 	l_assign = []
 
 	if lead:
+		events = []
+		for communication in get_communication_data(lead.doctype, lead.name, limit=100):
+			if communication['reference_doctype'] == 'Event':
+				communication['event_category'] = _(communication['communication_medium'])
+				events.append(communication)
+
 		quotation_search.append(lead.name)
 		resp['lead'] = {
 			'name': getlink('Lead', lead.name),
@@ -100,6 +108,7 @@ def get_cuit(tax_id):
 			'assign': ",".join(getlink('User', a) for a in json.loads(lead._assign or '[]')),
 			'creation': lead.creation,
 			'contact': lead_contact_details,
+			'events': events,
 		}
 		l_assign += json.loads(lead._assign or '[]')
 
