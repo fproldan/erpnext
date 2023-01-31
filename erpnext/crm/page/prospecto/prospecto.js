@@ -1,14 +1,14 @@
-frappe.pages['consulta-cuit'].on_page_load = function(wrapper) {
+frappe.pages['prospecto'].on_page_load = function(wrapper) {
 	var page = frappe.ui.make_app_page({
 		parent: wrapper,
-		title: 'Consulta de CUIT',
+		title: 'Prospecto',
 		single_column: true
 	});
 
-	new erpnext.ConsultaCuit(page);
+	new erpnext.Prospecto(page);
 }
 
-erpnext.ConsultaCuit = class ConsultaCuit {
+erpnext.Prospecto = class Prospecto {
 	constructor(page) {
 		this.page = page;
 		this.make_form();

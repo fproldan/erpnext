@@ -76,7 +76,7 @@ def get_cuit(tax_id):
 			'assign': ",".join(getlink('User', a) for a in json.loads(lead._assign or '[]')),
 			'creation': lead.creation,
 		}
-		l_assign += json.loads(l._assign or '[]')
+		l_assign += json.loads(lead._assign or '[]')
 
 	if customer:
 		quotation_search.append(customer.name)
