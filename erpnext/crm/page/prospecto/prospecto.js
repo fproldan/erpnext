@@ -205,16 +205,10 @@ erpnext.Prospecto = class Prospecto {
 									<tr>
 										<th width="20%">Razon Social</th>
 										<th width="20%">Cliente</th>
-										<th width="20%">Nombre Contacto</th>
-										<th width="20%">Celular Contacto</th>
-										<th width="20%">Mail Contacto</th>
 									</tr>
 									<tr>
 										<td>${cuit_values['customer']['customer_name']}</td>
 										<td>${cuit_values['customer']['name']}</td>
-										<td>${cuit_values['customer']['contact']['contact_person']}</td>
-										<td>${cuit_values['customer']['contact']['contact_mobile']}</td>
-										<td>${cuit_values['customer']['contact']['contact_email']}</td>
 									</tr>
 								</table>
 							</div>
