@@ -67,7 +67,6 @@ def get_cuit(tax_id):
 		if lead_contact:
 			lead_contact_details = get_contact_details(lead_contact)
 
-
 	nosis = (frappe.get_all('Verificacion NOSIS', {'cuit': tax_id}, order_by='-fecha') or [{}])[0]
 	if not nosis:
 		nosis = None
@@ -98,6 +97,7 @@ def get_cuit(tax_id):
 		for communication in get_communication_data(lead.doctype, lead.name, limit=100):
 			if communication['reference_doctype'] == 'Event':
 				communication['event_category'] = _(communication['communication_medium'])
+				communication['link'] = getlink('Event', communication['reference_name'])
 				events.append(communication)
 
 		quotation_search.append(lead.name)

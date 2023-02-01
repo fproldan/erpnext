@@ -306,6 +306,7 @@ erpnext.Prospecto = class Prospecto {
 
 					event_html += `
 						<tr>
+							<td>${cuit_values['lead']['events'][i]['link']}</td>
 							<td>${frappe.datetime.get_datetime_as_string_es(cuit_values['lead']['events'][i]['communication_date'])}</td>
 							<td>${cuit_values['lead']['events'][i]['sender_full_name']}</td>
 							<td>${cuit_values['lead']['events'][i]['event_category']}</td>
@@ -323,10 +324,11 @@ erpnext.Prospecto = class Prospecto {
 								<div>
 									<table class="table table-bordered">
 										<tr>
+											<th width="10%">Evento</th>
 											<th width="20%">Fecha</th>
 											<th width="10%">Usuario</th>
 											<th width="10%">Categoría</th>
-											<th width="30%">Asunto</th>
+											<th width="20%">Asunto</th>
 											<th width="30%">Contenido</th>
 										</tr>
 										${event_html}
