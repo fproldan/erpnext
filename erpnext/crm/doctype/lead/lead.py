@@ -49,7 +49,7 @@ class Lead(SellingController):
 		})
 
 		self.set_status()
-		self.check_email_id_is_unique()
+		self.check_tax_id_is_unique()
 
 		if self.email_id:
 			if not self.flags.ignore_email_validation:
@@ -83,15 +83,14 @@ class Lead(SellingController):
 			"description": ('Contact ' + cstr(self.lead_name)) + (self.contact_by and ('. By : ' + cstr(self.contact_by)) or '')
 		}, force)
 
-	def check_email_id_is_unique(self):
-		if self.email_id:
-			# validate email is unique
-			duplicate_leads = frappe.get_all("Lead", filters={"email_id": self.email_id, "name": ["!=", self.name]})
+	def check_tax_id_is_unique(self):
+		if self.tax_id:
+			# validate tax_id is unique
+			duplicate_leads = frappe.get_all("Lead", filters={"tax_id": self.tax_id, "name": ["!=", self.name]})
 			duplicate_leads = [lead.name for lead in duplicate_leads]
 
 			if duplicate_leads:
-				frappe.throw(_("Email Address must be unique, already exists for {0}")
-					.format(comma_and(duplicate_leads)), frappe.DuplicateEntryError)
+				frappe.throw("El CUIT debe ser único, ya existe para {0}".format(comma_and(duplicate_leads)), frappe.DuplicateEntryError)
 
 	def on_trash(self):
 		frappe.db.sql("""update `tabIssue` set lead='' where lead=%s""", self.name)
@@ -256,7 +255,8 @@ def make_opportunity(source_name, target_doc=None):
 				"lead_name": "contact_display",
 				"company_name": "customer_name",
 				"email_id": "contact_email",
-				"mobile_no": "contact_mobile"
+				"mobile_no": "contact_mobile",
+				"tax_id": "tax_id",
 			}
 		}}, target_doc, set_missing_values)
 
