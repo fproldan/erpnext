@@ -221,19 +221,19 @@ def add_non_standard_user_types():
 def get_user_types_data():
 	return {
 		'Usuario de Ventas Reducido': {
-			'role': 'Sales User',
+			'role': 'Usuario Reducido Ventas',
 			'doctypes': {},
 			'is_standard': 1,
 			'blocked_modules': ['Support', 'Website', 'HR', 'Accounts', 'Utilities', 'Custom', 'Core']
 		},
 		'Usuario de Soporte Reducido': {
-			'role': 'Support Team',
+			'role': 'Usuario Reducido Soporte',
 			'doctypes': {},
 			'is_standard': 1,
 			'blocked_modules': ['CRM', 'HR', 'Utilities', 'Custom', 'Core']
 		},
 		'Usuario de Proyecto Reducido': {
-			'role': 'Projects User',
+			'role': 'Usuario Reducido Proyecto',
 			'doctypes': {},
 			'is_standard': 1,
 			'blocked_modules': ['Buying', 'Selling', 'CRM', 'Support', 'Website', 'HR', 'Utilities', 'Custom', 'Core']
