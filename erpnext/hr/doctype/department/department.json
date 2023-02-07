@@ -145,7 +145,7 @@
  "idx": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2023-01-09 13:57:33.875494",
+ "modified": "2023-01-09 14:57:33.875494",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Department",
@@ -191,6 +191,10 @@
   },
   {
    "role": "Projects User",
+   "select": 1
+  },
+  {
+   "role": "Usuario Reducido Proyecto",
    "select": 1
   },
   {

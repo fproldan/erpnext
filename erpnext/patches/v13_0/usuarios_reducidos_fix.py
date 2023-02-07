@@ -41,6 +41,6 @@ def execute():
 	for u in us:
 		user = frappe.get_doc('User', u['name'])
 		for role in user.roles:
-			if role.role == 'Support User':
+			if role.role == 'Support Team':
 				role.role = 'Usuario Reducido Soporte'
 				role.save()
