@@ -230,7 +230,7 @@
  "idx": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-05-12 20:01:43.764731",
+ "modified": "2021-05-12 21:01:43.764731",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Installation Note",
@@ -255,6 +255,26 @@
    "read": 1,
    "report": 1,
    "role": "Sales User"
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Reducido Ventas",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "permlevel": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Reducido Ventas"
   }
  ],
  "restrict_to_domain": "Serie y Lote",
