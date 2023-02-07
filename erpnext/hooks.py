@@ -125,6 +125,9 @@ domains = {
 	'Shopify': 'erpnext.domains.shopify',
 	'Mercadopago': 'erpnext.domains.mercadopago',
 	'BOM': 'erpnext.domains.bom',
+	'Usuario de Ventas Reducido': 'erpnext.domains.usuario_ventas_reducido',
+	'Usuario de Soporte Reducido': 'erpnext.domains.usuario_soporte_reducido',
+	'Usuario de Proyecto Reducido':'erpnext.domains.usuario_proyecto_reducido',
 }
 
 website_generators = ["Item Group", "Website Item", "BOM", "Sales Partner",
