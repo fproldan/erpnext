@@ -7,7 +7,7 @@
  "doctype": "Report", 
  "idx": 3, 
  "is_standard": "Yes", 
- "modified": "2017-02-26 20:03:47.710828", 
+ "modified": "2017-02-27 20:03:47.710828", 
  "modified_by": "Administrator", 
  "module": "Selling", 
  "name": "Comisiones por producto vendido", 
@@ -18,6 +18,9 @@
  "roles": [
   {
    "role": "Sales User"
+  }, 
+  {
+   "role": "Usuario Reducido Ventas"
   }, 
   {
    "role": "Sales Manager"

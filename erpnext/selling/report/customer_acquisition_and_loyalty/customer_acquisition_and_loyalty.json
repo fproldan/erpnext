@@ -7,7 +7,7 @@
  "doctype": "Report", 
  "idx": 3, 
  "is_standard": "Yes", 
- "modified": "2017-02-24 20:18:54.950255", 
+ "modified": "2017-02-24 21:18:54.950255", 
  "modified_by": "Administrator", 
  "module": "Selling", 
  "name": "Customer Acquisition and Loyalty", 
@@ -18,6 +18,9 @@
  "roles": [
   {
    "role": "Sales User"
+  },
+  {
+   "role": "Usuario Reducido Ventas"
   }, 
   {
    "role": "Sales Manager"

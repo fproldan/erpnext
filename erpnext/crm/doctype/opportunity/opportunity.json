@@ -430,7 +430,7 @@
  "icon": "fa fa-info-sign",
  "idx": 195,
  "links": [],
- "modified": "2021-06-05 10:11:22.831139",
+ "modified": "2021-06-05 11:11:22.831139",
  "modified_by": "Administrator",
  "module": "CRM",
  "name": "Opportunity",
@@ -444,6 +444,17 @@
    "read": 1,
    "report": 1,
    "role": "Sales User",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Reducido Ventas",
    "share": 1,
    "write": 1
   },
