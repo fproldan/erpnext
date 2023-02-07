@@ -123,7 +123,7 @@
  "idx": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2021-02-09 17:10:03.767426",
+ "modified": "2021-02-09 17:11:03.767426",
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Territory",
@@ -158,6 +158,13 @@
    "read": 1,
    "report": 1,
    "role": "Sales User"
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Reducido Ventas"
   },
   {
    "read": 1,

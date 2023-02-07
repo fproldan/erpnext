@@ -776,6 +776,10 @@
   },
   {
    "read": 1,
+   "role": "Usuario Reducido Ventas"
+  },
+  {
+   "read": 1,
    "role": "Purchase User"
   },
   {

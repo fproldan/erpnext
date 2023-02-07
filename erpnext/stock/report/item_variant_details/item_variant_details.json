@@ -7,7 +7,7 @@
  "doctype": "Report", 
  "idx": 0, 
  "is_standard": "Yes", 
- "modified": "2017-11-18 06:24:10.818276", 
+ "modified": "2017-11-18 07:24:10.818276", 
  "modified_by": "Administrator", 
  "module": "Stock", 
  "name": "Item Variant Details", 
@@ -34,6 +34,9 @@
   {
    "role": "Sales User"
   }, 
+  {
+   "role": "Usuario Reducido Ventas"
+  },
   {
    "role": "RMA Manufacturing User"
   }, 
