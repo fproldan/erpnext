@@ -154,7 +154,7 @@ def get_cuit(tax_id):
 
 		for q in quotations:
 			q_assign += json.loads(q._assign or '[]')
-	
+
 	if q_assign or l_assign:
 		resp['estado_cuit'] = 'Activo'
 		resp['estado_cuit_class'] = 'text-success'

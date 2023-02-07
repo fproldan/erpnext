@@ -350,7 +350,6 @@ erpnext.Prospecto = class Prospecto {
 					</div>
 				`
 			}
-			
 		} else {
 			lead_html = `
 				<div class="row">
