@@ -7,7 +7,7 @@
  "doctype": "Report",
  "idx": 3,
  "is_standard": "Yes",
- "modified": "2020-07-26 23:59:49.897577",
+ "modified": "2020-08-09 09:15:52.437059",
  "modified_by": "Administrator",
  "module": "CRM",
  "name": "Lead Details",
@@ -19,6 +19,9 @@
  "roles": [
   {
    "role": "Sales User"
+  },
+  {
+   "role": "Usuario Reducido Ventas"
   },
   {
    "role": "Sales Manager"

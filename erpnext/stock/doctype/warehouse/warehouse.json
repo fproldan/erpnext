@@ -245,7 +245,7 @@
  "idx": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2021-04-11 19:54:56.263965",
+ "modified": "2021-04-12 19:54:56.263965",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Warehouse",
@@ -279,6 +279,13 @@
    "read": 1,
    "report": 1,
    "role": "Sales User"
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Reducido Ventas"
   },
   {
    "email": 1,
