@@ -742,7 +742,7 @@
  "image_field": "company_logo",
  "is_tree": 1,
  "links": [],
- "modified": "2021-05-17 16:51:08.187233",
+ "modified": "2021-05-17 17:51:08.187233",
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Company",
@@ -800,6 +800,10 @@
   },
   {
    "role": "Projects User",
+   "select": 1
+  },
+  {
+   "role": "Usuario Reducido Proyecto",
    "select": 1
   },
   {
