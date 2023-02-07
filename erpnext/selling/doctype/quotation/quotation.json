@@ -962,7 +962,7 @@
  "is_submittable": 1,
  "links": [],
  "max_attachments": 0,
- "modified": "2021-08-30 23:12:07.864951",
+ "modified": "2021-09-30 23:12:07.864951",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Quotation",
@@ -987,6 +987,26 @@
    "read": 1,
    "report": 1,
    "role": "Sales User"
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Reducido Ventas",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "permlevel": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Reducido Ventas"
   },
   {
    "permlevel": 1,

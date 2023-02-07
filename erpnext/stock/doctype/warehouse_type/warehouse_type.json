@@ -13,7 +13,7 @@
    "label": "Description"
   }
  ],
- "modified": "2019-05-29 18:35:33.354571",
+ "modified": "2019-05-29 19:35:33.354571",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Warehouse Type",
@@ -62,6 +62,15 @@
    "read": 1,
    "report": 1,
    "role": "Sales User",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Reducido Ventas",
    "share": 1
   },
   {
