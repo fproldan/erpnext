@@ -196,7 +196,7 @@ erpnext.Prospecto = class Prospecto {
 	se_puede_mostrar(cuit_values) {
 		// Si existe inciativa y no esta asignada o asignada a el usuario logeado
 		if (!cuit_values['lead']) {
-			return false
+			return true
 		}
 
 		if (!cuit_values['lead']['assign']) {
@@ -280,7 +280,7 @@ erpnext.Prospecto = class Prospecto {
 			`
 		}
 
-		if (me.se_puede_mostrar(cuit_values)) {
+		if (cuit_values['lead'] && me.se_puede_mostrar(cuit_values)) {
 			lead_html = `
 				<div class="row">
                 	<div class="col-lg-12 d-flex align-items-stretch">
