@@ -60,11 +60,14 @@ erpnext.Prospecto = class Prospecto {
 
 			this.page.add_button(__('Condiciones comerciales'), function() {
 				console.log('')
-			});
+			}, {btn_class: 'btn-primary'});
 
 			this.page.add_inner_button(__('Verificar estado NOSIS'), function() {
 				me.verificar_nosis(cuit_values);
 			}, __('Acciones'));
+
+			this.page.set_inner_btn_group_as_primary(__('Acciones'));
+			this.page.set_inner_btn_group_as_primary(__('Tarea'));
 
 			if (!cuit_values['customer']) {
 				this.page.add_inner_button(__('Crear cliente'), function() {
@@ -109,8 +112,9 @@ erpnext.Prospecto = class Prospecto {
 				this.page.add_inner_button(__('Evento'), function() {
 					create_event('calendar');
 					me.fetch_and_render();
-				}, __('Tarea'));
+				}, __('Tarea'), 'primary');
 			}
+
 		});
 	}
 
