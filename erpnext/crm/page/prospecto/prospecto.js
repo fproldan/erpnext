@@ -78,13 +78,13 @@ erpnext.Prospecto = class Prospecto {
 				}, __('Acciones'));
 			}
 
-			if (cuit_values['lead']) {
+			if (cuit_values['lead'] && me.se_puede_mostrar(cuit_values)) {
 				this.page.add_inner_button(__('Crear cotización desde inciativa'), function() {
 					me.crear_cotizacion_iniciativa(cuit_values);
 				}, __('Acciones'));
 			}
 
-			if (cuit_values['customer']) {
+			if (cuit_values['customer'] && me.se_puede_mostrar(cuit_values)) {
 				this.page.add_inner_button(__('Crear cotización desde cliente'), function() {
 					me.crear_cotizacion_cliente(cuit_values);
 				}, __('Acciones'));
@@ -96,7 +96,7 @@ erpnext.Prospecto = class Prospecto {
 				}, __('Acciones'));
 			}
 
-			if (cuit_values['lead']) {
+			if (me.se_puede_mostrar(cuit_values)) {
 				let create_event = () => {
 					const args = {
 						doc: cuit_values['lead']['base_name'],
@@ -193,7 +193,21 @@ erpnext.Prospecto = class Prospecto {
 		});
 	}
 
+	se_puede_mostrar(cuit_values) {
+		// Si existe inciativa y no esta asignada o asignada a el usuario logeado
+		if (!cuit_values['lead']) {
+			return false
+		}
+
+		if (!cuit_values['lead']['assign']) {
+			return true
+		}
+
+		return cuit_values['lead']['assign'].includes(frappe.session.user)
+	}
+
 	render(cuit_values) {
+		let me = this;
 		let customer_html = '';
 		let lead_html = '';
 		let quotation_html = '';
@@ -266,7 +280,7 @@ erpnext.Prospecto = class Prospecto {
 			`
 		}
 
-		if (cuit_values['lead']) {
+		if (me.se_puede_mostrar(cuit_values)) {
 			lead_html = `
 				<div class="row">
                 	<div class="col-lg-12 d-flex align-items-stretch">
@@ -299,7 +313,7 @@ erpnext.Prospecto = class Prospecto {
 				</div>
 			`;
 
-			if (cuit_values['lead']['events'] && !cuit_values['lead']['assign'] || cuit_values['lead']['assign'].includes(frappe.session.user)) {
+			if (cuit_values['lead']['events'] && me.se_puede_mostrar(cuit_values)) {
 				let event_html = ``;
 
 				for (let i = 0; i < cuit_values['lead']['events'].length; i++) {
@@ -339,7 +353,28 @@ erpnext.Prospecto = class Prospecto {
 					</div>
 				`;
 			} else {
-				lead_events_html = `
+
+				if (me.se_puede_mostrar(cuit_values)) {
+					lead_events_html = `
+						<div class="row">
+		                	<div class="col-lg-12 d-flex align-items-stretch">
+		                    	<div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
+		                    		<h5 class="border-bottom pb-2">Histórico</h5>
+									<h5 class="text-muted">No hay Histórico en esta Iniciativa</h5>
+								</div>
+							</div>
+						</div>
+					`
+				} else {
+					lead_events_html = '';
+					
+				}
+				
+			}
+		} else {
+
+			if (me.se_puede_mostrar(cuit_values)) {
+				lead_html = `
 					<div class="row">
 	                	<div class="col-lg-12 d-flex align-items-stretch">
 	                    	<div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
@@ -349,32 +384,27 @@ erpnext.Prospecto = class Prospecto {
 						</div>
 					</div>
 				`
-			}
-		} else {
-			lead_html = `
-				<div class="row">
-                	<div class="col-lg-12 d-flex align-items-stretch">
-                    	<div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
-                    		<h5 class="border-bottom pb-2">Histórico</h5>
-							<h5 class="text-muted">No hay Histórico en esta Iniciativa</h5>
-						</div>
-					</div>
-				</div>
-			`
 
-			lead_events_html = `
-				<div class="row">
-                	<div class="col-lg-12 d-flex align-items-stretch">
-                    	<div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
-                    		<h5 class="border-bottom pb-2">Iniciativa</h5>
-							<h5 class="text-muted">No hay Iniciativa con ese CUIT</h5>
+				lead_events_html = `
+					<div class="row">
+	                	<div class="col-lg-12 d-flex align-items-stretch">
+	                    	<div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
+	                    		<h5 class="border-bottom pb-2">Iniciativa</h5>
+								<h5 class="text-muted">No hay Iniciativa con ese CUIT</h5>
+							</div>
 						</div>
 					</div>
-				</div>
-			`
+				`
+			} else {
+				lead_html = ''
+				lead_events_html = ''
+			}
+
+
+			
 		}
 
-		if (cuit_values['quotations']) {
+		if (cuit_values['quotations'] && me.se_puede_mostrar(cuit_values)) {
 			let q_html = ``;
 
 			for (let i = 0; i < cuit_values['quotations'].length; i++) {
@@ -416,16 +446,21 @@ erpnext.Prospecto = class Prospecto {
 				</div>
 			`;
 		} else {
-			quotation_html = `
-				<div class="row">
-                	<div class="col-lg-12 d-flex align-items-stretch">
-                    	<div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
-                    		<h5 class="border-bottom pb-2">Cotizaciones</h5>
-							<h5 class="text-muted">No hay Cotizaciones con ese CUIT</h5>
+			if (me.se_puede_mostrar(cuit_values)) {
+				quotation_html = `
+					<div class="row">
+	                	<div class="col-lg-12 d-flex align-items-stretch">
+	                    	<div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
+	                    		<h5 class="border-bottom pb-2">Cotizaciones</h5>
+								<h5 class="text-muted">No hay Cotizaciones con ese CUIT</h5>
+							</div>
 						</div>
 					</div>
-				</div>
-			`
+				`
+			} else {
+				quotation_html = '';
+			}
+			
 		}
 
 		let html = `
