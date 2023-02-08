@@ -1060,8 +1060,6 @@ def get_jph_attibute(attribute_id):
 	if not stock_settings.login_url:
 		return []
 
-	LOGIN_URL = stock_settings.login_url
-	API_URL = stock_settings.api_url
 	HEADERS = {"Authorization": f"Basic {stock_settings.token}"}
 	LOGIN_BODY = {
 		"client_id": stock_settings.client_id,
@@ -1069,7 +1067,7 @@ def get_jph_attibute(attribute_id):
 		"password": stock_settings.password
 	}
 
-	login = requests.post(LOGIN_URL, headers=HEADERS, data=LOGIN_BODY)
+	login = requests.post(stock_settings.login_url, headers=HEADERS, data=LOGIN_BODY)
 
 	if login.status_code != 200:
 		return []
@@ -1089,7 +1087,7 @@ def get_jph_attibute(attribute_id):
 	}
 
 	HEADERS['token'] = login_data['token']
-	data = requests.get(API_URL + f'?id_tipo={ATTRIBUTES[attribute_id]}', headers=HEADERS)
+	data = requests.get(stock_settings.api_url + f'?id_tipo={ATTRIBUTES[attribute_id]}', headers=HEADERS)
 
 	if data.status_code != 200:
 		return []
