@@ -1054,13 +1054,19 @@ def validate_item_default_company_links(item_defaults: List[ItemDefault]) -> Non
 @frappe.whitelist()
 def get_jph_attibute(attribute_id):
 	import requests
-	LOGIN_URL = 'https://n4s-dev.jphlions.com/auth/api/v1/auth/local/login'
-	API_URL = 'https://n4s-dev.jphlions.com/api/valores_articulos/custom/obtener_valores_articulos'
-	HEADERS = {"Authorization": "Basic bGlvbnM6SnBoMTM1"}
+
+	stock_settings = frappe.get_doc('Stock Settings')
+
+	if not stock_settings.login_url:
+		return []
+
+	LOGIN_URL = stock_settings.login_url
+	API_URL = stock_settings.api_url
+	HEADERS = {"Authorization": f"Basic {stock_settings.token}"}
 	LOGIN_BODY = {
-		"client_id": 11,
-		"email": "Diamo@erp.com",
-		"password": "Diamo135!"
+		"client_id": stock_settings.client_id,
+		"email": stock_settings.email,
+		"password": stock_settings.password
 	}
 
 	login = requests.post(LOGIN_URL, headers=HEADERS, data=LOGIN_BODY)
