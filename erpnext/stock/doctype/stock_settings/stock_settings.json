@@ -47,7 +47,15 @@
   "stock_frozen_upto_days",
   "column_break_26",
   "role_allowed_to_create_edit_back_dated_transactions",
-  "stock_auth_role"
+  "stock_auth_role",
+  "acceso_nitro_section",
+  "login_url",
+  "api_url",
+  "token",
+  "column_break_48",
+  "client_id",
+  "email",
+  "password"
  ],
  "fields": [
   {
@@ -298,6 +306,45 @@
    "fieldname": "update_existing_price_list_rate",
    "fieldtype": "Check",
    "label": "Update Existing Price List Rate"
+  },
+  {
+   "fieldname": "acceso_nitro_section",
+   "fieldtype": "Section Break",
+   "label": "API atributos de producto"
+  },
+  {
+   "fieldname": "login_url",
+   "fieldtype": "Data",
+   "label": "Login url"
+  },
+  {
+   "fieldname": "api_url",
+   "fieldtype": "Data",
+   "label": "API url"
+  },
+  {
+   "fieldname": "token",
+   "fieldtype": "Data",
+   "label": "Token"
+  },
+  {
+   "fieldname": "column_break_48",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "client_id",
+   "fieldtype": "Data",
+   "label": "Client ID"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email"
+  },
+  {
+   "fieldname": "password",
+   "fieldtype": "Data",
+   "label": "Password"
   }
  ],
  "icon": "icon-cog",
@@ -305,7 +352,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2022-08-16 12:40:20.816809",
+ "modified": "2023-02-08 10:00:03.954208",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Stock Settings",
