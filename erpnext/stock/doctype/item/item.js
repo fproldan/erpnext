@@ -10,6 +10,8 @@ frappe.ui.form.on("Item", {
 		frm.add_fetch('attribute', 'to_range', 'to_range');
 		frm.add_fetch('attribute', 'increment', 'increment');
 		frm.add_fetch('tax_type', 'tax_rate', 'tax_rate');
+
+		set_jph_attributes_values(frm);
 	},
 	onload: function(frm) {
 		erpnext.item.setup_queries(frm);
@@ -145,6 +147,7 @@ frappe.ui.form.on("Item", {
 		});
 
 		frm.toggle_reqd('customer', frm.doc.is_customer_provided_item ? 1:0);
+
 	},
 
 	validate: function(frm){
@@ -206,6 +209,7 @@ frappe.ui.form.on("Item", {
 	has_variants: function(frm) {
 		erpnext.item.toggle_attributes(frm);
 	}
+
 });
 
 frappe.ui.form.on('Item Reorder', {
@@ -798,3 +802,28 @@ frappe.ui.form.on("UOM Conversion Detail", {
 		}
 	}
 });
+
+
+function set_jph_attributes_values(frm) {
+	let attributes = ['familia_id', 'rubro_id', 'sub_rubro_id', 'articulo_id', 'tipo_id', 'marca_id', 'color_id', 'talle_id', 'reflectivo']
+
+	$(attributes).each(function(index) {
+		var fieldname = attributes[index];
+
+		if (!frm.get_field(fieldname).value) {
+			frappe.call({
+				method: "erpnext.stock.doctype.item.item.get_jph_attibute",
+				args: {
+					"attribute_id": fieldname,
+				},
+				callback: function(r) {
+					if (!r.exc && r.message) {
+						frm.set_df_property(fieldname, "options", r.message);
+						frm.refresh_field(fieldname);
+					}
+				}
+			});
+		}
+	});
+}
+
