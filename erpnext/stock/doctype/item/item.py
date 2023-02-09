@@ -1049,3 +1049,47 @@ def validate_item_default_company_links(item_defaults: List[ItemDefault]) -> Non
 							frappe.bold(item_default.company),
 							frappe.bold(frappe.unscrub(field))
 						), title=_("Invalid Item Defaults"))
+
+
+@frappe.whitelist()
+def get_jph_attibute(attribute_id):
+	import requests
+
+	stock_settings = frappe.get_doc('Stock Settings')
+
+	if not stock_settings.login_url:
+		return []
+
+	HEADERS = {"Authorization": f"Basic {stock_settings.token}"}
+	LOGIN_BODY = {
+		"client_id": stock_settings.client_id,
+		"email": stock_settings.email,
+		"password": stock_settings.password
+	}
+
+	login = requests.post(stock_settings.login_url, headers=HEADERS, data=LOGIN_BODY)
+
+	if login.status_code != 200:
+		return []
+
+	login_data = login.json()
+
+	ATTRIBUTES = {
+		'familia_id': 1,
+		'rubro_id': 2,
+		'sub_rubro_id': 3,
+		'articulo_id': 4, 
+		'tipo_id': 5,
+		'marca_id': 6,
+		'color_id': 7,
+		'talle_id': 8,
+		'reflectivo': 9,
+	}
+
+	HEADERS['token'] = login_data['token']
+	data = requests.get(stock_settings.api_url + f'?id_tipo={ATTRIBUTES[attribute_id]}', headers=HEADERS)
+
+	if data.status_code != 200:
+		return []
+
+	return [d['nombre'] for d in data.json()]
