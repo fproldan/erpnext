@@ -460,6 +460,43 @@ def make_purchase_receipt(source_name, target_doc=None, args=None):
 	return doc
 
 @frappe.whitelist()
+def create_purchase_invoices(names):
+	names = json.loads(names)
+
+	purchase_orders = [frappe.get_doc("Purchase Order", name) for name in names]
+	suppliers = [po.supplier for po in purchase_orders]
+	per_billed = [po.per_billed for po in purchase_orders]
+
+	billed = []
+	not_submited = []
+	errors = ''
+
+	if len(list(set(suppliers))) > 1:
+		errors += 'Las Ordenes de Compra deben pertenecer al mismo proveedor<br>'
+
+	for po in purchase_orders:
+		if flt(po.per_billed >= 100):
+			billed.append(po.name)
+
+		if po.docstatus != 1:
+			not_submited.append(po.name)
+
+	if not_submited:
+		pos_not_submited = ', '.join(not_submited)
+		errors += f'Las Ordenes de Compra {pos_not_submited} no estan validadas<br>'
+	
+
+	if billed:
+		pos_billed = ', '.join(billed)
+		errors += f'Las Ordenes de Compra {pos_billed} ya estan facturadas'
+
+	if errors:
+		frappe.throw(errors)
+
+	frappe.msgprint('TODO CREAR FACTURA DE COMPRA')
+
+
+@frappe.whitelist()
 def make_purchase_invoice(source_name, target_doc=None):
 	return get_mapped_purchase_invoice(source_name, target_doc)
 
