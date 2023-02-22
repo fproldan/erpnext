@@ -464,15 +464,23 @@ def create_purchase_invoices(names):
 	names = json.loads(names)
 
 	purchase_orders = [frappe.get_doc("Purchase Order", name) for name in names]
+
 	suppliers = [po.supplier for po in purchase_orders]
 	per_billed = [po.per_billed for po in purchase_orders]
+	companies = [po.company for po in purchase_orders]
 
 	billed = []
 	not_submited = []
+	status_close = []
+	status_on_hold = []
+	status_pendiente = []
 	errors = ''
 
 	if len(list(set(suppliers))) > 1:
 		errors += 'Las Ordenes de Compra deben pertenecer al mismo proveedor<br>'
+
+	if len(list(set(companies))) > 1:
+		errors += 'Las Ordenes de Compra deben pertenecer a la misma compañia<br>'
 
 	for po in purchase_orders:
 		if flt(po.per_billed >= 100):
@@ -481,10 +489,30 @@ def create_purchase_invoices(names):
 		if po.docstatus != 1:
 			not_submited.append(po.name)
 
+		if po.status in ["Closed"]:
+			status_close.append(po.name)
+
+		if po.status in ["On Hold"]:
+			status_on_hold.append(po.name)
+
+		if po.status in ["Pendiente de Confirmacion"]:
+			status_pendiente.append(po.name)
+
 	if not_submited:
 		pos_not_submited = ', '.join(not_submited)
 		errors += f'Las Ordenes de Compra {pos_not_submited} no estan validadas<br>'
 	
+	if status_close:
+		pos_status_close = ', '.join(status_close)
+		errors += f'Las Ordenes de Compra {pos_status_close} estan cerradas<br>'
+
+	if status_on_hold:
+		pos_status_on_hold = ', '.join(status_on_hold)
+		errors += f'Las Ordenes de Compra {pos_status_on_hold} estan en espera<br>'
+
+	if status_pendiente:
+		pos_status_pendiente = ', '.join(status_pendiente)
+		errors += f'Las Ordenes de Compra {pos_status_pendiente} estan pendientes de confirmación<br>'
 
 	if billed:
 		pos_billed = ', '.join(billed)
@@ -493,7 +521,14 @@ def create_purchase_invoices(names):
 	if errors:
 		frappe.throw(errors)
 
-	frappe.msgprint('TODO CREAR FACTURA DE COMPRA')
+	purchase_invoice = get_mapped_purchase_invoice(purchase_orders[0].name, None)
+
+	for po in purchase_orders[1:]:
+		purchase_invoice = get_mapped_purchase_invoice(po.name, purchase_invoice)
+
+	purchase_invoice.save()
+	return purchase_invoice
+
 
 
 @frappe.whitelist()
