@@ -39,6 +39,7 @@ class SellingController(StockController):
 		self.set_customer_address()
 		self.validate_for_duplicate_items()
 		self.validate_target_warehouse()
+		self.validate_payment_schedule()
 
 	def set_missing_values(self, for_validate=False):
 
@@ -569,6 +570,16 @@ class SellingController(StockController):
 		# validate items to see if they have is_sales_item enabled
 		from erpnext.controllers.buying_controller import validate_item_type
 		validate_item_type(self, "is_sales_item", "sales")
+
+	def validate_payment_schedule(self):
+		if getattr(self, 'payment_schedule'):
+			total_portion = 0
+			for term in self.payment_schedule:
+				total_portion += flt(term.get('invoice_portion', 0))
+
+			if flt(total_portion, 2) != 100.00:
+				frappe.msgprint(_('Combined invoice portion must equal 100%'), raise_exception=1, indicator='red')
+
 
 def set_default_income_account_for_item(obj):
 	for d in obj.get("items"):
