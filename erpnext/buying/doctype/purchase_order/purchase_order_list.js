@@ -32,5 +32,20 @@ frappe.listview_settings['Purchase Order'] = {
 		listview.page.add_menu_item(__("Re-open"), function () {
 			listview.call_for_selected_items(method, { "status": "Submitted" });
 		});
+
+		listview.page.add_menu_item(__("Crear Factura de Compra"), function () {
+			var args = {}
+			args.names = listview.get_checked_items(true);
+			frappe.call({
+				method: "erpnext.buying.doctype.purchase_order.purchase_order.create_purchase_invoices",
+				args: args,
+				freeze: true,
+				callback: (r) => {
+					if (!r.exc) {
+						frappe.set_route("Form", r.message.doctype, r.message.name);
+					}
+				},
+			});
+		});
 	}
 };
