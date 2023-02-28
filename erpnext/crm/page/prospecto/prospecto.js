@@ -4,7 +4,6 @@ frappe.pages['prospecto'].on_page_load = function(wrapper) {
 		title: 'Prospecto',
 		single_column: true
 	});
-
 	new erpnext.Prospecto(page);
 }
 
@@ -39,7 +38,6 @@ erpnext.Prospecto = class Prospecto {
 	fetch_and_render() {
 		let values = this.form.get_values();
 		
-		// set working state
 		this.form.get_field('preview').html(`
 			<h5 class="text-muted margin-top">
 				${__("Fetching...")}
@@ -117,7 +115,6 @@ erpnext.Prospecto = class Prospecto {
 					me.fetch_and_render();
 				}, __('Tarea'), 'primary');
 			}
-
 		});
 	}
 
@@ -129,10 +126,7 @@ erpnext.Prospecto = class Prospecto {
 		return frappe.call({
 			type: "GET",
 			method: "erpnext.crm.utils.crear_entidad",
-			args: {
-				"doctype": doctype,
-				"tax_id": tax_id,
-			},
+			args: {"doctype": doctype, "tax_id": tax_id,},
 			freeze: true,
 			callback: function(r) {
 				if(!r.exc) {
@@ -246,7 +240,7 @@ erpnext.Prospecto = class Prospecto {
 				<div class="row">
                 	<div class="col-lg-12 d-flex align-items-stretch">
                     	<div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
-                    		<h5 class="border-bottom pb-2">Cliente</h5>
+                    		<h5 class="border-bottom pb-2">Contacto</h5>
 							<div>
 								<table class="table table-bordered">
 									<tr>
@@ -262,10 +256,10 @@ erpnext.Prospecto = class Prospecto {
 									<tr>
 										<td>${cuit_values['customer']['customer_name']}</td>
 										<td>${cuit_values['customer']['name']}</td>
-										<td><b>TODO</b></td>
-										<td><b>TODO</b></td>
+										<td><b>-</b></td>
+										<td><b>-</b></td>
 										<td>${cuit_values['customer']['contact']['contact_person']}</td>
-										<td><b>TODO</b></td>
+										<td><b>-</b></td>
 										<td>${cuit_values['customer']['contact']['contact_mobile']}</td>
 										<td>${cuit_values['customer']['contact']['contact_email']}</td>
 									</tr>
@@ -288,7 +282,7 @@ erpnext.Prospecto = class Prospecto {
 			`
 		}
 
-		if (true) { // TODO relations
+		if (false) { // TODO relations
 			relations_html = `
 				<div class="row">
                 	<div class="col-lg-12 d-flex align-items-stretch">
@@ -405,7 +399,6 @@ erpnext.Prospecto = class Prospecto {
 					lead_events_html = '';
 					
 				}
-				
 			}
 		} else {
 
@@ -435,14 +428,12 @@ erpnext.Prospecto = class Prospecto {
 				lead_html = ''
 				lead_events_html = ''
 			}
-			
 		}
 
 		if (cuit_values['quotations'] && me.se_puede_mostrar(cuit_values)) {
 			let q_html = ``;
 
 			for (let i = 0; i < cuit_values['quotations'].length; i++) {
-
 				q_html += `
 					<tr>
 						<td>${cuit_values['quotations'][i]['name']}</td>
@@ -451,8 +442,8 @@ erpnext.Prospecto = class Prospecto {
 						<td>${cuit_values['quotations'][i]['contact']['contact_mobile']}</td>
 						<td>${cuit_values['quotations'][i]['contact']['contact_email']}</td>
 						<td>${cuit_values['quotations'][i]['assign']}</td>
-						<td><b>TODO</b></td>
-						<td><b>TODO</b></td>
+						<td><b>-</b></td>
+						<td><b>-</b></td>
 					</tr>
 				`
 			}
@@ -496,7 +487,6 @@ erpnext.Prospecto = class Prospecto {
 			} else {
 				quotation_html = '';
 			}
-			
 		}
 
 		let html = `
@@ -507,8 +497,6 @@ erpnext.Prospecto = class Prospecto {
 			${lead_html}
 			${lead_events_html}
 		`;
-
 		this.form.get_field('preview').html(html);
 	}
-	
 };
