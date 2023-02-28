@@ -32,6 +32,7 @@ def get_cuit(tax_id):
 	from frappe.desk.form.load import get_communication_data
 	from erpnext.accounts.party import get_default_contact
 
+	tax_id = tax_id.strip()
 	customer = (frappe.db.get_all('Customer', {'tax_id': tax_id}) or [{}])[0]
 	
 	customer_contact_details = {

@@ -67,10 +67,13 @@ erpnext.Prospecto = class Prospecto {
 			}, __('Acciones'));
 
 			this.page.set_inner_btn_group_as_primary(__('Acciones'));
-			this.page.set_inner_btn_group_as_primary(__('Tarea'));
+
+			if (cuit_values['lead'] && me.se_puede_mostrar(cuit_values)) {
+				this.page.set_inner_btn_group_as_primary(__('Tarea'));
+			}
 
 			if (!cuit_values['customer']) {
-				this.page.add_inner_button(__('Crear cliente'), function() {
+				this.page.add_inner_button(__('Crear prospecto'), function() {
 					me.crear_cliente(cuit_values);
 				}, __('Acciones'));
 			}
@@ -99,7 +102,7 @@ erpnext.Prospecto = class Prospecto {
 				}, __('Acciones'));
 			}
 
-			if (me.se_puede_mostrar(cuit_values)) {
+			if (cuit_values['lead'] && me.se_puede_mostrar(cuit_values)) {
 				let create_event = () => {
 					const args = {
 						doc: cuit_values['lead']['base_name'],
@@ -216,6 +219,7 @@ erpnext.Prospecto = class Prospecto {
 		let lead_html = '';
 		let quotation_html = '';
 		let lead_events_html = '';
+		let relations_html = '';
 		let estado_cuenta = `
 		 	<div class="row">
                 <div class="col-lg-4 d-flex align-items-stretch">
@@ -230,10 +234,9 @@ erpnext.Prospecto = class Prospecto {
                         <h4 class="text-center text-muted" style="margin-bottom: 0px;">${cuit_values['last_nosis']}</h4>
                     </div>
                 </div>
-                <div class="col-lg-4 d-flex align-items-stretch">
+                <div class="col-lg-2 d-flex align-items-stretch">
                     <div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
-                        <h5 class="border-bottom pb-2">Evidencia objetiva</h5>
-                        <h4 class="text-center text-muted" style="margin-bottom: 0px;">-</h4>
+                        <img src="${cuit_values['image']}" class="img-fluid">
                     </div>
                 </div>
             </div>
@@ -241,7 +244,7 @@ erpnext.Prospecto = class Prospecto {
 		if (cuit_values['customer']) {
 			customer_html = `
 				<div class="row">
-                	<div class="col-lg-9 d-flex align-items-stretch">
+                	<div class="col-lg-12 d-flex align-items-stretch">
                     	<div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
                     		<h5 class="border-bottom pb-2">Cliente</h5>
 							<div>
@@ -249,14 +252,20 @@ erpnext.Prospecto = class Prospecto {
 									<tr>
 										<th>Razon Social</th>
 										<th>Cliente</th>
+										<th>Unidad de Negocio</th>
+										<th>Tipo de Servicio</th>
 										<th>Nombre Contacto</th>
+										<th>Domicilio</th>
 										<th>Celular Contacto</th>
 										<th>Mail Contacto</th>
 									</tr>
 									<tr>
 										<td>${cuit_values['customer']['customer_name']}</td>
 										<td>${cuit_values['customer']['name']}</td>
+										<td><b>TODO</b></td>
+										<td><b>TODO</b></td>
 										<td>${cuit_values['customer']['contact']['contact_person']}</td>
+										<td><b>TODO</b></td>
 										<td>${cuit_values['customer']['contact']['contact_mobile']}</td>
 										<td>${cuit_values['customer']['contact']['contact_email']}</td>
 									</tr>
@@ -264,11 +273,6 @@ erpnext.Prospecto = class Prospecto {
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-3 d-flex align-items-stretch">
-	                    <div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
-	                        <img src="${cuit_values['image']}" class="img-fluid">
-	                    </div>
-	                </div>
 				</div>
 			`;
 		} else {
@@ -283,6 +287,34 @@ erpnext.Prospecto = class Prospecto {
 				</div>
 			`
 		}
+
+		if (true) { // TODO relations
+			relations_html = `
+				<div class="row">
+                	<div class="col-lg-12 d-flex align-items-stretch">
+                    	<div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
+                    		<h5 class="border-bottom pb-2">Relaciones</h5>
+							<div>
+								<table class="table table-bordered">
+									<tr>
+										<th></th>
+										<th></th>
+										<th></th>
+										<th></th>
+									</tr>
+									<tr>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			`;
+		} 
 
 		if (cuit_values['lead'] && me.se_puede_mostrar(cuit_values)) {
 			lead_html = `
@@ -403,8 +435,6 @@ erpnext.Prospecto = class Prospecto {
 				lead_html = ''
 				lead_events_html = ''
 			}
-
-
 			
 		}
 
@@ -417,11 +447,12 @@ erpnext.Prospecto = class Prospecto {
 					<tr>
 						<td>${cuit_values['quotations'][i]['name']}</td>
 						<td>${cuit_values['quotations'][i]['transaction_date']}</td>
-						<td>${cuit_values['quotations'][i]['name']}</td>
 						<td>${cuit_values['quotations'][i]['contact']['contact_person']}</td>
 						<td>${cuit_values['quotations'][i]['contact']['contact_mobile']}</td>
 						<td>${cuit_values['quotations'][i]['contact']['contact_email']}</td>
 						<td>${cuit_values['quotations'][i]['assign']}</td>
+						<td><b>TODO</b></td>
+						<td><b>TODO</b></td>
 					</tr>
 				`
 			}
@@ -436,11 +467,12 @@ erpnext.Prospecto = class Prospecto {
 									<tr>
 										<th>Nombre</th>
 										<th>Fecha</th>
-										<th>Cotizacion</th>
 										<th>Nombre Contacto</th>
 										<th>Celular Contacto</th>
 										<th>Mail Contacto</th>
 										<th>Asignado</th>
+										<th>Domicilio de Explotación</th>
+										<th>Unidad de Negocio</th>
 									</tr>
 									${q_html}
 								</table>
@@ -470,9 +502,10 @@ erpnext.Prospecto = class Prospecto {
 		let html = `
 			${estado_cuenta}
 			${customer_html}
+			${relations_html}
+			${quotation_html}
 			${lead_html}
 			${lead_events_html}
-			${quotation_html}
 		`;
 
 		this.form.get_field('preview').html(html);
