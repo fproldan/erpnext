@@ -60,12 +60,15 @@ erpnext.Prospecto = class Prospecto {
 				console.log('')
 			}, {btn_class: 'btn-primary'});
 
-			this.page.add_inner_button(__('Verificar estado NOSIS'), function() {
-				me.verificar_nosis(cuit_values);
-			}, __('Acciones'));
-
-			this.page.set_inner_btn_group_as_primary(__('Acciones'));
-
+			if (cuit_values['estado_cuit'] != 'Inhabilitado') {
+				this.page.add_inner_button(__('Verificar estado NOSIS'), function() {
+					me.verificar_nosis(cuit_values);
+				}, __('Acciones'));
+			}
+			
+			if (cuit_values['estado_cuit'] != 'Inhabilitado') {
+				this.page.set_inner_btn_group_as_primary(__('Acciones'));
+			}
 			if (cuit_values['lead'] && me.se_puede_mostrar(cuit_values)) {
 				this.page.set_inner_btn_group_as_primary(__('Tarea'));
 			}
@@ -76,7 +79,7 @@ erpnext.Prospecto = class Prospecto {
 				}, __('Acciones'));
 			}
 
-			if (!cuit_values['lead']) {
+			if (!cuit_values['lead'] && cuit_values['estado_cuit'] != 'Inhabilitado') {
 				this.page.add_inner_button(__('Crear iniciativa'), function() {
 					me.crear_iniciativa(cuit_values);
 				}, __('Acciones'));
@@ -88,7 +91,7 @@ erpnext.Prospecto = class Prospecto {
 				}, __('Acciones'));
 			}
 
-			if (cuit_values['customer'] && me.se_puede_mostrar(cuit_values)) {
+			if (cuit_values['customer'] && cuit_values['estado_cuit'] != 'Inhabilitado' && me.se_puede_mostrar(cuit_values)) {
 				this.page.add_inner_button(__('Crear cotización desde cliente'), function() {
 					me.crear_cotizacion_cliente(cuit_values);
 				}, __('Acciones'));
