@@ -57,6 +57,8 @@
 		<span class="indicator-pill {{ doc.indicator_color or ("blue" if doc.docstatus==1 else "darkgrey") }}">
 			{% if doc.doctype == "Quotation" and not doc.docstatus %}
 				{{ _("Pending") }}
+			{% elif doc.doctype == 'Purchase Order' and doc.aprobado_por_proveedor == 1 and doc.status not in ['Completed', 'Delivered', 'Cancelled', 'On Hold', 'Closed', 'Pendiente de Confirmacion'] %}
+				{{ "Respuesta Enviada" }}
 			{% else %}
 				{{ _(doc.get('indicator_title')) or _(doc.status) or _("Submitted") }}
 			{% endif %}
