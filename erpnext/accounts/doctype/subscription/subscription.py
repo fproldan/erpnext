@@ -317,7 +317,7 @@ class Subscription(Document):
 		"""
 
 		# No facturar si ya termino la suscripcion
-		if getdate() > self.end_date:
+		if self.end_date and getdate() > getdate(self.end_date):
 			return
 
 		doctype = 'Sales Invoice' if self.party_type == 'Customer' else 'Purchase Invoice'
