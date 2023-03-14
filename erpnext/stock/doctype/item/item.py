@@ -1052,7 +1052,7 @@ def validate_item_default_company_links(item_defaults: List[ItemDefault]) -> Non
 
 
 @frappe.whitelist()
-def get_jph_attibute(attribute_id):
+def get_jph_login_token_hierarchy():
 	import requests
 
 	stock_settings = frappe.get_doc('Stock Settings')
@@ -1072,22 +1072,81 @@ def get_jph_attibute(attribute_id):
 	if login.status_code != 200:
 		return []
 
-	login_data = login.json()
+	token = login.json()['token']
 
-	ATTRIBUTES = {
-		'familia_id': 1,
-		'rubro_id': 2,
-		'sub_rubro_id': 3,
-		'articulo_id': 4, 
-		'tipo_id': 5,
-		'marca_id': 6,
-		'color_id': 7,
-		'talle_id': 8,
-		'reflectivo': 9,
-	}
+	hierarchy = get_jph_hierarchy(token)
 
-	HEADERS['token'] = login_data['token']
-	data = requests.get(stock_settings.api_url + f'?id_tipo={ATTRIBUTES[attribute_id]}', headers=HEADERS)
+	return token, hierarchy
+
+def get_jph_hierarchy(token):
+	import requests
+
+	stock_settings = frappe.get_doc('Stock Settings')
+	HEADERS = {"Authorization": f"Basic {stock_settings.token}", "token": token}
+
+	data = requests.get(stock_settings.api_tipo_articulo_url, headers=HEADERS)
+
+	tipos_articulo = data.json()
+
+	# if tipos_articulo.get('estado') != 1:
+	# 	return []
+
+	tipos_articulo = sorted(tipos_articulo['resultados'], key=lambda d: d['prioridad']) 
+
+	tipos_articulo_dict = {}
+	for ta in tipos_articulo:
+		tipos_articulo_dict[ta['idNitro4']] = ta
+
+	ATRIBUTOS = {}
+
+	for tipo_articulo in tipos_articulo:
+		tipo_articulo['tipo'] = tipo_articulo['tipo'].lower() + '_id'
+		ATRIBUTOS[tipo_articulo['tipo']] = {'relacion': tipo_articulo['relacion'], 'id': tipo_articulo['idNitro4']}
+
+	for tipo_articulo in tipos_articulo:
+		if ATRIBUTOS[tipo_articulo['tipo']]['relacion']:
+			ATRIBUTOS[tipo_articulo['tipo']]['relacion'] = tipos_articulo_dict[ATRIBUTOS[tipo_articulo['tipo']]['relacion']]['tipo']
+		else:
+			ATRIBUTOS[tipo_articulo['tipo']]['relacion'] = None
+
+	"""
+	{
+		'familia_id': {'relacion': None, 'id': 1},
+		'rubro_id': {'relacion': 'familia_id', 'id': 2},
+		'sub_rubro_id': {'relacion': None, 'id': 3},
+		'articulo_id': {'relacion': 'rubro_id', 'id': 4},
+		'tipo_id': {'relacion': 'articulo_id', 'id': 5},
+		'marca_id': {'relacion': 'rubro_id', 'id': 6},
+		'color_id': {'relacion': None, 'id': 7},
+		'talle_id': {'relacion': 'articulo_id', 'id': 8},
+		'reflectivo_id': {'relacion': None, 'id': 9}}
+	"""
+	return ATRIBUTOS
+
+@frappe.whitelist()
+def get_jph_attibute(attribute_id, token):
+	import requests
+
+	stock_settings = frappe.get_doc('Stock Settings')
+	HEADERS = {"Authorization": f"Basic {stock_settings.token}", "token": token}
+
+	data = requests.get(stock_settings.api_tipo_articulo_url, headers=HEADERS)
+
+	tipos_articulo = data.json()
+
+	if tipos_articulo.get('estado') != 1:
+		return []
+
+	tipos_articulo = sorted(tipos_articulo['resultados'], key=lambda d: d['prioridad']) 
+
+	for tipo_articulo in tipos_articulo:
+		tipo_articulo['tipo'] = tipo_articulo['tipo'].lower() + '_id'
+
+			
+	print(tipos_articulo)
+
+
+	data = requests.get(stock_settings.api_tipo_articulo_url + f'?id_tipo={ATTRIBUTES[attribute_id]}', headers=HEADERS)
 
 	if data.status_code != 200:
 		return []

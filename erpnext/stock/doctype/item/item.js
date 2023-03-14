@@ -3,6 +3,8 @@
 
 frappe.provide("erpnext.item");
 
+var atributos = null;
+
 frappe.ui.form.on("Item", {
 	setup: function(frm) {
 		frm.add_fetch('attribute', 'numeric_values', 'numeric_values');
@@ -803,27 +805,48 @@ frappe.ui.form.on("UOM Conversion Detail", {
 	}
 });
 
-
 function set_jph_attributes_values(frm) {
-	let attributes = ['familia_id', 'rubro_id', 'sub_rubro_id', 'articulo_id', 'tipo_id', 'marca_id', 'color_id', 'talle_id', 'reflectivo']
+	let attributes = ['familia_id', 'rubro_id', 'sub_rubro_id', 'articulo_id', 'tipo_id', 'marca_id', 'color_id', 'talle_id', 'reflectivo_id']
+	var token = null;
 
-	$(attributes).each(function(index) {
-		var fieldname = attributes[index];
-
-		if (!frm.get_field(fieldname).value) {
-			frappe.call({
-				method: "erpnext.stock.doctype.item.item.get_jph_attibute",
-				args: {
-					"attribute_id": fieldname,
-				},
-				callback: function(r) {
-					if (!r.exc && r.message) {
-						frm.set_df_property(fieldname, "options", r.message);
-						frm.refresh_field(fieldname);
-					}
-				}
-			});
+	frappe.call({
+		method: "erpnext.stock.doctype.item.item.get_jph_login_token_hierarchy",
+		args: {},
+		async: false,
+		callback: function(r) {
+			if (!r.exc && r.message) {
+				token = r.message[0]
+				atributos = r.message[1];
+			}
 		}
 	});
+
+	if (!token) { return }
+
+	for (const [key, value] of Object.entries(atributos)) {
+		if (value['relacion'] && !frm.get_field(value['relacion']).value) {
+			frm.set_df_property(key, 'read_only', 1);
+		} else {
+			frm.set_df_property(key, 'read_only', 0);
+		} 
+	}
+	
+	// if (token) {
+	// 	$(attributes).each(function(index) {
+	// 		var fieldname = attributes[index];
+	// 		if (!frm.get_field(fieldname).value) {
+	// 			frappe.call({
+	// 				method: "erpnext.stock.doctype.item.item.get_jph_attibute",
+	// 				args: {"attribute_id": fieldname, "token": token},
+	// 				callback: function(r) {
+	// 					if (!r.exc && r.message) {
+	// 						frm.set_df_property(fieldname, "options", r.message);
+	// 						frm.refresh_field(fieldname);
+	// 					}
+	// 				}
+	// 			});
+	// 		}
+	// 	});
+	// }
 }
 
