@@ -210,7 +210,61 @@ frappe.ui.form.on("Item", {
 
 	has_variants: function(frm) {
 		erpnext.item.toggle_attributes(frm);
-	}
+	},
+
+	familia_id: function(frm) { 
+		if (frm.doc.familia_id) {
+			get_jph_children_attribute_values(frm, 'familia_id');
+		}
+	},
+
+	rubro_id: function(frm) { 
+		if (frm.doc.rubro_id) {
+			get_jph_children_attribute_values(frm, 'rubro_id');
+		}
+	},
+
+	sub_rubro_id: function(frm) { 
+		if (frm.doc.sub_rubro_id) {
+			get_jph_children_attribute_values(frm, 'sub_rubro_id');
+		}
+	},
+
+	articulo_id: function(frm) { 
+		if (frm.doc.articulo_id) {
+			get_jph_children_attribute_values(frm, 'articulo_id');
+		}
+	},
+
+	tipo_id: function(frm) { 
+		if (frm.doc.tipo_id) {
+			get_jph_children_attribute_values(frm, 'tipo_id');
+		}
+	},
+
+	marca_id: function(frm) { 
+		if (frm.doc.marca_id) {
+			get_jph_children_attribute_values(frm, 'marca_id');
+		}
+	},
+
+	color_id: function(frm) { 
+		if (frm.doc.color_id) {
+			get_jph_children_attribute_values(frm, 'color_id');
+		}
+	},
+
+	talle_id: function(frm) { 
+		if (frm.doc.talle_id) {
+			get_jph_children_attribute_values(frm, 'talle_id');
+		}
+	},
+
+	reflectivo_id: function(frm) { 
+		if (frm.doc.reflectivo_id) {
+			get_jph_children_attribute_values(frm, 'reflectivo_id');
+		}
+	},
 
 });
 
@@ -783,6 +837,7 @@ $.extend(erpnext.item, {
 		}
 		frm.layout.refresh_sections();
 	}
+
 });
 
 frappe.ui.form.on("UOM Conversion Detail", {
@@ -805,6 +860,30 @@ frappe.ui.form.on("UOM Conversion Detail", {
 	}
 });
 
+
+function get_jph_children_attribute_values(frm, field) {
+	frappe.call({
+		method: "erpnext.stock.doctype.item.item.get_jph_children_attribute_values",
+		args: {'field': field, 'value': frm.get_field(field).value},
+		async: false,
+		callback: function(r) {
+			if (!r.exc && r.message) {
+				$(r.message).each(function(index) {
+					let child_fieldname = r.message[index][0];
+					let child_values = r.message[index][1];
+					if (child_fieldname && child_values) {
+						frm.get_field(child_fieldname).value = null; // TODO al cambiar deberia eliminar lo seleccionado en child
+						frm.refresh_field(child_fieldname);
+						frm.set_df_property(child_fieldname, "options", child_values);
+						frm.set_df_property(child_fieldname, "read_only", 0);
+						frm.refresh_field(child_fieldname);
+					}
+				});
+			}
+		}
+	});
+}
+
 function set_jph_attributes_values(frm) {
 	let attributes = ['familia_id', 'rubro_id', 'sub_rubro_id', 'articulo_id', 'tipo_id', 'marca_id', 'color_id', 'talle_id', 'reflectivo_id']
 	var token = null;
@@ -824,29 +903,22 @@ function set_jph_attributes_values(frm) {
 	if (!token) { return }
 
 	for (const [key, value] of Object.entries(atributos)) {
-		if (value['relacion'] && !frm.get_field(value['relacion']).value) {
-			frm.set_df_property(key, 'read_only', 1);
-		} else {
-			frm.set_df_property(key, 'read_only', 0);
-		} 
+		if (!value['relacion'] && !frm.get_field(key).value) {
+			frappe.call({
+				method: "erpnext.stock.doctype.item.item.get_jph_attibute",
+				args: {"tipo_id": value['id'], "valor_padre_id": null, "token": token},
+				callback: function(r) {
+					if (!r.exc && r.message) {
+						frm.set_df_property(key, "options", r.message);
+						frm.refresh_field(key);
+					}
+				}
+			});
+		}
+		if (value['relacion'] && !frm.get_field(key).value) {
+			frm.set_df_property(key, "read_only", 1);
+			frm.refresh_field(key);
+		}
 	}
-	
-	// if (token) {
-	// 	$(attributes).each(function(index) {
-	// 		var fieldname = attributes[index];
-	// 		if (!frm.get_field(fieldname).value) {
-	// 			frappe.call({
-	// 				method: "erpnext.stock.doctype.item.item.get_jph_attibute",
-	// 				args: {"attribute_id": fieldname, "token": token},
-	// 				callback: function(r) {
-	// 					if (!r.exc && r.message) {
-	// 						frm.set_df_property(fieldname, "options", r.message);
-	// 						frm.refresh_field(fieldname);
-	// 					}
-	// 				}
-	// 			});
-	// 		}
-	// 	});
-	// }
 }
 

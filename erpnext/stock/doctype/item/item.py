@@ -1053,6 +1053,11 @@ def validate_item_default_company_links(item_defaults: List[ItemDefault]) -> Non
 
 @frappe.whitelist()
 def get_jph_login_token_hierarchy():
+	token = get_jph_token()
+	hierarchy = get_jph_hierarchy(token)
+	return token, hierarchy
+
+def get_jph_token():
 	import requests
 
 	stock_settings = frappe.get_doc('Stock Settings')
@@ -1073,10 +1078,7 @@ def get_jph_login_token_hierarchy():
 		return []
 
 	token = login.json()['token']
-
-	hierarchy = get_jph_hierarchy(token)
-
-	return token, hierarchy
+	return token
 
 def get_jph_hierarchy(token):
 	import requests
@@ -1088,8 +1090,8 @@ def get_jph_hierarchy(token):
 
 	tipos_articulo = data.json()
 
-	# if tipos_articulo.get('estado') != 1:
-	# 	return []
+	if tipos_articulo.get('estado') != 1:
+		return []
 
 	tipos_articulo = sorted(tipos_articulo['resultados'], key=lambda d: d['prioridad']) 
 
@@ -1124,31 +1126,52 @@ def get_jph_hierarchy(token):
 	return ATRIBUTOS
 
 @frappe.whitelist()
-def get_jph_attibute(attribute_id, token):
+def get_jph_attibute(tipo_id, valor_padre_id, token):
 	import requests
 
 	stock_settings = frappe.get_doc('Stock Settings')
 	HEADERS = {"Authorization": f"Basic {stock_settings.token}", "token": token}
 
-	data = requests.get(stock_settings.api_tipo_articulo_url, headers=HEADERS)
-
-	tipos_articulo = data.json()
-
-	if tipos_articulo.get('estado') != 1:
-		return []
-
-	tipos_articulo = sorted(tipos_articulo['resultados'], key=lambda d: d['prioridad']) 
-
-	for tipo_articulo in tipos_articulo:
-		tipo_articulo['tipo'] = tipo_articulo['tipo'].lower() + '_id'
-
-			
-	print(tipos_articulo)
-
-
-	data = requests.get(stock_settings.api_tipo_articulo_url + f'?id_tipo={ATTRIBUTES[attribute_id]}', headers=HEADERS)
+	data = requests.post(stock_settings.api_valores_articulo_url, data={'tipo_id': tipo_id, 'valor_padre_id': valor_padre_id}, headers=HEADERS)
 
 	if data.status_code != 200:
 		return []
 
-	return [d['nombre'] for d in data.json()]
+	return [d['valor'] for d in data.json()['resultados']]
+
+
+@frappe.whitelist()
+def get_jph_children_attribute_values(field, value):
+	import requests
+
+	token = get_jph_token()
+	hierarchy = get_jph_hierarchy(token)
+
+	# {
+	# 	'familia_id': {'relacion': None, 'id': 1},
+	# 	'rubro_id': {'relacion': 'familia_id', 'id': 2},
+	# 	'sub_rubro_id': {'relacion': None, 'id': 3},
+	# 	'articulo_id': {'relacion': 'rubro_id', 'id': 4},
+	# 	'tipo_id': {'relacion': 'articulo_id', 'id': 5},
+	# 	'marca_id': {'relacion': 'rubro_id', 'id': 6},
+	# 	'color_id': {'relacion': None, 'id': 7},
+	# 	'talle_id': {'relacion': 'articulo_id', 'id': 8},
+	# 	'reflectivo_id': {'relacion': None, 'id': 9}
+	# }
+
+	result = []
+	for key, value in hierarchy.items():
+		if value['relacion'] == field:
+			child_field = key
+			child_id = value['id']
+	
+			stock_settings = frappe.get_doc('Stock Settings')
+			HEADERS = {"Authorization": f"Basic {stock_settings.token}", "token": token}
+
+			data = requests.post(stock_settings.api_valores_articulo_url, data={'tipo_id': child_id, 'valor_padre_id': value}, headers=HEADERS)
+
+			if data.status_code != 200:
+				continue
+			result.append([child_field, [d['valor'] for d in data.json()['resultados']]])
+
+	return result
