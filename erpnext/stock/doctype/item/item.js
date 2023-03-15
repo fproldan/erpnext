@@ -12,9 +12,9 @@ frappe.ui.form.on("Item", {
 		frm.add_fetch('attribute', 'to_range', 'to_range');
 		frm.add_fetch('attribute', 'increment', 'increment');
 		frm.add_fetch('tax_type', 'tax_rate', 'tax_rate');
-
 		set_jph_attributes_values(frm);
 	},
+
 	onload: function(frm) {
 		erpnext.item.setup_queries(frm);
 		if (frm.doc.variant_of){
@@ -27,7 +27,7 @@ frappe.ui.form.on("Item", {
 	},
 
 	refresh: function(frm) {
-
+		set_jph_attributes_values_refresh(frm);
 		if (frm.doc.is_stock_item) {
 			frm.add_custom_button(__("Stock Balance"), function() {
 				frappe.route_options = {
@@ -869,6 +869,31 @@ function get_jph_children_attribute_values(frm, field) {
 }
 
 
+function set_jph_attributes_values_refresh(frm) {
+	var token = null;
+	frappe.call({
+		method: "erpnext.stock.doctype.item.item.get_jph_login_token_hierarchy",
+		args: {},
+		async: false,
+		callback: function(r) {
+			if (!r.exc && r.message) {
+				token = r.message[0]
+				atributos = r.message[1];
+			}
+		}
+	});
+
+	if (!token) { return }
+	
+	for (const [key, value] of Object.entries(atributos)) {
+		
+		// Completa las opciones de atributos con dependencias y que la dependencia tiene valor
+		if (value['relacion'] && !frm.get_field(key).value && frm.get_field(value['relacion']).value) {
+			get_jph_children_attribute_values(frm, value['relacion']);
+		}
+	}
+}
+
 function set_jph_attributes_values(frm) {
 	var token = null;
 	frappe.call({
@@ -886,7 +911,6 @@ function set_jph_attributes_values(frm) {
 	if (!token) { return }
 	
 	for (const [key, value] of Object.entries(atributos)) {
-
 		// Completa los atributos sin dependencias si no hay valor elegido
 		if (!value['relacion'] && !frm.get_field(key).value) {
 			frappe.call({
