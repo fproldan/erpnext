@@ -3,8 +3,6 @@
 
 frappe.provide("erpnext.item");
 
-var atributos = null;
-
 frappe.ui.form.on("Item", {
 	setup: function(frm) {
 		frm.add_fetch('attribute', 'numeric_values', 'numeric_values');
