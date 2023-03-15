@@ -3,6 +3,7 @@
 
 import copy
 import json
+import requests
 from typing import List
 
 import frappe
@@ -1057,22 +1058,14 @@ def get_jph_login_token_hierarchy():
 	hierarchy = get_jph_hierarchy(token)
 	return token, hierarchy
 
+
 def get_jph_token():
-	import requests
-
 	stock_settings = frappe.get_doc('Stock Settings')
-
 	if not stock_settings.login_url:
 		return []
 
-	HEADERS = {"Authorization": f"Basic {stock_settings.token}"}
-	LOGIN_BODY = {
-		"client_id": stock_settings.client_id,
-		"email": stock_settings.email,
-		"password": stock_settings.password
-	}
-
-	login = requests.post(stock_settings.login_url, headers=HEADERS, data=LOGIN_BODY)
+	LOGIN_BODY = {"client_id": stock_settings.client_id, "email": stock_settings.email, "password": stock_settings.password}
+	login = requests.post(stock_settings.login_url, headers={"Authorization": f"Basic {stock_settings.token}"}, data=LOGIN_BODY)
 
 	if login.status_code != 200:
 		return []
@@ -1080,20 +1073,16 @@ def get_jph_token():
 	token = login.json()['token']
 	return token
 
+
 def get_jph_hierarchy(token):
-	import requests
-
 	stock_settings = frappe.get_doc('Stock Settings')
-	HEADERS = {"Authorization": f"Basic {stock_settings.token}", "token": token}
 
-	data = requests.get(stock_settings.api_tipo_articulo_url, headers=HEADERS)
+	data = requests.get(stock_settings.api_tipo_articulo_url, headers={"Authorization": f"Basic {stock_settings.token}", "token": token})
+	
+	if data.status_code != 200:
+		return {}
 
-	tipos_articulo = data.json()
-
-	if tipos_articulo.get('estado') != 1:
-		return []
-
-	tipos_articulo = sorted(tipos_articulo['resultados'], key=lambda d: d['prioridad']) 
+	tipos_articulo = sorted(data.json()['resultados'], key=lambda d: d['prioridad']) 
 
 	tipos_articulo_dict = {}
 	for ta in tipos_articulo:
@@ -1110,29 +1099,14 @@ def get_jph_hierarchy(token):
 			ATRIBUTOS[tipo_articulo['tipo']]['relacion'] = tipos_articulo_dict[ATRIBUTOS[tipo_articulo['tipo']]['relacion']]['tipo']
 		else:
 			ATRIBUTOS[tipo_articulo['tipo']]['relacion'] = None
-
-	"""
-	{
-		'familia_id': {'relacion': None, 'id': 1},
-		'rubro_id': {'relacion': 'familia_id', 'id': 2},
-		'sub_rubro_id': {'relacion': None, 'id': 3},
-		'articulo_id': {'relacion': 'rubro_id', 'id': 4},
-		'tipo_id': {'relacion': 'articulo_id', 'id': 5},
-		'marca_id': {'relacion': 'rubro_id', 'id': 6},
-		'color_id': {'relacion': None, 'id': 7},
-		'talle_id': {'relacion': 'articulo_id', 'id': 8},
-		'reflectivo_id': {'relacion': None, 'id': 9}}
-	"""
 	return ATRIBUTOS
+
 
 @frappe.whitelist()
 def get_jph_attibute(tipo_id, valor_padre_id, token):
-	import requests
-
 	stock_settings = frappe.get_doc('Stock Settings')
-	HEADERS = {"Authorization": f"Basic {stock_settings.token}", "token": token}
 
-	data = requests.post(stock_settings.api_valores_articulo_url, data={'tipo_id': tipo_id, 'valor_padre_id': valor_padre_id}, headers=HEADERS)
+	data = requests.post(stock_settings.api_valores_articulo_url, data={'tipo_id': tipo_id, 'valor_padre_id': valor_padre_id}, headers={"Authorization": f"Basic {stock_settings.token}", "token": token})
 
 	if data.status_code != 200:
 		return []
@@ -1141,37 +1115,29 @@ def get_jph_attibute(tipo_id, valor_padre_id, token):
 
 
 @frappe.whitelist()
-def get_jph_children_attribute_values(field, value):
-	import requests
-
+def get_jph_children_attribute_values(field, fieldvalue):
 	token = get_jph_token()
 	hierarchy = get_jph_hierarchy(token)
-
-	# {
-	# 	'familia_id': {'relacion': None, 'id': 1},
-	# 	'rubro_id': {'relacion': 'familia_id', 'id': 2},
-	# 	'sub_rubro_id': {'relacion': None, 'id': 3},
-	# 	'articulo_id': {'relacion': 'rubro_id', 'id': 4},
-	# 	'tipo_id': {'relacion': 'articulo_id', 'id': 5},
-	# 	'marca_id': {'relacion': 'rubro_id', 'id': 6},
-	# 	'color_id': {'relacion': None, 'id': 7},
-	# 	'talle_id': {'relacion': 'articulo_id', 'id': 8},
-	# 	'reflectivo_id': {'relacion': None, 'id': 9}
-	# }
-
+	stock_settings = frappe.get_doc('Stock Settings')
+	
 	result = []
+	
 	for key, value in hierarchy.items():
 		if value['relacion'] == field:
 			child_field = key
 			child_id = value['id']
-	
-			stock_settings = frappe.get_doc('Stock Settings')
-			HEADERS = {"Authorization": f"Basic {stock_settings.token}", "token": token}
 
-			data = requests.post(stock_settings.api_valores_articulo_url, data={'tipo_id': child_id, 'valor_padre_id': value}, headers=HEADERS)
+			if not fieldvalue:
+				result.append([child_field, []])
+				continue
+	
+			data = requests.post(stock_settings.api_valores_articulo_url, data={'tipo_id': child_id, 'valor_padre_id': fieldvalue}, headers={"Authorization": f"Basic {stock_settings.token}", "token": token})
 
 			if data.status_code != 200:
+				frappe.cache().delete_value("jph_atributos_token")
+				result.append([child_field, []])
 				continue
+
 			result.append([child_field, [d['valor'] for d in data.json()['resultados']]])
 
 	return result

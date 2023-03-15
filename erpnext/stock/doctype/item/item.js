@@ -27,6 +27,7 @@ frappe.ui.form.on("Item", {
 	},
 
 	refresh: function(frm) {
+
 		if (frm.doc.is_stock_item) {
 			frm.add_custom_button(__("Stock Balance"), function() {
 				frappe.route_options = {
@@ -213,57 +214,39 @@ frappe.ui.form.on("Item", {
 	},
 
 	familia_id: function(frm) { 
-		if (frm.doc.familia_id) {
-			get_jph_children_attribute_values(frm, 'familia_id');
-		}
+		get_jph_children_attribute_values(frm, 'familia_id');
 	},
 
 	rubro_id: function(frm) { 
-		if (frm.doc.rubro_id) {
-			get_jph_children_attribute_values(frm, 'rubro_id');
-		}
+		get_jph_children_attribute_values(frm, 'rubro_id');
 	},
 
 	sub_rubro_id: function(frm) { 
-		if (frm.doc.sub_rubro_id) {
-			get_jph_children_attribute_values(frm, 'sub_rubro_id');
-		}
+		get_jph_children_attribute_values(frm, 'sub_rubro_id');
 	},
 
 	articulo_id: function(frm) { 
-		if (frm.doc.articulo_id) {
-			get_jph_children_attribute_values(frm, 'articulo_id');
-		}
+		get_jph_children_attribute_values(frm, 'articulo_id');
 	},
 
 	tipo_id: function(frm) { 
-		if (frm.doc.tipo_id) {
-			get_jph_children_attribute_values(frm, 'tipo_id');
-		}
+		get_jph_children_attribute_values(frm, 'tipo_id');
 	},
 
 	marca_id: function(frm) { 
-		if (frm.doc.marca_id) {
-			get_jph_children_attribute_values(frm, 'marca_id');
-		}
+		get_jph_children_attribute_values(frm, 'marca_id');
 	},
 
 	color_id: function(frm) { 
-		if (frm.doc.color_id) {
-			get_jph_children_attribute_values(frm, 'color_id');
-		}
+		get_jph_children_attribute_values(frm, 'color_id');
 	},
 
 	talle_id: function(frm) { 
-		if (frm.doc.talle_id) {
-			get_jph_children_attribute_values(frm, 'talle_id');
-		}
+		get_jph_children_attribute_values(frm, 'talle_id');
 	},
 
 	reflectivo_id: function(frm) { 
-		if (frm.doc.reflectivo_id) {
-			get_jph_children_attribute_values(frm, 'reflectivo_id');
-		}
+		get_jph_children_attribute_values(frm, 'reflectivo_id');
 	},
 
 });
@@ -864,7 +847,7 @@ frappe.ui.form.on("UOM Conversion Detail", {
 function get_jph_children_attribute_values(frm, field) {
 	frappe.call({
 		method: "erpnext.stock.doctype.item.item.get_jph_children_attribute_values",
-		args: {'field': field, 'value': frm.get_field(field).value},
+		args: {'field': field, 'fieldvalue': frm.get_field(field).value},
 		async: false,
 		callback: function(r) {
 			if (!r.exc && r.message) {
@@ -872,7 +855,8 @@ function get_jph_children_attribute_values(frm, field) {
 					let child_fieldname = r.message[index][0];
 					let child_values = r.message[index][1];
 					if (child_fieldname && child_values) {
-						frm.get_field(child_fieldname).value = null; // TODO al cambiar deberia eliminar lo seleccionado en child
+						frm.set_value(child_fieldname, '');
+						frm.set_df_property(child_fieldname, "options", []);
 						frm.refresh_field(child_fieldname);
 						frm.set_df_property(child_fieldname, "options", child_values);
 						frm.set_df_property(child_fieldname, "read_only", 0);
@@ -884,10 +868,9 @@ function get_jph_children_attribute_values(frm, field) {
 	});
 }
 
-function set_jph_attributes_values(frm) {
-	let attributes = ['familia_id', 'rubro_id', 'sub_rubro_id', 'articulo_id', 'tipo_id', 'marca_id', 'color_id', 'talle_id', 'reflectivo_id']
-	var token = null;
 
+function set_jph_attributes_values(frm) {
+	var token = null;
 	frappe.call({
 		method: "erpnext.stock.doctype.item.item.get_jph_login_token_hierarchy",
 		args: {},
@@ -901,8 +884,10 @@ function set_jph_attributes_values(frm) {
 	});
 
 	if (!token) { return }
-
+	
 	for (const [key, value] of Object.entries(atributos)) {
+
+		// Completa los atributos sin dependencias si no hay valor elegido
 		if (!value['relacion'] && !frm.get_field(key).value) {
 			frappe.call({
 				method: "erpnext.stock.doctype.item.item.get_jph_attibute",
@@ -915,9 +900,10 @@ function set_jph_attributes_values(frm) {
 				}
 			});
 		}
-		if (value['relacion'] && !frm.get_field(key).value) {
-			frm.set_df_property(key, "read_only", 1);
-			frm.refresh_field(key);
+
+		// Completa las opciones de atributos con dependencias y que la dependencia tiene valor
+		if (value['relacion'] && !frm.get_field(key).value && frm.get_field(value['relacion']).value) {
+			get_jph_children_attribute_values(frm, value['relacion']);
 		}
 	}
 }
