@@ -3,6 +3,8 @@
 
 frappe.provide("erpnext.item");
 
+var atributos = null;
+
 frappe.ui.form.on("Item", {
 	setup: function(frm) {
 		frm.add_fetch('attribute', 'numeric_values', 'numeric_values');
@@ -10,9 +12,9 @@ frappe.ui.form.on("Item", {
 		frm.add_fetch('attribute', 'to_range', 'to_range');
 		frm.add_fetch('attribute', 'increment', 'increment');
 		frm.add_fetch('tax_type', 'tax_rate', 'tax_rate');
-
 		set_jph_attributes_values(frm);
 	},
+
 	onload: function(frm) {
 		erpnext.item.setup_queries(frm);
 		if (frm.doc.variant_of){
@@ -25,6 +27,7 @@ frappe.ui.form.on("Item", {
 	},
 
 	refresh: function(frm) {
+		set_jph_attributes_values_refresh(frm);
 		if (frm.doc.is_stock_item) {
 			frm.add_custom_button(__("Stock Balance"), function() {
 				frappe.route_options = {
@@ -208,7 +211,43 @@ frappe.ui.form.on("Item", {
 
 	has_variants: function(frm) {
 		erpnext.item.toggle_attributes(frm);
-	}
+	},
+
+	familia_id: function(frm) { 
+		get_jph_children_attribute_values(frm, 'familia_id');
+	},
+
+	rubro_id: function(frm) { 
+		get_jph_children_attribute_values(frm, 'rubro_id');
+	},
+
+	sub_rubro_id: function(frm) { 
+		get_jph_children_attribute_values(frm, 'sub_rubro_id');
+	},
+
+	articulo_id: function(frm) { 
+		get_jph_children_attribute_values(frm, 'articulo_id');
+	},
+
+	tipo_id: function(frm) { 
+		get_jph_children_attribute_values(frm, 'tipo_id');
+	},
+
+	marca_id: function(frm) { 
+		get_jph_children_attribute_values(frm, 'marca_id');
+	},
+
+	color_id: function(frm) { 
+		get_jph_children_attribute_values(frm, 'color_id');
+	},
+
+	talle_id: function(frm) { 
+		get_jph_children_attribute_values(frm, 'talle_id');
+	},
+
+	reflectivo_id: function(frm) { 
+		get_jph_children_attribute_values(frm, 'reflectivo_id');
+	},
 
 });
 
@@ -781,6 +820,7 @@ $.extend(erpnext.item, {
 		}
 		frm.layout.refresh_sections();
 	}
+
 });
 
 frappe.ui.form.on("UOM Conversion Detail", {
@@ -804,26 +844,91 @@ frappe.ui.form.on("UOM Conversion Detail", {
 });
 
 
+function get_jph_children_attribute_values(frm, field) {
+	frappe.call({
+		method: "erpnext.stock.doctype.item.item.get_jph_children_attribute_values",
+		args: {'field': field, 'fieldvalue': frm.get_field(field).value},
+		async: false,
+		callback: function(r) {
+			if (!r.exc && r.message) {
+				$(r.message).each(function(index) {
+					let child_fieldname = r.message[index][0];
+					let child_values = r.message[index][1];
+					if (child_fieldname && child_values) {
+						frm.set_value(child_fieldname, '');
+						frm.set_df_property(child_fieldname, "options", []);
+						frm.refresh_field(child_fieldname);
+						frm.set_df_property(child_fieldname, "options", child_values);
+						frm.set_df_property(child_fieldname, "read_only", 0);
+						frm.refresh_field(child_fieldname);
+					}
+				});
+			}
+		}
+	});
+}
+
+
+function set_jph_attributes_values_refresh(frm) {
+	var token = null;
+	frappe.call({
+		method: "erpnext.stock.doctype.item.item.get_jph_login_token_hierarchy",
+		args: {},
+		async: false,
+		callback: function(r) {
+			if (!r.exc && r.message) {
+				token = r.message[0]
+				atributos = r.message[1];
+			}
+		}
+	});
+
+	if (!token) { return }
+	
+	for (const [key, value] of Object.entries(atributos)) {
+		
+		// Completa las opciones de atributos con dependencias y que la dependencia tiene valor
+		if (value['relacion'] && !frm.get_field(key).value && frm.get_field(value['relacion']).value) {
+			get_jph_children_attribute_values(frm, value['relacion']);
+		}
+	}
+}
+
 function set_jph_attributes_values(frm) {
-	let attributes = ['familia_id', 'rubro_id', 'sub_rubro_id', 'articulo_id', 'tipo_id', 'marca_id', 'color_id', 'talle_id', 'reflectivo']
+	var token = null;
+	frappe.call({
+		method: "erpnext.stock.doctype.item.item.get_jph_login_token_hierarchy",
+		args: {},
+		async: false,
+		callback: function(r) {
+			if (!r.exc && r.message) {
+				token = r.message[0]
+				atributos = r.message[1];
+			}
+		}
+	});
 
-	$(attributes).each(function(index) {
-		var fieldname = attributes[index];
-
-		if (!frm.get_field(fieldname).value) {
+	if (!token) { return }
+	
+	for (const [key, value] of Object.entries(atributos)) {
+		// Completa los atributos sin dependencias si no hay valor elegido
+		if (!value['relacion'] && !frm.get_field(key).value) {
 			frappe.call({
 				method: "erpnext.stock.doctype.item.item.get_jph_attibute",
-				args: {
-					"attribute_id": fieldname,
-				},
+				args: {"tipo_id": value['id'], "valor_padre_id": null, "token": token},
 				callback: function(r) {
 					if (!r.exc && r.message) {
-						frm.set_df_property(fieldname, "options", r.message);
-						frm.refresh_field(fieldname);
+						frm.set_df_property(key, "options", r.message);
+						frm.refresh_field(key);
 					}
 				}
 			});
 		}
-	});
+
+		// Completa las opciones de atributos con dependencias y que la dependencia tiene valor
+		if (value['relacion'] && !frm.get_field(key).value && frm.get_field(value['relacion']).value) {
+			get_jph_children_attribute_values(frm, value['relacion']);
+		}
+	}
 }
 
