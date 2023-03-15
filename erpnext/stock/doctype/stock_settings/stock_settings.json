@@ -50,7 +50,8 @@
   "stock_auth_role",
   "acceso_nitro_section",
   "login_url",
-  "api_url",
+  "api_tipo_articulo_url",
+  "api_valores_articulo_url",
   "token",
   "column_break_48",
   "client_id",
@@ -318,11 +319,6 @@
    "label": "Login url"
   },
   {
-   "fieldname": "api_url",
-   "fieldtype": "Data",
-   "label": "API url"
-  },
-  {
    "fieldname": "token",
    "fieldtype": "Data",
    "label": "Token"
@@ -345,6 +341,16 @@
    "fieldname": "password",
    "fieldtype": "Data",
    "label": "Password"
+  },
+  {
+   "fieldname": "api_tipo_articulo_url",
+   "fieldtype": "Data",
+   "label": "API Tipo Articulo url"
+  },
+  {
+   "fieldname": "api_valores_articulo_url",
+   "fieldtype": "Data",
+   "label": "API Valores Articulo url"
   }
  ],
  "icon": "icon-cog",
@@ -352,7 +358,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2023-02-08 10:00:03.954208",
+ "modified": "2023-03-14 09:48:12.241834",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Stock Settings",

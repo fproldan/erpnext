@@ -45,7 +45,7 @@
   "column_break_32",
   "color_id",
   "talle_id",
-  "reflectivo",
+  "reflectivo_id",
   "section_break_11",
   "brand",
   "description",
@@ -1004,17 +1004,17 @@
    "label": "Talle"
   },
   {
-   "fieldname": "reflectivo",
-   "fieldtype": "Select",
-   "label": "Reflectivo"
-  },
-  {
    "fieldname": "column_break_28",
    "fieldtype": "Column Break"
   },
   {
    "fieldname": "column_break_32",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "reflectivo_id",
+   "fieldtype": "Select",
+   "label": "Reflectivo"
   }
  ],
  "icon": "fa fa-tag",
@@ -1022,7 +1022,7 @@
  "image_field": "image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-01-17 15:53:46.965146",
+ "modified": "2023-03-14 10:40:53.981167",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Item",
