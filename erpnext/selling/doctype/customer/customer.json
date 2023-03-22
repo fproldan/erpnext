@@ -56,6 +56,7 @@
   "banco",
   "convenio_bancario",
   "datos_facturacion_section",
+  "condicion_de_iva_facturacion",
   "fecha_de_facturacion",
   "envia_pre_factura",
   "verifica_factura",
@@ -1074,6 +1075,12 @@
    "label": "Estado",
    "options": "Activo\nNo Reactivable\nNo Activo",
    "reqd": 1
+  },
+  {
+   "fieldname": "condicion_de_iva_facturacion",
+   "fieldtype": "Link",
+   "label": "Condici\u00f3n de IVA",
+   "options": "Tipo de Comprobante"
   }
  ],
  "icon": "fa fa-user",
@@ -1087,7 +1094,7 @@
    "link_fieldname": "party"
   }
  ],
- "modified": "2023-03-22 08:52:02.538930",
+ "modified": "2023-03-22 09:38:38.817720",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Customer",
