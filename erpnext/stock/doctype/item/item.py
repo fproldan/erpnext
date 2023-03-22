@@ -1111,7 +1111,7 @@ def get_jph_attibute(tipo_id, valor_padre_id, token):
 	if data.status_code != 200:
 		return []
 
-	return [d['valor'] for d in data.json()['resultados']]
+	return [{"label": d['valor'], "value": d['idNitro4']} for d in data.json()['resultados']]
 
 
 @frappe.whitelist()
@@ -1130,6 +1130,7 @@ def get_jph_children_attribute_values(field, fieldvalue):
 			if not fieldvalue:
 				result.append([child_field, []])
 				continue
+
 	
 			data = requests.post(stock_settings.api_valores_articulo_url, data={'tipo_id': child_id, 'valor_padre_id': fieldvalue}, headers={"Authorization": f"Basic {stock_settings.token}", "token": token})
 
@@ -1138,6 +1139,6 @@ def get_jph_children_attribute_values(field, fieldvalue):
 				result.append([child_field, []])
 				continue
 
-			result.append([child_field, [d['valor'] for d in data.json()['resultados']]])
+			result.append([child_field, [{"label": d['valor'], "value": d['idNitro4']} for d in data.json()['resultados']]])
 
 	return result
