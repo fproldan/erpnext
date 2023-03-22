@@ -16,7 +16,6 @@ def get_data():
 		},
 		'internal_links': {
 			'Purchase Order': ['items', 'purchase_order'],
-			'Purchase Receipt': ['items', 'purchase_receipt'],
 		},
 		'transactions': [
 			{
