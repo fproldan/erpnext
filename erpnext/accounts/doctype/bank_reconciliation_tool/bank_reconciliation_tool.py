@@ -308,7 +308,7 @@ def check_matching(bank_account, company, transaction, document_types):
 
 def get_queries(bank_account, company, transaction, document_types):
 	# get queries to get matching vouchers
-	amount_condition = "=" if "exact_match" in document_types else "<="
+	amount_condition = "=" if "exact_match" in document_types else None
 	account_from_to = "paid_to" if transaction.deposit > 0 else "paid_from"
 	queries = []
 
@@ -341,6 +341,11 @@ def get_pe_matching_query(amount_condition, account_from_to, transaction):
 		currency_field = "paid_to_account_currency as currency"
 	else:
 		currency_field = "paid_from_account_currency as currency"
+	
+	amount_filter = "True"
+	if amount_condition:
+		amount_filter = f"paid_amount {amount_condition} %(amount)s"
+	
 	return  f"""
 	SELECT
 		(CASE WHEN reference_no=%(reference_no)s THEN 1 ELSE 0 END
@@ -358,7 +363,7 @@ def get_pe_matching_query(amount_condition, account_from_to, transaction):
 	FROM
 		`tabPayment Entry`
 	WHERE
-		paid_amount {amount_condition} %(amount)s
+		{amount_filter}
 		AND docstatus = 1
 		AND payment_type IN (%(payment_type)s, 'Internal Transfer')
 		AND ifnull(clearance_date, '') = ""
@@ -373,8 +378,12 @@ def get_je_matching_query(amount_condition, transaction):
 	# So one bank could have both types of bank accounts like asset and liability
 	# So cr_or_dr should be judged only on basis of withdrawal and deposit and not account type
 	cr_or_dr = "credit" if transaction.withdrawal > 0 else "debit"
-	return f"""
 
+	amount_filter = ""
+	if amount_condition:
+		amount_filter = f"AND jea.{cr_or_dr}_in_account_currency {amount_condition} %(amount)s"
+
+	return f"""
 		SELECT
 			(CASE WHEN je.cheque_no=%(reference_no)s THEN 1 ELSE 0 END
 			+ 1) AS rank ,
@@ -396,13 +405,17 @@ def get_je_matching_query(amount_condition, transaction):
 		WHERE
 			(je.clearance_date is null or je.clearance_date='0000-00-00')
 			AND jea.account = %(bank_account)s
-			AND jea.{cr_or_dr}_in_account_currency {amount_condition} %(amount)s
+			{amount_filter}
 			AND je.docstatus = 1
 	"""
 
 
 def get_si_matching_query(amount_condition):
 	# get matchin sales invoice query
+	amount_filter = ""
+	if amount_condition:
+		amount_filter = f"AND sip.amount {amount_condition} %(amount)s"
+
 	return f"""
 		SELECT
 			( CASE WHEN si.customer = %(party)s  THEN 1 ELSE 0  END
@@ -425,12 +438,16 @@ def get_si_matching_query(amount_condition):
 			sip.parent = si.name
 		WHERE (sip.clearance_date is null or sip.clearance_date='0000-00-00')
 			AND sip.account = %(bank_account)s
-			AND sip.amount {amount_condition} %(amount)s
+			{amount_filter}
 			AND si.docstatus = 1
 	"""
 
 def get_pi_matching_query(amount_condition):
 	# get matching purchase invoice query
+	amount_filter = "True"
+	if amount_condition:
+		amount_filter = f"paid_amount {amount_condition} %(amount)s"
+	
 	return f"""
 		SELECT
 			( CASE WHEN supplier = %(party)s THEN 1 ELSE 0 END
@@ -447,7 +464,7 @@ def get_pi_matching_query(amount_condition):
 		FROM
 			`tabPurchase Invoice`
 		WHERE
-			paid_amount {amount_condition} %(amount)s
+			{amount_filter}
 			AND docstatus = 1
 			AND is_paid = 1
 			AND ifnull(clearance_date, '') = ""
@@ -460,6 +477,11 @@ def get_ec_matching_query(bank_account, company, amount_condition):
 			filters={"default_account": bank_account}, fields=["parent"])]
 	mode_of_payments = '(\'' + '\', \''.join(mode_of_payments) + '\' )'
 	company_currency = get_company_currency(company)
+
+	amount_filter = "True"
+	if amount_condition:
+		amount_filter = f"total_sanctioned_amount {amount_condition} %(amount)s"
+
 	return f"""
 		SELECT
 			( CASE WHEN employee = %(party)s THEN 1 ELSE 0 END
@@ -476,7 +498,7 @@ def get_ec_matching_query(bank_account, company, amount_condition):
 		FROM
 			`tabExpense Claim`
 		WHERE
-			total_sanctioned_amount {amount_condition} %(amount)s
+			{amount_filter}
 			AND docstatus = 1
 			AND is_paid = 1
 			AND ifnull(clearance_date, '') = ""
