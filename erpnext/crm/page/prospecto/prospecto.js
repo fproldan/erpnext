@@ -30,6 +30,7 @@ erpnext.Prospecto = class Prospecto {
 					fieldname: 'customer_name',
 					fieldtype: 'Link',
 					options: 'Customer',
+					only_select: true,
 					change: () => this.fetch_and_render(),
 				},
 				{
