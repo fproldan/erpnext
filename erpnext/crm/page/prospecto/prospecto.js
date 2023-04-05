@@ -23,6 +23,16 @@ erpnext.Prospecto = class Prospecto {
 					change: () => this.fetch_and_render(),
 				},
 				{
+					fieldtype: 'Column Break'
+				},
+				{
+					label: __('Razón Social'),
+					fieldname: 'customer_name',
+					fieldtype: 'Link',
+					options: 'Customer',
+					change: () => this.fetch_and_render(),
+				},
+				{
 					fieldtype: 'Section Break'
 				},
 				{
@@ -44,11 +54,11 @@ erpnext.Prospecto = class Prospecto {
 			</h5>
 		`);
 
-		if (!values['tax_id']) {
+		if (!values['tax_id'] && !values['customer_name']) {
 			return
 		}
 
-		frappe.call('erpnext.crm.utils.get_cuit', {tax_id: values['tax_id']}).then(r => {
+		frappe.call('erpnext.crm.utils.get_cuit', {tax_id: values['tax_id'], customer_name: values['customer_name']}).then(r => {
 			let cuit_values = r.message;
 
 			this.render(cuit_values);

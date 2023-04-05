@@ -25,15 +25,19 @@ def update_lead_phone_numbers(contact, method):
 
 
 @frappe.whitelist()
-def get_cuit(tax_id):
+def get_cuit(tax_id=None, customer_name=None):
 	import json
 	from frappe.utils.csvutils import getlink
 	from frappe.contacts.doctype.contact.contact import get_contact_details
 	from frappe.desk.form.load import get_communication_data
 	from erpnext.accounts.party import get_default_contact
 
-	tax_id = tax_id.strip()
-	customer = (frappe.db.get_all('Customer', {'tax_id': tax_id}) or [{}])[0]
+	if tax_id:
+		tax_id = tax_id.strip()
+		customer = (frappe.db.get_all('Customer', {'tax_id': tax_id}) or [{}])[0]
+
+	if customer_name:
+		customer = (frappe.db.get_all('Customer', {'name': customer_name}) or [{}])[0]
 	
 	customer_contact_details = {
 		'contact_person': '',
