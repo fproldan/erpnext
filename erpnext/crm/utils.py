@@ -38,7 +38,7 @@ def get_cuit(tax_id=None, customer_name=None):
 
 	if customer_name:
 		customer = (frappe.db.get_all('Customer', {'name': customer_name}) or [{}])[0]
-	
+
 	customer_contact_details = {
 		'contact_person': '',
 		'contact_display': '',
@@ -143,18 +143,25 @@ def get_cuit(tax_id=None, customer_name=None):
 		resp['quotations'] = []
 
 		for quotation in quotations:
-			quotation_contact = get_default_contact(lead.doctype, lead.name, '')
+			quotation_contact = get_default_contact(quotation.doctype, quotation.name, '')
 			if quotation_contact:
 				quotation_contact_details = get_contact_details(quotation_contact)
 
+			if quotation.status == 'Open':
+				status_color = 'text-success'
+			else:
+				status_color = ''
+			link = getlink('Quotation', quotation.name)
+
 			resp['quotations'].append({
-				'name': getlink('Quotation', quotation.name),
+				'name': link[:2] + ' class="'+ status_color+'"' + link[2:],
 				'base_name': quotation.name,
 				'transaction_date': quotation.transaction_date,
 				'quotation_to': quotation.quotation_to,
 				'party_name': quotation.party_name,
 				'assign':  ",".join(getlink('User', a) for a in json.loads(quotation._assign or '[]')),
 				'contact': quotation_contact_details,
+				'status_color': status_color,
 			})
 
 		for q in quotations:
