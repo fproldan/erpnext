@@ -266,6 +266,9 @@ erpnext.Prospecto = class Prospecto {
 										<th>Domicilio</th>
 										<th>Celular Contacto</th>
 										<th>Mail Contacto</th>
+										<th>Área</th>
+										<th>Puesto</th>
+										<th>Proceso</th>
 									</tr>
 									<tr>
 										<td>${cuit_values['customer']['customer_name']}</td>
@@ -276,6 +279,9 @@ erpnext.Prospecto = class Prospecto {
 										<td><b>-</b></td>
 										<td>${cuit_values['customer']['contact']['contact_mobile']}</td>
 										<td>${cuit_values['customer']['contact']['contact_email']}</td>
+										<td>${cuit_values['customer']['contact']['area']}</td>
+										<td>${cuit_values['customer']['contact']['puesto']}</td>
+										<td>${cuit_values['customer']['contact']['proceso']}</td>
 									</tr>
 								</table>
 							</div>
