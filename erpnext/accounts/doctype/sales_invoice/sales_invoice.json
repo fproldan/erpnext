@@ -2043,7 +2043,7 @@
    "link_fieldname": "consolidated_invoice"
   }
  ],
- "modified": "2023-03-07 12:28:32.967233",
+ "modified": "2022-04-22 14:23:44.271169",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Sales Invoice",
@@ -2064,7 +2064,8 @@
    "role": "Accounts Manager",
    "share": 1,
    "submit": 1,
-   "write": 1
+   "write": 1,
+   "export": 1
   },
   {
    "amend": 1,
