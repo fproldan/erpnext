@@ -16,7 +16,6 @@
   "customer_name",
   "gender",
   "customer_type",
-  "pan",
   "tax_withholding_category",
   "default_bank_account",
   "lead_name",
@@ -41,7 +40,6 @@
   "represents_company",
   "address_contacts",
   "address_html",
-  "website",
   "column_break1",
   "contact_html",
   "datos_pagos_de_haberes_section",
@@ -64,7 +62,7 @@
   "agrupamiento_de_factura",
   "agrupamiento_de_anexas",
   "column_break_55",
-  "registrar_binificacion_de_corficiente",
+  "registrar_bonificacion_de_coeficiente",
   "forma_de_envio",
   "documentacion_a_enviar",
   "cliente_solicita_oc",
@@ -154,7 +152,6 @@
   "more_info",
   "customer_details",
   "column_break_45",
-  "market_segment",
   "language",
   "is_frozen",
   "column_break_38",
@@ -372,11 +369,6 @@
    "read_only": 1
   },
   {
-   "fieldname": "website",
-   "fieldtype": "Data",
-   "label": "Website"
-  },
-  {
    "fieldname": "column_break1",
    "fieldtype": "Column Break",
    "width": "50%"
@@ -478,12 +470,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "market_segment",
-   "fieldtype": "Link",
-   "label": "Market Segment",
-   "options": "Market Segment"
-  },
-  {
    "default": "0",
    "fieldname": "is_frozen",
    "fieldtype": "Check",
@@ -577,11 +563,6 @@
    "fieldname": "dn_required",
    "fieldtype": "Check",
    "label": "Allow Sales Invoice Creation Without Delivery Note"
-  },
-  {
-   "fieldname": "pan",
-   "fieldtype": "Data",
-   "label": "PAN"
   },
   {
    "fieldname": "tax_withholding_category",
@@ -746,9 +727,9 @@
    "options": "Si\nNo"
   },
   {
-   "fieldname": "registrar_binificacion_de_corficiente",
+   "fieldname": "registrar_bonificacion_de_coeficiente",
    "fieldtype": "Data",
-   "label": "Registrar Binificacion de Corficiente"
+   "label": "Registrar Bonificacion de Coeficiente"
   },
   {
    "fieldname": "forma_de_envio",
@@ -1110,7 +1091,7 @@
    "link_fieldname": "party"
   }
  ],
- "modified": "2023-04-11 14:10:56.262788",
+ "modified": "2023-04-11 14:30:56.262788",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Customer",
