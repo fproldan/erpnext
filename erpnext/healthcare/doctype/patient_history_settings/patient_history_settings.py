@@ -11,7 +11,7 @@ from frappe import _
 from frappe.model.document import Document
 from frappe.utils import cint, cstr
 
-from erpnext.healthcare.page.patient_history.patient_history import get_patient_history_doctypes
+# from erpnext.healthcare.page.patient_history.patient_history import get_patient_history_doctypes
 
 
 class PatientHistorySettings(Document):
@@ -181,8 +181,8 @@ def validate_medical_record_required(doc):
 		or get_module(doc) != 'Healthcare':
 		return False
 
-	if doc.doctype not in get_patient_history_doctypes():
-		return False
+	# if doc.doctype not in get_patient_history_doctypes():
+	#	return False
 
 	return True
 

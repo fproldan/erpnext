@@ -82,9 +82,9 @@ class IssueSummary(object):
 		})
 
 		self.sla_status_map = {
-			'SLA Failed': 'failed',
-			'SLA Fulfilled': 'fulfilled',
-			'SLA Ongoing': 'ongoing'
+			_('SLA Failed'): 'failed',
+			_('SLA Fulfilled'): 'fulfilled',
+			_('SLA Ongoing'): 'ongoing'
 		}
 
 		for label, fieldname in self.sla_status_map.items():
@@ -290,23 +290,23 @@ class IssueSummary(object):
 				'labels': labels[:30],
 				'datasets': [
 					{
-						'name': 'Open',
+						'name': _('Open'),
 						'values': open_issues[:30]
 					},
 					{
-						'name': 'Replied',
+						'name': _('Replied'),
 						'values': replied_issues[:30]
 					},
 					{
-						'name': 'On Hold',
+						'name': _('On Hold'),
 						'values': on_hold_issues[:30]
 					},
 					{
-						'name': 'Resolved',
+						'name': _('Resolved'),
 						'values': resolved_issues[:30]
 					},
 					{
-						'name': 'Closed',
+						'name': _('Closed'),
 						'values': closed_issues[:30]
 					}
 				]

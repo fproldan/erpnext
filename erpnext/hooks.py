@@ -175,6 +175,12 @@ website_route_rules = [
 			"parents": [{"label": _("Purchase Invoice"), "route": "purchase_invoices"}]
 		}
 	},
+	{"from_route": "/purchase_orders/<path:name>", "to_route": "order",
+		"defaults": {
+			"doctype": "Purchase Order",
+			"parents": [{"label": _("Purchase Order"), "route": "purchase_orders"}]
+		}
+	},
 	{"from_route": "/quotations", "to_route": "Quotation"},
 	{"from_route": "/quotations/<path:name>", "to_route": "order",
 		"defaults": {
@@ -285,11 +291,6 @@ standard_queries = {
 }
 
 doc_events = {
-	"*": {
-		"on_submit": "erpnext.healthcare.doctype.patient_history_settings.patient_history_settings.create_medical_record",
-		"on_update_after_submit": "erpnext.healthcare.doctype.patient_history_settings.patient_history_settings.update_medical_record",
-		"on_cancel": "erpnext.healthcare.doctype.patient_history_settings.patient_history_settings.delete_medical_record"
-	},
 	"Stock Entry": {
 		"on_submit": "erpnext.stock.doctype.material_request.material_request.update_completed_and_requested_qty",
 		"on_cancel": "erpnext.stock.doctype.material_request.material_request.update_completed_and_requested_qty"

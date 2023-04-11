@@ -290,18 +290,30 @@ def make_supplier_quotation_from_rfq(source_name, target_doc=None, for_supplier=
 # This method is used to make supplier quotation from supplier's portal.
 @frappe.whitelist()
 def create_supplier_quotation(doc):
+	from erpnext.setup.doctype.naming_series.naming_series import get_naming_series_for_company
 	if isinstance(doc, string_types):
 		doc = json.loads(doc)
 
 	try:
-		sq_doc = frappe.get_doc({
+		naming_series = None
+		if doc.get('company') and doc.get('doctype'):
+			naming_series = get_naming_series_for_company(doc.get('doctype'), doc.get('company'))
+			if naming_series:
+				naming_series = naming_series.split("\n")[0]
+
+		doc_data = {
 			"doctype": "Supplier Quotation",
 			"supplier": doc.get('supplier'),
 			"terms": doc.get("terms"),
 			"company": doc.get("company"),
 			"currency": doc.get('currency') or get_party_account_currency('Supplier', doc.get('supplier'), doc.get('company')),
 			"buying_price_list": doc.get('buying_price_list') or frappe.db.get_value('Buying Settings', None, 'buying_price_list')
-		})
+		}
+		
+		if naming_series:
+			doc_data['naming_series'] = naming_series
+
+		sq_doc = frappe.get_doc(doc_data)
 		add_items(sq_doc, doc.get('supplier'), doc.get('items'))
 		sq_doc.flags.ignore_permissions = True
 		sq_doc.run_method("set_missing_values")

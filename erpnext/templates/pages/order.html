@@ -57,6 +57,8 @@
 		<span class="indicator-pill {{ doc.indicator_color or ("blue" if doc.docstatus==1 else "darkgrey") }}">
 			{% if doc.doctype == "Quotation" and not doc.docstatus %}
 				{{ _("Pending") }}
+			{% elif doc.doctype == 'Purchase Order' and doc.aprobado_por_proveedor == 1 and doc.status not in ['Completed', 'Delivered', 'Cancelled', 'On Hold', 'Closed', 'Pendiente de Confirmacion'] %}
+				{{ "Respuesta Enviada" }}
 			{% else %}
 				{{ _(doc.get('indicator_title')) or _(doc.status) or _("Submitted") }}
 			{% endif %}
@@ -134,15 +136,31 @@
 {{ doc._header }}
 {% endif %}
 
+
 {% if doc.doctype == 'Purchase Order' %}
-<div class="pt-2 pb-5 float-right">
-	<h5>Nuevo pacto de entrega:</h5> 
-	<form action="" style="display: flex;">
-		<input name='nuevo_pacto_entrega' class='form-control' type='date' format="yyyy-mm-dd" style='max-width: 200px; display: inline-block; margin-right: 10px;' value='{{ doc.nuevo_pacto_entrega }}'>
-		<input type='submit' class='btn btn-sm btn-light btn-primary' value="{{ _("Modificar") }}">
-	</form>
+<div class="row pt-2 pb-5">
+	<div class="col-6">
+		{% if doc.doctype == 'Purchase Order' and doc.status == 'Pendiente de Confirmacion' and doc.aprobado_por_proveedor == 0 %}
+			<h5>Aprobar / Rechazar</h5> 
+			<a type="button" class="btn btn-success" href="?aprobar_rechazar_por_proveedor=aprobar">Aprobar</a>
+			<a type="button" class="btn btn-danger" href="?aprobar_rechazar_por_proveedor=rechazar">Rechazar</a>
+		{% endif %}
+	</div>
+	<div class="col-6">
+		{% if doc.docstatus != 2 %}
+
+			<div class="float-right">
+			<h5>Nuevo pacto de entrega:</h5> 
+			<form action="" style="display: flex;">
+				<input name='nuevo_pacto_entrega' class='form-control' type='date' format="yyyy-mm-dd" style='max-width: 200px; display: inline-block; margin-right: 10px;' value='{{ doc.nuevo_pacto_entrega }}'>
+				<input type='submit' class='btn btn-sm btn-light btn-primary' value="{{ _("Modificar") }}">
+			</form>
+			</div>
+		{% endif %}
+	</div>
 </div>
 {% endif %}
+
 
 {% if doc.doctype == 'Payment Entry' %}
 <div class="order-container">
@@ -169,6 +187,54 @@
 					Total Comprobante: $ {{ reference.total_amount }}
 				</td>
 			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	<!-- taxes -->
+	<div class="order-taxes d-flex justify-content-end">
+		<table>
+			{% include "erpnext/templates/includes/order/order_taxes.html" %}
+		</table>
+	</div>
+</div>
+{% elif doc.doctype == 'Purchase Order' %}
+<div class="order-container">
+	<!-- items -->
+	<table class="order-item-table w-100 table">
+		<thead class="order-items order-item-header">
+			<th width="40%">
+				{{ _("Item") }}
+			</th>
+			<th width="20%" class="text-right">
+				{{ _("Warehouse") }}
+			</th>
+			<th width="20%" class="text-right">
+				{{ _("Quantity") }}
+			</th>
+			<th width="20%" class="text-right">
+				{{ _("Amount") }}
+			</th>
+		</thead>
+		<tbody>
+		{% for d in doc.items %}
+		<tr class="order-items">
+			<td>
+				{{ item_name_and_description(d) }}
+			</td>
+			<td>
+				{{ d.warehouse }}
+			</td>
+			<td class="text-right">
+				{{ d.qty }}
+				{% if d.delivered_qty is defined and d.delivered_qty != None %}
+				<p class="text-muted small">{{ _("Delivered") }}&nbsp;{{ d.delivered_qty }}</p>
+				{% endif %}
+			</td>
+			<td class="text-right">
+				{{ d.get_formatted("amount")	 }}
+				<p class="text-muted small">{{ _("Rate:") }}&nbsp;{{ d.get_formatted("rate") }}</p>
+			</td>
+		</tr>
 		{% endfor %}
 		</tbody>
 	</table>
@@ -322,8 +388,36 @@
 </div>
 {% endif %}
 
+{% if doc.doctype == 'Purchase Order' %}
+<div class="order-container pt-10">
+	<div class="row order-items order-item-header text-muted">
+		<div class="col-sm-12 h6 text-uppercase">
+			{{ _("Adjuntar Documentación") }}
+		</div>
+		<div class="col-sm-12 pb-3">
+			Aquí podrá subir documentación como remitos o cuestiones relacionadas a esta compra
+		</div>
+	</div>
+	<div class="row order-items">
+		<div class="col-sm-12">
+			<form id="frmFileUp" action="" style="display: flex;">
+				<div class="input-group mb-3">
+				  <div class="input-group-prepend">
+				    <span class="btn btn-primary" id="btn_upload">Adjuntar</span>
+				  </div>
+				  <div class="custom-file">
+				    <input type="file" class="custom-file-input" id="select_files" aria-describedby="inputGroupFileAddon01" lang="es">
+				    <label class="custom-file-label" for="select_files" data-browse="Buscar">Elegir archivo</label>
+				  </div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endif %}
+
 {% if attachments %}
-<div class="order-item-table">
+<div class="order-item-table pt-10">
 	<div class="row order-items order-item-header text-muted">
 		<div class="col-sm-12 h6 text-uppercase">
 			{{ _("Attachments") }}
