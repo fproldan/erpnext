@@ -58,7 +58,9 @@
   "verifica_anexa",
   "leyenda",
   "agrupamiento_de_factura",
+  "opciones_de_agrupamiento_factura",
   "agrupamiento_de_anexas",
+  "opciones_de_agrupamiento_anexas",
   "column_break_55",
   "registrar_bonificacion_de_coeficiente",
   "forma_de_envio",
@@ -1060,6 +1062,20 @@
    "fieldname": "modalidad_de_liquidacion",
    "fieldtype": "Data",
    "label": "Modalidad de Liquidaci\u00f3n"
+  },
+  {
+   "depends_on": "eval:doc.agrupamiento_de_factura=='Si'",
+   "fieldname": "opciones_de_agrupamiento_factura",
+   "fieldtype": "Select",
+   "label": "Opciones de Agrupamiento Factura",
+   "options": "Opci\u00f3n 1\nOpci\u00f3n 2"
+  },
+  {
+   "depends_on": "eval:doc.agrupamiento_de_anexas=='Si'",
+   "fieldname": "opciones_de_agrupamiento_anexas",
+   "fieldtype": "Select",
+   "label": "Opciones de Agrupamiento Anexas",
+   "options": "Opci\u00f3n 1\nOpci\u00f3n 2"
   }
  ],
  "icon": "fa fa-user",
@@ -1073,7 +1089,7 @@
    "link_fieldname": "party"
   }
  ],
- "modified": "2023-04-11 15:37:56.055922",
+ "modified": "2023-04-11 15:42:39.695849",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Customer",
