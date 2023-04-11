@@ -27,7 +27,6 @@
   "admite_visita",
   "envio_de_novedades",
   "column_break0",
-  "account_manager",
   "customer_group",
   "territory",
   "estado",
@@ -90,7 +89,8 @@
   "remuneracion_conformada",
   "fecha_de_corte",
   "jornada_laboral",
-  "dias_de_jornada_laboral",
+  "trabaja_dias_sabado",
+  "dias_jornada_laboral",
   "politica_de_anticipo",
   "montos_de_anticipo",
   "fecha_probable_de_acreditacion",
@@ -112,6 +112,7 @@
   "clave_art",
   "fecha_de_envio_sicoss",
   "envio_de_preliquidacion",
+  "modalidad_de_liquidacion",
   "decreto_762",
   "art_decreto_762",
   "art_decreto_762_fijo",
@@ -131,6 +132,7 @@
   "industry",
   "datos_oferta_seccion",
   "datos_para_cotizar",
+  "account_manager",
   "allowed_to_transact_section",
   "companies",
   "currency_and_price_list",
@@ -194,7 +196,7 @@
    "fieldname": "customer_name",
    "fieldtype": "Data",
    "in_global_search": 1,
-   "label": "Full Name",
+   "label": "Raz\u00f3n Social",
    "no_copy": 1,
    "oldfieldname": "customer_name",
    "oldfieldtype": "Data",
@@ -727,8 +729,9 @@
   },
   {
    "fieldname": "leyenda",
-   "fieldtype": "Data",
-   "label": "Leyenda"
+   "fieldtype": "Select",
+   "label": "Leyenda",
+   "options": "Si\nNo"
   },
   {
    "fieldname": "agrupamiento_de_factura",
@@ -795,6 +798,7 @@
    "label": "Condiciones de Pago"
   },
   {
+   "default": "6 Meses",
    "fieldname": "plazo_promedio_de_cobranza",
    "fieldtype": "Data",
    "label": "Plazo Promedio de Cobranza"
@@ -821,8 +825,9 @@
   },
   {
    "fieldname": "cobrador_asignado_gg",
-   "fieldtype": "Data",
-   "label": "Cobrador Asignado GG"
+   "fieldtype": "Link",
+   "label": "Cobrador Asignado GG",
+   "options": "User"
   },
   {
    "fieldname": "enviar_aviso_de_vencimiento_de_factura",
@@ -871,8 +876,8 @@
    "label": "Jornada Laboral"
   },
   {
-   "fieldname": "dias_de_jornada_laboral",
-   "fieldtype": "Data",
+   "fieldname": "dias_jornada_laboral",
+   "fieldtype": "Int",
    "label": "D\u00edas de Jornada Laboral"
   },
   {
@@ -937,12 +942,12 @@
   },
   {
    "fieldname": "fecha_de_inicio_de_contrato_art",
-   "fieldtype": "Data",
+   "fieldtype": "Date",
    "label": "Fecha de Inicio de Contrato ART"
   },
   {
    "fieldname": "fecha_de_vencimiento_de_contrato_art",
-   "fieldtype": "Data",
+   "fieldtype": "Date",
    "label": "Fecha de Vencimiento de Contrato ART"
   },
   {
@@ -1081,6 +1086,17 @@
    "fieldtype": "Link",
    "label": "Condici\u00f3n de IVA",
    "options": "Tipo de Comprobante"
+  },
+  {
+   "fieldname": "trabaja_dias_sabado",
+   "fieldtype": "Select",
+   "label": "Trabaja D\u00edas Sabado",
+   "options": "Si\nNo"
+  },
+  {
+   "fieldname": "modalidad_de_liquidacion",
+   "fieldtype": "Data",
+   "label": "Modalidad de Liquidaci\u00f3n"
   }
  ],
  "icon": "fa fa-user",
@@ -1094,7 +1110,7 @@
    "link_fieldname": "party"
   }
  ],
- "modified": "2023-03-22 09:38:38.817720",
+ "modified": "2023-04-11 14:10:56.262788",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Customer",
