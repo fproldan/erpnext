@@ -45,6 +45,9 @@ def get_cuit(tax_id=None, customer_name=None):
 		'contact_email': '',
 		'contact_mobile': '',
 		'contact_phone': '',
+		'area': '',
+		'puesto': '',
+		'proceso': '',
 	}
 
 	lead_contact_details = {
@@ -53,6 +56,9 @@ def get_cuit(tax_id=None, customer_name=None):
 		'contact_email': '',
 		'contact_mobile': '',
 		'contact_phone': '',
+		'area': '',
+		'puesto': '',
+		'proceso': '',
 	}
 
 	if not customer:
@@ -91,7 +97,6 @@ def get_cuit(tax_id=None, customer_name=None):
 
 	if not customer and not lead:
 		return resp
-
 
 	quotation_search = []
 	q_assign = []
@@ -138,6 +143,9 @@ def get_cuit(tax_id=None, customer_name=None):
 			'contact_email': '',
 			'contact_mobile': '',
 			'contact_phone': '',
+			'area': '',
+			'puesto': '',
+			'proceso': '',
 		}
 
 		resp['quotations'] = []
