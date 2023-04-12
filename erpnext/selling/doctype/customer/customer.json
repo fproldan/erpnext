@@ -51,6 +51,7 @@
   "banco",
   "convenio_bancario",
   "datos_facturacion_section",
+  "tipo_de_comprobante",
   "condicion_de_iva_facturacion",
   "fecha_de_facturacion",
   "envia_pre_factura",
@@ -1076,6 +1077,11 @@
    "fieldtype": "Select",
    "label": "Opciones de Agrupamiento Anexas",
    "options": "Opci\u00f3n 1\nOpci\u00f3n 2"
+  },
+  {
+   "fieldname": "tipo_de_comprobante",
+   "fieldtype": "Data",
+   "label": "Tipo de Comprobante"
   }
  ],
  "icon": "fa fa-user",
@@ -1089,7 +1095,7 @@
    "link_fieldname": "party"
   }
  ],
- "modified": "2023-04-11 15:42:39.695849",
+ "modified": "2023-04-12 17:13:55.021020",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Customer",
