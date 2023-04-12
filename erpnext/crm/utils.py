@@ -21,7 +21,7 @@ def update_lead_phone_numbers(contact, method):
 
 			lead = frappe.get_doc("Lead", contact_lead)
 			lead.db_set("phone", phone)
-			lead.db_set("mobile_no", mobile_no)
+			lead.db_set("mobile_no", mobile_no)	
 
 
 @frappe.whitelist()
@@ -31,13 +31,6 @@ def get_cuit(tax_id=None, customer_name=None):
 	from frappe.contacts.doctype.contact.contact import get_contact_details
 	from frappe.desk.form.load import get_communication_data
 	from erpnext.accounts.party import get_default_contact
-
-	if tax_id:
-		tax_id = tax_id.strip()
-		customer = (frappe.db.get_all('Customer', {'tax_id': tax_id}) or [{}])[0]
-
-	if customer_name:
-		customer = (frappe.db.get_all('Customer', {'name': customer_name}) or [{}])[0]
 
 	customer_contact_details = {
 		'contact_person': '',
@@ -61,10 +54,18 @@ def get_cuit(tax_id=None, customer_name=None):
 		'proceso': '',
 	}
 
+	if tax_id:
+		tax_id = tax_id.strip()
+		customer = (frappe.db.get_all('Customer', {'tax_id': tax_id}) or [{}])[0]
+
+	if customer_name:
+		customer = (frappe.db.get_all('Customer', {'name': customer_name}) or [{}])[0]
+
 	if not customer:
 		customer = None
 	else:
 		customer = frappe.get_doc('Customer', customer['name'])
+		tax_id = customer.tax_id
 		customer_contact = get_default_contact(customer.doctype, customer.name, '')
 		if customer_contact:
 			customer_contact_details = get_contact_details(customer_contact)
@@ -190,8 +191,11 @@ def get_cuit(tax_id=None, customer_name=None):
 
 
 @frappe.whitelist()
-def crear_entidad(doctype, tax_id):
+def crear_entidad(doctype, tax_id=None, customer_name=None):
 	target = frappe.new_doc(doctype)
+	if doctype == 'Lead' and customer_name:
+		tax_id = frappe.db.get_value('Customer', {'name': customer_name}, 'tax_id')
+		
 	target.tax_id = tax_id
 	return target
 
