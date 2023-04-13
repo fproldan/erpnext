@@ -46,14 +46,12 @@ def get_party_details(inv):
 	return party_type, party
 
 def get_party_tax_withholding_details(inv, tax_withholding_category=None):
-	return None
 	pan_no = ''
 	parties = []
 	party_type, party = get_party_details(inv)
 
 	if not tax_withholding_category:
-		tax_withholding_category = frappe.db.get_value(party_type, party, ['tax_withholding_category', 'pan'])
-		pan_no = None
+		tax_withholding_category, pan_no = frappe.db.get_value(party_type, party, ['tax_withholding_category', 'pan'])
 
 	if not tax_withholding_category:
 		return
