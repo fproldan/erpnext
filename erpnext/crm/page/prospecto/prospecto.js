@@ -136,11 +136,11 @@ erpnext.Prospecto = class Prospecto {
 
 	}
 
-	crear_entidad(doctype, tax_id) {
+	crear_entidad(doctype, tax_id, customer_name) {
 		return frappe.call({
 			type: "GET",
 			method: "erpnext.crm.utils.crear_entidad",
-			args: {"doctype": doctype, "tax_id": tax_id,},
+			args: {"doctype": doctype, "tax_id": tax_id, "customer_name": customer_name},
 			freeze: true,
 			callback: function(r) {
 				if(!r.exc) {
@@ -171,12 +171,12 @@ erpnext.Prospecto = class Prospecto {
 
 	crear_cliente(cuit_values) {
 		let values = this.form.get_values();
-		this.crear_entidad('Customer', values['tax_id']);
+		this.crear_entidad('Customer', values['tax_id'], '');
 	}
 
 	crear_iniciativa(cuit_values) {
 		let values = this.form.get_values();
-		this.crear_entidad('Lead', values['tax_id']);
+		this.crear_entidad('Lead', values['tax_id'] || '', values['customer_name'] || '');
 	}
 
 	crear_cotizacion_iniciativa(cuit_values) {

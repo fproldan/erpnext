@@ -39,6 +39,14 @@ frappe.ui.form.on("Customer", {
 			frm.set_value("represents_company", "");
 		}
 
+		frm.set_query('cobrador_asignado_gg', function(doc) {
+			return {
+				filters: {
+					"enabled": 1,
+					'user_type': "System User"
+				}
+			}
+		})
 		frm.set_query('customer_primary_contact', function(doc) {
 			return {
 				query: "erpnext.selling.doctype.customer.customer.get_customer_primary_contact",

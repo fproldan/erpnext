@@ -12,11 +12,8 @@
  "field_order": [
   "basic_info",
   "naming_series",
-  "salutation",
   "customer_name",
-  "gender",
   "customer_type",
-  "pan",
   "tax_withholding_category",
   "default_bank_account",
   "lead_name",
@@ -27,7 +24,6 @@
   "admite_visita",
   "envio_de_novedades",
   "column_break0",
-  "account_manager",
   "customer_group",
   "territory",
   "estado",
@@ -42,7 +38,6 @@
   "represents_company",
   "address_contacts",
   "address_html",
-  "website",
   "column_break1",
   "contact_html",
   "datos_pagos_de_haberes_section",
@@ -56,6 +51,7 @@
   "banco",
   "convenio_bancario",
   "datos_facturacion_section",
+  "tipo_de_comprobante",
   "condicion_de_iva_facturacion",
   "fecha_de_facturacion",
   "envia_pre_factura",
@@ -63,9 +59,11 @@
   "verifica_anexa",
   "leyenda",
   "agrupamiento_de_factura",
+  "opciones_de_agrupamiento_factura",
   "agrupamiento_de_anexas",
+  "opciones_de_agrupamiento_anexas",
   "column_break_55",
-  "registrar_binificacion_de_corficiente",
+  "registrar_bonificacion_de_coeficiente",
   "forma_de_envio",
   "documentacion_a_enviar",
   "cliente_solicita_oc",
@@ -90,7 +88,8 @@
   "remuneracion_conformada",
   "fecha_de_corte",
   "jornada_laboral",
-  "dias_de_jornada_laboral",
+  "trabaja_dias_sabado",
+  "dias_jornada_laboral",
   "politica_de_anticipo",
   "montos_de_anticipo",
   "fecha_probable_de_acreditacion",
@@ -112,6 +111,7 @@
   "clave_art",
   "fecha_de_envio_sicoss",
   "envio_de_preliquidacion",
+  "modalidad_de_liquidacion",
   "decreto_762",
   "art_decreto_762",
   "art_decreto_762_fijo",
@@ -131,6 +131,7 @@
   "industry",
   "datos_oferta_seccion",
   "datos_para_cotizar",
+  "account_manager",
   "allowed_to_transact_section",
   "companies",
   "currency_and_price_list",
@@ -152,7 +153,6 @@
   "more_info",
   "customer_details",
   "column_break_45",
-  "market_segment",
   "language",
   "is_frozen",
   "column_break_38",
@@ -182,32 +182,16 @@
    "set_only_once": 1
   },
   {
-   "depends_on": "eval:doc.customer_type!='Company'",
-   "fieldname": "salutation",
-   "fieldtype": "Link",
-   "hidden": 1,
-   "label": "Salutation",
-   "options": "Salutation"
-  },
-  {
    "bold": 1,
    "fieldname": "customer_name",
    "fieldtype": "Data",
    "in_global_search": 1,
-   "label": "Full Name",
+   "label": "Raz\u00f3n Social",
    "no_copy": 1,
    "oldfieldname": "customer_name",
    "oldfieldtype": "Data",
    "reqd": 1,
    "search_index": 1
-  },
-  {
-   "depends_on": "eval:doc.customer_type != 'Company'",
-   "fieldname": "gender",
-   "fieldtype": "Link",
-   "hidden": 1,
-   "label": "Gender",
-   "options": "Gender"
   },
   {
    "default": "Company",
@@ -370,11 +354,6 @@
    "read_only": 1
   },
   {
-   "fieldname": "website",
-   "fieldtype": "Data",
-   "label": "Website"
-  },
-  {
    "fieldname": "column_break1",
    "fieldtype": "Column Break",
    "width": "50%"
@@ -476,12 +455,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "market_segment",
-   "fieldtype": "Link",
-   "label": "Market Segment",
-   "options": "Market Segment"
-  },
-  {
    "default": "0",
    "fieldname": "is_frozen",
    "fieldtype": "Check",
@@ -575,11 +548,6 @@
    "fieldname": "dn_required",
    "fieldtype": "Check",
    "label": "Allow Sales Invoice Creation Without Delivery Note"
-  },
-  {
-   "fieldname": "pan",
-   "fieldtype": "Data",
-   "label": "PAN"
   },
   {
    "fieldname": "tax_withholding_category",
@@ -727,8 +695,9 @@
   },
   {
    "fieldname": "leyenda",
-   "fieldtype": "Data",
-   "label": "Leyenda"
+   "fieldtype": "Select",
+   "label": "Leyenda",
+   "options": "Si\nNo"
   },
   {
    "fieldname": "agrupamiento_de_factura",
@@ -743,9 +712,9 @@
    "options": "Si\nNo"
   },
   {
-   "fieldname": "registrar_binificacion_de_corficiente",
+   "fieldname": "registrar_bonificacion_de_coeficiente",
    "fieldtype": "Data",
-   "label": "Registrar Binificacion de Corficiente"
+   "label": "Registrar Bonificacion de Coeficiente"
   },
   {
    "fieldname": "forma_de_envio",
@@ -795,6 +764,7 @@
    "label": "Condiciones de Pago"
   },
   {
+   "default": "6 Meses",
    "fieldname": "plazo_promedio_de_cobranza",
    "fieldtype": "Data",
    "label": "Plazo Promedio de Cobranza"
@@ -821,8 +791,9 @@
   },
   {
    "fieldname": "cobrador_asignado_gg",
-   "fieldtype": "Data",
-   "label": "Cobrador Asignado GG"
+   "fieldtype": "Link",
+   "label": "Cobrador Asignado GG",
+   "options": "User"
   },
   {
    "fieldname": "enviar_aviso_de_vencimiento_de_factura",
@@ -871,8 +842,8 @@
    "label": "Jornada Laboral"
   },
   {
-   "fieldname": "dias_de_jornada_laboral",
-   "fieldtype": "Data",
+   "fieldname": "dias_jornada_laboral",
+   "fieldtype": "Int",
    "label": "D\u00edas de Jornada Laboral"
   },
   {
@@ -937,12 +908,12 @@
   },
   {
    "fieldname": "fecha_de_inicio_de_contrato_art",
-   "fieldtype": "Data",
+   "fieldtype": "Date",
    "label": "Fecha de Inicio de Contrato ART"
   },
   {
    "fieldname": "fecha_de_vencimiento_de_contrato_art",
-   "fieldtype": "Data",
+   "fieldtype": "Date",
    "label": "Fecha de Vencimiento de Contrato ART"
   },
   {
@@ -1081,6 +1052,36 @@
    "fieldtype": "Link",
    "label": "Condici\u00f3n de IVA",
    "options": "Tipo de Comprobante"
+  },
+  {
+   "fieldname": "trabaja_dias_sabado",
+   "fieldtype": "Select",
+   "label": "Trabaja D\u00edas Sabado",
+   "options": "Si\nNo"
+  },
+  {
+   "fieldname": "modalidad_de_liquidacion",
+   "fieldtype": "Data",
+   "label": "Modalidad de Liquidaci\u00f3n"
+  },
+  {
+   "depends_on": "eval:doc.agrupamiento_de_factura=='Si'",
+   "fieldname": "opciones_de_agrupamiento_factura",
+   "fieldtype": "Select",
+   "label": "Opciones de Agrupamiento Factura",
+   "options": "Opci\u00f3n 1\nOpci\u00f3n 2"
+  },
+  {
+   "depends_on": "eval:doc.agrupamiento_de_anexas=='Si'",
+   "fieldname": "opciones_de_agrupamiento_anexas",
+   "fieldtype": "Select",
+   "label": "Opciones de Agrupamiento Anexas",
+   "options": "Opci\u00f3n 1\nOpci\u00f3n 2"
+  },
+  {
+   "fieldname": "tipo_de_comprobante",
+   "fieldtype": "Data",
+   "label": "Tipo de Comprobante"
   }
  ],
  "icon": "fa fa-user",
@@ -1094,7 +1095,7 @@
    "link_fieldname": "party"
   }
  ],
- "modified": "2023-03-22 09:38:38.817720",
+ "modified": "2023-04-12 17:13:55.021020",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Customer",
