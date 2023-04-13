@@ -46,6 +46,7 @@ def get_party_details(inv):
 	return party_type, party
 
 def get_party_tax_withholding_details(inv, tax_withholding_category=None):
+	return None
 	pan_no = ''
 	parties = []
 	party_type, party = get_party_details(inv)
