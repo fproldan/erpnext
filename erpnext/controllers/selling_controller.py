@@ -571,7 +571,7 @@ class SellingController(StockController):
 		validate_item_type(self, "is_sales_item", "sales")
 
 	def validate_payment_schedule(self):
-		if hasattr(self, 'payment_schedule'):
+		if hasattr(self, 'payment_schedule') and self.payment_schedule:
 			total_portion = 0
 			for term in self.payment_schedule:
 				total_portion += flt(term.get('invoice_portion', 0))
