@@ -125,6 +125,9 @@ domains = {
 	'Shopify': 'erpnext.domains.shopify',
 	'Mercadopago': 'erpnext.domains.mercadopago',
 	'BOM': 'erpnext.domains.bom',
+	'Usuario de Ventas Reducido': 'erpnext.domains.usuario_ventas_reducido',
+	'Usuario de Soporte Reducido': 'erpnext.domains.usuario_soporte_reducido',
+	'Usuario de Proyecto Reducido':'erpnext.domains.usuario_proyecto_reducido',
 }
 
 website_generators = ["Item Group", "Website Item", "BOM", "Sales Partner",
@@ -273,11 +276,6 @@ standard_queries = {
 }
 
 doc_events = {
-	"*": {
-		"on_submit": "erpnext.healthcare.doctype.patient_history_settings.patient_history_settings.create_medical_record",
-		"on_update_after_submit": "erpnext.healthcare.doctype.patient_history_settings.patient_history_settings.update_medical_record",
-		"on_cancel": "erpnext.healthcare.doctype.patient_history_settings.patient_history_settings.delete_medical_record"
-	},
 	"Stock Entry": {
 		"on_submit": "erpnext.stock.doctype.material_request.material_request.update_completed_and_requested_qty",
 		"on_cancel": "erpnext.stock.doctype.material_request.material_request.update_completed_and_requested_qty"

@@ -7,7 +7,7 @@
  "doctype": "Report", 
  "idx": 0, 
  "is_standard": "Yes", 
- "modified": "2018-05-21 11:06:11.920622", 
+ "modified": "2018-05-22 11:06:11.920622", 
  "modified_by": "Administrator", 
  "module": "Selling", 
  "name": "Customers Without Any Sales Transactions", 
@@ -19,6 +19,9 @@
  "roles": [
   {
    "role": "Sales User"
+  }, 
+  {
+   "role": "Usuario Reducido Ventas"
   }, 
   {
    "role": "Sales Manager"

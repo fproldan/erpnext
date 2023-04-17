@@ -7,7 +7,7 @@
  "doctype": "Report", 
  "idx": 3, 
  "is_standard": "Yes", 
- "modified": "2017-02-24 20:09:56.200184", 
+ "modified": "2017-02-25 20:09:56.200184", 
  "modified_by": "Administrator", 
  "module": "Selling", 
  "name": "Available Stock for Packing Items", 
@@ -21,6 +21,9 @@
   }, 
   {
    "role": "Stock User"
+  }, 
+  {
+   "role": "Usuario Reducido Ventas"
   }, 
   {
    "role": "Sales User"

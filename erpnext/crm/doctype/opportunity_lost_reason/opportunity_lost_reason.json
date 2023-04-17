@@ -17,7 +17,7 @@
   }
  ],
  "links": [],
- "modified": "2021-05-12 19:59:04.213157",
+ "modified": "2021-05-13 19:59:04.213157",
  "modified_by": "Administrator",
  "module": "CRM",
  "name": "Opportunity Lost Reason",
@@ -44,6 +44,18 @@
    "read": 1,
    "report": 1,
    "role": "Sales User",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Reducido Ventas",
    "share": 1,
    "write": 1
   },
