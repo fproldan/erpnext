@@ -7,7 +7,7 @@
  "doctype": "Report",
  "idx": 3,
  "is_standard": "Yes",
- "modified": "2019-11-05 16:28:14.608904",
+ "modified": "2019-11-06 16:28:14.608904",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Item-wise Sales History",
@@ -19,6 +19,9 @@
  "roles": [
   {
    "role": "Sales User"
+  },
+  {
+   "role": "Usuario Reducido Ventas"
   },
   {
    "role": "Sales Manager"

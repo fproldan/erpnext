@@ -11,7 +11,7 @@
  "is_standard": "Yes",
  "json": "{\"add_total_row\": 0, \"sort_by\": \"Bin.projected_qty\", \"sort_order\": \"asc\", \"sort_by_next\": \"\", \"filters\": [[\"Bin\", \"projected_qty\", \"<\", \"0\"]], \"sort_order_next\": \"desc\", \"columns\": [[\"warehouse\", \"Bin\"], [\"item_code\", \"Bin\"], [\"actual_qty\", \"Bin\"], [\"ordered_qty\", \"Bin\"], [\"planned_qty\", \"Bin\"], [\"reserved_qty\", \"Bin\"], [\"projected_qty\", \"Bin\"]]}",
  "letter_head": "erer",
- "modified": "2022-08-23 09:05:45.006797",
+ "modified": "2022-08-24 09:05:45.006797",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Reporte Stock Bajo",
@@ -24,6 +24,9 @@
  "roles": [
   {
    "role": "Sales User"
+  },
+  {
+   "role": "Usuario Reducido Ventas"
   },
   {
    "role": "Purchase User"

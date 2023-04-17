@@ -80,7 +80,7 @@
  "icon": "fa fa-money",
  "idx": 1,
  "links": [],
- "modified": "2021-08-11 10:59:23.535060",
+ "modified": "2021-08-12 10:59:23.535060",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Sales Taxes and Charges Template",
@@ -92,6 +92,13 @@
    "read": 1,
    "report": 1,
    "role": "Sales User"
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Reducido Ventas"
   },
   {
    "create": 1,
