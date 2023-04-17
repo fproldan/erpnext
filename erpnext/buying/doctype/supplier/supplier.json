@@ -111,7 +111,8 @@
    "fieldname": "tax_id",
    "fieldtype": "Data",
    "label": "Tax ID",
-   "allow_in_quick_entry": 1
+   "allow_in_quick_entry": 1,
+   "mandatory_depends_on": "eval:doc.condicion_de_iva_proveedor && doc.condicion_de_iva_proveedor !='Consumidor Final'"
   },
   {
    "fieldname": "tax_category",
@@ -439,7 +440,7 @@
    "link_fieldname": "party"
   }
  ],
- "modified": "2021-09-09 19:37:56.522233",
+ "modified": "2021-09-09 21:37:56.522233",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Supplier",

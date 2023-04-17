@@ -146,7 +146,7 @@
  "idx": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2020-06-18 18:09:31.025214",
+ "modified": "2020-06-19 18:09:30.025214",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Cost Center",
@@ -163,12 +163,6 @@
    "role": "Accounts Manager",
    "share": 1,
    "write": 1
-  },
-  {
-   "export": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Auditor"
   },
   {
    "email": 1,

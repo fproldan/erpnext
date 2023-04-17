@@ -23,6 +23,11 @@ $.extend(erpnext, {
 	toggle_naming_series: function() {
 		if(cur_frm.fields_dict.naming_series) {
 			cur_frm.toggle_display("naming_series", cur_frm.doc.__islocal?true:false);
+			if (cur_frm.doc.doctype == 'Sales Invoice') {
+				cur_frm.toggle_display("naming_series", true);
+			} else {
+				cur_frm.toggle_display("naming_series", cur_frm.doc.__islocal?true:false);
+			}
 		}
 	},
 
@@ -82,6 +87,10 @@ $.extend(erpnext, {
 			});
 			frappe.set_route('Form','Journal Entry', journal_entry.name);
 		});
+	},
+
+	route_to_pending_reposts: (args) => {
+		frappe.set_route('List', 'Repost Item Valuation', args);
 	},
 
 	proceed_save_with_reminders_frequency_change: () => {

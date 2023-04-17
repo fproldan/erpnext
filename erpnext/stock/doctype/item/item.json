@@ -93,6 +93,7 @@
   "max_discount",
   "comisi\u00f3n_section",
   "porcentaje_comision",
+  "grant_commission",
   "column_break_113",
   "porcentaje_comision_especial",
   "comision_valido_hasta",
@@ -976,6 +977,12 @@
    "fieldtype": "Check",
    "label": "Published in Website",
    "read_only": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "grant_commission",
+   "fieldtype": "Check",
+   "label": "Grant Commission"
   }
  ],
  "icon": "fa fa-tag",
@@ -984,7 +991,7 @@
  "index_web_pages_for_search": 1,
  "links": [],
  "max_attachments": 0,
- "modified": "2022-07-12 15:39:59.534877",
+ "modified": "2022-07-13 15:39:59.534877",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Item",
