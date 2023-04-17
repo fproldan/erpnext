@@ -44,7 +44,7 @@
  "icon": "fa fa-bookmark",
  "idx": 1,
  "links": [],
- "modified": "2021-05-12 19:59:23.822425",
+ "modified": "2021-05-13 19:59:23.822425",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Designation",
@@ -64,6 +64,10 @@
   {
    "read": 1,
    "role": "Sales User"
+  },
+  {
+   "read": 1,
+   "role": "Usuario Reducido Ventas"
   }
  ],
  "quick_entry": 1,

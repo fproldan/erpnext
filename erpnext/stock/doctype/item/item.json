@@ -991,7 +991,7 @@
  "index_web_pages_for_search": 1,
  "links": [],
  "max_attachments": 0,
- "modified": "2022-07-11 15:39:59.534877",
+ "modified": "2022-07-13 15:39:59.534877",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Item",
@@ -1027,6 +1027,10 @@
   {
    "read": 1,
    "role": "Sales User"
+  },
+  {
+   "read": 1,
+   "role": "Usuario Reducido Ventas"
   },
   {
    "read": 1,

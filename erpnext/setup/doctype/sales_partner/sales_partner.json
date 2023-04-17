@@ -192,7 +192,7 @@
  "icon": "fa fa-user",
  "idx": 1,
  "links": [],
- "modified": "2021-05-12 20:01:44.106039",
+ "modified": "2021-05-13 20:01:44.106039",
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Sales Partner",
@@ -211,6 +211,13 @@
    "read": 1,
    "report": 1,
    "role": "Sales User"
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Reducido Ventas"
   },
   {
    "create": 1,

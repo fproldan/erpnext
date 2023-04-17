@@ -6,7 +6,7 @@
  "doctype": "Report",
  "idx": 0,
  "is_standard": "Yes",
- "modified": "2018-11-13 14:08:27.241332",
+ "modified": "2018-11-14 14:08:27.241332",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Pending SO Items For Purchase Request",
@@ -30,6 +30,9 @@
   },
   {
    "role": "Sales User"
+  },
+  {
+   "role": "Usuario Reducido Ventas"
   }
  ]
 }

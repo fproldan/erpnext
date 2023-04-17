@@ -7,7 +7,7 @@
  "doctype": "Report", 
  "idx": 0, 
  "is_standard": "Yes", 
- "modified": "2019-04-26 18:15:09.920739", 
+ "modified": "2019-04-27 18:15:09.920739", 
  "modified_by": "Administrator", 
  "module": "Selling", 
  "name": "Sales Partner Transaction Summary", 
@@ -19,6 +19,9 @@
  "roles": [
   {
    "role": "Sales User"
+  }, 
+  {
+   "role": "Usuario Reducido Ventas"
   }, 
   {
    "role": "Sales Manager"
