@@ -7,7 +7,7 @@
  "doctype": "Report", 
  "idx": 0, 
  "is_standard": "Yes", 
- "modified": "2018-07-19 12:08:07.400295", 
+ "modified": "2018-07-19 13:08:07.400295", 
  "modified_by": "Administrator", 
  "module": "Regional", 
  "name": "Eway Bill", 
@@ -24,6 +24,9 @@
   }, 
   {
    "role": "Sales User"
+  }, 
+  {
+   "role": "Usuario Reducido Ventas"
   }, 
   {
    "role": "Accounts User"

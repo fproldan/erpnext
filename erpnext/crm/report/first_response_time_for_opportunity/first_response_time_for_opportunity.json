@@ -8,7 +8,7 @@
  "idx": 0,
  "is_standard": "Yes",
  "letter_head": "Test 2",
- "modified": "2020-08-10 18:34:19.083872",
+ "modified": "2020-08-11 18:34:19.083872",
  "modified_by": "Administrator",
  "module": "CRM",
  "name": "First Response Time for Opportunity",
@@ -20,6 +20,9 @@
  "roles": [
   {
    "role": "Sales User"
+  },
+  {
+   "role": "Usuario Reducido Ventas"
   },
   {
    "role": "Sales Manager"

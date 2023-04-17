@@ -7,13 +7,16 @@
    "role": "Sales User"
   },
   {
+   "role": "Usuario Reducido Ventas"
+  },
+  {
    "role": "Stock Manager"
   },
   {
    "role": "Stock User"
   }
  ],
- "creation": "2020-06-01 12:44:42.589930",
+ "creation": "2020-06-02 12:44:42.589930",
  "docstatus": 0,
  "doctype": "Module Onboarding",
  "documentation_url": "https://docs.erpnext.com/docs/user/manual/en/selling",

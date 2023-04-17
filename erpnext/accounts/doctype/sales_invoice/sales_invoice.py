@@ -158,6 +158,8 @@ class SalesInvoice(SellingController):
 		if self.redeem_loyalty_points and self.loyalty_program and self.loyalty_points and not self.is_consolidated:
 			validate_loyalty_points(self, self.loyalty_points)
 
+		self.reset_default_field_value("set_warehouse", "items", "warehouse")
+
 	def validate_fixed_asset(self):
 		for d in self.get("items"):
 			if d.is_fixed_asset and d.meta.get_field("asset") and d.asset:
@@ -760,9 +762,7 @@ class SalesInvoice(SellingController):
 					timesheet.billing_amount = ts_doc.total_billable_amount
 
 	def update_timesheet_billing_for_project(self):
-		if not self.timesheets and self.project:
-			self.add_timesheet_data()
-		else:
+		if self.timesheets:
 			self.calculate_billing_amount_for_timesheet()
 
 	@frappe.whitelist()

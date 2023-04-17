@@ -1,6 +1,6 @@
 {
  "content": null,
- "creation": "2020-01-28 22:05:44.819140",
+ "creation": "2020-01-28 23:05:44.819140",
  "docstatus": 0,
  "doctype": "Page",
  "idx": 0,
@@ -20,6 +20,9 @@
   },
   {
    "role": "Sales User"
+  },
+  {
+   "role": "Usuario Reducido Ventas"
   },
   {
    "role": "Sales Manager"

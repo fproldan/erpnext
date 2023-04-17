@@ -9,7 +9,7 @@
  "filters": [],
  "idx": 0,
  "is_standard": "Yes",
- "modified": "2021-04-06 19:23:43.838623",
+ "modified": "2021-04-06 19:24:43.838623",
  "modified_by": "Administrator",
  "module": "Projects",
  "name": "Employee Hours Utilization Based On Timesheet",
@@ -22,6 +22,9 @@
   {
    "role": "Projects User"
   }, 
+  {
+   "role": "Usuario Reducido Proyecto"
+  },
   {
    "role": "Projects Manager"
   }
