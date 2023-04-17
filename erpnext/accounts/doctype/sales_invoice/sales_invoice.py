@@ -762,9 +762,7 @@ class SalesInvoice(SellingController):
 					timesheet.billing_amount = ts_doc.total_billable_amount
 
 	def update_timesheet_billing_for_project(self):
-		if not self.timesheets and self.project:
-			self.add_timesheet_data()
-		else:
+		if self.timesheets:
 			self.calculate_billing_amount_for_timesheet()
 
 	@frappe.whitelist()

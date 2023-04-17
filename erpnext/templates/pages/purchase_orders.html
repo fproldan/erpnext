@@ -1,0 +1,47 @@
+{% extends "templates/web.html" %}
+
+{% block title %}
+	{{ title or (_("{0} List").format(_(doctype))) }}
+{% endblock %}
+
+{% block header %}
+	<h1>{{ title or (_("{0} List").format(_(doctype))) }}</h1>
+{% endblock %}
+
+{% block breadcrumbs %}
+	{% include "templates/includes/breadcrumbs.html" %}
+{% endblock %}
+
+{% block page_content %}
+
+<div class="pt-2 pb-2">
+	<form action="" style="display: flex;">
+		<select name='company' class="form-control" style='max-width: 200px; display: inline-block; margin-right: 10px;' >
+			<option value="">{{ _('Company') }}</option>
+			{% for company in companies %}
+				<option value="{{ company.name }}" {% if company.name == frappe.form_dict.company %}selected{% endif %}>{{ company.name }}</option>
+			{% endfor %}
+		</select>
+		<input name='txt' placeholder="Documento" class='form-control' type='text' style='max-width: 200px; display: inline-block; margin-right: 10px;' value='{{ frappe.form_dict.txt or ''}}'>
+		<input name='transaction_date' class='form-control' type="text" placeholder="Fecha de Emisión" onfocus="(this.type='date')" onblur="(this.type='text')"  format="yyyy-mm-dd" style='max-width: 200px; display: inline-block; margin-right: 10px;' value='{{ frappe.form_dict.transaction_date or ''}}'>
+		<input name="schedule_date" type="text" placeholder="Solicitado Para" onfocus="(this.type='date')" onblur="(this.type='text')" name='schedule_date' class='form-control' format="yyyy-mm-dd" style='max-width: 200px; display: inline-block; margin-right: 10px;' value='{{ frappe.form_dict.schedule_date or ''}}'>
+		<input name='nuevo_pacto_entrega' class='form-control' type="text" placeholder="Nuevo Pacto de Entrega" onfocus="(this.type='date')" onblur="(this.type='text')" format="yyyy-mm-dd" style='max-width: 200px; display: inline-block; margin-right: 10px;' value='{{ frappe.form_dict.nuevo_pacto_entrega or ''}}'>
+		
+
+		<select name='status' class="form-control" style='max-width: 200px; display: inline-block; margin-right: 10px;' >
+			<option value="">{{ _('Estado') }}</option>
+				<option value="Pendiente de Confirmación" {% if "Pendiente de Confirmación" == frappe.form_dict.status %}selected{% endif %}>Pendiente de Confirmación</option>
+				<option value="Pendiente de Entrega" {% if "Pendiente de Entrega" == frappe.form_dict.status %}selected{% endif %}>Pendiente de Entrega</option>
+		</select>
+		<input type='submit' class='btn btn-sm btn-light btn-search' value="{{ _("Search") }}">
+	</form>
+</div>
+{% if introduction %}<p>{{ introduction }}</p>{% endif %}
+{% include list_template or "templates/includes/list/list.html" %}
+{% if list_footer %}{{ list_footer }}{% endif %}
+
+{% endblock %}
+
+{% block script %}
+<script>{% include "templates/pages/payments.js" %}</script>
+{% endblock %}

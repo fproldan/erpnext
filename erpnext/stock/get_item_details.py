@@ -75,9 +75,19 @@ def get_item_details(args, doc=None, for_validate=False, overwrite_warehouse=Tru
 		args['posting_date'] = doc.get('posting_date')
 		args['transaction_date'] = doc.get('transaction_date')
 
-	get_item_tax_template(args, item, out)
-	out["item_tax_rate"] = get_item_tax_map(args.company, args.get("item_tax_template") if out.get("item_tax_template") is None \
-		else out.get("item_tax_template"), as_json=True)
+	set_item_tax_template = True
+	
+	if doc and doc.get('doctype') in ["Purchase Invoice", "Material Request", "Purchase Order"] and doc.get('supplier'):
+		supplier = frappe.get_doc("Supplier", doc.get('supplier'))
+		condicion_iva = frappe.get_doc("Condicion de IVA", supplier.condicion_de_iva_proveedor)
+
+		if condicion_iva.codigo in ["6", "14", "12", "5", "8", "9", "2", "3", "10", "7", "13"]:
+			set_item_tax_template = False 
+
+	if set_item_tax_template:
+		get_item_tax_template(args, item, out)
+		out["item_tax_rate"] = get_item_tax_map(args.company, args.get("item_tax_template") if out.get("item_tax_template") is None \
+			else out.get("item_tax_template"), as_json=True)
 
 	get_party_item_code(args, item, out)
 

@@ -218,7 +218,10 @@ def get_transaction_list(doctype, company=None, txt=None, bill_no=None, posting_
             else:
                 filters.append(('customer', 'in', customers))
         elif suppliers:
-            filters.append(('party', 'in', suppliers))
+            if doctype == 'Payment Entry':
+                filters.append(('party', 'in', suppliers))
+            elif doctype == 'Purchase Invoice':
+                filters.append(('supplier', 'in', suppliers))
         elif not custom:
             return []
 

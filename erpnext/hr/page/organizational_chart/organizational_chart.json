@@ -4,20 +4,14 @@
  "docstatus": 0,
  "doctype": "Page",
  "idx": 0,
- "modified": "2021-05-25 10:53:18.201931",
+ "modified": "2023-01-11 12:27:47.936243",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "organizational-chart",
  "owner": "Administrator",
  "page_name": "Organizational Chart",
- "roles": [
-  {
-   "role": "HR User"
-  },
-  {
-   "role": "HR Manager"
-  }
- ],
+ "restrict_to_domain": "HR",
+ "roles": [],
  "script": null,
  "standard": "Yes",
  "style": null,

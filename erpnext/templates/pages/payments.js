@@ -7,6 +7,9 @@ frappe.ready(function() {
 		var data = $.extend(frappe.utils.get_query_params(), {
 			doctype: "{{ doctype }}",
 			txt: "{{ txt or '' }}",
+			company: "{{ company or '' }}",
+			bill_no: "{{ bill_no or '' }}",
+			posting_date: "{{ posting_date or '' }}",
 			limit_start: next_start,
 			pathname: location.pathname,
 		});

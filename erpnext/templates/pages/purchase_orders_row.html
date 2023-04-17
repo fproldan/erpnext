@@ -1,0 +1,52 @@
+<div class="web-list-item transaction-list-item">
+	<div class="row">
+		<div class="col-sm-4">
+			<a style="text-decoration: none !important;color: inherit;" href="/{{ pathname }}/{{ doc.name }}" data-toggle="tooltip" data-placement="top" title="{{ _(doc.status) }}">
+				{% if doc.status == 'Pendiente de Confirmacion' %}
+					<span class="indicator small grey">{{ doc.name }}</span>
+				{% elif doc.status == 'Unpaid' %}
+					<span class="indicator small orange">{{ doc.name }}</span>
+				{% elif doc.status == 'Paid' %}
+					<span class="indicator small green">{{ doc.name }}</span>
+				{% elif doc.status == 'Overdue' %}
+					<span class="indicator small red">{{ doc.name }}</span>
+				{% elif doc.status == 'Partly Paid' %}
+					<span class="indicator small yellow">{{ doc.name }}</span>
+				{% else %}
+					<span class="indicator small blue">{{ doc.name }}</span>
+				{% endif %}
+				<div class="small text-muted transaction-time"
+					title="{{ frappe.utils.format_datetime(doc.modified, "medium") }}">
+					{{ frappe.utils.global_date_format(doc.modified) }}
+				</div>
+			</a>
+		</div>
+		<div class="col-sm-3 small">
+			<b>Fecha de Emisión</b><br>
+			{{ frappe.utils.formatdate(doc.transaction_date, 'dd/MM/Y') }}
+			<hr style="margin-top:5px;margin-bottom:5px;" />
+			
+			<b>Solicitado Para</b><br>
+			{{ frappe.utils.formatdate(doc.schedule_date, 'dd/MM/Y') }}
+			<hr style="margin-top:5px;margin-bottom:5px;" />
+			
+			<b>Nuevo Pacto de Entrega</b><br>
+			{{ frappe.utils.formatdate(doc.nuevo_pacto_entrega, 'dd/MM/Y') }}
+		</div>
+		<div class="col-sm-2">
+			{% for warehouse in doc.get_warehouses() %}
+				<span class="small">{{ warehouse }}</span><br>
+			{% endfor %}
+		</div>
+		<div class="col-sm-2">
+			{{ doc.get_formatted("grand_total") }}
+		</div>
+		<div class="col-sm-1">
+			<button onclick="javascript:window.open('/printview?doctype={{ doc.doctype}}&name={{ doc.name }}&format=Standard', '_blank');" class="text-muted btn btn-default icon-btn" title="Imprimir" data-original-title="Impresión">
+				<svg class="icon icon-sm" style="">
+					<use class="" href="#icon-printer"></use>
+				</svg>
+			</button>
+		</div>
+	</div>
+</div>

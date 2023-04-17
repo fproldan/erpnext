@@ -359,6 +359,9 @@ class PurchaseOrder(BuyingController):
 		else:
 			self.db_set("per_received", 0, update_modified=False)
 
+	def get_warehouses(self):
+		return list(set([i.warehouse for i in self.items]))
+
 
 @frappe.whitelist()
 def establecer_motivo_de_rechazo(motivo_de_rechazo, name):
@@ -443,6 +446,78 @@ def make_purchase_receipt(source_name, target_doc=None):
 	}, target_doc, set_missing_values)
 
 	return doc
+
+@frappe.whitelist()
+def create_purchase_invoices(names):
+	names = json.loads(names)
+
+	purchase_orders = [frappe.get_doc("Purchase Order", name) for name in names]
+
+	suppliers = [po.supplier for po in purchase_orders]
+	per_billed = [po.per_billed for po in purchase_orders]
+	companies = [po.company for po in purchase_orders]
+
+	billed = []
+	not_submited = []
+	status_close = []
+	status_on_hold = []
+	status_pendiente = []
+	errors = ''
+
+	if len(list(set(suppliers))) > 1:
+		errors += 'Las Ordenes de Compra deben pertenecer al mismo proveedor<br>'
+
+	if len(list(set(companies))) > 1:
+		errors += 'Las Ordenes de Compra deben pertenecer a la misma compañia<br>'
+
+	for po in purchase_orders:
+		if flt(po.per_billed >= 100):
+			billed.append(po.name)
+
+		if po.docstatus != 1:
+			not_submited.append(po.name)
+
+		if po.status in ["Closed"]:
+			status_close.append(po.name)
+
+		if po.status in ["On Hold"]:
+			status_on_hold.append(po.name)
+
+		if po.status in ["Pendiente de Confirmacion"]:
+			status_pendiente.append(po.name)
+
+	if not_submited:
+		pos_not_submited = ', '.join(not_submited)
+		errors += f'Las Ordenes de Compra {pos_not_submited} no estan validadas<br>'
+	
+	if status_close:
+		pos_status_close = ', '.join(status_close)
+		errors += f'Las Ordenes de Compra {pos_status_close} estan cerradas<br>'
+
+	if status_on_hold:
+		pos_status_on_hold = ', '.join(status_on_hold)
+		errors += f'Las Ordenes de Compra {pos_status_on_hold} estan en espera<br>'
+
+	if status_pendiente:
+		pos_status_pendiente = ', '.join(status_pendiente)
+		errors += f'Las Ordenes de Compra {pos_status_pendiente} estan pendientes de confirmación<br>'
+
+	if billed:
+		pos_billed = ', '.join(billed)
+		errors += f'Las Ordenes de Compra {pos_billed} ya estan facturadas'
+
+	if errors:
+		frappe.throw(errors)
+
+	purchase_invoice = get_mapped_purchase_invoice(purchase_orders[0].name, None)
+
+	for po in purchase_orders[1:]:
+		purchase_invoice = get_mapped_purchase_invoice(po.name, purchase_invoice)
+
+	purchase_invoice.save()
+	return purchase_invoice
+
+
 
 @frappe.whitelist()
 def make_purchase_invoice(source_name, target_doc=None):
@@ -592,6 +667,15 @@ def update_status(status, name):
 	po = frappe.get_doc("Purchase Order", name)
 	po.update_status(status)
 	po.update_delivered_qty_in_sales_order()
+
+@frappe.whitelist()
+def approve(name):
+	po = frappe.get_doc("Purchase Order", name)
+	po.aprobado_por_proveedor = 1
+	po.save(ignore_permissions=True)
+	frappe.db.commit()
+	po.set_status(update=True)
+	frappe.db.commit()
 
 @frappe.whitelist()
 def make_inter_company_sales_order(source_name, target_doc=None):
