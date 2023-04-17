@@ -81,6 +81,7 @@ def install(country=None):
 		{'doctype': 'Domain', 'domain': 'Shopify'},
 		{'doctype': 'Domain', 'domain': 'Mercadopago'},
 		{'doctype': 'Domain', 'domain': 'BOM'},
+		{'doctype': 'Domain', 'domain': 'Compreahora'},
 		{'doctype': 'Domain', 'domain': 'Usuario de Ventas Reducido'},
 		{'doctype': 'Domain', 'domain': 'Usuario de Soporte Reducido'},
 		{'doctype': 'Domain', 'domain': 'Usuario de Proyecto Reducido'},
