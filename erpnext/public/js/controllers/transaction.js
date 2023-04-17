@@ -266,8 +266,8 @@ erpnext.TransactionController = erpnext.taxes_and_totals.extend({
 			'Quotation', 'Request for Quotation', 'Sales Order', 'Stock Entry', 'Stock Reconciliation',
 			'Supplier Quotation', 'Timesheet', 'Warranty Claim', 'Work Order'
 		];
-		if(!in_list(doctype_list, this.frm.doc.doctype)) { return; }
 		const me = this;
+		if(!in_list(doctype_list, me.frm.doc.doctype) || me.frm.doc.__islocal != 1) { return; }
 		frappe.call({
 			type: "GET",
 			method: "erpnext.setup.doctype.naming_series.naming_series.get_naming_series_for_company",

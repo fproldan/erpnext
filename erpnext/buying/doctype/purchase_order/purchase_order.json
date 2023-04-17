@@ -16,6 +16,7 @@
   "supplier_name",
   "apply_tds",
   "tax_withholding_category",
+  "aprobado_por_proveedor",
   "column_break1",
   "company",
   "transaction_date",
@@ -914,9 +915,9 @@
    "collapsible": 1,
    "fieldname": "more_info",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "More Information",
-   "oldfieldtype": "Section Break",
-   "hidden": 1
+   "oldfieldtype": "Section Break"
   },
   {
    "default": "Draft",
@@ -927,7 +928,7 @@
    "no_copy": 1,
    "oldfieldname": "status",
    "oldfieldtype": "Select",
-   "options": "\nDraft\nOn Hold\nTo Receive and Bill\nTo Bill\nTo Receive\nCompleted\nCancelled\nClosed\nDelivered",
+   "options": "\nDraft\nOn Hold\nPendiente de Confirmacion\nTo Receive and Bill\nTo Bill\nTo Receive\nCompleted\nCancelled\nClosed\nDelivered",
    "print_hide": 1,
    "read_only": 1,
    "reqd": 1,
@@ -1180,13 +1181,22 @@
    "in_standard_filter": 1,
    "label": "Tipo de Orden",
    "options": "\nAbierta\nCerrada"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "fieldname": "aprobado_por_proveedor",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Aprobado por Proveedor",
+   "read_only": 1
   }
  ],
  "icon": "fa fa-file-text",
  "idx": 105,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-08-04 10:21:34.510200",
+ "modified": "2023-01-03 12:54:41.735082",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Purchase Order",

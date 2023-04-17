@@ -763,7 +763,8 @@
    "hidden": 1,
    "hide_days": 1,
    "hide_seconds": 1,
-   "label": "Time Sheet List"
+   "label": "Time Sheet List",
+   "hidden": 1
   },
   {
    "fieldname": "timesheets",
@@ -772,7 +773,8 @@
    "hide_seconds": 1,
    "label": "Time Sheets",
    "options": "Sales Invoice Timesheet",
-   "print_hide": 1
+   "print_hide": 1,
+   "hidden": 1
   },
   {
    "default": "0",
@@ -783,7 +785,8 @@
    "label": "Total Billing Amount",
    "options": "currency",
    "print_hide": 1,
-   "read_only": 1
+   "read_only": 1,
+   "hidden": 1
   },
   {
    "fieldname": "section_break_30",
@@ -1056,7 +1059,8 @@
    "fieldtype": "Section Break",
    "hide_days": 1,
    "hide_seconds": 1,
-   "label": "Additional Discount"
+   "label": "Additional Discount",
+   "hidden": 1
   },
   {
    "default": "Grand Total",
@@ -1535,7 +1539,8 @@
    "fieldtype": "Section Break",
    "hide_days": 1,
    "hide_seconds": 1,
-   "label": "Printing Settings"
+   "label": "Printing Settings",
+   "hidden": 1
   },
   {
    "allow_on_submit": 1,
@@ -1770,7 +1775,8 @@
    "label": "Commission",
    "oldfieldtype": "Section Break",
    "options": "fa fa-group",
-   "print_hide": 1
+   "print_hide": 1,
+   "hidden": 1
   },
   {
    "fieldname": "sales_partner",
@@ -1821,7 +1827,8 @@
    "hide_days": 1,
    "hide_seconds": 1,
    "label": "Sales Team",
-   "print_hide": 1
+   "print_hide": 1,
+   "hidden": 1
   },
   {
    "allow_on_submit": 1,
@@ -1839,10 +1846,10 @@
    "collapsible": 1,
    "fieldname": "subscription_section",
    "fieldtype": "Section Break",
-   "hidden": 1,
    "hide_days": 1,
    "hide_seconds": 1,
-   "label": "Subscription Section"
+   "label": "Subscription Section",
+   "hidden": 1
   },
   {
    "allow_on_submit": 1,
@@ -2036,7 +2043,7 @@
    "link_fieldname": "consolidated_invoice"
   }
  ],
- "modified": "2022-11-15 12:26:31.967233",
+ "modified": "2022-04-22 14:23:44.271169",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Sales Invoice",
@@ -2056,7 +2063,8 @@
    "role": "Accounts Manager",
    "share": 1,
    "submit": 1,
-   "write": 1
+   "write": 1,
+   "export": 1
   },
   {
    "amend": 1,

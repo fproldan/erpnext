@@ -12,42 +12,132 @@
  "field_order": [
   "basic_info",
   "naming_series",
-  "salutation",
   "customer_name",
-  "gender",
   "customer_type",
-  "pan",
   "tax_withholding_category",
   "default_bank_account",
   "lead_name",
   "opportunity_name",
   "image",
+  "domicilio_de_explotacion",
+  "grupo_empresa",
+  "admite_visita",
+  "envio_de_novedades",
   "column_break0",
-  "account_manager",
   "customer_group",
   "territory",
+  "estado",
   "tax_id",
-  "estado_cuit",
   "tax_category",
   "so_required",
   "dn_required",
-  "disabled",
   "fecha_de_alta",
   "fecha_de_baja",
   "motivo_de_baja",
   "is_internal_customer",
   "represents_company",
+  "address_contacts",
+  "address_html",
+  "column_break1",
+  "contact_html",
+  "datos_pagos_de_haberes_section",
+  "lugar_de_pago",
+  "modalidad_de_pago_en_planta",
+  "horario_de_pago",
+  "bancarizable",
+  "column_break_41",
+  "posible_banco_de_acreditacion",
+  "posible_sucursal",
+  "banco",
+  "convenio_bancario",
+  "datos_facturacion_section",
+  "tipo_de_comprobante",
+  "condicion_de_iva_facturacion",
+  "fecha_de_facturacion",
+  "envia_pre_factura",
+  "verifica_factura",
+  "verifica_anexa",
+  "leyenda",
+  "agrupamiento_de_factura",
+  "opciones_de_agrupamiento_factura",
+  "agrupamiento_de_anexas",
+  "opciones_de_agrupamiento_anexas",
+  "column_break_55",
+  "registrar_bonificacion_de_coeficiente",
+  "forma_de_envio",
+  "documentacion_a_enviar",
+  "cliente_solicita_oc",
+  "forma_de_envio_de_fc",
+  "refacturar_a_otro_cliente",
+  "descripcion_de_la_leyenda",
+  "datos_gestion_de_cobro_section",
+  "condiciones_de_pago",
+  "plazo_promedio_de_cobranza",
+  "estado_de_cliente",
+  "plazo_de_pago",
+  "limite_de_credito",
+  "disabled",
+  "column_break_69",
+  "cobrador_asignado_gg",
+  "enviar_aviso_de_vencimiento_de_factura",
+  "lugares_de_cobro",
+  "dia_horario_de_cobro",
+  "datos_para_la_liquidacion_section",
+  "tipo_de_liquidacion",
+  "comentarios_liquidacion_armado_conceptos",
+  "remuneracion_conformada",
+  "fecha_de_corte",
+  "jornada_laboral",
+  "trabaja_dias_sabado",
+  "dias_jornada_laboral",
+  "politica_de_anticipo",
+  "montos_de_anticipo",
+  "fecha_probable_de_acreditacion",
+  "anticipo_de_sac",
+  "incluye_anticipo",
+  "centro_de_costos",
+  "detalle_de_documentacion_de_ingreso",
+  "column_break_86",
+  "obra_social",
+  "codigo_de_obra_social",
+  "fecha_de_pago_de_haberes",
+  "adhiere_a_recibo_digital",
+  "nombre_art",
+  "fecha_de_inicio_de_contrato_art",
+  "fecha_de_vencimiento_de_contrato_art",
+  "numero_de_contrato_poliza",
+  "contacto_telefono_de_emergencia_art",
+  "usuario_art",
+  "clave_art",
+  "fecha_de_envio_sicoss",
+  "envio_de_preliquidacion",
+  "modalidad_de_liquidacion",
+  "decreto_762",
+  "art_decreto_762",
+  "art_decreto_762_fijo",
+  "column_break_105",
+  "actividad_762",
+  "tipo_de_empleador_762",
+  "datos_impositivos_section",
+  "estado_cuit",
+  "situacion_iva",
+  "exclusiones_de_percepciones",
+  "contribuyente_local_iibb",
+  "condicion_de_ingresos_brutos",
+  "column_break_112",
+  "cm05",
+  "decreta_633_18",
+  "descripcion_de_la_actividad_comercial",
+  "industry",
+  "datos_oferta_seccion",
+  "datos_para_cotizar",
+  "account_manager",
   "allowed_to_transact_section",
   "companies",
   "currency_and_price_list",
   "default_currency",
   "column_break_14",
   "default_price_list",
-  "address_contacts",
-  "address_html",
-  "website",
-  "column_break1",
-  "contact_html",
   "primary_address_and_contact_detail",
   "customer_primary_contact",
   "mobile_no",
@@ -63,8 +153,6 @@
   "more_info",
   "customer_details",
   "column_break_45",
-  "market_segment",
-  "industry",
   "language",
   "is_frozen",
   "column_break_38",
@@ -94,32 +182,16 @@
    "set_only_once": 1
   },
   {
-   "depends_on": "eval:doc.customer_type!='Company'",
-   "fieldname": "salutation",
-   "fieldtype": "Link",
-   "hidden": 1,
-   "label": "Salutation",
-   "options": "Salutation"
-  },
-  {
    "bold": 1,
    "fieldname": "customer_name",
    "fieldtype": "Data",
    "in_global_search": 1,
-   "label": "Full Name",
+   "label": "Raz\u00f3n Social",
    "no_copy": 1,
    "oldfieldname": "customer_name",
    "oldfieldtype": "Data",
    "reqd": 1,
    "search_index": 1
-  },
-  {
-   "depends_on": "eval:doc.customer_type != 'Company'",
-   "fieldname": "gender",
-   "fieldtype": "Link",
-   "hidden": 1,
-   "label": "Gender",
-   "options": "Gender"
   },
   {
    "default": "Company",
@@ -282,11 +354,6 @@
    "read_only": 1
   },
   {
-   "fieldname": "website",
-   "fieldtype": "Data",
-   "label": "Website"
-  },
-  {
    "fieldname": "column_break1",
    "fieldtype": "Column Break",
    "width": "50%"
@@ -388,18 +455,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "market_segment",
-   "fieldtype": "Link",
-   "label": "Market Segment",
-   "options": "Market Segment"
-  },
-  {
-   "fieldname": "industry",
-   "fieldtype": "Link",
-   "label": "Industry",
-   "options": "Industry Type"
-  },
-  {
    "default": "0",
    "fieldname": "is_frozen",
    "fieldtype": "Check",
@@ -495,11 +550,6 @@
    "label": "Allow Sales Invoice Creation Without Delivery Note"
   },
   {
-   "fieldname": "pan",
-   "fieldtype": "Data",
-   "label": "PAN"
-  },
-  {
    "fieldname": "tax_withholding_category",
    "fieldtype": "Link",
    "label": "Tax Withholding Category",
@@ -523,7 +573,8 @@
    "default": "Today",
    "fieldname": "fecha_de_alta",
    "fieldtype": "Date",
-   "label": "Fecha de alta"
+   "label": "Fecha de alta",
+   "reqd": 1
   },
   {
    "fieldname": "fecha_de_baja",
@@ -534,6 +585,503 @@
    "fieldname": "motivo_de_baja",
    "fieldtype": "Data",
    "label": "Motivo de baja"
+  },
+  {
+   "fieldname": "grupo_empresa",
+   "fieldtype": "Link",
+   "label": "Grupo Empresa",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "domicilio_de_explotacion",
+   "fieldtype": "Link",
+   "label": "Domicilio de Explotaci\u00f3n",
+   "options": "Address",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "admite_visita",
+   "fieldtype": "Check",
+   "label": "Admite Visita"
+  },
+  {
+   "default": "0",
+   "fieldname": "envio_de_novedades",
+   "fieldtype": "Check",
+   "label": "Env\u00edo de Novedades"
+  },
+  {
+   "fieldname": "datos_pagos_de_haberes_section",
+   "fieldtype": "Section Break",
+   "label": "Datos Pagos de Haberes"
+  },
+  {
+   "fieldname": "lugar_de_pago",
+   "fieldtype": "Data",
+   "label": "Lugar de Pago"
+  },
+  {
+   "fieldname": "modalidad_de_pago_en_planta",
+   "fieldtype": "Select",
+   "label": "Modalidad de Pago en Planta",
+   "options": "Si\nNo"
+  },
+  {
+   "fieldname": "horario_de_pago",
+   "fieldtype": "Data",
+   "label": "Horario de Pago"
+  },
+  {
+   "default": "0",
+   "fieldname": "bancarizable",
+   "fieldtype": "Check",
+   "label": "Bancarizable"
+  },
+  {
+   "fieldname": "posible_banco_de_acreditacion",
+   "fieldtype": "Link",
+   "label": "Posible Banco de Acreditaci\u00f3n",
+   "options": "Bank"
+  },
+  {
+   "fieldname": "posible_sucursal",
+   "fieldtype": "Data",
+   "label": "Posible Sucursal"
+  },
+  {
+   "fieldname": "banco",
+   "fieldtype": "Link",
+   "label": "Banco",
+   "options": "Bank"
+  },
+  {
+   "fieldname": "convenio_bancario",
+   "fieldtype": "Data",
+   "label": "Convenio Bancario"
+  },
+  {
+   "fieldname": "column_break_41",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "datos_facturacion_section",
+   "fieldtype": "Section Break",
+   "label": "Datos Facturaci\u00f3n"
+  },
+  {
+   "fieldname": "fecha_de_facturacion",
+   "fieldtype": "Date",
+   "label": "Fecha de Facturaci\u00f3n"
+  },
+  {
+   "fieldname": "envia_pre_factura",
+   "fieldtype": "Select",
+   "label": "Env\u00eda pre-factura",
+   "options": "Si\nNo"
+  },
+  {
+   "fieldname": "verifica_factura",
+   "fieldtype": "Select",
+   "label": "Verifica Factura",
+   "options": "Si\nNo"
+  },
+  {
+   "fieldname": "verifica_anexa",
+   "fieldtype": "Select",
+   "label": "Verifica Anexa",
+   "options": "Si\nNo"
+  },
+  {
+   "fieldname": "leyenda",
+   "fieldtype": "Select",
+   "label": "Leyenda",
+   "options": "Si\nNo"
+  },
+  {
+   "fieldname": "agrupamiento_de_factura",
+   "fieldtype": "Select",
+   "label": "Agrupamiento de Factura",
+   "options": "Si\nNo"
+  },
+  {
+   "fieldname": "agrupamiento_de_anexas",
+   "fieldtype": "Select",
+   "label": "Agrupamiento de Anexas",
+   "options": "Si\nNo"
+  },
+  {
+   "fieldname": "registrar_bonificacion_de_coeficiente",
+   "fieldtype": "Data",
+   "label": "Registrar Bonificacion de Coeficiente"
+  },
+  {
+   "fieldname": "forma_de_envio",
+   "fieldtype": "Data",
+   "label": "Forma de Env\u00edo"
+  },
+  {
+   "fieldname": "documentacion_a_enviar",
+   "fieldtype": "Select",
+   "label": "Documentaci\u00f3n a Enviar",
+   "options": "Factura\nAnexa\nDocumentaci\u00f3n Adicional"
+  },
+  {
+   "fieldname": "cliente_solicita_oc",
+   "fieldtype": "Select",
+   "label": "Cliente Solicita OC",
+   "options": "Si\nNo"
+  },
+  {
+   "fieldname": "forma_de_envio_de_fc",
+   "fieldtype": "Select",
+   "label": "Forma de Env\u00edo de FC",
+   "options": "Portal\nMail"
+  },
+  {
+   "fieldname": "refacturar_a_otro_cliente",
+   "fieldtype": "Data",
+   "label": "Refacturar a Otro Cliente"
+  },
+  {
+   "fieldname": "descripcion_de_la_leyenda",
+   "fieldtype": "Data",
+   "label": "Descripci\u00f3n de la Leyenda"
+  },
+  {
+   "fieldname": "column_break_55",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "datos_gestion_de_cobro_section",
+   "fieldtype": "Section Break",
+   "label": "Datos Gesti\u00f3n de Cobro"
+  },
+  {
+   "fieldname": "condiciones_de_pago",
+   "fieldtype": "Data",
+   "label": "Condiciones de Pago"
+  },
+  {
+   "default": "6 Meses",
+   "fieldname": "plazo_promedio_de_cobranza",
+   "fieldtype": "Data",
+   "label": "Plazo Promedio de Cobranza"
+  },
+  {
+   "fieldname": "estado_de_cliente",
+   "fieldtype": "Select",
+   "label": "Estado de Cliente",
+   "options": "Se Bloquea\nNo Bloquea"
+  },
+  {
+   "fieldname": "plazo_de_pago",
+   "fieldtype": "Data",
+   "label": "Plazo de Pago"
+  },
+  {
+   "fieldname": "limite_de_credito",
+   "fieldtype": "Data",
+   "label": "L\u00edmite de Cr\u00e9dito"
+  },
+  {
+   "fieldname": "column_break_69",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "cobrador_asignado_gg",
+   "fieldtype": "Link",
+   "label": "Cobrador Asignado GG",
+   "options": "User"
+  },
+  {
+   "fieldname": "enviar_aviso_de_vencimiento_de_factura",
+   "fieldtype": "Select",
+   "label": "Enviar Aviso de Vencimiento de Factura?",
+   "options": "Si\nNo"
+  },
+  {
+   "fieldname": "lugares_de_cobro",
+   "fieldtype": "Data",
+   "label": "Lugares de Cobro"
+  },
+  {
+   "fieldname": "dia_horario_de_cobro",
+   "fieldtype": "Data",
+   "label": "D\u00eda y Horario de Cobro"
+  },
+  {
+   "fieldname": "datos_para_la_liquidacion_section",
+   "fieldtype": "Section Break",
+   "label": "Datos para la Liquidaci\u00f3n"
+  },
+  {
+   "fieldname": "tipo_de_liquidacion",
+   "fieldtype": "Data",
+   "label": "Tipo de Liquidaci\u00f3n (J,M,D)"
+  },
+  {
+   "fieldname": "comentarios_liquidacion_armado_conceptos",
+   "fieldtype": "Data",
+   "label": "Comentarios Liquidaci\u00f3n / Armado de Conceptos"
+  },
+  {
+   "fieldname": "remuneracion_conformada",
+   "fieldtype": "Data",
+   "label": "Remuneraci\u00f3n Conformada"
+  },
+  {
+   "fieldname": "fecha_de_corte",
+   "fieldtype": "Data",
+   "label": "Fecha de Corte"
+  },
+  {
+   "fieldname": "jornada_laboral",
+   "fieldtype": "Data",
+   "label": "Jornada Laboral"
+  },
+  {
+   "fieldname": "dias_jornada_laboral",
+   "fieldtype": "Int",
+   "label": "D\u00edas de Jornada Laboral"
+  },
+  {
+   "fieldname": "politica_de_anticipo",
+   "fieldtype": "Data",
+   "label": "Pol\u00edtica de Anticipo"
+  },
+  {
+   "fieldname": "montos_de_anticipo",
+   "fieldtype": "Data",
+   "label": "Montos de Anticipo"
+  },
+  {
+   "fieldname": "fecha_probable_de_acreditacion",
+   "fieldtype": "Data",
+   "label": "Fecha Probable de Acreditaci\u00f3n"
+  },
+  {
+   "fieldname": "anticipo_de_sac",
+   "fieldtype": "Data",
+   "label": "Anticipo de SAC"
+  },
+  {
+   "fieldname": "incluye_anticipo",
+   "fieldtype": "Data",
+   "label": "Incluye Anticipo"
+  },
+  {
+   "fieldname": "centro_de_costos",
+   "fieldtype": "Data",
+   "label": "Centro de Costos"
+  },
+  {
+   "fieldname": "detalle_de_documentacion_de_ingreso",
+   "fieldtype": "Data",
+   "label": "Detalle de Documentaci\u00f3n de Ingreso"
+  },
+  {
+   "fieldname": "obra_social",
+   "fieldtype": "Data",
+   "label": "Obra Social"
+  },
+  {
+   "fieldname": "codigo_de_obra_social",
+   "fieldtype": "Data",
+   "label": "C\u00f3digo de Obra Social"
+  },
+  {
+   "fieldname": "fecha_de_pago_de_haberes",
+   "fieldtype": "Data",
+   "label": "Fecha de Pago de Haberes"
+  },
+  {
+   "fieldname": "adhiere_a_recibo_digital",
+   "fieldtype": "Data",
+   "label": "Adhiere a Recibo Digital"
+  },
+  {
+   "fieldname": "nombre_art",
+   "fieldtype": "Data",
+   "label": "Nombre ART"
+  },
+  {
+   "fieldname": "fecha_de_inicio_de_contrato_art",
+   "fieldtype": "Date",
+   "label": "Fecha de Inicio de Contrato ART"
+  },
+  {
+   "fieldname": "fecha_de_vencimiento_de_contrato_art",
+   "fieldtype": "Date",
+   "label": "Fecha de Vencimiento de Contrato ART"
+  },
+  {
+   "fieldname": "numero_de_contrato_poliza",
+   "fieldtype": "Data",
+   "label": "N\u00famero de Contrato / P\u00f3liza"
+  },
+  {
+   "fieldname": "contacto_telefono_de_emergencia_art",
+   "fieldtype": "Data",
+   "label": "Contacto Tel\u00e9fono de Emergencia ART"
+  },
+  {
+   "fieldname": "usuario_art",
+   "fieldtype": "Data",
+   "label": "Usuario ART"
+  },
+  {
+   "fieldname": "clave_art",
+   "fieldtype": "Data",
+   "label": "Clave ART"
+  },
+  {
+   "fieldname": "fecha_de_envio_sicoss",
+   "fieldtype": "Data",
+   "label": "Fecha de Env\u00edo SICOSS"
+  },
+  {
+   "fieldname": "envio_de_preliquidacion",
+   "fieldtype": "Data",
+   "label": "Env\u00edo de Preliquidaci\u00f3n"
+  },
+  {
+   "fieldname": "column_break_86",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "decreto_762",
+   "fieldtype": "Section Break",
+   "label": "Decreto 762"
+  },
+  {
+   "fieldname": "art_decreto_762",
+   "fieldtype": "Data",
+   "label": "ART % decreto 762"
+  },
+  {
+   "fieldname": "art_decreto_762_fijo",
+   "fieldtype": "Data",
+   "label": "ART decreto 762 Fijo"
+  },
+  {
+   "fieldname": "column_break_105",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "actividad_762",
+   "fieldtype": "Data",
+   "label": "Actividad 762"
+  },
+  {
+   "fieldname": "tipo_de_empleador_762",
+   "fieldtype": "Data",
+   "label": "Tipo de Empleador 762"
+  },
+  {
+   "fieldname": "datos_impositivos_section",
+   "fieldtype": "Section Break",
+   "label": "Datos Impositivos"
+  },
+  {
+   "fieldname": "situacion_iva",
+   "fieldtype": "Data",
+   "label": "Situaci\u00f3n IVA"
+  },
+  {
+   "fieldname": "exclusiones_de_percepciones",
+   "fieldtype": "Data",
+   "label": "Exclusiones de Percepciones"
+  },
+  {
+   "fieldname": "contribuyente_local_iibb",
+   "fieldtype": "Select",
+   "label": "Contribuyente Local IIBB",
+   "options": "Si\nNo"
+  },
+  {
+   "fieldname": "condicion_de_ingresos_brutos",
+   "fieldtype": "Data",
+   "label": "Condici\u00f3n de Ingresos Brutos"
+  },
+  {
+   "fieldname": "cm05",
+   "fieldtype": "Data",
+   "label": "CM05"
+  },
+  {
+   "fieldname": "decreta_633_18",
+   "fieldtype": "Data",
+   "label": "Decreta 633/18"
+  },
+  {
+   "fieldname": "descripcion_de_la_actividad_comercial",
+   "fieldtype": "Data",
+   "label": "Descripci\u00f3n de la Actividad Comercial"
+  },
+  {
+   "fieldname": "industry",
+   "fieldtype": "Link",
+   "label": "Rubro Econ\u00f3mico",
+   "options": "Industry Type"
+  },
+  {
+   "fieldname": "column_break_112",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "datos_oferta_seccion",
+   "fieldtype": "Section Break",
+   "label": "Datos Oferta"
+  },
+  {
+   "fieldname": "datos_para_cotizar",
+   "fieldtype": "Data",
+   "label": "Datos para Cotizar"
+  },
+  {
+   "fieldname": "estado",
+   "fieldtype": "Select",
+   "label": "Estado",
+   "options": "Activo\nNo Reactivable\nNo Activo",
+   "reqd": 1
+  },
+  {
+   "fieldname": "condicion_de_iva_facturacion",
+   "fieldtype": "Link",
+   "label": "Condici\u00f3n de IVA",
+   "options": "Tipo de Comprobante"
+  },
+  {
+   "fieldname": "trabaja_dias_sabado",
+   "fieldtype": "Select",
+   "label": "Trabaja D\u00edas Sabado",
+   "options": "Si\nNo"
+  },
+  {
+   "fieldname": "modalidad_de_liquidacion",
+   "fieldtype": "Data",
+   "label": "Modalidad de Liquidaci\u00f3n"
+  },
+  {
+   "depends_on": "eval:doc.agrupamiento_de_factura=='Si'",
+   "fieldname": "opciones_de_agrupamiento_factura",
+   "fieldtype": "Select",
+   "label": "Opciones de Agrupamiento Factura",
+   "options": "Opci\u00f3n 1\nOpci\u00f3n 2"
+  },
+  {
+   "depends_on": "eval:doc.agrupamiento_de_anexas=='Si'",
+   "fieldname": "opciones_de_agrupamiento_anexas",
+   "fieldtype": "Select",
+   "label": "Opciones de Agrupamiento Anexas",
+   "options": "Opci\u00f3n 1\nOpci\u00f3n 2"
+  },
+  {
+   "fieldname": "tipo_de_comprobante",
+   "fieldtype": "Data",
+   "label": "Tipo de Comprobante"
   }
  ],
  "icon": "fa fa-user",
@@ -547,7 +1095,7 @@
    "link_fieldname": "party"
   }
  ],
- "modified": "2022-05-17 12:14:27.279401",
+ "modified": "2023-04-12 17:13:55.021020",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Customer",
@@ -626,6 +1174,7 @@
   }
  ],
  "quick_entry": 1,
+ "route": "app/doctype/Customer",
  "search_fields": "customer_name,customer_group,territory, mobile_no,primary_address",
  "show_name_in_global_search": 1,
  "sort_field": "modified",
