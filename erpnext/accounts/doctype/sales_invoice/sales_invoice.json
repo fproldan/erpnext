@@ -182,6 +182,7 @@
   "sales_team_section_break",
   "sales_partner",
   "column_break10",
+  "amount_eligible_for_commission",
   "commission_rate",
   "total_commission",
   "section_break2",
@@ -226,8 +227,7 @@
    "oldfieldtype": "Select",
    "options": "ACC-SINV-.YYYY.-\nACC-SINV-RET-.YYYY.-",
    "print_hide": 1,
-   "reqd": 1,
-   "set_only_once": 1
+   "reqd": 1
   },
   {
    "bold": 1,
@@ -2025,6 +2025,12 @@
    "label": "Total Billing Hours",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "amount_eligible_for_commission",
+   "fieldtype": "Currency",
+   "label": "Amount Eligible for Commission",
+   "read_only": 1
   }
  ],
  "icon": "fa fa-file-text",
@@ -2037,7 +2043,7 @@
    "link_fieldname": "consolidated_invoice"
   }
  ],
- "modified": "2022-04-22 14:23:44.271169",
+ "modified": "2022-04-23 14:23:44.271169",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Sales Invoice",
