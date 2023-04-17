@@ -7,7 +7,7 @@
  "doctype": "Report", 
  "idx": 3, 
  "is_standard": "Yes", 
- "modified": "2017-02-25 20:14:00.850349", 
+ "modified": "2017-02-25 21:14:00.850349", 
  "modified_by": "Administrator", 
  "module": "Stock", 
  "name": "Stock Projected Qty", 
@@ -27,6 +27,9 @@
   }, 
   {
    "role": "Sales User"
+  }, 
+  {
+   "role": "Usuario Reducido Ventas"
   }, 
   {
    "role": "Purchase User"

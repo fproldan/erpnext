@@ -19,7 +19,7 @@
   }
  ],
  "links": [],
- "modified": "2021-05-13 19:59:35.484361",
+ "modified": "2021-05-14 19:59:35.484361",
  "modified_by": "Administrator",
  "module": "Support",
  "name": "Issue Type",
@@ -53,6 +53,10 @@
   {
    "select": 1,
    "role": "Support Team"
+  },
+  {
+   "select": 1,
+   "role": "Usuario Reducido Soporte"
   }
  ],
  "quick_entry": 1,

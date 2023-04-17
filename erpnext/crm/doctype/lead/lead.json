@@ -462,7 +462,7 @@
  "idx": 5,
  "image_field": "image",
  "links": [],
- "modified": "2021-08-09 09:13:52.437059",
+ "modified": "2021-08-09 09:15:52.437059",
  "modified_by": "Administrator",
  "module": "CRM",
  "name": "Lead",
@@ -482,6 +482,16 @@
    "read": 1,
    "report": 1,
    "role": "Sales User",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Reducido Ventas",
    "share": 1,
    "write": 1
   },
@@ -519,6 +529,12 @@
    "read": 1,
    "report": 1,
    "role": "Sales User"
+  },
+  {
+   "permlevel": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Reducido Ventas"
   }
  ],
  "restrict_to_domain": "CRM",

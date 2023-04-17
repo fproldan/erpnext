@@ -139,7 +139,7 @@
  "idx": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2021-02-08 17:01:52.162202",
+ "modified": "2021-02-08 18:01:52.162202",
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Customer Group",
@@ -159,6 +159,13 @@
    "read": 1,
    "report": 1,
    "role": "Sales User"
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Reducido Ventas"
   },
   {
    "create": 1,
@@ -184,6 +191,11 @@
    "permlevel": 1,
    "read": 1,
    "role": "Sales User"
+  },
+  {
+   "permlevel": 1,
+   "read": 1,
+   "role": "Usuario Reducido Ventas"
   },
   {
    "permlevel": 1,

@@ -6,7 +6,7 @@
  "doctype": "Report", 
  "idx": 0, 
  "is_standard": "Yes", 
- "modified": "2019-09-19 14:40:52.035394", 
+ "modified": "2019-09-19 15:40:52.035394", 
  "modified_by": "Administrator", 
  "module": "CRM", 
  "name": "Lead Conversion Time", 
@@ -21,6 +21,9 @@
   }, 
   {
    "role": "Sales User"
+  },
+  {
+   "role": "Usuario Reducido Ventas"
   }
  ]
 }
