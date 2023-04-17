@@ -521,7 +521,7 @@
    "link_fieldname": "party"
   }
  ],
- "modified": "2021-11-17 17:38:54.196663",
+ "modified": "2021-11-09 18:38:54.196663",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Customer",
@@ -542,6 +542,21 @@
    "permlevel": 1,
    "read": 1,
    "role": "Sales User"
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Reducido Ventas",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "permlevel": 1,
+   "read": 1,
+   "role": "Usuario Reducido Ventas"
   },
   {
    "email": 1,

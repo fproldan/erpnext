@@ -9,7 +9,7 @@
  "filters": [],
  "idx": 0,
  "is_standard": "Yes",
- "modified": "2020-10-11 19:43:19.358625",
+ "modified": "2020-10-12 19:43:19.358625",
  "modified_by": "Administrator",
  "module": "Support",
  "name": "Issue Analytics",
@@ -21,6 +21,9 @@
  "roles": [
   {
    "role": "Support Team"
+  },
+  {
+   "role": "Usuario Reducido Soporte"
   }
  ]
 }

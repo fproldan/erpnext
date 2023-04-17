@@ -26,7 +26,7 @@
   }
  ],
  "links": [],
- "modified": "2021-09-24 10:44:37.743312",
+ "modified": "2021-09-24 11:44:37.743312",
  "modified_by": "Administrator",
  "module": "Projects",
  "name": "Project Template",
@@ -58,6 +58,10 @@
   },
   {
    "role": "Projects User",
+   "select": 1
+  },
+  {
+   "role": "Usuario Reducido Proyecto",
    "select": 1
   }
  ],
