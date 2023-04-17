@@ -7,7 +7,7 @@
  "doctype": "Report", 
  "idx": 3, 
  "is_standard": "Yes", 
- "modified": "2017-02-24 20:09:46.150861", 
+ "modified": "2017-02-24 21:09:46.150861", 
  "modified_by": "Administrator", 
  "module": "Accounts", 
  "name": "Accounts Payable", 
@@ -24,9 +24,6 @@
   }, 
   {
    "role": "Accounts Manager"
-  }, 
-  {
-   "role": "Auditor"
   }
  ]
 }

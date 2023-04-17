@@ -7,7 +7,7 @@
  "doctype": "Report", 
  "idx": 3, 
  "is_standard": "Yes", 
- "modified": "2017-02-24 20:15:45.590238", 
+ "modified": "2017-02-24 21:15:45.590238", 
  "modified_by": "Administrator", 
  "module": "Accounts", 
  "name": "Purchase Register", 
@@ -24,9 +24,6 @@
   }, 
   {
    "role": "Accounts Manager"
-  }, 
-  {
-   "role": "Auditor"
   }
  ]
 }

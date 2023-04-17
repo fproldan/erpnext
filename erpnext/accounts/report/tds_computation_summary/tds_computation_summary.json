@@ -9,7 +9,7 @@
  "filters": [],
  "idx": 0,
  "is_standard": "Yes",
- "modified": "2021-09-20 17:43:39.518851",
+ "modified": "2021-09-21 17:43:39.518851",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "TDS Computation Summary",
@@ -27,9 +27,6 @@
   },
   {
    "role": "Accounts User"
-  },
-  {
-   "role": "Auditor"
   }
  ]
 }

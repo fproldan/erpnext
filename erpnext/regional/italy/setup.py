@@ -212,7 +212,7 @@ def add_permissions():
 	doctype = 'Import Supplier Invoice'
 	add_permission(doctype, 'All', 0)
 
-	for role in ('Accounts Manager', 'Accounts User','Purchase User', 'Auditor'):
+	for role in ('Accounts Manager', 'Accounts User','Purchase User'):
 		add_permission(doctype, role, 0)
 		update_permission_property(doctype, role, 0, 'print', 1)
 		update_permission_property(doctype, role, 0, 'report', 1)
