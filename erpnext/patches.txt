@@ -354,3 +354,4 @@ erpnext.patches.v13_0.agregar_usuarios_reducidos
 erpnext.patches.v13_0.agregar_usuario_contador
 erpnext.patches.v13_0.release_1_6
 erpnext.patches.v13_0.complete_purchase_invoice_new_fields
+erpnext.patches.v13_0.usuarios_reducidos_fix

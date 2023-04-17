@@ -7,7 +7,7 @@
  "doctype": "Report", 
  "idx": 0, 
  "is_standard": "Yes", 
- "modified": "2019-04-26 22:20:59.033199", 
+ "modified": "2019-04-26 23:20:59.033199", 
  "modified_by": "Administrator", 
  "module": "Selling", 
  "name": "Territory Target Variance Based On Item Group", 
@@ -20,6 +20,9 @@
   {
    "role": "Sales User"
   }, 
+  {
+   "role": "Usuario Reducido Ventas"
+  },
   {
    "role": "Sales Manager"
   }, 

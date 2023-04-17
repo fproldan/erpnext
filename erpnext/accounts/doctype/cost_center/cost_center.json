@@ -146,7 +146,7 @@
  "idx": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2020-06-18 17:09:30.025214",
+ "modified": "2020-06-18 18:09:31.025214",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Cost Center",
@@ -180,6 +180,10 @@
   {
    "read": 1,
    "role": "Sales User"
+  },
+  {
+   "read": 1,
+   "role": "Usuario Reducido Ventas"
   },
   {
    "read": 1,

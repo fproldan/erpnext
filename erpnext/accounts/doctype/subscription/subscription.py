@@ -316,6 +316,10 @@ class Subscription(Document):
 		saves the `Subscription`.
 		"""
 
+		# No facturar si ya termino la suscripcion
+		if self.end_date and getdate() > getdate(self.end_date):
+			return
+
 		doctype = 'Sales Invoice' if self.party_type == 'Customer' else 'Purchase Invoice'
 
 		invoice = self.create_invoice(prorate)
@@ -566,7 +570,10 @@ class Subscription(Document):
 		"""
 		current_invoice = self.get_current_invoice()
 		if not current_invoice:
-			frappe.throw(_('Current invoice {0} is missing').format(current_invoice.invoice))
+			if current_invoice is None:
+				frappe.throw(_('Current invoice is missing'))
+			else:
+				frappe.throw(_('Current invoice {0} is missing').format(current_invoice.invoice))
 		else:
 			if not self.has_outstanding_invoice():
 				self.status = 'Active'
