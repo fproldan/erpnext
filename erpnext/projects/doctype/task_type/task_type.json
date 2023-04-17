@@ -21,7 +21,7 @@
   }
  ],
  "links": [],
- "modified": "2021-09-24 10:45:00.089303",
+ "modified": "2021-09-24 11:45:00.089303",
  "modified_by": "Administrator",
  "module": "Projects",
  "name": "Task Type",
@@ -53,6 +53,10 @@
   },
   {
    "role": "Projects User",
+   "select": 1
+  },
+  {
+   "role": "Usuario Reducido Proyecto",
    "select": 1
   }
  ],

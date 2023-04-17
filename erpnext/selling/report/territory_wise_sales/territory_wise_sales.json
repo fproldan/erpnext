@@ -7,7 +7,7 @@
  "doctype": "Report",
  "idx": 0,
  "is_standard": "Yes",
- "modified": "2020-01-31 10:34:33.319047",
+ "modified": "2020-01-31 11:34:33.319047",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Territory-wise Sales",
@@ -19,6 +19,9 @@
  "roles": [
   {
    "role": "Sales User"
+  },
+  {
+   "role": "Usuario Reducido Ventas"
   },
   {
    "role": "Sales Manager"

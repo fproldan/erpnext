@@ -410,7 +410,7 @@
  "icon": "fa fa-ticket",
  "idx": 7,
  "links": [],
- "modified": "2021-06-10 03:22:27.098898",
+ "modified": "2021-06-11 03:22:27.098898",
  "modified_by": "Administrator",
  "module": "Support",
  "name": "Issue",
@@ -424,6 +424,17 @@
    "read": 1,
    "report": 1,
    "role": "Support Team",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Reducido Soporte",
    "share": 1,
    "write": 1
   }

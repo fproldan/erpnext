@@ -214,7 +214,7 @@
  "is_tree": 1,
  "links": [],
  "max_attachments": 0,
- "modified": "2021-02-21 13:40:30.049650",
+ "modified": "2021-02-22 13:40:30.049650",
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Item Group",
@@ -257,6 +257,13 @@
    "read": 1,
    "report": 1,
    "role": "Sales User"
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Usuario Reducido Ventas"
   },
   {
    "email": 1,
