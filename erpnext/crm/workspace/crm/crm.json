@@ -118,6 +118,15 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "Asignaciones",
+   "link_to": "Asignaciones",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Reports",
    "onboard": 0,
    "type": "Card Break"
@@ -364,7 +373,7 @@
    "type": "Link"
   }
  ],
- "modified": "2023-01-24 19:40:16.216041",
+ "modified": "2023-04-19 08:51:46.583720",
  "modified_by": "Administrator",
  "module": "CRM",
  "name": "CRM",
