@@ -13,10 +13,6 @@ frappe.ui.form.on(cur_frm.doctype, {
 				erpnext.taxes.set_conditional_mandatory_rate_or_amount(grid_row);
 			}
 		});
-
-		if (frm.fields_dict.naming_series) {
-			setup_naming_series_by_company(frm);
-		}
 	},
 	onload: function(frm) {
 		if(frm.get_field("taxes")) {
@@ -69,31 +65,6 @@ frappe.ui.form.on(cur_frm.doctype, {
 		}
 	}
 });
-
-function setup_naming_series_by_company(frm) {
-	var doctype_list = [
-		'Delivery Note', 'Delivery Trip', 'Journal Entry', 'Material Request', 'Opportunity',
-		'Payment Entry', 'Payment Request', 'Purchase Invoice', 'Purchase Order', 'Purchase Receipt',
-		'Quotation', 'Request for Quotation', 'Sales Order', 'Stock Entry', 'Stock Reconciliation',
-		'Supplier Quotation', 'Timesheet', 'Warranty Claim', 'Work Order'
-	];
-	if(!in_list(doctype_list, frm.doc.doctype) || frm.doc.__islocal != 1) { return; }
-	frappe.call({
-		type: "GET",
-		method: "erpnext.setup.doctype.naming_series.naming_series.get_naming_series_for_company",
-		args: {
-			doctype: frm.doc.doctype,
-			company: frm.doc.company,
-		},
-		callback: function(r){
-			if(r.message){
-				frm.set_df_property("naming_series", "options", r.message.split("\\n"));
-				frm.set_value("naming_series", r.message.split("\\n")[0]);
-				frm.refresh_field("naming_series");
-			}
-		}
-	});
-}
 
 frappe.ui.form.on('Sales Invoice Payment', {
 	mode_of_payment: function(frm, cdt, cdn) {
