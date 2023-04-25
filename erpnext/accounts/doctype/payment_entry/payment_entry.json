@@ -177,7 +177,7 @@
    "fieldname": "party",
    "fieldtype": "Dynamic Link",
    "in_standard_filter": 1,
-   "label": "Party",
+   "label": "Proveedor/Cliente",
    "options": "party_type"
   },
   {
@@ -186,7 +186,7 @@
    "fieldname": "party_name",
    "fieldtype": "Data",
    "in_global_search": 1,
-   "label": "Party Name"
+   "label": "Raz\u00f3n Social"
   },
   {
    "fieldname": "column_break_11",
@@ -473,7 +473,6 @@
   {
    "fieldname": "project",
    "fieldtype": "Link",
-   "hidden": 0,
    "label": "Project",
    "options": "Project",
    "print_hide": 1
@@ -582,6 +581,7 @@
    "collapsible": 1,
    "fieldname": "accounting_dimensions_section",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Accounting Dimensions"
   },
   {
@@ -713,7 +713,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-08-04 08:57:45.018591",
+ "modified": "2023-04-19 10:36:19.575901",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Payment Entry",
@@ -752,6 +752,7 @@
    "write": 1
   }
  ],
+ "route": "app/doctype/Payment%20Entry",
  "show_name_in_global_search": 1,
  "sort_field": "modified",
  "sort_order": "DESC",

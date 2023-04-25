@@ -397,6 +397,7 @@
    "collapsible": 1,
    "fieldname": "section_addresses",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Address and Contact"
   },
   {
@@ -548,6 +549,7 @@
    "default": "No",
    "fieldname": "is_subcontracted",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Raw Materials Supplied",
    "options": "No\nYes",
    "print_hide": 1
@@ -684,6 +686,7 @@
   {
    "fieldname": "shipping_rule",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Shipping Rule",
    "options": "Shipping Rule",
    "print_hide": 1
@@ -797,6 +800,7 @@
    "collapsible_depends_on": "discount_amount",
    "fieldname": "section_break_44",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Additional Discount"
   },
   {
@@ -1087,6 +1091,7 @@
    "collapsible_depends_on": "eval:(!doc.is_return)",
    "fieldname": "payment_schedule_section",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Payment Terms"
   },
   {
@@ -1108,6 +1113,7 @@
    "collapsible_depends_on": "terms",
    "fieldname": "terms_section_break",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Terms and Conditions",
    "options": "fa fa-legal"
   },
@@ -1127,6 +1133,7 @@
    "collapsible": 1,
    "fieldname": "printing_settings",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Printing Settings"
   },
   {
@@ -1172,6 +1179,7 @@
    "collapsible": 1,
    "fieldname": "more_info",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "More Information",
    "oldfieldtype": "Section Break",
    "options": "fa fa-file-text",
@@ -1253,6 +1261,7 @@
    "collapsible": 1,
    "fieldname": "subscription_section",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Subscription Section",
    "print_hide": 1
   },
@@ -1298,6 +1307,7 @@
    "collapsible": 1,
    "fieldname": "accounting_dimensions_section",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Accounting Dimensions"
   },
   {
@@ -1423,7 +1433,7 @@
  "idx": 204,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-12-19 13:45:07.109394",
+ "modified": "2023-04-19 10:32:22.354735",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Purchase Invoice",
