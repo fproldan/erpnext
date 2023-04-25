@@ -36,7 +36,8 @@ frappe.ui.form.on('Payment Entry', {
 			frm.events.validate_company(frm);
 			return{
 				filters: {
-					"name": ["in", Object.keys(frappe.boot.party_account_types)],
+					// "name": ["in", Object.keys(frappe.boot.party_account_types)],
+					"name": ["in", ['Customer', 'Supplier']],
 				}
 			}
 		});
