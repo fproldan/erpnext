@@ -90,6 +90,9 @@ class Project(Document):
 		return self.update_if_holiday(self.end_date)
 
 	def update_if_holiday(self, date):
+		if not frappe.db.exists("Has Domain", {"domain": 'HR Asistencia y Vacaciones'}):
+			return date
+
 		holiday_list = self.holiday_list or get_holiday_list(self.company)
 		while is_holiday(holiday_list, date):
 			date = add_days(date, 1)
