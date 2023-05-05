@@ -92,6 +92,9 @@ class StudentAttendance(Document):
 				frappe.bold(formatdate(self.date))))
 
 def get_holiday_list(company=None):
+	if not frappe.db.exists("Has Domain", {"domain": 'HR Asistencia y Vacaciones'}):
+		return None
+
 	if not company:
 		company = get_default_company() or frappe.get_all('Company')[0].name
 
