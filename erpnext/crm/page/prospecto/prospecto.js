@@ -263,10 +263,6 @@ erpnext.Prospecto = class Prospecto {
 			  	data: [
 			    	[cv['customer_name'], gridjs.html(cv['name']), '-', '-', cv['contact']['contact_person'], '-', cv['contact']['contact_mobile'], cv['contact']['contact_email'], cv['contact']['area'], cv['contact']['puesto'], cv['contact']['proceso']],
 			  	],
-				pagination: {
-				    limit: 10,
-				    summary: false
-				},
 			  	language: {
 			    	'search': {
 			      		'placeholder': 'Buscar...'
@@ -341,10 +337,6 @@ erpnext.Prospecto = class Prospecto {
 			  	data: [
 			    	[lead_data['lead_name'], frappe.datetime.get_datetime_as_string_es(lead_data['creation']), gridjs.html(lead_data['name']), lead_data['contact']['contact_person'], lead_data['contact']['contact_mobile'], lead_data['contact']['contact_email'], lead_data['assign']],
 			  	],
-				pagination: {
-				    limit: 10,
-				    summary: false
-				},
 			  	language: {
 			    	'search': {
 			      		'placeholder': 'Buscar...'
