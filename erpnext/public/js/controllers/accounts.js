@@ -44,6 +44,10 @@ frappe.ui.form.on(cur_frm.doctype, {
 				};
 			});
 		}
+
+		if (frm.fields_dict.naming_series) {
+			setup_naming_series_by_company(frm);
+		}
 	},
 	validate: function(frm) {
 		// neither is absolutely mandatory
