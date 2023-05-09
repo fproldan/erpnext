@@ -335,7 +335,7 @@ erpnext.Prospecto = class Prospecto {
 			  	columns: ['Razon Social', 'Fecha', 'Iniciativa', 'Nombre Contacto', 'Celular Contacto', 'Mail Contacto', 'Asignado'],
 			  	search: true,
 			  	data: [
-			    	[lead_data['lead_name'], frappe.datetime.get_datetime_as_string_es(lead_data['creation']), gridjs.html(lead_data['name']), lead_data['contact']['contact_person'], lead_data['contact']['contact_mobile'], lead_data['contact']['contact_email'], lead_data['assign']],
+			    	[lead_data['lead_name'], frappe.datetime.get_datetime_as_string_es(lead_data['creation']), gridjs.html(lead_data['name']), lead_data['contact']['contact_person'], lead_data['contact']['contact_mobile'], lead_data['contact']['contact_email'], gridjs.html(lead_data['assign'])],
 			  	],
 			  	language: {
 			    	'search': {
