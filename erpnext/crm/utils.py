@@ -29,7 +29,7 @@ def get_cuit(tax_id=None, customer_name=None):
 	import json
 	from frappe.utils.csvutils import getlink
 	from frappe.contacts.doctype.contact.contact import get_contact_details
-	from frappe.desk.form.load import get_communication_data
+	from frappe.desk.form.load import get_communication_data, get_assignments
 	from erpnext.accounts.party import get_default_contact
 
 	customer_contact_details = {
@@ -110,6 +110,18 @@ def get_cuit(tax_id=None, customer_name=None):
 				communication['event_category'] = _(communication['communication_medium'])
 				communication['link'] = getlink('Event', communication['reference_name'])
 				events.append(communication)
+
+		for todo_info in get_assignments(lead.doctype, lead.name):
+			todo = frappe.get_doc('ToDo', todo_info['name'])
+			events.append({
+				'link': getlink('ToDo', todo.name),
+				'communication_date': todo.creation,
+				'sender_full_name': todo.owner,
+				'event_category': 'Tarea',
+				'subject': '',
+				'content': todo.description,
+			})
+
 
 		quotation_search.append(lead.name)
 		resp['lead'] = {
