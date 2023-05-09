@@ -128,7 +128,7 @@ def get_cuit(tax_id=None, customer_name=None):
 			'name': getlink('Lead', lead.name),
 			'base_name': lead.name,
 			'lead_name': lead.lead_name,
-			'assign': ",".join(getlink('User', a) for a in json.loads(lead._assign or '[]')),
+			'assign': ",".join(list(set(list(getlink('User', a) for a in json.loads(lead._assign or '[]'))))),
 			'creation': lead.creation,
 			'contact': lead_contact_details,
 			'events': events,
