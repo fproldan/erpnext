@@ -249,41 +249,44 @@ erpnext.Prospecto = class Prospecto {
                 </div>
             </div>
 		`
+
+		let contact_table = {};
+		let lead_table = {};
+		let quotation_table = {};
+		let event_table = {};
+
 		if (cuit_values['customer']) {
+			let cv = cuit_values['customer']
+			contact_table = {
+			  	columns: ['Razon Social', 'Cliente', 'Unidad de Negocio', 'Tipo de Servicio', 'Nombre Contacto', 'Domicilio', 'Celular Contacto', 'Mail Contacto', 'Área', 'Puesto', 'Proceso'],
+			  	search: true,
+			  	data: [
+			    	[cv['customer_name'], gridjs.html(cv['name']), '-', '-', cv['contact']['contact_person'], '-', cv['contact']['contact_mobile'], cv['contact']['contact_email'], cv['contact']['area'], cv['contact']['puesto'], cv['contact']['proceso']],
+			  	],
+				pagination: {
+				    limit: 10,
+				    summary: false
+				},
+			  	language: {
+			    	'search': {
+			      		'placeholder': 'Buscar...'
+			    	},
+			    	'pagination': {
+				    	'previous': 'Anterior',
+				      	'next': 'Siguiente',
+				      	'showing': 'Mostrando',
+				      	'results': () => 'Registros'
+			    	}
+			  	}
+			};
 			customer_html = `
+			<div id="caca"></div>
 				<div class="row">
                 	<div class="col-lg-12 d-flex align-items-stretch">
                     	<div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
                     		<h5 class="border-bottom pb-2">Contacto</h5>
 							<div>
-								<table class="table table-bordered">
-									<tr>
-										<th>Razon Social</th>
-										<th>Cliente</th>
-										<th>Unidad de Negocio</th>
-										<th>Tipo de Servicio</th>
-										<th>Nombre Contacto</th>
-										<th>Domicilio</th>
-										<th>Celular Contacto</th>
-										<th>Mail Contacto</th>
-										<th>Área</th>
-										<th>Puesto</th>
-										<th>Proceso</th>
-									</tr>
-									<tr>
-										<td>${cuit_values['customer']['customer_name']}</td>
-										<td>${cuit_values['customer']['name']}</td>
-										<td><b>-</b></td>
-										<td><b>-</b></td>
-										<td>${cuit_values['customer']['contact']['contact_person']}</td>
-										<td><b>-</b></td>
-										<td>${cuit_values['customer']['contact']['contact_mobile']}</td>
-										<td>${cuit_values['customer']['contact']['contact_email']}</td>
-										<td>${cuit_values['customer']['contact']['area']}</td>
-										<td>${cuit_values['customer']['contact']['puesto']}</td>
-										<td>${cuit_values['customer']['contact']['proceso']}</td>
-									</tr>
-								</table>
+								<div id="contact_table"></div>
 							</div>
 						</div>
 					</div>
@@ -331,32 +334,37 @@ erpnext.Prospecto = class Prospecto {
 		} 
 
 		if (cuit_values['lead'] && me.se_puede_mostrar(cuit_values)) {
+			let lead_data = cuit_values['lead'];
+			lead_table = {
+			  	columns: ['Razon Social', 'Fecha', 'Iniciativa', 'Nombre Contacto', 'Celular Contacto', 'Mail Contacto', 'Asignado'],
+			  	search: true,
+			  	data: [
+			    	[lead_data['lead_name'], frappe.datetime.get_datetime_as_string_es(lead_data['creation']), gridjs.html(lead_data['name']), lead_data['contact']['contact_person'], lead_data['contact']['contact_mobile'], lead_data['contact']['contact_email'], lead_data['assign']],
+			  	],
+				pagination: {
+				    limit: 10,
+				    summary: false
+				},
+			  	language: {
+			    	'search': {
+			      		'placeholder': 'Buscar...'
+			    	},
+			    	'pagination': {
+				    	'previous': 'Anterior',
+				      	'next': 'Siguiente',
+				      	'showing': 'Mostrando',
+				      	'results': () => 'Registros'
+			    	}
+			  	}
+			};
+
 			lead_html = `
 				<div class="row">
                 	<div class="col-lg-12 d-flex align-items-stretch">
                     	<div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
                     		<h5 class="border-bottom pb-2">Iniciativa</h5>
 							<div>
-								<table class="table table-bordered">
-									<tr>
-										<th>Razon Social</th>
-										<th>Fecha</th>
-										<th>Iniciativa</th>
-										<th>Nombre Contacto</th>
-										<th>Celular Contacto</th>
-										<th>Mail Contacto</th>
-										<th>Asignado</th>
-									</tr>
-									<tr>
-										<td>${cuit_values['lead']['lead_name']}</td>
-										<td>${frappe.datetime.get_datetime_as_string_es(cuit_values['lead']['creation'])}</td>
-										<td>${cuit_values['lead']['name']}</td>
-										<td>${cuit_values['lead']['contact']['contact_person']}</td>
-										<td>${cuit_values['lead']['contact']['contact_mobile']}</td>
-										<td>${cuit_values['lead']['contact']['contact_email']}</td>
-										<td>${cuit_values['lead']['assign']}</td>
-									</tr>
-								</table>
+								<div id="lead_table"></div>
 							</div>
 						</div>
 					</div>
@@ -364,21 +372,37 @@ erpnext.Prospecto = class Prospecto {
 			`;
 
 			if (cuit_values['lead']['events'] && me.se_puede_mostrar(cuit_values)) {
-				let event_html = ``;
-
+				let event_data = []
 				for (let i = 0; i < cuit_values['lead']['events'].length; i++) {
-
-					event_html += `
-						<tr>
-							<td>${cuit_values['lead']['events'][i]['link']}</td>
-							<td>${frappe.datetime.get_datetime_as_string_es(cuit_values['lead']['events'][i]['communication_date'])}</td>
-							<td>${cuit_values['lead']['events'][i]['sender_full_name']}</td>
-							<td>${cuit_values['lead']['events'][i]['event_category']}</td>
-							<td>${cuit_values['lead']['events'][i]['subject']}</td>
-							<td>${cuit_values['lead']['events'][i]['content']}</td>
-						</tr>
-					`
+					event_data.push([
+						gridjs.html(cuit_values['lead']['events'][i]['link']),
+						frappe.datetime.get_datetime_as_string_es(cuit_values['lead']['events'][i]['communication_date']),
+						cuit_values['lead']['events'][i]['sender_full_name'],
+						cuit_values['lead']['events'][i]['event_category'],
+						cuit_values['lead']['events'][i]['subject'],
+						gridjs.html(cuit_values['lead']['events'][i]['content'])
+					])
 				}
+				event_table = {
+				  	columns: ['Evento', 'Fecha', 'Usuario', 'Categoría', 'Asunto', 'Contenido'],
+				  	search: true,
+				  	data: event_data,
+					pagination: {
+					    limit: 10,
+					    summary: false
+					},
+				  	language: {
+				    	'search': {
+				      		'placeholder': 'Buscar...'
+				    	},
+				    	'pagination': {
+					    	'previous': 'Anterior',
+					      	'next': 'Siguiente',
+					      	'showing': 'Mostrando',
+					      	'results': () => 'Registros'
+				    	}
+				  	}
+				};
 
 				lead_events_html = `
 					<div class="row">
@@ -386,17 +410,7 @@ erpnext.Prospecto = class Prospecto {
 	                    	<div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
 	                    		<h5 class="border-bottom pb-2">Histórico</h5>
 								<div>
-									<table class="table table-bordered">
-										<tr>
-											<th width="10%">Evento</th>
-											<th width="20%">Fecha</th>
-											<th width="10%">Usuario</th>
-											<th width="10%">Categoría</th>
-											<th width="20%">Asunto</th>
-											<th width="30%">Contenido</th>
-										</tr>
-										${event_html}
-									</table>
+									<div id="event_table"></div>
 								</div>
 							</div>
 						</div>
@@ -451,22 +465,39 @@ erpnext.Prospecto = class Prospecto {
 		}
 
 		if (cuit_values['quotations'] && me.se_puede_mostrar(cuit_values)) {
-			let q_html = ``;
-
+			let quotation_data = []
 			for (let i = 0; i < cuit_values['quotations'].length; i++) {
-				q_html += `
-					<tr>
-						<td>${cuit_values['quotations'][i]['name']}</td>
-						<td>${cuit_values['quotations'][i]['transaction_date']}</td>
-						<td>${cuit_values['quotations'][i]['contact']['contact_person']}</td>
-						<td>${cuit_values['quotations'][i]['contact']['contact_mobile']}</td>
-						<td>${cuit_values['quotations'][i]['contact']['contact_email']}</td>
-						<td>${cuit_values['quotations'][i]['assign']}</td>
-						<td><b>-</b></td>
-						<td><b>-</b></td>
-					</tr>
-				`
+				quotation_data.push([
+					gridjs.html(cuit_values['quotations'][i]['name']),
+					cuit_values['quotations'][i]['transaction_date'],
+					cuit_values['quotations'][i]['contact']['contact_person'],
+					cuit_values['quotations'][i]['contact']['contact_mobile'],
+					cuit_values['quotations'][i]['contact']['contact_email'],
+					gridjs.html(cuit_values['quotations'][i]['assign']),
+					gridjs.html('<b>-</b>'),
+					gridjs.html('<b>-</b>')
+				])
 			}
+			quotation_table = {
+			  	columns: ['Nombre', 'Fecha', 'Nombre Contacto', 'Celular Contacto', 'Mail Contacto', 'Asignado', 'Domicilio de Explotación', 'Unidad de Negocio'],
+			  	search: true,
+			  	data: quotation_data,
+				pagination: {
+				    limit: 10,
+				    summary: false
+				},
+			  	language: {
+			    	'search': {
+			      		'placeholder': 'Buscar...'
+			    	},
+			    	'pagination': {
+				    	'previous': 'Anterior',
+				      	'next': 'Siguiente',
+				      	'showing': 'Mostrando',
+				      	'results': () => 'Registros'
+			    	}
+			  	}
+			};
 
 			quotation_html = `
 				<div class="row">
@@ -474,19 +505,7 @@ erpnext.Prospecto = class Prospecto {
                     	<div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
                     		<h5 class="border-bottom pb-2">Cotizaciones</h5>
 							<div>
-								<table class="table table-bordered">
-									<tr>
-										<th>Nombre</th>
-										<th>Fecha</th>
-										<th>Nombre Contacto</th>
-										<th>Celular Contacto</th>
-										<th>Mail Contacto</th>
-										<th>Asignado</th>
-										<th>Domicilio de Explotación</th>
-										<th>Unidad de Negocio</th>
-									</tr>
-									${q_html}
-								</table>
+								<div id="quotation_table"></div>
 							</div>
 						</div>
 					</div>
@@ -517,6 +536,24 @@ erpnext.Prospecto = class Prospecto {
 			${lead_html}
 			${lead_events_html}
 		`;
+
 		this.form.get_field('preview').html(html);
+
+		if (contact_table) {
+			new gridjs.Grid(contact_table).render(document.getElementById("contact_table"));
+		}
+
+		if (lead_table) {
+			new gridjs.Grid(lead_table).render(document.getElementById("lead_table"));
+		}
+
+		if (event_table) {
+			new gridjs.Grid(event_table).render(document.getElementById("event_table"));
+		}
+
+		if (quotation_table) {
+			new gridjs.Grid(quotation_table).render(document.getElementById("quotation_table"));
+		}
+		
 	}
 };
