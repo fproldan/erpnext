@@ -16,8 +16,8 @@ app_logo_url = "/assets/erpnext/images/erpnext-logo.svg"
 
 develop_version = '13.x.x-develop'
 
-app_include_js = "/assets/js/erpnext.min.js"
-app_include_css = "/assets/css/erpnext.css"
+app_include_js = ["/assets/js/erpnext.min.js", "https://unpkg.com/gridjs/dist/gridjs.umd.js"]
+app_include_css = ["/assets/css/erpnext.css", "https://unpkg.com/gridjs/dist/theme/mermaid.min.css"]
 web_include_js = "/assets/js/erpnext-web.min.js"
 web_include_css = "/assets/css/erpnext-web.css"
 
