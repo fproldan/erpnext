@@ -546,3 +546,6 @@ erpnext.Prospecto = class Prospecto {
 		if (!$.isEmptyObject(quotation_table)) {
 			new gridjs.Grid(quotation_table).render(document.getElementById("quotation_table"));
 		}
+		
+	}
+};
