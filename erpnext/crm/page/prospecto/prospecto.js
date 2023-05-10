@@ -531,7 +531,7 @@ erpnext.Prospecto = class Prospecto {
 
 		this.form.get_field('preview').html(html);
 
-		if (contact_table != {}) {
+		if ($.isEmptyObject(contact_table)) {
 			new gridjs.Grid(contact_table).render(document.getElementById("contact_table"));
 		}
 
