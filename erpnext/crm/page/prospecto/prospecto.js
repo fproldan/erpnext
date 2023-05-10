@@ -531,19 +531,19 @@ erpnext.Prospecto = class Prospecto {
 
 		this.form.get_field('preview').html(html);
 
-		if (contact_table) {
+		if (contact_table != {}) {
 			new gridjs.Grid(contact_table).render(document.getElementById("contact_table"));
 		}
 
-		if (lead_table) {
+		if (lead_table != {}) {
 			new gridjs.Grid(lead_table).render(document.getElementById("lead_table"));
 		}
 
-		if (event_table) {
+		if (event_table != {}) {
 			new gridjs.Grid(event_table).render(document.getElementById("event_table"));
 		}
 
-		if (quotation_table) {
+		if (quotation_table != {}) {
 			new gridjs.Grid(quotation_table).render(document.getElementById("quotation_table"));
 		}
 		
