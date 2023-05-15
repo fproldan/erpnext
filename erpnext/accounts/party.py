@@ -659,7 +659,7 @@ def get_default_contact(doctype, name, document_doctype=None):
 	"""
 	order_by = 'ORDER BY is_primary_contact DESC, is_billing_contact DESC'
 
-	if document_doctype and document_doctype in ['Sales Invoice', 'Purchase Invoice']:
+	if document_doctype and document_doctype in ['Sales Invoice', 'Sales Order', 'Purchase Invoice']:
 		order_by = 'ORDER BY is_billing_contact DESC, is_primary_contact DESC'
 
 	out = frappe.db.sql("""
