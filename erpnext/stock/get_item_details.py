@@ -77,7 +77,7 @@ def get_item_details(args, doc=None, for_validate=False, overwrite_warehouse=Tru
 
 	set_item_tax_template = True
 	
-	if doc and doc.get('doctype') in ["Purchase Invoice", "Material Request", "Purchase Order"] and doc.get('supplier'):
+	if doc and doc.get('doctype') in ["Purchase Invoice", "Material Request", "Purchase Order", "Purchase Receipt"] and doc.get('supplier'):
 		supplier = frappe.get_doc("Supplier", doc.get('supplier'))
 		condicion_iva = frappe.get_doc("Condicion de IVA", supplier.condicion_de_iva_proveedor)
 
