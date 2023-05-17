@@ -231,6 +231,7 @@
    "default": "0",
    "fieldname": "allow_alternative_item",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Allow Alternative Item"
   },
   {
@@ -248,6 +249,7 @@
    "depends_on": "eval:!doc.is_fixed_asset",
    "fieldname": "include_item_in_manufacturing",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Include Item In Manufacturing"
   },
   {
@@ -261,6 +263,7 @@
    "depends_on": "is_stock_item",
    "fieldname": "valuation_rate",
    "fieldtype": "Currency",
+   "hidden": 1,
    "label": "Valuation Rate"
   },
   {
@@ -347,6 +350,7 @@
   {
    "fieldname": "shelf_life_in_days",
    "fieldtype": "Int",
+   "hidden": 1,
    "label": "Shelf Life In Days",
    "mandatory_depends_on": "eval:doc.has_batch_no && doc.has_expiry_date"
   },
@@ -355,6 +359,7 @@
    "depends_on": "is_stock_item",
    "fieldname": "end_of_life",
    "fieldtype": "Date",
+   "hidden": 1,
    "label": "End of Life",
    "oldfieldname": "end_of_life",
    "oldfieldtype": "Date"
@@ -363,6 +368,7 @@
    "default": "Purchase",
    "fieldname": "default_material_request_type",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Default Material Request Type",
    "options": "Purchase\nMaterial Transfer\nMaterial Issue\nManufacture\nCustomer Provided"
   },
@@ -385,6 +391,7 @@
    "depends_on": "eval:doc.is_stock_item",
    "fieldname": "warranty_period",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Warranty Period (in days)",
    "oldfieldname": "warranty_period",
    "oldfieldtype": "Data"
@@ -393,6 +400,7 @@
    "depends_on": "is_stock_item",
    "fieldname": "weight_per_unit",
    "fieldtype": "Float",
+   "hidden": 1,
    "label": "Weight Per Unit"
   },
   {
@@ -439,6 +447,7 @@
    "depends_on": "eval:doc.is_stock_item",
    "fieldname": "serial_nos_and_batches",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Serial Nos and Batches"
   },
   {
@@ -514,6 +523,7 @@
    "depends_on": "eval:!doc.is_fixed_asset",
    "fieldname": "variants_section",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Variants"
   },
   {
@@ -652,6 +662,7 @@
    "collapsible": 1,
    "fieldname": "foreign_trade_details",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Foreign Trade Details"
   },
   {
@@ -675,6 +686,7 @@
    "default": "eval:!doc.is_fixed_asset",
    "fieldname": "sales_details",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Sales Details",
    "oldfieldtype": "Section Break",
    "options": "fa fa-tag"
@@ -708,6 +720,7 @@
    "collapsible": 1,
    "fieldname": "deferred_revenue",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Deferred Revenue"
   },
   {
@@ -738,6 +751,7 @@
    "collapsible": 1,
    "fieldname": "deferred_expense_section",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Deferred Expense"
   },
   {
@@ -769,6 +783,7 @@
    "depends_on": "eval:!doc.is_fixed_asset",
    "fieldname": "customer_details",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Customer Details"
   },
   {
@@ -800,6 +815,7 @@
    "depends_on": "eval:!doc.is_fixed_asset",
    "fieldname": "inspection_criteria",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Inspection Criteria",
    "oldfieldtype": "Section Break",
    "options": "fa fa-search"
@@ -830,6 +846,7 @@
    "depends_on": "is_stock_item",
    "fieldname": "manufacturing",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Manufacturing",
    "oldfieldtype": "Section Break",
    "options": "fa fa-cogs"
@@ -914,6 +931,7 @@
    "depends_on": "eval:!doc.__islocal && !doc.is_fixed_asset",
    "fieldname": "over_delivery_receipt_allowance",
    "fieldtype": "Float",
+   "hidden": 1,
    "label": "Over Delivery/Receipt Allowance (%)",
    "oldfieldname": "tolerance",
    "oldfieldtype": "Currency"
@@ -922,6 +940,7 @@
    "depends_on": "eval:!doc.__islocal && !doc.is_fixed_asset",
    "fieldname": "over_billing_allowance",
    "fieldtype": "Float",
+   "hidden": 1,
    "label": "Over Billing Allowance (%)"
   },
   {
@@ -1022,7 +1041,7 @@
  "image_field": "image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-03-14 10:40:53.981167",
+ "modified": "2023-05-11 11:00:53.871620",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Item",
