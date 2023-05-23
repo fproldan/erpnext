@@ -184,7 +184,7 @@
    "fieldtype": "Link",
    "label": "Aprobar",
    "options": "Role"
-  },
+  }
  ],
  "icon": "fa fa-cog",
  "idx": 1,
