@@ -30,7 +30,15 @@
   "aprobar",
   "column_break_23",
   "rs_monto_menor_a",
-  "do_monto_menor_igual_a"
+  "do_monto_menor_igual_a",
+  "configuracion_validacion_de_pe_por_montos_section",
+  "rol_aprobar_rs_pe",
+  "rol_aprobar_do_pe",
+  "rol_aprobar_ga_pe",
+  "aprobar_pe",
+  "column_break_24",
+  "rs_monto_menor_a_pe",
+  "do_monto_menor_igual_a_pe"
  ],
  "fields": [
   {
@@ -184,6 +192,49 @@
    "fieldtype": "Link",
    "label": "Aprobar",
    "options": "Role"
+  },
+  {
+   "fieldname": "configuracion_validacion_de_pe_por_montos_section",
+   "fieldtype": "Section Break",
+   "label": "Configuracion Validacion de Pagos por montos"
+  },
+  {
+   "fieldname": "column_break_24",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "rs_monto_menor_a_pe",
+   "fieldtype": "Currency",
+   "label": "RS Monto menor a"
+  },
+  {
+   "fieldname": "do_monto_menor_igual_a_pe",
+   "fieldtype": "Currency",
+   "label": "DO Monto menor igual a"
+  },
+  {
+   "fieldname": "rol_aprobar_rs_pe",
+   "fieldtype": "Link",
+   "label": "Rol Aprobar RS",
+   "options": "Role"
+  },
+  {
+   "fieldname": "rol_aprobar_do_pe",
+   "fieldtype": "Link",
+   "label": "Rol Aprobar DO",
+   "options": "Role"
+  },
+  {
+   "fieldname": "rol_aprobar_ga_pe",
+   "fieldtype": "Link",
+   "label": "Rol Aprobar GA",
+   "options": "Role"
+  },
+  {
+   "fieldname": "aprobar_pe",
+   "fieldtype": "Link",
+   "label": "Aprobar",
+   "options": "Role"
   }
  ],
  "icon": "fa fa-cog",
@@ -191,7 +242,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2022-10-27 10:40:36.596767",
+ "modified": "2022-10-27 11:40:36.596767",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Buying Settings",
