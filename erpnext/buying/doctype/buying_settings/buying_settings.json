@@ -30,7 +30,7 @@
   "aprobar",
   "column_break_23",
   "rs_monto_menor_a",
-  "do_monto_menor_igual_a",
+  "do_monto_menor_igual_a"
  ],
  "fields": [
   {
@@ -191,7 +191,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2022-10-27 13:40:36.596767",
+ "modified": "2022-10-27 13:41:36.596767",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Buying Settings",
