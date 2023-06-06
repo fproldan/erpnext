@@ -13,6 +13,8 @@
   "basic_info",
   "naming_series",
   "supplier_name",
+  "nombre_comercial",
+  "centro_de_costos",
   "country",
   "default_bank_account",
   "tax_id",
@@ -37,6 +39,15 @@
   "warn_pos",
   "prevent_rfqs",
   "prevent_pos",
+  "datos_de_pagos_section",
+  "modalidad_de_pago",
+  "cbu_para_transferencia",
+  "orden_cheque",
+  "cuit_cheque",
+  "column_break_35",
+  "tipo_de_cuenta",
+  "cheque_a_la_orden",
+  "cheque_cruzado",
   "section_break_40",
   "critico",
   "proveedor_o_suministro",
@@ -45,6 +56,20 @@
   "limite_de_credito_cta_cte",
   "forma_de_pago",
   "centro_de_costo",
+  "retenciones_section",
+  "motivo_de_exclusion",
+  "constancia_de_exclusion",
+  "situacion_ganancias",
+  "motivo_de_exclusion_de_ganancias",
+  "constancia_de_exclusion_de_ganancias",
+  "incluido_en_regimen_de_factura_de_credito_electronica_desde",
+  "column_break_54",
+  "cuenta_patrimonial",
+  "cuenta_de_resultado",
+  "concepto_impositivo",
+  "comprobante",
+  "letra",
+  "prefijo",
   "allowed_to_transact_section",
   "companies",
   "section_break_7",
@@ -101,7 +126,7 @@
    "fieldname": "supplier_name",
    "fieldtype": "Data",
    "in_global_search": 1,
-   "label": "Supplier Name",
+   "label": "Raz\u00f3n Social",
    "no_copy": 1,
    "oldfieldname": "supplier_name",
    "oldfieldtype": "Data",
@@ -124,7 +149,6 @@
    "fieldname": "tax_id",
    "fieldtype": "Data",
    "label": "Tax ID",
-   "allow_in_quick_entry": 1,
    "mandatory_depends_on": "eval:doc.condicion_de_iva_proveedor && doc.condicion_de_iva_proveedor !='Consumidor Final'"
   },
   {
@@ -505,6 +529,131 @@
   {
    "fieldname": "columna_compras",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "nombre_comercial",
+   "fieldtype": "Data",
+   "label": "Nombre Comercial"
+  },
+  {
+   "fieldname": "centro_de_costos",
+   "fieldtype": "Data",
+   "label": "Centro de Costos"
+  },
+  {
+   "fieldname": "datos_de_pagos_section",
+   "fieldtype": "Section Break",
+   "label": "Datos de Pagos"
+  },
+  {
+   "fieldname": "modalidad_de_pago",
+   "fieldtype": "Data",
+   "label": "Modalidad de Pago"
+  },
+  {
+   "fieldname": "cbu_para_transferencia",
+   "fieldtype": "Data",
+   "label": "CBU Para Transferencia"
+  },
+  {
+   "fieldname": "orden_cheque",
+   "fieldtype": "Data",
+   "label": "Orden Cheque"
+  },
+  {
+   "fieldname": "cuit_cheque",
+   "fieldtype": "Data",
+   "label": "CUIT Cheque"
+  },
+  {
+   "fieldname": "column_break_35",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "tipo_de_cuenta",
+   "fieldtype": "Data",
+   "label": "Tipo de Cuenta"
+  },
+  {
+   "fieldname": "cheque_a_la_orden",
+   "fieldtype": "Data",
+   "label": "Cheque a la Orden"
+  },
+  {
+   "fieldname": "cheque_cruzado",
+   "fieldtype": "Data",
+   "label": "Cheque Cruzado"
+  },
+  {
+   "fieldname": "retenciones_section",
+   "fieldtype": "Section Break",
+   "label": "Datos Impositivos"
+  },
+  {
+   "fieldname": "motivo_de_exclusion",
+   "fieldtype": "Data",
+   "label": "Motivo de Exclusi\u00f3n"
+  },
+  {
+   "fieldname": "constancia_de_exclusion",
+   "fieldtype": "Attach",
+   "label": "Constancia de Exclusi\u00f3n"
+  },
+  {
+   "fieldname": "situacion_ganancias",
+   "fieldtype": "Data",
+   "label": "Situaci\u00f3n Ganancias"
+  },
+  {
+   "fieldname": "motivo_de_exclusion_de_ganancias",
+   "fieldtype": "Data",
+   "label": "Motivo de Exclusi\u00f3n de Ganancias"
+  },
+  {
+   "fieldname": "constancia_de_exclusion_de_ganancias",
+   "fieldtype": "Attach",
+   "label": "Constancia de Exclusi\u00f3n de Ganancias"
+  },
+  {
+   "fieldname": "incluido_en_regimen_de_factura_de_credito_electronica_desde",
+   "fieldtype": "Date",
+   "label": "Incluido en R\u00e9gimen de Factura de Cr\u00e9dito Electr\u00f3nica Desde"
+  },
+  {
+   "fieldname": "cuenta_patrimonial",
+   "fieldtype": "Link",
+   "label": "Cuenta Patrimonial",
+   "options": "Account"
+  },
+  {
+   "fieldname": "cuenta_de_resultado",
+   "fieldtype": "Link",
+   "label": "Cuenta de Resultado",
+   "options": "Account"
+  },
+  {
+   "fieldname": "concepto_impositivo",
+   "fieldtype": "Data",
+   "label": "Concepto Impositivo"
+  },
+  {
+   "fieldname": "comprobante",
+   "fieldtype": "Data",
+   "label": "Comprobante"
+  },
+  {
+   "fieldname": "letra",
+   "fieldtype": "Data",
+   "label": "Letra"
+  },
+  {
+   "fieldname": "prefijo",
+   "fieldtype": "Data",
+   "label": "Prefijo"
+  },
+  {
+   "fieldname": "column_break_54",
+   "fieldtype": "Column Break"
   }
  ],
  "icon": "fa fa-user",
@@ -517,7 +666,7 @@
    "link_fieldname": "party"
   }
  ],
- "modified": "2021-09-09 21:37:56.522233",
+ "modified": "2023-06-05 13:59:25.695148",
  "modified_by": "Administrator",
  "module": "Buying",
  "name": "Supplier",
