@@ -36,9 +36,9 @@ class CierredeCaja(StatusUpdater):
         accounts = self.get_accounts(True)
         positive_entries_filter = [['creation', '>=', self.period_start_date], ['creation', '<=', self.period_end_date], ['paid_to', 'in', accounts], ['docstatus', '=', '1']]
         negative_entries_filter = [['creation', '>=', self.period_start_date], ['creation', '<=', self.period_end_date], ['paid_from', 'in', accounts], ['docstatus', '=', '1']]
-        positive_payment_entries = frappe.db.get_all("Payment Entry", filters=positive_entries_filter, fields=["total_allocated_amount"])
-        negative_payment_entries = frappe.db.get_all("Payment Entry", filters=negative_entries_filter, fields=["total_allocated_amount"])
-        total_cash_cheque = sum(payment_entry['total_allocated_amount'] for payment_entry in positive_payment_entries) + sum(payment_entry['total_allocated_amount'] * -1 for payment_entry in negative_payment_entries)
+        positive_payment_entries = frappe.db.get_all("Payment Entry", filters=positive_entries_filter, fields=["paid_amount"])
+        negative_payment_entries = frappe.db.get_all("Payment Entry", filters=negative_entries_filter, fields=["paid_amount"])
+        total_cash_cheque = sum(payment_entry['paid_amount'] for payment_entry in positive_payment_entries) + sum(payment_entry['paid_amount'] * -1 for payment_entry in negative_payment_entries)
         totals['total_cash_cheque'] = total_cash_cheque
         return totals
 
@@ -61,9 +61,9 @@ def get_expected_amount(mode_of_payment, period_start_date, period_end_date, own
     account = frappe.db.get_value("Mode of Payment Account", {"parent": mode_of_payment, "company": company}, "default_account")
     positive_entries_filter = [['creation', '>=', period_start_date], ['creation', '<=', period_end_date], ['paid_to', '=', account], ['docstatus', '=', '1']]
     negative_entries_filter = [['creation', '>=', period_start_date], ['creation', '<=', period_end_date], ['paid_from', '=', account], ['docstatus', '=', '1']]
-    positive_payment_entries = frappe.db.get_all("Payment Entry", filters=positive_entries_filter, fields=["total_allocated_amount"])
-    negative_payment_entries = frappe.db.get_all("Payment Entry", filters=negative_entries_filter, fields=["total_allocated_amount"])
-    return sum(payment_entry['total_allocated_amount'] for payment_entry in positive_payment_entries) + sum(payment_entry['total_allocated_amount'] * -1 for payment_entry in negative_payment_entries)
+    positive_payment_entries = frappe.db.get_all("Payment Entry", filters=positive_entries_filter, fields=["paid_amount"])
+    negative_payment_entries = frappe.db.get_all("Payment Entry", filters=negative_entries_filter, fields=["paid_amount"])
+    return sum(payment_entry['paid_amount'] for payment_entry in positive_payment_entries) + sum(payment_entry['paid_amount'] * -1 for payment_entry in negative_payment_entries)
 
 
 @frappe.whitelist()
