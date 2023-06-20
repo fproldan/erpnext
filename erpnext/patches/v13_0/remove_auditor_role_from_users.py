@@ -9,4 +9,4 @@ def execute():
 		if 'Auditor' in user_roles:
 			user.remove_roles("Auditor")
 
-		frappe.db.commit()
+	frappe.db.commit()
