@@ -16,6 +16,7 @@
   "crm_settings_section",
   "campaign_naming_by",
   "default_valid_till",
+  "prospect_event_manager",
   "column_break_9",
   "close_opportunity_after_days",
   "canal_de_venta",
@@ -235,6 +236,12 @@
    "in_list_view": 1,
    "label": "Tipo de Documento Predeterminado",
    "options": "Tipo de Documento"
+  },
+  {
+   "fieldname": "prospect_event_manager",
+   "fieldtype": "Link",
+   "label": "Rol de eventos en Prospecto",
+   "options": "Role"
   }
  ],
  "icon": "fa fa-cog",
@@ -242,7 +249,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2021-09-18 23:05:06.139820",
+ "modified": "2023-06-20 16:12:34.537009",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Selling Settings",
