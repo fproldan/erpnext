@@ -87,13 +87,16 @@ def get_cuit(tax_id=None, customer_name=None):
 		nosis = frappe.get_doc('Verificacion NOSIS', nosis['name'])
 		last_nosis = nosis.get_dias()
 
+	EVENT_ROLE = frappe.db.get_single_value("Selling Settings", "prospect_event_manager")
+
 	resp = {
 		'customer': '',
 		'lead': '',
 		'estado_cuit': '-',
 		'estado_cuit_class': '',
 		'image': 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAYAAAA8AXHiAAABDklEQVR42u3SMQEAAAQAMJJL4VJWAadzy7Cc6Qp4lmIhFmIhlliIhViIBWIhFmKBWIiFWCAWYiEWiIVYiAViIRZigViIhVggFmIhFoiFWIgFYiEWYoFYiIVYIBZiIRaIhViIBWIhFmKBWIiFWCAWYiEWiIVYiAViIRZigViIhVggFmIhFoiFWIgFYiEWYoFYiIVYIBZiIRaIhViIBWIhFmKBWIiFWCAWYiEWYomFWIiFWCAWYiEWiIVYiAViIRZigViIhVggFmIhFoiFWIgFYiEWYoFYiIVYIBZiIRaIhViIBWIhFmKBWIiFWCAWYiEWiIVYiAViIRZigViIhVggFmIhFoiFWIgFYiEWYsFtAbdmWALgJXnzAAAAAElFTkSuQmCC',
-		'last_nosis': last_nosis
+		'last_nosis': last_nosis,
+		'event_role': EVENT_ROLE
 	}
 
 	if not customer and not lead:
@@ -105,8 +108,7 @@ def get_cuit(tax_id=None, customer_name=None):
 
 	current_user = frappe.get_doc('User', frappe.session.user)
 	current_user_roles = set([role.role for role in current_user.roles])
-	EVENT_ROLE = "System Manager"
-
+	
 	if lead:
 		events = []
 		for communication in get_communication_data(lead.doctype, lead.name, limit=100):

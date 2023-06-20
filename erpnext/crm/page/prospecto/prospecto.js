@@ -419,12 +419,11 @@ erpnext.Prospecto = class Prospecto {
 
 		if (cuit_values['lead'] && cuit_values['lead']['events']) {
 				let event_data = []
-				var EVENT_ROLE = 'System Manager';
 
 				for (let i = 0; i < cuit_values['lead']['events'].length; i++) {
-					if (cuit_values['lead']['events'][i]['assign'].includes(frappe.session.user) || frappe.user.has_role(EVENT_ROLE)) {
+					if (cuit_values['lead']['events'][i]['assign'].includes(frappe.session.user) || frappe.user.has_role(cuit_values['event_role'])) {
 
-						if (frappe.user.has_role(EVENT_ROLE)) {
+						if (frappe.user.has_role(cuit_values['event_role'])) {
 							var assign_row = gridjs.html(`<button onclick="event_assign('${cuit_values['lead']['events'][i]['name']}')" type="button" class="btn btn-primary assign_event_check">Asignar</button>`);
 						} else {
 							var assign_row = '-'
