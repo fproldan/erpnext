@@ -362,3 +362,4 @@ execute:frappe.delete_doc('Page', "welcome-to-erpnext", force=True)
 execute:frappe.delete_doc('Page', "team-updates", force=True)
 erpnext.patches.v13_0.usuarios_reducidos_fix
 erpnext.patches.v13_0.release_1_7
+erpnext.patches.v13_0.remove_auditor_role_from_users
