@@ -420,7 +420,7 @@ erpnext.Prospecto = class Prospecto {
 
 		if (cuit_values['lead'] && cuit_values['lead']['events']) {
 				let event_data = []
-				var EVENT_ROLE = 'Systems Manager';
+				var EVENT_ROLE = 'System Manager';
 
 				for (let i = 0; i < cuit_values['lead']['events'].length; i++) {
 					if (cuit_values['lead']['events'][i]['assign'].includes(frappe.session.user) || frappe.user.has_role(EVENT_ROLE)) {
