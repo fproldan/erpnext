@@ -12,9 +12,8 @@ function event_assign(event_id) {
 		method: "frappe.desk.form.assign_to.add",
 		doctype: 'Event',
 		docname: event_id,
-		//frm: me.frm,
 		callback: function (r) {
-			frappe.msgprint(r.message);
+			frappe.msgprint('Asignación realizada');
 		}
 	});
 	assign_to.dialog.clear();
@@ -27,7 +26,7 @@ function event_unassign(event_id, user) {
 		name: event_id,
 		assign_to: user
 	}).then((assignments) => {
-		frappe.msgprint('Asignacion eliminada')
+		frappe.msgprint('Asignación eliminada')
 	});
 }
 
