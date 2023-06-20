@@ -7,6 +7,30 @@ frappe.pages['prospecto'].on_page_load = function(wrapper) {
 	new erpnext.Prospecto(page);
 }
 
+function event_assign(event_id) {
+	assign_to = new frappe.ui.form.AssignToDialog({
+		method: "frappe.desk.form.assign_to.add",
+		doctype: 'Event',
+		docname: event_id,
+		//frm: me.frm,
+		callback: function (r) {
+			frappe.msgprint(r.message);
+		}
+	});
+	assign_to.dialog.clear();
+	assign_to.dialog.show();
+}
+
+function event_unassign(event_id, user) {
+	frappe.xcall('frappe.desk.form.assign_to.remove', {
+		doctype: 'Event',
+		name: event_id,
+		assign_to: user
+	}).then((assignments) => {
+		frappe.msgprint('Asignacion eliminada')
+	});
+}
+
 erpnext.Prospecto = class Prospecto {
 	constructor(page) {
 		this.page = page;
@@ -272,7 +296,8 @@ erpnext.Prospecto = class Prospecto {
 				      	'next': 'Siguiente',
 				      	'showing': 'Mostrando',
 				      	'results': () => 'Registros'
-			    	}
+			    	},
+				    'noRecordsFound': 'No se encontraron registros',
 			  	}
 			};
 			customer_html = `
@@ -346,7 +371,8 @@ erpnext.Prospecto = class Prospecto {
 				      	'next': 'Siguiente',
 				      	'showing': 'Mostrando',
 				      	'results': () => 'Registros'
-			    	}
+			    	},
+				    'noRecordsFound': 'No se encontraron registros',
 			  	}
 			};
 
@@ -362,21 +388,62 @@ erpnext.Prospecto = class Prospecto {
 					</div>
 				</div>
 			`;
+		} else {
 
-			if (cuit_values['lead']['events'] && me.se_puede_mostrar(cuit_values)) {
+			if (me.se_puede_mostrar(cuit_values)) {
+				lead_html = `
+					<div class="row">
+	                	<div class="col-lg-12 d-flex align-items-stretch">
+	                    	<div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
+	                    		<h5 class="border-bottom pb-2">Histórico</h5>
+								<h5 class="text-muted">No hay Histórico en esta Iniciativa</h5>
+							</div>
+						</div>
+					</div>
+				`
+
+				lead_events_html = `
+					<div class="row">
+	                	<div class="col-lg-12 d-flex align-items-stretch">
+	                    	<div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
+	                    		<h5 class="border-bottom pb-2">Iniciativa</h5>
+								<h5 class="text-muted">No hay Iniciativa con ese CUIT</h5>
+							</div>
+						</div>
+					</div>
+				`
+			} else {
+				lead_html = ''
+				lead_events_html = ''
+			}
+		}
+
+		if (cuit_values['lead'] && cuit_values['lead']['events']) {
 				let event_data = []
+				var EVENT_ROLE = 'Systems Manager';
+
 				for (let i = 0; i < cuit_values['lead']['events'].length; i++) {
-					event_data.push([
-						gridjs.html(cuit_values['lead']['events'][i]['link']),
-						frappe.datetime.get_datetime_as_string_es(cuit_values['lead']['events'][i]['communication_date']),
-						cuit_values['lead']['events'][i]['sender_full_name'],
-						cuit_values['lead']['events'][i]['event_category'],
-						cuit_values['lead']['events'][i]['subject'],
-						gridjs.html(cuit_values['lead']['events'][i]['content'])
-					])
+					if (cuit_values['lead']['events'][i]['assign'].includes(frappe.session.user) || frappe.user.has_role(EVENT_ROLE)) {
+
+						if (frappe.user.has_role(EVENT_ROLE)) {
+							var assign_row = gridjs.html(`<button onclick="event_assign('${cuit_values['lead']['events'][i]['name']}')" type="button" class="btn btn-primary assign_event_check">Asignar</button>`);
+						} else {
+							var assign_row = '-'
+						}
+						event_data.push([
+							gridjs.html(cuit_values['lead']['events'][i]['link']),
+							frappe.datetime.get_datetime_as_string_es(cuit_values['lead']['events'][i]['communication_date']),
+							cuit_values['lead']['events'][i]['sender_full_name'],
+							cuit_values['lead']['events'][i]['event_category'],
+							cuit_values['lead']['events'][i]['subject'],
+							gridjs.html(cuit_values['lead']['events'][i]['content']),
+							gridjs.html(cuit_values['lead']['events'][i]['assign']),
+							assign_row
+						])
+					}
 				}
 				event_table = {
-				  	columns: ['Evento', 'Fecha', 'Usuario', 'Categoría', 'Asunto', 'Contenido'],
+				  	columns: ['Evento', 'Fecha', 'Usuario', 'Categoría', 'Asunto', 'Contenido', 'Asignado', 'Acción'],
 				  	search: true,
 				  	data: event_data,
 					pagination: {
@@ -392,7 +459,8 @@ erpnext.Prospecto = class Prospecto {
 					      	'next': 'Siguiente',
 					      	'showing': 'Mostrando',
 					      	'results': () => 'Registros'
-				    	}
+				    	},
+				    	'noRecordsFound': 'No se encontraron registros',
 				  	}
 				};
 
@@ -426,35 +494,6 @@ erpnext.Prospecto = class Prospecto {
 					
 				}
 			}
-		} else {
-
-			if (me.se_puede_mostrar(cuit_values)) {
-				lead_html = `
-					<div class="row">
-	                	<div class="col-lg-12 d-flex align-items-stretch">
-	                    	<div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
-	                    		<h5 class="border-bottom pb-2">Histórico</h5>
-								<h5 class="text-muted">No hay Histórico en esta Iniciativa</h5>
-							</div>
-						</div>
-					</div>
-				`
-
-				lead_events_html = `
-					<div class="row">
-	                	<div class="col-lg-12 d-flex align-items-stretch">
-	                    	<div class="card border-0 shadow-sm p-3 mb-3 w-100 rounded-sm" style="background-color: var(--card-bg)">
-	                    		<h5 class="border-bottom pb-2">Iniciativa</h5>
-								<h5 class="text-muted">No hay Iniciativa con ese CUIT</h5>
-							</div>
-						</div>
-					</div>
-				`
-			} else {
-				lead_html = ''
-				lead_events_html = ''
-			}
-		}
 
 		if (cuit_values['quotations'] && me.se_puede_mostrar(cuit_values)) {
 			let quotation_data = []
@@ -487,7 +526,8 @@ erpnext.Prospecto = class Prospecto {
 				      	'next': 'Siguiente',
 				      	'showing': 'Mostrando',
 				      	'results': () => 'Registros'
-			    	}
+			    	},
+				    'noRecordsFound': 'No se encontraron registros',
 			  	}
 			};
 
