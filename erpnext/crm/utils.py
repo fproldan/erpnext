@@ -87,13 +87,16 @@ def get_cuit(tax_id=None, customer_name=None):
 		nosis = frappe.get_doc('Verificacion NOSIS', nosis['name'])
 		last_nosis = nosis.get_dias()
 
+	EVENT_ROLE = frappe.db.get_single_value("Selling Settings", "prospect_event_manager")
+
 	resp = {
 		'customer': '',
 		'lead': '',
 		'estado_cuit': '-',
 		'estado_cuit_class': '',
 		'image': 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAACWCAYAAAA8AXHiAAABDklEQVR42u3SMQEAAAQAMJJL4VJWAadzy7Cc6Qp4lmIhFmIhlliIhViIBWIhFmKBWIiFWCAWYiEWiIVYiAViIRZigViIhVggFmIhFoiFWIgFYiEWYoFYiIVYIBZiIRaIhViIBWIhFmKBWIiFWCAWYiEWiIVYiAViIRZigViIhVggFmIhFoiFWIgFYiEWYoFYiIVYIBZiIRaIhViIBWIhFmKBWIiFWCAWYiEWYomFWIiFWCAWYiEWiIVYiAViIRZigViIhVggFmIhFoiFWIgFYiEWYoFYiIVYIBZiIRaIhViIBWIhFmKBWIiFWCAWYiEWiIVYiAViIRZigViIhVggFmIhFoiFWIgFYiEWYsFtAbdmWALgJXnzAAAAAElFTkSuQmCC',
-		'last_nosis': last_nosis
+		'last_nosis': last_nosis,
+		'event_role': EVENT_ROLE
 	}
 
 	if not customer and not lead:
@@ -103,25 +106,38 @@ def get_cuit(tax_id=None, customer_name=None):
 	q_assign = []
 	l_assign = []
 
+	current_user = frappe.get_doc('User', frappe.session.user)
+	current_user_roles = set([role.role for role in current_user.roles])
+	
 	if lead:
 		events = []
 		for communication in get_communication_data(lead.doctype, lead.name, limit=100):
 			if communication['reference_doctype'] == 'Event':
 				communication['event_category'] = _(communication['communication_medium'])
 				communication['link'] = getlink('Event', communication['reference_name'])
+				communication['name'] = communication['reference_name']
+				event = frappe.get_doc('Event', communication['reference_name'])
+				event_link = []
+				for a in json.loads(event._assign or '[]'):
+					l = getlink('User', a)
+					if EVENT_ROLE in current_user_roles:
+						l += f'<a href="javascript:void(0);" onclick="event_unassign(\'{event.name}\', \'{a}\')"> (Eliminar)</a>'
+					event_link.append(l)
+				communication['assign'] = ", ".join(list(set(event_link)))
 				events.append(communication)
 
 		for todo_info in get_assignments(lead.doctype, lead.name):
 			todo = frappe.get_doc('ToDo', todo_info['name'])
-			events.append({
+			events.append({	
 				'link': getlink('ToDo', todo.name),
 				'communication_date': todo.creation,
 				'sender_full_name': todo.owner,
 				'event_category': 'Tarea',
 				'subject': '',
 				'content': todo.description,
+				'name': todo.name,
+				'assign': 'TODO'
 			})
-
 
 		quotation_search.append(lead.name)
 		resp['lead'] = {
