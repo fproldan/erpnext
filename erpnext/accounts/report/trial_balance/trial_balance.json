@@ -9,7 +9,7 @@
  "filters": [],
  "idx": 2,
  "is_standard": "Yes",
- "modified": "2022-12-06 15:43:13.046204",
+ "modified": "2022-12-06 15:44:13.046204",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Trial Balance",
@@ -24,9 +24,6 @@
   },
   {
    "role": "Accounts Manager"
-  },
-  {
-   "role": "Auditor"
   }
  ]
 }
