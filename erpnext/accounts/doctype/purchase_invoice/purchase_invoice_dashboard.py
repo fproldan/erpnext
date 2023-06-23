@@ -12,7 +12,7 @@ def get_data():
 			'Payment Request': 'reference_name',
 			'Landed Cost Voucher': 'receipt_document',
 			'Purchase Invoice': 'return_against',
-			'Auto Repeat': 'reference_document'
+			'Auto Repeat': 'reference_document',
 		},
 		'internal_links': {
 			'Purchase Order': ['items', 'purchase_order'],
