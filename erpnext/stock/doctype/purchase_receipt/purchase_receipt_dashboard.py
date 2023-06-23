@@ -5,9 +5,8 @@ from frappe import _
 
 def get_data():
 	return {
-		'fieldname': 'purchase_receipt_no',
+		'fieldname': 'purchase_receipt',
 		'non_standard_fieldnames': {
-			'Purchase Invoice': 'purchase_receipt',
 			'Asset': 'purchase_receipt',
 			'Landed Cost Voucher': 'receipt_document',
 			'Auto Repeat': 'reference_document',
@@ -17,7 +16,6 @@ def get_data():
 			'Purchase Order': ['items', 'purchase_order'],
 			'Project': ['items', 'project'],
 			'Quality Inspection': ['items', 'quality_inspection'],
-			'Purchase Invoice': ['items', 'purchase_invoice'],
 		},
 		'transactions': [
 			{
