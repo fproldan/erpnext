@@ -63,9 +63,9 @@ class BankTransaction(StatusUpdater):
 					return
 
 		clearance_date = self.date if not for_cancel else None
-		frappe.db.set_value(
-			payment_entry.payment_document, payment_entry.payment_entry,
-			"clearance_date", clearance_date)
+
+		if self.get_reconcilied_amount(payment_entry) >= payment_entry.allocated_amount:
+			frappe.db.set_value(payment_entry.payment_document, payment_entry.payment_entry, "clearance_date", clearance_date)
 
 	def clear_sales_invoice(self, payment_entry, for_cancel=False):
 		clearance_date = self.date if not for_cancel else None
@@ -76,6 +76,25 @@ class BankTransaction(StatusUpdater):
 				parent=payment_entry.payment_entry
 			),
 			"clearance_date", clearance_date)
+
+	def get_reconcilied_amount(self, payment_entry):
+		if self.withdrawal > 0:
+			select = "sum(bt.withdrawal) as sum"
+		else:
+			select = "sum(bt.deposit) as sum"
+
+		amount = frappe.db.sql(f"""
+		select {select}
+		from `tabBank Transaction` as bt, `tabBank Transaction Payments` as btp
+		where bt.name = btp.parent
+		and btp.payment_entry = '{payment_entry.payment_entry}'
+		and btp.payment_document = '{payment_entry.payment_document}'
+		group by btp.payment_entry
+		""", as_dict=1)
+
+		if not len(amount):
+			return 0
+		return amount[0]['sum']
 
 def get_reconciled_bank_transactions(payment_entry):
 	reconciled_bank_transactions = frappe.get_all(
