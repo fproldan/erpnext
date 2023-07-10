@@ -521,6 +521,8 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				frappe.show_alert(alert_string);
 				this.update_dt_cards(response.message);
 				this.dialog.hide();
+				console.log('2222');
+				cur_page.page.frm.refresh();
 			},
 		});
 	}
@@ -545,6 +547,8 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				frappe.show_alert(alert_string);
 				this.update_dt_cards(response.message);
 				this.dialog.hide();
+				console.log('2222');
+				cur_page.page.frm.refresh();
 			},
 		});
 	}
@@ -570,6 +574,8 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				frappe.show_alert(alert_string);
 				this.update_dt_cards(response.message);
 				this.dialog.hide();
+				console.log('2222');
+				cur_page.page.frm.refresh();
 			},
 		});
 	}
