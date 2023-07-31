@@ -115,8 +115,6 @@ domains = {
 	'RMA': 'erpnext.domains.rma',
 	'Retail Avanzado': 'erpnext.domains.retail_avanzado',
 	'Servicios Google': 'erpnext.domains.servicios_google',
-	'HR Asistencia y Vacaciones': 'erpnext.domains.hr_asistencia_vacaciones',
-	'HR Reclutamiento, Capacitacion y Gastos': 'erpnext.domains.hr_reclutamiento_capacitacion_gastos',
 	'Build': 'erpnext.domains.build',
 	'Pagos360': 'erpnext.domains.pagos360',
 	'Mercadolibre': 'erpnext.domains.mercadolibre',
@@ -128,7 +126,8 @@ domains = {
 	'Compreahora': 'erpnext.domains.compreahora',
 	'Usuario de Ventas Reducido': 'erpnext.domains.usuario_ventas_reducido',
 	'Usuario de Soporte Reducido': 'erpnext.domains.usuario_soporte_reducido',
-	'Usuario de Proyecto Reducido':'erpnext.domains.usuario_proyecto_reducido',
+	'Usuario de Proyecto Reducido': 'erpnext.domains.usuario_proyecto_reducido',
+	'HR Asistencia, Vacaciones y Rendimiento de Gastos': 'erpnext.domains.hr_asistencia_vacaciones_rendimiento_gastos',
 }
 
 website_generators = ["Item Group", "Website Item", "BOM", "Sales Partner",

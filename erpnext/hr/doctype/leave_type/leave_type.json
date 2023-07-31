@@ -214,7 +214,7 @@
  "icon": "fa fa-flag",
  "idx": 1,
  "links": [],
- "modified": "2021-08-13 16:10:36.464690",
+ "modified": "2021-08-14 16:10:36.464690",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Leave Type",
@@ -247,7 +247,7 @@
    "role": "Employee"
   }
  ],
- "restrict_to_domain": "HR Asistencia y Vacaciones",
+ "restrict_to_domain": "HR Asistencia, Vacaciones y Rendimiento de Gastos",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

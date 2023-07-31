@@ -250,7 +250,7 @@
  "is_submittable": 1,
  "links": [],
  "max_attachments": 0,
- "modified": "2021-05-13 20:01:52.079355",
+ "modified": "2021-05-13 21:01:52.079355",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Leave Application",
@@ -330,7 +330,7 @@
    "write": 1
   }
  ],
- "restrict_to_domain": "HR Asistencia y Vacaciones",
+ "restrict_to_domain": "HR Asistencia, Vacaciones y Rendimiento de Gastos",
  "search_fields": "employee,employee_name,leave_type,from_date,to_date,total_leave_days",
  "sort_field": "modified",
  "sort_order": "DESC",

@@ -200,7 +200,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-09-11 18:38:38.617478",
+ "modified": "2021-09-12 18:38:38.617478",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Employee Advance",
@@ -233,7 +233,7 @@
    "write": 1
   }
  ],
- "restrict_to_domain": "HR Reclutamiento, Capacitacion y Gastos",
+ "restrict_to_domain": "HR Asistencia, Vacaciones y Rendimiento de Gastos",
  "search_fields": "employee,employee_name",
  "sort_field": "modified",
  "sort_order": "DESC",
