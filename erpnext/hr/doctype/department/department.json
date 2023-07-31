@@ -73,7 +73,6 @@
    "description": "Days for which Holidays are blocked for this department.",
    "fieldname": "leave_block_list",
    "fieldtype": "Link",
-   "hidden": 1,
    "in_list_view": 1,
    "label": "Leave Block List",
    "options": "Leave Block List"
@@ -145,7 +144,7 @@
  "idx": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2023-01-09 14:57:33.875494",
+ "modified": "2023-07-31 12:58:08.462456",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Department",

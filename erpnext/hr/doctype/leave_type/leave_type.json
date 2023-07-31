@@ -126,6 +126,7 @@
    "collapsible": 1,
    "fieldname": "encashment",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Encashment"
   },
   {
@@ -214,7 +215,7 @@
  "icon": "fa fa-flag",
  "idx": 1,
  "links": [],
- "modified": "2021-08-14 16:10:36.464690",
+ "modified": "2023-07-31 12:54:34.847134",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Leave Type",
