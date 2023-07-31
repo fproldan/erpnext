@@ -64,7 +64,7 @@ class BankTransaction(StatusUpdater):
 
 		clearance_date = self.date if not for_cancel else None
 
-		if self.get_reconcilied_amount(payment_entry) >= payment_entry.allocated_amount:
+		if self.get_reconcilied_amount(payment_entry.payment_document, payment_entry.payment_entry) >= payment_entry.allocated_amount:
 			frappe.db.set_value(payment_entry.payment_document, payment_entry.payment_entry, "clearance_date", clearance_date)
 
 	def clear_sales_invoice(self, payment_entry, for_cancel=False):
@@ -77,7 +77,7 @@ class BankTransaction(StatusUpdater):
 			),
 			"clearance_date", clearance_date)
 
-	def get_reconcilied_amount(self, payment_entry):
+	def get_reconcilied_amount(self, payment_document, payment_entry):
 		if self.withdrawal > 0:
 			select = "sum(bt.withdrawal) as sum"
 		else:
@@ -87,8 +87,8 @@ class BankTransaction(StatusUpdater):
 		select {select}
 		from `tabBank Transaction` as bt, `tabBank Transaction Payments` as btp
 		where bt.name = btp.parent
-		and btp.payment_entry = '{payment_entry.payment_entry}'
-		and btp.payment_document = '{payment_entry.payment_document}'
+		and btp.payment_entry = '{payment_entry}'
+		and btp.payment_document = '{payment_document}'
 		group by btp.payment_entry
 		""", as_dict=1)
 
