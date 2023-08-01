@@ -248,14 +248,11 @@ def reconcile_vouchers(bank_transaction_name, vouchers):
 	for voucher in vouchers:
 		gl_entry = frappe.db.get_value("GL Entry", dict(account=account, voucher_type=voucher['payment_doctype'], voucher_no=voucher['payment_name']), ['credit', 'debit'], as_dict=1)
 		gl_amount, transaction_amount = (gl_entry.credit, transaction.deposit) if gl_entry.credit > 0 else (gl_entry.debit, transaction.withdrawal)
-		# allocated_amount = gl_amount if gl_amount >= transaction_amount else transaction_amount
-
 		reconcilied_amount = transaction.get_reconcilied_amount(voucher['payment_entry'].doctype, voucher['payment_entry'].name) 	
 		not_concilied = round((gl_amount - reconcilied_amount), 2)
-		if not_concilied < transaction.unallocated_amount:
-			frappe.throw(f'El monto no asignado de la transacción {transaction.unallocated_amount} es mayor al monto no conciliado del documento {not_concilied}.')
-
+		# allocated_amount = gl_amount if gl_amount >= transaction_amount else transaction_amount
 		allocated_amount = not_concilied if not_concilied >= transaction_amount else transaction_amount
+
 		transaction.append("payment_entries", {
 			"payment_document": voucher['payment_entry'].doctype,
 			"payment_entry": voucher['payment_entry'].name,
