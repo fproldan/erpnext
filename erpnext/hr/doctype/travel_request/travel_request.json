@@ -35,7 +35,8 @@
   "name_of_organizer",
   "address_of_organizer",
   "other_details",
-  "amended_from"
+  "amended_from",
+  "employee_advance"
  ],
  "fields": [
   {
@@ -212,11 +213,19 @@
   {
    "fieldname": "dimension_col_break",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "employee_advance",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Employee Advance",
+   "options": "Employee Advance",
+   "read_only": 1
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-05-14 19:59:20.945318",
+ "modified": "2023-08-01 08:15:45.860681",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Travel Request",

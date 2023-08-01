@@ -30,7 +30,8 @@
   "amended_from",
   "column_break_18",
   "advance_account",
-  "mode_of_payment"
+  "mode_of_payment",
+  "travel_request"
  ],
  "fields": [
   {
@@ -196,11 +197,18 @@
    "precision": "9",
    "print_hide": 1,
    "reqd": 1
+  },
+  {
+   "fieldname": "travel_request",
+   "fieldtype": "Link",
+   "label": "Travel Request",
+   "options": "Travel Request",
+   "read_only": 1
   }
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-09-12 18:38:38.617478",
+ "modified": "2023-08-01 08:07:59.242651",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Employee Advance",
