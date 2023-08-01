@@ -232,22 +232,29 @@ def reconcile_vouchers(bank_transaction_name, vouchers):
 
 	if transaction.unallocated_amount == 0:
 		frappe.throw(_("This bank transaction is already fully reconciled"))
-	total_amount = 0
+	
+	# total_amount = 0
+	
 	for voucher in vouchers:
 		voucher['payment_entry'] = frappe.get_doc(voucher['payment_doctype'], voucher['payment_name'])
-		total_amount += get_paid_amount(frappe._dict({
-			'payment_document': voucher['payment_doctype'],
-			'payment_entry': voucher['payment_name'],
-		}), transaction.currency, company_account)
+		# total_amount += get_paid_amount(frappe._dict({
+		# 	'payment_document': voucher['payment_doctype'],
+		# 	'payment_entry': voucher['payment_name'],
+		# }), transaction.currency, company_account)
 
-	if total_amount > transaction.unallocated_amount:
-		frappe.throw(_("The Sum Total of Amounts of All Selected Vouchers Should be Less than the Unallocated Amount of the Bank Transaction"))
+	# if total_amount > transaction.unallocated_amount:
+	# 	frappe.throw(_("The Sum Total of Amounts of All Selected Vouchers Should be Less than the Unallocated Amount of the Bank Transaction"))
 	account = frappe.db.get_value("Bank Account", transaction.bank_account, "account")
 
 	for voucher in vouchers:
 		gl_entry = frappe.db.get_value("GL Entry", dict(account=account, voucher_type=voucher['payment_doctype'], voucher_no=voucher['payment_name']), ['credit', 'debit'], as_dict=1)
-		gl_amount, transaction_amount = (gl_entry.credit, transaction.deposit) if gl_entry.credit > 0 else (gl_entry.debit, transaction.withdrawal)
-		allocated_amount = gl_amount if gl_amount >= transaction_amount else transaction_amount
+		gl_amount = gl_entry.credit if gl_entry.credit > 0 else gl_entry.debit
+		transaction_amount = transaction.deposit if transaction.deposit > 0  else transaction.withdrawal
+		# gl_amount, transaction_amount = (gl_entry.credit, transaction.deposit) if gl_entry.credit > 0 else (gl_entry.debit, transaction.withdrawal)
+		reconcilied_amount = transaction.get_reconcilied_amount(voucher['payment_entry'].doctype, voucher['payment_entry'].name) 	
+		not_reconcilied = round((gl_amount - reconcilied_amount), 2)
+		# allocated_amount = gl_amount if gl_amount >= transaction_amount else transaction_amount
+		allocated_amount = not_reconcilied if not_reconcilied <= transaction_amount else transaction_amount
 
 		transaction.append("payment_entries", {
 			"payment_document": voucher['payment_entry'].doctype,
@@ -308,7 +315,7 @@ def check_matching(bank_account, company, transaction, document_types):
 
 def get_queries(bank_account, company, transaction, document_types):
 	# get queries to get matching vouchers
-	amount_condition = "=" if "exact_match" in document_types else "<="
+	amount_condition = "=" if "exact_match" in document_types else None
 	account_from_to = "paid_to" if transaction.deposit > 0 else "paid_from"
 	queries = []
 
@@ -341,6 +348,11 @@ def get_pe_matching_query(amount_condition, account_from_to, transaction):
 		currency_field = "paid_to_account_currency as currency"
 	else:
 		currency_field = "paid_from_account_currency as currency"
+	
+	amount_filter = "True"
+	if amount_condition:
+		amount_filter = f"paid_amount {amount_condition} %(amount)s"
+	
 	return  f"""
 	SELECT
 		(CASE WHEN reference_no=%(reference_no)s THEN 1 ELSE 0 END
@@ -358,7 +370,7 @@ def get_pe_matching_query(amount_condition, account_from_to, transaction):
 	FROM
 		`tabPayment Entry`
 	WHERE
-		paid_amount {amount_condition} %(amount)s
+		{amount_filter}
 		AND docstatus = 1
 		AND payment_type IN (%(payment_type)s, 'Internal Transfer')
 		AND ifnull(clearance_date, '') = ""
@@ -373,8 +385,12 @@ def get_je_matching_query(amount_condition, transaction):
 	# So one bank could have both types of bank accounts like asset and liability
 	# So cr_or_dr should be judged only on basis of withdrawal and deposit and not account type
 	cr_or_dr = "credit" if transaction.withdrawal > 0 else "debit"
-	return f"""
 
+	amount_filter = ""
+	if amount_condition:
+		amount_filter = f"AND jea.{cr_or_dr}_in_account_currency {amount_condition} %(amount)s"
+
+	return f"""
 		SELECT
 			(CASE WHEN je.cheque_no=%(reference_no)s THEN 1 ELSE 0 END
 			+ 1) AS rank ,
@@ -396,13 +412,17 @@ def get_je_matching_query(amount_condition, transaction):
 		WHERE
 			(je.clearance_date is null or je.clearance_date='0000-00-00')
 			AND jea.account = %(bank_account)s
-			AND jea.{cr_or_dr}_in_account_currency {amount_condition} %(amount)s
+			{amount_filter}
 			AND je.docstatus = 1
 	"""
 
 
 def get_si_matching_query(amount_condition):
 	# get matchin sales invoice query
+	amount_filter = ""
+	if amount_condition:
+		amount_filter = f"AND sip.amount {amount_condition} %(amount)s"
+
 	return f"""
 		SELECT
 			( CASE WHEN si.customer = %(party)s  THEN 1 ELSE 0  END
@@ -425,12 +445,16 @@ def get_si_matching_query(amount_condition):
 			sip.parent = si.name
 		WHERE (sip.clearance_date is null or sip.clearance_date='0000-00-00')
 			AND sip.account = %(bank_account)s
-			AND sip.amount {amount_condition} %(amount)s
+			{amount_filter}
 			AND si.docstatus = 1
 	"""
 
 def get_pi_matching_query(amount_condition):
 	# get matching purchase invoice query
+	amount_filter = "True"
+	if amount_condition:
+		amount_filter = f"paid_amount {amount_condition} %(amount)s"
+	
 	return f"""
 		SELECT
 			( CASE WHEN supplier = %(party)s THEN 1 ELSE 0 END
@@ -447,7 +471,7 @@ def get_pi_matching_query(amount_condition):
 		FROM
 			`tabPurchase Invoice`
 		WHERE
-			paid_amount {amount_condition} %(amount)s
+			{amount_filter}
 			AND docstatus = 1
 			AND is_paid = 1
 			AND ifnull(clearance_date, '') = ""
@@ -460,6 +484,11 @@ def get_ec_matching_query(bank_account, company, amount_condition):
 			filters={"default_account": bank_account}, fields=["parent"])]
 	mode_of_payments = '(\'' + '\', \''.join(mode_of_payments) + '\' )'
 	company_currency = get_company_currency(company)
+
+	amount_filter = "True"
+	if amount_condition:
+		amount_filter = f"total_sanctioned_amount {amount_condition} %(amount)s"
+
 	return f"""
 		SELECT
 			( CASE WHEN employee = %(party)s THEN 1 ELSE 0 END
@@ -476,7 +505,7 @@ def get_ec_matching_query(bank_account, company, amount_condition):
 		FROM
 			`tabExpense Claim`
 		WHERE
-			total_sanctioned_amount {amount_condition} %(amount)s
+			{amount_filter}
 			AND docstatus = 1
 			AND is_paid = 1
 			AND ifnull(clearance_date, '') = ""
