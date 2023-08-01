@@ -233,13 +233,14 @@ def reconcile_vouchers(bank_transaction_name, vouchers):
 	if transaction.unallocated_amount == 0:
 		frappe.throw(_("This bank transaction is already fully reconciled"))
 	
-	total_amount = 0
+	# total_amount = 0
+	
 	for voucher in vouchers:
 		voucher['payment_entry'] = frappe.get_doc(voucher['payment_doctype'], voucher['payment_name'])
-		total_amount += get_paid_amount(frappe._dict({
-			'payment_document': voucher['payment_doctype'],
-			'payment_entry': voucher['payment_name'],
-		}), transaction.currency, company_account)
+		# total_amount += get_paid_amount(frappe._dict({
+		# 	'payment_document': voucher['payment_doctype'],
+		# 	'payment_entry': voucher['payment_name'],
+		# }), transaction.currency, company_account)
 
 	# if total_amount > transaction.unallocated_amount:
 	# 	frappe.throw(_("The Sum Total of Amounts of All Selected Vouchers Should be Less than the Unallocated Amount of the Bank Transaction"))
@@ -247,11 +248,13 @@ def reconcile_vouchers(bank_transaction_name, vouchers):
 
 	for voucher in vouchers:
 		gl_entry = frappe.db.get_value("GL Entry", dict(account=account, voucher_type=voucher['payment_doctype'], voucher_no=voucher['payment_name']), ['credit', 'debit'], as_dict=1)
-		gl_amount, transaction_amount = (gl_entry.credit, transaction.deposit) if gl_entry.credit > 0 else (gl_entry.debit, transaction.withdrawal)
+		gl_amount = gl_entry.credit if gl_entry.credit > 0 else gl_entry.debit
+		transaction_amount = transaction.deposit if transaction.deposit > 0  else transaction.withdrawal
+		# gl_amount, transaction_amount = (gl_entry.credit, transaction.deposit) if gl_entry.credit > 0 else (gl_entry.debit, transaction.withdrawal)
 		reconcilied_amount = transaction.get_reconcilied_amount(voucher['payment_entry'].doctype, voucher['payment_entry'].name) 	
-		not_concilied = round((gl_amount - reconcilied_amount), 2)
+		not_reconcilied = round((gl_amount - reconcilied_amount), 2)
 		# allocated_amount = gl_amount if gl_amount >= transaction_amount else transaction_amount
-		allocated_amount = not_concilied if not_concilied >= transaction_amount else transaction_amount
+		allocated_amount = not_reconcilied if not_reconcilied <= transaction_amount else transaction_amount
 
 		transaction.append("payment_entries", {
 			"payment_document": voucher['payment_entry'].doctype,
