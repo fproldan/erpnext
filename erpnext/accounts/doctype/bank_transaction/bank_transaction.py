@@ -64,7 +64,10 @@ class BankTransaction(StatusUpdater):
 
 		clearance_date = self.date if not for_cancel else None
 
-		if self.get_reconcilied_amount(payment_entry.payment_document, payment_entry.payment_entry) >= payment_entry.allocated_amount:
+		gl_entry = frappe.db.get_value("GL Entry", dict(voucher_type=payment_entry.payment_document, voucher_no=payment_entry.payment_entry), ['credit', 'debit'], as_dict=1)
+		gl_amount = gl_entry.credit if gl_entry.credit > 0 else gl_entry.debit
+
+		if self.get_reconcilied_amount(payment_entry.payment_document, payment_entry.payment_entry) >= gl_amount:
 			frappe.db.set_value(payment_entry.payment_document, payment_entry.payment_entry, "clearance_date", clearance_date)
 
 	def clear_sales_invoice(self, payment_entry, for_cancel=False):
