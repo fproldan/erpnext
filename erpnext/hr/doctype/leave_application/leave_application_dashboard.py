@@ -14,7 +14,7 @@ def get_data():
         'reports': [
 			{
                 'label': _('Reports'),
-				'items': ['Employee Leave Balance']
+				'items': [_('Employee Leave Balance')]
 			}
 		]
     }
