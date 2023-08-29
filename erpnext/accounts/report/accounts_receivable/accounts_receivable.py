@@ -97,6 +97,12 @@ class ReceivablePayableReport(object):
 	def init_voucher_balance(self):
 		# build all keys, since we want to exclude vouchers beyond the report date
 		for gle in self.gl_entries:
+
+			if frappe.get_hooks('accounts_receivable_family_column') and gle.party_type == 'Customer':
+				familia = frappe.get_value('Customer', gle.party, 'familia')
+			else:
+				familia = None
+
 			# get the balance object for voucher_type
 			key = (gle.voucher_type, gle.voucher_no, gle.party)
 			if not key in self.voucher_balance:
@@ -114,7 +120,8 @@ class ReceivablePayableReport(object):
 					invoiced_in_account_currency = 0.0,
 					paid_in_account_currency = 0.0,
 					credit_note_in_account_currency = 0.0,
-					outstanding_in_account_currency = 0.0
+					outstanding_in_account_currency = 0.0,
+					familia = familia
 				)
 			self.get_invoices(gle)
 
@@ -231,7 +238,7 @@ class ReceivablePayableReport(object):
 			row.outstanding_in_account_currency = flt(row.invoiced_in_account_currency - row.paid_in_account_currency - \
 				row.credit_note_in_account_currency, self.currency_precision)
 			row.invoice_grand_total = row.invoiced
-			
+
 			if frappe.get_hooks('accounts_receivable_usd_column') and row.outstanding != 0.0:
 				if row['voucher_type'] == "Payment Entry":
 					currency_field = "paid_to_account_currency"
@@ -736,6 +743,10 @@ class ReceivablePayableReport(object):
 			conditions.append("party in (select name from tabCustomer where default_sales_partner=%s)")
 			values.append(self.filters.get("sales_partner"))
 
+		if self.filters.get("familia"):
+			conditions.append("party in (select name from tabCustomer where familia=%s)")
+			values.append(self.filters.get("familia"))
+
 	def add_supplier_filters(self, conditions, values):
 		if self.filters.get("supplier_group"):
 			conditions.append("""party in (select name from tabSupplier
@@ -802,6 +813,9 @@ class ReceivablePayableReport(object):
 		self.add_column('Posting Date', fieldtype='Date')
 		self.add_column(label=_(self.party_type), fieldname='party',
 			fieldtype='Link', options=self.party_type, width=180)
+
+		if frappe.get_hooks('accounts_receivable_family_column') and self.party_type == 'Customer':
+			self.add_column(_("Familia"), fieldname='familia', fieldtype='Link', options='Customer')
 
 		if self.party_naming_by == "Naming Series":
 			self.add_column(_('{0} Name').format(self.party_type),
