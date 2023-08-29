@@ -364,3 +364,4 @@ erpnext.patches.v13_0.usuarios_reducidos_fix
 erpnext.patches.v13_0.release_1_7
 erpnext.patches.v13_0.remove_auditor_role_from_users
 erpnext.patches.v13_0.remove_old_hr_domains
+erpnext.patches.v13_0.release_1_8
