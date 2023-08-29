@@ -27,6 +27,10 @@ class EmployeeAdvance(Document):
 		validate_active_employee(self.employee)
 		self.set_status()
 
+	def on_submit(self):
+		if self.travel_request:
+			frappe.db.set_value('Travel Request', self.travel_request, 'employee_advance', self.name)
+
 	def on_cancel(self):
 		self.ignore_linked_doctypes = ('GL Entry')
 

@@ -160,7 +160,7 @@
   }
  ],
  "links": [],
- "modified": "2021-05-12 20:01:55.578405",
+ "modified": "2021-05-13 20:01:55.578405",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Shift Type",
@@ -200,7 +200,7 @@
   }
  ],
  "quick_entry": 1,
- "restrict_to_domain": "HR Asistencia y Vacaciones",
+ "restrict_to_domain": "HR Asistencia, Vacaciones y Rendimiento de Gastos",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1
