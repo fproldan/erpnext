@@ -624,8 +624,8 @@ class Subscription(Document):
 			to_prorate = frappe.db.get_single_value('Subscription Settings', 'prorate')
 			self.status = 'Cancelled'
 			self.cancelation_date = nowdate()
-			if to_generate_invoice:
-				self.generate_invoice(prorate=to_prorate)
+			# if to_generate_invoice:
+			# 	self.generate_invoice(prorate=to_prorate)
 			self.save()
 
 	def restart_subscription(self):
