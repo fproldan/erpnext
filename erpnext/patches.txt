@@ -361,8 +361,9 @@ execute:frappe.delete_doc('Page', "patient_history", force=True)
 execute:frappe.delete_doc('Page', "welcome-to-erpnext", force=True)
 execute:frappe.delete_doc('Page', "team-updates", force=True)
 erpnext.patches.v13_0.usuarios_reducidos_fix
-execute:frappe.delete_doc('Role', 'Auditor', ignore_missing=True, force=True)
-erpnext.patches.v13_0.complete_purchase_invoice_new_fields
+erpnext.patches.v13_0.remove_auditor_role_from_users
+erpnext.patches.v13_0.remove_old_hr_domains
 erpnext.patches.v13_0.release_1_7
 erpnext.patches.v13_0.remove_auditor_role_from_users
 erpnext.patches.v13_0.remove_old_hr_domains
+erpnext.patches.v13_0.release_1_8
