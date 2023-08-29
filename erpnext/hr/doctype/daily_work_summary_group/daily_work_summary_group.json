@@ -65,7 +65,7 @@
   }
  ],
  "links": [],
- "modified": "2021-05-12 20:01:56.379840",
+ "modified": "2021-05-12 21:01:56.379840",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Daily Work Summary Group",
@@ -85,7 +85,7 @@
   }
  ],
  "quick_entry": 1,
- "restrict_to_domain": "HR Asistencia y Vacaciones",
+ "restrict_to_domain": "HR Asistencia, Vacaciones y Rendimiento de Gastos",
  "sort_field": "modified",
  "sort_order": "DESC"
 }

@@ -756,7 +756,6 @@
    "collapsible": 1,
    "fieldname": "attendance_and_leave_details",
    "fieldtype": "Section Break",
-   "hidden": 1,
    "label": "Attendance and Leave Details"
   },
   {
@@ -829,7 +828,7 @@
  "idx": 24,
  "image_field": "image",
  "links": [],
- "modified": "2022-08-11 15:28:59.782180",
+ "modified": "2023-07-31 12:56:37.591515",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Employee",

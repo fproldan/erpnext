@@ -236,7 +236,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-06-03 15:28:26.335104",
+ "modified": "2021-06-03 16:28:26.335104",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Leave Allocation",
@@ -273,7 +273,7 @@
    "write": 1
   }
  ],
- "restrict_to_domain": "HR Asistencia y Vacaciones",
+ "restrict_to_domain": "HR Asistencia, Vacaciones y Rendimiento de Gastos",
  "search_fields": "employee,employee_name,leave_type,total_leaves_allocated",
  "show_name_in_global_search": 1,
  "sort_field": "modified",

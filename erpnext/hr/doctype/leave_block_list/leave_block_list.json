@@ -70,7 +70,7 @@
  "icon": "fa fa-calendar",
  "idx": 1,
  "links": [],
- "modified": "2021-05-12 20:01:53.938972",
+ "modified": "2021-05-12 21:01:53.938972",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Leave Block List",
@@ -86,7 +86,7 @@
    "write": 1
   }
  ],
- "restrict_to_domain": "HR Asistencia y Vacaciones",
+ "restrict_to_domain": "HR Asistencia, Vacaciones y Rendimiento de Gastos",
  "sort_field": "modified",
  "sort_order": "ASC"
 }

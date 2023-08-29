@@ -201,7 +201,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-05-12 20:01:58.902166",
+ "modified": "2021-05-12 21:01:58.902166",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Appraisal",
@@ -246,7 +246,7 @@
    "write": 1
   }
  ],
- "restrict_to_domain": "HR Reclutamiento, Capacitacion y Gastos",
+ "restrict_to_domain": "HR Asistencia, Vacaciones y Rendimiento de Gastos",
  "search_fields": "status, employee, employee_name",
  "sort_field": "modified",
  "sort_order": "DESC",

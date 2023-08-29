@@ -2,6 +2,6 @@ from __future__ import unicode_literals
 
 data = {
     'modules': [
-        'HR Asistencia y Vacaciones'
+        'HR Asistencia, Vacaciones y Rendimiento de Gastos'
     ],
 }
