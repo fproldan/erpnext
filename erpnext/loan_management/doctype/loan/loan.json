@@ -360,7 +360,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-05-12 20:02:01.236364",
+ "modified": "2021-05-12 21:02:01.236364",
  "modified_by": "Administrator",
  "module": "Loan Management",
  "name": "Loan",
@@ -386,7 +386,7 @@
    "role": "Employee"
   }
  ],
- "restrict_to_domain": "HR Reclutamiento, Capacitacion y Gastos",
+ "restrict_to_domain": "HR Asistencia, Vacaciones y Rendimiento de Gastos",
  "search_fields": "posting_date",
  "sort_field": "creation",
  "sort_order": "DESC",
