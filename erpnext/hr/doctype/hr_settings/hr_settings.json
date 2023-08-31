@@ -60,15 +60,14 @@
    "default": "1",
    "fieldname": "expense_approver_mandatory_in_expense_claim",
    "fieldtype": "Check",
-   "label": "Expense Approver Mandatory In Expense Claim",
-   "hidden": 1
+   "hidden": 1,
+   "label": "Expense Approver Mandatory In Expense Claim"
   },
   {
    "collapsible": 1,
    "fieldname": "leave_settings",
    "fieldtype": "Section Break",
-   "label": "Leave Settings",
-   "hidden": 1
+   "label": "Leave Settings"
   },
   {
    "depends_on": "eval: doc.send_leave_notification == 1",
@@ -189,7 +188,7 @@
  "idx": 1,
  "issingle": 1,
  "links": [],
- "modified": "2021-08-25 15:54:12.834162",
+ "modified": "2023-07-31 12:57:33.002058",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "HR Settings",
