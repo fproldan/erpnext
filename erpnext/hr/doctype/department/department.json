@@ -66,8 +66,7 @@
   },
   {
    "fieldname": "section_break_4",
-   "fieldtype": "Section Break",
-   "hidden": 1
+   "fieldtype": "Section Break"
   },
   {
    "description": "Days for which Holidays are blocked for this department.",
@@ -120,6 +119,7 @@
   {
    "fieldname": "payroll_cost_center",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Payroll Cost Center",
    "options": "Cost Center"
   },
@@ -144,7 +144,7 @@
  "idx": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2023-07-31 12:58:08.462456",
+ "modified": "2023-09-07 10:30:01.006792",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Department",
@@ -207,6 +207,7 @@
   }
  ],
  "restrict_to_domain": "HR",
+ "route": "app/doctype/Department",
  "show_name_in_global_search": 1,
  "sort_field": "modified",
  "sort_order": "ASC"

@@ -83,6 +83,7 @@
    "depends_on": "eval:doc.is_ppl == 0",
    "fieldname": "is_lwp",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Is Leave Without Pay"
   },
   {
@@ -202,6 +203,7 @@
    "depends_on": "eval:doc.is_lwp == 0",
    "fieldname": "is_ppl",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Is Partially Paid Leave"
   },
   {
@@ -215,7 +217,7 @@
  "icon": "fa fa-flag",
  "idx": 1,
  "links": [],
- "modified": "2023-07-31 12:54:34.847134",
+ "modified": "2023-09-07 10:28:38.420258",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Leave Type",
