@@ -1763,7 +1763,7 @@ def apply_early_payment_discount(paid_amount, received_amount, doc):
 	total_discount = 0
 	if doc.doctype in ['Sales Invoice', 'Purchase Invoice'] and doc.payment_schedule:
 		for term in doc.payment_schedule:
-			if not term.discounted_amount and term.discount and getdate(nowdate()) <= term.discount_date:
+			if not term.discounted_amount and term.discount and getdate(nowdate()) <= (term.discount_date or getdate(nowdate())):
 				if term.discount_type == 'Percentage':
 					discount_amount = flt(doc.get('grand_total')) * (term.discount / 100)
 				else:
