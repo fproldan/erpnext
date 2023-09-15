@@ -30,7 +30,7 @@ class Analytics(object):
 		# Skipping total row for tree-view reports
 		skip_total_row = 0
 
-		if self.filters.tree_type in ["Supplier Group", "Item Group", "Customer Group", "Territory"]:
+		if self.filters.tree_type in ["Supplier Group", "Item Group", "Customer Group", "Territory", "Canal de Venta"]:
 			skip_total_row = 1
 
 		return self.columns, self.data, None, self.chart, None, skip_total_row
@@ -38,10 +38,10 @@ class Analytics(object):
 	def get_columns(self):
 		self.columns = [{
 				"label": _(self.filters.tree_type),
-				"options": self.filters.tree_type if self.filters.tree_type != "Canal de Venta" else "",
+				"options": self.filters.tree_type,
 				"fieldname": "entity",
-				"fieldtype": "Link" if self.filters.tree_type != "Canal de Venta" else "Data",
-				"width": 140 if self.filters.tree_type != "Canal de Venta" else 200
+				"fieldtype": "Link",
+				"width": 200
 			}]
 		if self.filters.tree_type in ["Customer", "Supplier", "Item"]:
 			self.columns.append({
@@ -129,6 +129,14 @@ class Analytics(object):
 		if self.filters.doc_type == "Sales Invoice":
 			query = """
 					SELECT * from (
+						select 'Canales de venta' as entity, SUM(s.{value_field}) as value_field, s.{date_field}, s.conversion_rate, s.currency
+						from `tab{doctype}` s
+						where s.docstatus = 1 and s.company = '{compa}'
+						and s.{date_field} between '{f_date}' and '{t_date}'
+						and ifnull(s.canal_de_venta, "") != ""
+						group by s.{date_field}
+						union all
+
 						select s.canal_de_venta as entity, s.{value_field} as value_field, s.{date_field}, s.conversion_rate, s.currency
 						from `tab{doctype}` s
 						where s.docstatus = 1 and s.company = '{compa}'
@@ -185,7 +193,6 @@ class Analytics(object):
 			self.entity_names.setdefault(d.entity, d.entity_name)
 
 	def get_sales_transactions_based_on_items(self):
-
 		if self.filters["value_quantity"] == 'Value':
 			value_field = 'base_amount'
 		else:
@@ -397,7 +404,6 @@ class Analytics(object):
 				self.depth_map.setdefault(d.name, 0)
 
 	def get_teams(self):
-
 		self.depth_map = frappe._dict()
 
 		if self.filters.doc_type == "Sales Invoice":
