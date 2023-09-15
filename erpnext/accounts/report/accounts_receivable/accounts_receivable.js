@@ -1,6 +1,22 @@
 // Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
 // License: GNU General Public License v3. See license.txt
 
+if (frappe.boot.single_types.includes("Persat Settings")) {
+	var family = {
+		"fieldname": "familia",
+		"label": __("Familia"),
+		"fieldtype": "Link",
+		"options": "Customer"
+	}
+} else {
+	var family = {
+		"fieldname": "familia",
+		"label": __("Familia"),
+		"fieldtype": "Link",
+		"options": "Customer",
+		"hidden": 1
+	}
+}
 frappe.query_reports["Accounts Receivable"] = {
 	"filters": [
 		{
@@ -66,6 +82,7 @@ frappe.query_reports["Accounts Receivable"] = {
 				}
 			}
 		},
+		family,
 		{
 			"fieldname": "ageing_based_on",
 			"label": __("Ageing Based On"),

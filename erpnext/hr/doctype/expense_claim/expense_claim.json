@@ -379,7 +379,7 @@
  "idx": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-11-22 16:26:57.787838",
+ "modified": "2021-11-23 16:26:57.787838",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Expense Claim",
@@ -441,7 +441,7 @@
    "write": 1
   }
  ],
- "restrict_to_domain": "HR Reclutamiento, Capacitacion y Gastos",
+ "restrict_to_domain": "HR Asistencia, Vacaciones y Rendimiento de Gastos",
  "search_fields": "employee,employee_name",
  "show_name_in_global_search": 1,
  "sort_field": "modified",

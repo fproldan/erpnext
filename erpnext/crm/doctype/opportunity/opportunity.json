@@ -122,7 +122,6 @@
    "no_copy": 1
   },
   {
-   "default": "Sales",
    "fieldname": "opportunity_type",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -224,7 +223,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "default": "Prospecting",
    "fieldname": "sales_stage",
    "fieldtype": "Link",
    "label": "Sales Stage",
@@ -430,7 +428,7 @@
  "icon": "fa fa-info-sign",
  "idx": 195,
  "links": [],
- "modified": "2021-06-05 11:11:22.831139",
+ "modified": "2021-06-05 12:12:22.831139",
  "modified_by": "Administrator",
  "module": "CRM",
  "name": "Opportunity",
