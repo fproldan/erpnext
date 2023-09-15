@@ -136,7 +136,6 @@ class Analytics(object):
 						and ifnull(s.canal_de_venta, "") != ""
 						group by s.{date_field}
 						union all
-
 						select s.canal_de_venta as entity, s.{value_field} as value_field, s.{date_field}, s.conversion_rate, s.currency
 						from `tab{doctype}` s
 						where s.docstatus = 1 and s.company = '{compa}'
@@ -152,12 +151,21 @@ class Analytics(object):
 				""".format(date_field=self.date_field, value_field=value_field, doctype=self.filters.doc_type, compa=self.filters.company, f_date=self.filters.from_date, t_date=self.filters.to_date, sep=self.sep)
 		else:
 			query = """
-					SELECT s.canal_de_venta as entity, s.{value_field} as value_field, s.{date_field}, s.conversion_rate, s.currency
+					SELECT * from (
+						select 'Canales de venta' as entity, SUM(s.{value_field}) as value_field, s.{date_field}, s.conversion_rate, s.currency
 						from `tab{doctype}` s
 						where s.docstatus = 1 and s.company = '{compa}'
 						and s.{date_field} between '{f_date}' and '{t_date}'
 						and ifnull(s.canal_de_venta, "") != ""
-					order by s.canal_de_venta
+						group by s.{date_field}
+						union all
+						
+						SELECT s.canal_de_venta as entity, s.{value_field} as value_field, s.{date_field}, s.conversion_rate, s.currency
+						from `tab{doctype}` s
+						where s.docstatus = 1 and s.company = '{compa}'
+						and s.{date_field} between '{f_date}' and '{t_date}'
+						and ifnull(s.canal_de_venta, "") != "") as b
+					order by b.entity
 				""".format(date_field=self.date_field, value_field=value_field, doctype=self.filters.doc_type, compa=self.filters.company, f_date=self.filters.from_date, t_date=self.filters.to_date, sep=self.sep)
 
 		self.entries = frappe.db.sql(query, as_dict=1)
