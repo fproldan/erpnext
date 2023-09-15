@@ -357,6 +357,9 @@ class BOM(WebsiteGenerator):
 					d.precio_usd = last_purchase_rate_usd
 					d.importe_usd = flt(d.precio_usd) * flt(d.qty)
 
+			if hasattr(self, 'costo_total_usd_gold'):
+				self.costo_total_usd_gold += d.importe_usd
+
 			if save:
 				d.db_update()
 
