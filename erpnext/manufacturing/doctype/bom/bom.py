@@ -356,7 +356,6 @@ class BOM(WebsiteGenerator):
 				if last_purchase_rate_usd:
 					d.precio_usd = last_purchase_rate_usd
 					d.importe_usd = flt(d.precio_usd) * flt(d.qty)
-			
 			if save:
 				d.db_update()
 
