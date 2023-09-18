@@ -38,7 +38,6 @@ class calculate_taxes_and_totals(object):
 			self.set_discount_amount()
 			self.apply_discount_amount()
 
-		self.calculate_shipping_charges()
 
 		if self.doc.doctype in ["Sales Invoice", "Purchase Invoice"]:
 			self.calculate_total_advance()
@@ -53,6 +52,7 @@ class calculate_taxes_and_totals(object):
 		self.initialize_taxes()
 		self.determine_exclusive_rate()
 		self.calculate_net_total()
+		self.calculate_shipping_charges()
 		self.calculate_taxes()
 		self.manipulate_grand_total_for_inclusive_tax()
 		self.calculate_totals()
@@ -265,7 +265,6 @@ class calculate_taxes_and_totals(object):
 		if hasattr(self.doc, "shipping_rule") and self.doc.shipping_rule:
 			shipping_rule = frappe.get_doc("Shipping Rule", self.doc.shipping_rule)
 			shipping_rule.apply(self.doc)
-			self._calculate()
 
 	def calculate_taxes(self):
 		self.doc.rounding_adjustment = 0
