@@ -112,8 +112,8 @@ class Analytics(object):
 				date_field = 'transaction_date'
 
 			if entry['currency'] != 'USD':
-				conversion_rate = get_exchange_rate(entry['currency'], "USD", str(entry[date_field]), "for_buying")
-				entry['value_field'] = entry['value_field'] * conversion_rate
+				conversion_rate = get_exchange_rate("USD", entry['currency'], str(entry[date_field]), "for_buying")
+				entry['value_field'] = entry['value_field'] / conversion_rate
 			else:
 				entry['value_field'] = entry['value_field'] / entry['conversion_rate']
 		return entry
