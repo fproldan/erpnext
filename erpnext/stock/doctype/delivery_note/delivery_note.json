@@ -378,14 +378,14 @@
   {
    "fieldname": "contact_mobile",
    "fieldtype": "Small Text",
-   "hidden": 1,
+   "hidden": 0,
    "label": "Mobile No",
    "read_only": 1
   },
   {
    "fieldname": "contact_email",
    "fieldtype": "Data",
-   "hidden": 1,
+   "hidden": 0,
    "label": "Contact Email",
    "options": "Email",
    "print_hide": 1,
@@ -1324,7 +1324,7 @@
  "idx": 146,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-09-03 15:10:09.761714",
+ "modified": "2023-09-03 15:12:09.761714",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Delivery Note",
