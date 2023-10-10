@@ -37,6 +37,7 @@
   "dispatch_address",
   "contact_person",
   "contact_display",
+  "contact_phone",
   "contact_mobile",
   "contact_email",
   "col_break21",
@@ -374,6 +375,14 @@
    "in_global_search": 1,
    "label": "Contact",
    "read_only": 1
+  },
+  {
+    "fieldname": "contact_phone",
+    "fieldtype": "Data",
+    "hide_days": 1,
+    "hide_seconds": 1,
+    "label": "Phone",
+    "read_only": 1
   },
   {
    "fieldname": "contact_mobile",
@@ -1324,7 +1333,7 @@
  "idx": 146,
  "is_submittable": 1,
  "links": [],
- "modified": "2023-09-03 15:12:09.761714",
+ "modified": "2023-09-03 15:13:09.761714",
  "modified_by": "Administrator",
  "module": "Stock",
  "name": "Delivery Note",
