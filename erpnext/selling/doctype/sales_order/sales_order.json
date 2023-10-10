@@ -386,7 +386,7 @@
   {
    "fieldname": "contact_email",
    "fieldtype": "Data",
-   "hidden": 1,
+   "hidden": 0,
    "hide_days": 1,
    "hide_seconds": 1,
    "label": "Contact Email",
@@ -1532,7 +1532,7 @@
  "idx": 105,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-09-30 16:09:51.515542",
+ "modified": "2021-09-30 16:10:51.515542",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Sales Order",

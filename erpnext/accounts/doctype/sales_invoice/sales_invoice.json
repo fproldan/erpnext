@@ -40,6 +40,7 @@
   "address_display",
   "contact_person",
   "contact_display",
+  "contact_phone",
   "contact_mobile",
   "contact_email",
   "territory",
@@ -497,9 +498,17 @@
    "read_only": 1
   },
   {
+    "fieldname": "contact_phone",
+    "fieldtype": "Data",
+    "hide_days": 1,
+    "hide_seconds": 1,
+    "label": "Phone",
+    "read_only": 1
+  },
+  {
    "fieldname": "contact_mobile",
    "fieldtype": "Small Text",
-   "hidden": 1,
+   "hidden": 0,
    "hide_days": 1,
    "hide_seconds": 1,
    "label": "Mobile No",
@@ -508,7 +517,7 @@
   {
    "fieldname": "contact_email",
    "fieldtype": "Data",
-   "hidden": 1,
+   "hidden": 0,
    "hide_days": 1,
    "hide_seconds": 1,
    "label": "Contact Email",
@@ -2043,7 +2052,7 @@
    "link_fieldname": "consolidated_invoice"
   }
  ],
- "modified": "2022-04-22 14:23:44.271169",
+ "modified": "2022-04-22 14:25:44.271169",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Sales Invoice",
