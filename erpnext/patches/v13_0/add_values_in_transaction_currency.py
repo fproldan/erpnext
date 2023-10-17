@@ -3,11 +3,6 @@
 import frappe
 from frappe.utils import flt
 from erpnext.accounts.utils import get_account_currency
-import erpnext.hooks as hooks
-
-
-def execute():
-    hooks.after_migrate.append("erpnext.patches.v13_0.add_values_in_transaction_currency.add_values_in_transaction_currency")
 
 
 def add_values_in_transaction_currency():
