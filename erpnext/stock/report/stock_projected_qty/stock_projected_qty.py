@@ -41,12 +41,7 @@ def execute(filters=None):
 			continue
 
 		if filters.item_group:
-			item_group_descendants = []
-			for item_group in filters.item_group:
-				item_group_descendants += get_descendants_of("Item Group", item_group)
-				item_group_descendants.append(item_group)
-			
-			if item.item_group not in item_group_descendants:
+			if item.item_group not in filters.item_group:
 				continue
 
 		elif filters.company and filters.company != company:
