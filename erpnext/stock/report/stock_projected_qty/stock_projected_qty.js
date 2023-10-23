@@ -37,8 +37,11 @@ frappe.query_reports["Stock Projected Qty"] = {
 		{
 			"fieldname":"item_group",
 			"label": __("Item Group"),
-			"fieldtype": "Link",
-			"options": "Item Group"
+			"fieldtype": 'MultiSelectList',
+			"options": "Item Group",
+			"get_data": function (txt) {
+				return frappe.db.get_link_options('Item Group', txt, {})
+			},
 		},
 		{
 			"fieldname":"brand",
