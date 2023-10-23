@@ -6,6 +6,7 @@ from __future__ import unicode_literals
 import frappe
 from frappe import _
 from frappe.utils import flt, today
+from frappe.utils.nestedset import get_descendants_of
 
 from erpnext.accounts.doctype.pos_invoice.pos_invoice import get_pos_reserved_qty
 from erpnext.stock.utils import (
@@ -39,8 +40,9 @@ def execute(filters=None):
 		if filters.brand and filters.brand != item.brand:
 			continue
 
-		elif filters.item_group and filters.item_group != item.item_group:
-			continue
+		if filters.item_group:
+			if item.item_group not in filters.item_group:
+				continue
 
 		elif filters.company and filters.company != company:
 			continue
@@ -104,17 +106,18 @@ def get_bin_list(filters):
 		conditions.append("item_code = '%s' "%filters.item_code)
 
 	if filters.warehouse:
-		warehouse_details = frappe.db.get_value("Warehouse", filters.warehouse, ["lft", "rgt"], as_dict=1)
+		for warehouse in filters.warehouse:
+			warehouse_details = frappe.db.get_value("Warehouse", warehouse, ["lft", "rgt"], as_dict=1)
 
-		if warehouse_details:
-			conditions.append(" exists (select name from `tabWarehouse` wh \
-				where wh.lft >= %s and wh.rgt <= %s and bin.warehouse = wh.name)"%(warehouse_details.lft,
-				warehouse_details.rgt))
+			if warehouse_details:
+				conditions.append(" exists (select name from `tabWarehouse` wh \
+					where wh.lft >= %s and wh.rgt <= %s and bin.warehouse = wh.name)"%(warehouse_details.lft,
+					warehouse_details.rgt))
 
 	bin_list = frappe.db.sql("""select item_code, warehouse, actual_qty, planned_qty, indented_qty,
 		ordered_qty, reserved_qty, reserved_qty_for_production, reserved_qty_for_sub_contract, projected_qty
 		from tabBin bin {conditions} order by item_code, warehouse
-		""".format(conditions=" where " + " and ".join(conditions) if conditions else ""), as_dict=1)
+		""".format(conditions=" where " + " or ".join(conditions) if conditions else ""), as_dict=1)
 
 	return bin_list
 
