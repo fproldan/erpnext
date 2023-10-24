@@ -48,7 +48,7 @@ def get_dolarsi_exchange_rate_xml() -> str:
 
 
 def get_currency_exchange_rate(from_currency: str, to_currency: str) -> float:
-	exchange_rate_type = db.get_value(
+	exchange_rate_type = frappe.db.get_value(
 		"Currency",
 		{"currency_name": to_currency if from_currency == "ARS" else from_currency},
 		"exchange_rate_type",
