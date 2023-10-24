@@ -61,7 +61,7 @@ def get_currency_exchange_rate(from_currency: str, to_currency: str) -> float:
 
 	if from_currency == "ARS":
 		exchange_rate_value = re.search(r"<venta>(?P<venta>.*)</venta>", exchange_rate_info).group("venta")
-		return 1 / float(exchange_rate_value.replace(",", "."))
+		return 1 / float(exchange_rate_value.replace(".", "").replace(",", "."))
 
 	exchange_rate_value = re.search(r"<compra>(?P<compra>.*)</compra>", exchange_rate_info).group("compra")
 	return float(exchange_rate_value.replace(",", "."))
