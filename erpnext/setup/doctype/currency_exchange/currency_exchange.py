@@ -64,7 +64,7 @@ def get_currency_exchange_rate(from_currency: str, to_currency: str) -> float:
 		return 1 / float(exchange_rate_value.replace(".", "").replace(",", "."))
 
 	exchange_rate_value = re.search(r"<compra>(?P<compra>.*)</compra>", exchange_rate_info).group("compra")
-	return float(exchange_rate_value.replace(",", "."))
+	return float(exchange_rate_value.replace(".", "").replace(",", "."))
 
 
 def set_currency_exchange_rates(*args, **kwargs):
