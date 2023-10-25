@@ -63,6 +63,7 @@ class ExchangeRateRevaluation(Document):
 		for d in account_details:
 			current_exchange_rate = d.balance / d.balance_in_account_currency \
 				if d.balance_in_account_currency else 0
+			current_exchange_rate = abs(current_exchange_rate)
 			new_exchange_rate = get_exchange_rate(d.account_currency, company_currency, self.posting_date)
 			new_balance_in_base_currency = flt(d.balance_in_account_currency * new_exchange_rate)
 			gain_loss = flt(new_balance_in_base_currency, precision) - flt(d.balance, precision)
