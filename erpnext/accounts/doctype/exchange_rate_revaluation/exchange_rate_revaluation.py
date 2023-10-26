@@ -71,7 +71,7 @@ class ExchangeRateRevaluation(Document):
 					"party_type": d.party_type,
 					"party": d.party,
 					"account_currency": d.account_currency,
-					"balance_in_base_currency": d.balance,
+					"balance_in_base_currency": abs(d.balance),
 					"balance_in_account_currency": d.balance_in_account_currency,
 					"current_exchange_rate": current_exchange_rate,
 					"new_exchange_rate": new_exchange_rate,
@@ -201,7 +201,7 @@ def get_account_details(account, company, posting_date, party_type=None, party=N
 		new_balance_in_base_currency = balance_in_account_currency * new_exchange_rate
 		account_details = {
 			"account_currency": account_currency,
-			"balance_in_base_currency": balance,
+			"balance_in_base_currency": abs(balance),
 			"balance_in_account_currency": balance_in_account_currency,
 			"current_exchange_rate": current_exchange_rate,
 			"new_exchange_rate": new_exchange_rate,
