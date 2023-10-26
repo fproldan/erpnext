@@ -357,7 +357,13 @@ doc_events = {
 	},
 	"Integration Request": {
 		"validate": "erpnext.accounts.doctype.payment_request.payment_request.validate_payment"
-	}
+	},
+    "Product Bundle": {
+        "validate": "erpnext.selling.doctype.product_bundle.product_bundle.update_bundle_price",
+    },
+    "Item Price": {
+        "on_update": "erpnext.selling.doctype.product_bundle.product_bundle.update_item_bundle_price",
+    },
 }
 
 # On cancel event Payment Entry will be exempted and all linked submittable doctype will get cancelled.
