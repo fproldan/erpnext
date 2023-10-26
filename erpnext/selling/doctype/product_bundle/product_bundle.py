@@ -7,6 +7,7 @@ import frappe
 from frappe import _
 from frappe.model.document import Document
 from frappe.utils import get_link_to_form
+from erpnext.stock.get_item_details import get_item_price
 
 
 class ProductBundle(Document):
@@ -62,43 +63,6 @@ def get_new_item_code(doctype, txt, searchfield, start, page_len, filters):
 		("%%%s%%" % txt, start, page_len))
 
 
-def get_item_price(args, item_code, ignore_party=False):
-    """
-        Get name, price_list_rate from Item Price based on conditions
-            Check if the desired qty is within the increment of the packing list.
-        :param args: dict (or frappe._dict) with mandatory fields price_list, uom
-            optional fields min_qty, transaction_date, customer, supplier
-        :param item_code: str, Item Doctype field item_code
-    """
-
-    args['item_code'] = item_code
-
-    conditions = """
-      	WHERE item_code=%(item_code)s
-        AND price_list=%(price_list)s
-    """
-
-    if not ignore_party:
-        if args.get("customer"):
-            conditions += " AND customer=%(customer)s"
-        elif args.get("supplier"):
-            conditions += " AND supplier=%(supplier)s"
-        else:
-            conditions += " AND (customer is null or customer = '') AND (supplier is null or supplier = '')"
-
-    if args.get('min_qty'):
-        conditions += " AND ifnull(min_qty, 0) <= %(min_qty)s"
-
-    if args.get('transaction_date'):
-        conditions += """ AND %(transaction_date)s BETWEEN
-            ifnull(valid_from, '2000-01-01') AND ifnull(valid_upto, '2500-12-31')"""
-
-    return frappe.db.sql("""
-        SELECT name, price_list_rate, uom
-        FROM `tabItem Price` {conditions}
-        ORDER BY uom DESC, valid_from DESC""".format(conditions=conditions), args)
-
-
 def update_bundle_price(doc, event):
     """
     doc: Product Bundle
@@ -139,10 +103,8 @@ def update_bundle_price(doc, event):
 
     for child in child_items:
         price_lists = frappe.get_all('Item Price', filters={'item_code': child.item_code}, fields='DISTINCT(price_list) AS price_list')
-        # price_lists = frappe.db.sql("""SELECT DISTINCT(price_list) FROM `tabItem Price` WHERE item_code="{}";""".format(child.item_code), as_dict=1)
-
         for price_list in price_lists:
-            prices = get_item_price({"price_list": price_list['price_list']}, item_code=child.item_code, ignore_party=True)
+            prices = get_item_price({"price_list": price_list['price_list'], 'uom': None, 'batch_no': None}, item_code=child.item_code, ignore_party=True)
             if prices:
                 price_lists_data.append({
                     'item_code': child.item_code,
