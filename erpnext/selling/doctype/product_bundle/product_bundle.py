@@ -88,7 +88,7 @@ def update_bundle_price(doc, event):
           precio = item1_lista2 + item2_lista2
     En el item padre crear los precios para cada lista
     """
-    if False: # TODO: not doc.calcular_precios:
+    if not doc.create_price:
         return
 
     parent_item = frappe.get_doc('Item', doc.new_item_code)

@@ -11,6 +11,7 @@
   "description",
   "item_section",
   "items",
+  "create_price",
   "section_break_4",
   "about"
  ],
@@ -60,12 +61,18 @@
    "fieldname": "about",
    "fieldtype": "HTML",
    "options": "<h3>Sobre el Conjunto / paquete de productos</h3>\n\n<p>Agrupar varios <b>productos</b> dentro de otro <b>producto</b>es \u00fatil si se desea vender estos productos en conjunto, manteniendo el stock del paquete en lugar del de los productos. El producto padre / principal <b>no</b> tendr\u00e1 la opci\u00f3n <code>Mantener Stock</code>; pero <b>s\u00ed</b> la opci\u00f3n  <code>Es un producto para venta</code>.</p>\n\n<h4>Ejemplo:</h4>\n<p>Si se est\u00e1n vendiendo notebooks y mochilas, y se ofrece un precio especial si se las compra juntas; entonces se podr\u00eda crear un Conjunto / paquete de productos de notebook + mochila.</p>\n"
+  },
+  {
+   "default": "0",
+   "fieldname": "create_price",
+   "fieldtype": "Check",
+   "label": "Crear precio a partir de los productos y cantidades"
   }
  ],
  "icon": "fa fa-sitemap",
  "idx": 1,
  "links": [],
- "modified": "2022-11-10 08:47:53.336138",
+ "modified": "2023-10-30 09:00:03.704644",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Product Bundle",
