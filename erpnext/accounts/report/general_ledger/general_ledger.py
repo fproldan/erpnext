@@ -212,12 +212,18 @@ def get_gl_entries(filters, accounting_dimensions):
 		AND cost_center = DCC_allocation.parent
 		""".format(dimension_fields=dimension_fields,select_fields_with_percentage=select_fields_with_percentage, conditions=get_conditions(filters).replace("and cost_center in %(cost_center)s ", ''))
 
+	transaction_currency_fields = ""
+	if filters.get("add_values_in_transaction_currency"):
+		transaction_currency_fields = (
+			"debit_in_transaction_currency, credit_in_transaction_currency, transaction_currency,"
+		)
+
 	gl_entries = frappe.db.sql(
 		"""
 		select
 			name as gl_entry, posting_date, account, party_type, party,
 			voucher_type, voucher_no, {dimension_fields}
-			cost_center, project,
+			cost_center, project, {transaction_currency_fields}
 			against_voucher_type, against_voucher, account_currency,
 			remarks, against, is_opening, creation {select_fields}
 		from `tabGL Entry`
@@ -225,7 +231,7 @@ def get_gl_entries(filters, accounting_dimensions):
 		{distributed_cost_center_query}
 		{order_by_statement}
 		""".format(
-			dimension_fields=dimension_fields, select_fields=select_fields, conditions=get_conditions(filters), distributed_cost_center_query=distributed_cost_center_query,
+			dimension_fields=dimension_fields, transaction_currency_fields=transaction_currency_fields, select_fields=select_fields, conditions=get_conditions(filters), distributed_cost_center_query=distributed_cost_center_query,
 			order_by_statement=order_by_statement
 		),
 		filters, as_dict=1)
@@ -553,6 +559,31 @@ def get_columns(filters):
 			"width": 130
 		}
 	]
+
+	if filters.get("add_values_in_transaction_currency"):
+		columns.extend([
+			{
+				"label": _("Débito (Transacción)"),
+				"fieldname": "debit_in_transaction_currency",
+				"fieldtype": "Currency",
+				"width": 130,
+				"options": "transaction_currency",
+			},
+			{
+				"label": _("Crédito (Transacción)"),
+				"fieldname": "credit_in_transaction_currency",
+				"fieldtype": "Currency",
+				"width": 130,
+				"options": "transaction_currency",
+			},
+			{
+				"label": "Moneda de la Transacción",
+				"fieldname": "transaction_currency",
+				"fieldtype": "Link",
+				"options": "Currency",
+				"width": 70,
+			},
+		])
 
 	columns.extend([
 		{

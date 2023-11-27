@@ -193,6 +193,11 @@ frappe.query_reports["General Ledger"] = {
 			"fieldname": "excluir_asientos_ajuste_inflacion",
 			"label": __("Excluir asientos de Ajuste por Inflación"),
 			"fieldtype": "Check"
+		},
+		{
+			"fieldname": "add_values_in_transaction_currency",
+			"label": __("Añadir columnas en la moneda de la transacción"),
+			"fieldtype": "Check"
 		}
 	]
 }

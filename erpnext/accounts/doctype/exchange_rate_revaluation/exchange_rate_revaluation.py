@@ -61,8 +61,7 @@ class ExchangeRateRevaluation(Document):
 
 		account_details = self.get_accounts_from_gle()
 		for d in account_details:
-			current_exchange_rate = d.balance / d.balance_in_account_currency \
-				if d.balance_in_account_currency else 0
+			current_exchange_rate = abs(d.balance / d.balance_in_account_currency) if d.balance_in_account_currency else 0
 			new_exchange_rate = get_exchange_rate(d.account_currency, company_currency, self.posting_date)
 			new_balance_in_base_currency = flt(d.balance_in_account_currency * new_exchange_rate)
 			gain_loss = flt(new_balance_in_base_currency, precision) - flt(d.balance, precision)
@@ -72,7 +71,7 @@ class ExchangeRateRevaluation(Document):
 					"party_type": d.party_type,
 					"party": d.party,
 					"account_currency": d.account_currency,
-					"balance_in_base_currency": d.balance,
+					"balance_in_base_currency": abs(d.balance),
 					"balance_in_account_currency": d.balance_in_account_currency,
 					"current_exchange_rate": current_exchange_rate,
 					"new_exchange_rate": new_exchange_rate,
@@ -197,12 +196,12 @@ def get_account_details(account, company, posting_date, party_type=None, party=N
 	balance = get_balance_on(account, date=posting_date, party_type=party_type, party=party, in_account_currency=False)
 	if balance:
 		balance_in_account_currency = get_balance_on(account, date=posting_date, party_type=party_type, party=party)
-		current_exchange_rate = balance / balance_in_account_currency if balance_in_account_currency else 0
+		current_exchange_rate = abs(balance / balance_in_account_currency) if balance_in_account_currency else 0
 		new_exchange_rate = get_exchange_rate(account_currency, company_currency, posting_date)
 		new_balance_in_base_currency = balance_in_account_currency * new_exchange_rate
 		account_details = {
 			"account_currency": account_currency,
-			"balance_in_base_currency": balance,
+			"balance_in_base_currency": abs(balance),
 			"balance_in_account_currency": balance_in_account_currency,
 			"current_exchange_rate": current_exchange_rate,
 			"new_exchange_rate": new_exchange_rate,
