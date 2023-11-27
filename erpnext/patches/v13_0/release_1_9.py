@@ -4,10 +4,10 @@ import frappe
 
 
 def execute():
-    if not frappe.db.exists('Note', {'name': "¡Nueva actualización 1.9 🚀!"}):
+    if not frappe.db.exists('Note', {'name': "¡Nueva actualización 1.9!"}):
         frappe.get_doc(
             {
-                "name": "¡Nueva actualización 1.9 🚀!",
+                "name": "¡Nueva actualización 1.9!",
                 "title": "¡Nueva actualización 1.9 🚀!",
                 "public": 1,
                 "notify_on_login": 1,
