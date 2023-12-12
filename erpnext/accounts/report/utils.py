@@ -87,7 +87,8 @@ def convert_to_presentation_currency(gl_entries, currency_info, company):
 		debit_in_account_currency = flt(entry['debit_in_account_currency'])
 		credit_in_account_currency = flt(entry['credit_in_account_currency'])
 		account_currency = entry['account_currency']
-
+		posting_date = entry['posting_date']
+		
 		if account_currency == presentation_currency:
 			if entry.get('debit'):
 				entry['debit'] = debit_in_account_currency
@@ -96,8 +97,8 @@ def convert_to_presentation_currency(gl_entries, currency_info, company):
 				entry['credit'] = credit_in_account_currency
 		else:
 			date = currency_info['report_date']
-			converted_debit_value = convert(debit, presentation_currency, company_currency, date)
-			converted_credit_value = convert(credit, presentation_currency, company_currency, date)
+			converted_debit_value = convert(debit, presentation_currency, company_currency, posting_date)
+			converted_credit_value = convert(credit, presentation_currency, company_currency, posting_date)
 
 			if entry.get('debit'):
 				entry['debit'] = converted_debit_value
