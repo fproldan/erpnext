@@ -81,17 +81,14 @@ def convert_to_presentation_currency(gl_entries, currency_info, company):
 	presentation_currency = currency_info['presentation_currency']
 	company_currency = currency_info['company_currency']
 
-	account_currencies = list(set(entry['account_currency'] for entry in gl_entries))
-
 	for entry in gl_entries:
-		account = entry['account']
 		debit = flt(entry['debit'])
 		credit = flt(entry['credit'])
 		debit_in_account_currency = flt(entry['debit_in_account_currency'])
 		credit_in_account_currency = flt(entry['credit_in_account_currency'])
 		account_currency = entry['account_currency']
 
-		if len(account_currencies) == 1 and account_currency == presentation_currency:
+		if account_currency == presentation_currency:
 			if entry.get('debit'):
 				entry['debit'] = debit_in_account_currency
 
