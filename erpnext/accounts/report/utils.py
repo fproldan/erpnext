@@ -52,6 +52,15 @@ def convert(value, from_, to, date):
 	return converted_value
 
 
+def convert_with_rate(value, rate):
+	"""
+	convert `value` from `from_` to `to` on `date`
+	:param value: Amount to be converted
+	"""
+	converted_value = flt(value) / (rate or 1)
+	return converted_value
+
+
 def get_rate_as_at(date, from_currency, to_currency):
 	"""
 	Gets exchange rate as at `date` for `from_currency` - `to_currency` exchange rate.
@@ -87,8 +96,10 @@ def convert_to_presentation_currency(gl_entries, currency_info, company):
 		debit_in_account_currency = flt(entry['debit_in_account_currency'])
 		credit_in_account_currency = flt(entry['credit_in_account_currency'])
 		account_currency = entry['account_currency']
+		against_voucher_type = entry['against_voucher_type']
+		against_voucher = entry['against_voucher']
 		posting_date = entry['posting_date']
-		
+
 		if account_currency == presentation_currency:
 			if entry.get('debit'):
 				entry['debit'] = debit_in_account_currency
@@ -96,9 +107,17 @@ def convert_to_presentation_currency(gl_entries, currency_info, company):
 			if entry.get('credit'):
 				entry['credit'] = credit_in_account_currency
 		else:
-			date = currency_info['report_date']
-			converted_debit_value = convert(debit, presentation_currency, company_currency, posting_date)
-			converted_credit_value = convert(credit, presentation_currency, company_currency, posting_date)
+			if frappe.get_meta(against_voucher_type).get_field('conversion_rate'):
+				conversion_rate = frappe.db.get_value(against_voucher_type, against_voucher, 'conversion_rate')
+				if conversion_rate and conversion_rate != 1:
+					converted_debit_value = convert_with_rate(debit, conversion_rate)
+					converted_credit_value = convert_with_rate(credit, conversion_rate)
+				else:
+					converted_debit_value = convert(debit, presentation_currency, company_currency, posting_date)
+					converted_credit_value = convert(credit, presentation_currency, company_currency, posting_date)
+			else:		
+				converted_debit_value = convert(debit, presentation_currency, company_currency, posting_date)
+				converted_credit_value = convert(credit, presentation_currency, company_currency, posting_date)
 
 			if entry.get('debit'):
 				entry['debit'] = converted_debit_value
