@@ -97,9 +97,11 @@ def convert_to_presentation_currency(gl_entries, currency_info, company):
 		credit_in_account_currency = flt(entry['credit_in_account_currency'])
 		account_currency = entry['account_currency']
 		against_voucher_type = entry['against_voucher_type']
+		voucher_type = entry['voucher_type']
 		against_voucher = entry['against_voucher']
+		voucher_no = entry['voucher_no']
 		posting_date = entry['posting_date']
-
+	
 		if account_currency == presentation_currency:
 			if entry.get('debit'):
 				entry['debit'] = debit_in_account_currency
@@ -107,15 +109,18 @@ def convert_to_presentation_currency(gl_entries, currency_info, company):
 			if entry.get('credit'):
 				entry['credit'] = credit_in_account_currency
 		else:
+			conversion_rate = None
+			if voucher_type and frappe.get_meta(voucher_type).get_field('conversion_rate'):
+				conversion_rate = frappe.db.get_value(voucher_type, voucher_no, 'conversion_rate')
+				voucher_currency = frappe.db.get_value(voucher_type, voucher_no, 'currency')
 			if against_voucher_type and frappe.get_meta(against_voucher_type).get_field('conversion_rate'):
 				conversion_rate = frappe.db.get_value(against_voucher_type, against_voucher, 'conversion_rate')
-				if conversion_rate and conversion_rate != 1:
-					converted_debit_value = convert_with_rate(debit, conversion_rate)
-					converted_credit_value = convert_with_rate(credit, conversion_rate)
-				else:
-					converted_debit_value = convert(debit, presentation_currency, company_currency, posting_date)
-					converted_credit_value = convert(credit, presentation_currency, company_currency, posting_date)
-			else:		
+				voucher_currency = frappe.db.get_value(voucher_type, against_voucher, 'currency')
+			
+			if conversion_rate and conversion_rate != 1 and voucher_currency == presentation_currency:
+				converted_debit_value = convert_with_rate(debit, conversion_rate)
+				converted_credit_value = convert_with_rate(credit, conversion_rate)
+			else:
 				converted_debit_value = convert(debit, presentation_currency, company_currency, posting_date)
 				converted_credit_value = convert(credit, presentation_currency, company_currency, posting_date)
 
