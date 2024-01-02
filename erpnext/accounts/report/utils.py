@@ -110,12 +110,13 @@ def convert_to_presentation_currency(gl_entries, currency_info, company):
 				entry['credit'] = credit_in_account_currency
 		else:
 			conversion_rate = None
-			if voucher_type and frappe.get_meta(voucher_type).get_field('conversion_rate'):
+			voucher_currency = None
+			if voucher_type and frappe.get_meta(voucher_type).get_field('conversion_rate') and frappe.get_meta(voucher_type).get_field('currency'):
 				conversion_rate = frappe.db.get_value(voucher_type, voucher_no, 'conversion_rate')
 				voucher_currency = frappe.db.get_value(voucher_type, voucher_no, 'currency')
-			if against_voucher_type and frappe.get_meta(against_voucher_type).get_field('conversion_rate'):
+			if against_voucher_type and frappe.get_meta(against_voucher_type).get_field('conversion_rate') and frappe.get_meta(against_voucher_type).get_field('currency'):
 				conversion_rate = frappe.db.get_value(against_voucher_type, against_voucher, 'conversion_rate')
-				voucher_currency = frappe.db.get_value(voucher_type, against_voucher, 'currency')
+				voucher_currency = frappe.db.get_value(against_voucher_type, against_voucher, 'currency')
 			
 			if conversion_rate and conversion_rate != 1 and voucher_currency == presentation_currency:
 				converted_debit_value = convert_with_rate(debit, conversion_rate)
