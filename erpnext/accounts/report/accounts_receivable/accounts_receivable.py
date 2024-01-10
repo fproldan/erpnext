@@ -276,7 +276,7 @@ class ReceivablePayableReport(object):
 					conversion_rate = get_exchange_rate("USD", vourcher_data[currency_field], nowdate(), exchange_type)
 					row.outstanding_original_currency = flt((row.outstanding / conversion_rate), self.currency_precision)
 
-			if (abs(row.outstanding) > 1.0/10 ** self.currency_precision) and (
+			if (abs(row.outstanding) > 1.0/10 ** self.currency_precision) or (
 				(abs(row.outstanding_in_account_currency) > 1.0 / 10**self.currency_precision)
 				or (row.voucher_no in self.err_journals)
 			):
