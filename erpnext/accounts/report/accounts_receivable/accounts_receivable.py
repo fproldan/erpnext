@@ -276,12 +276,14 @@ class ReceivablePayableReport(object):
 					conversion_rate = get_exchange_rate("USD", vourcher_data[currency_field], nowdate(), exchange_type)
 					row.outstanding_original_currency = flt((row.outstanding / conversion_rate), self.currency_precision)
 
-			if (abs(row.outstanding) > 1.0/10 ** self.currency_precision) and (
+			if frappe.get_hooks('accounts_receivable_usd_column') and row.outstanding == 0.0:
+				row.outstanding_original_currency = 0
+				
+			if (abs(row.outstanding) > 1.0/10 ** self.currency_precision) or (
 				(abs(row.outstanding_in_account_currency) > 1.0 / 10**self.currency_precision)
 				or (row.voucher_no in self.err_journals)
 			):
 				# non-zero oustanding, we must consider this row
-
 				if self.is_invoice(row) and self.filters.based_on_payment_terms:
 					# is an invoice, allocate based on fifo
 					# adds a list `payment_terms` which contains new rows for each term
