@@ -10,7 +10,7 @@ from frappe.model.document import Document
 
 class PaymentGatewayAccount(Document):
 	def autoname(self):
-		self.name = self.payment_gateway + " - " + self.currency
+		self.name = self.payment_gateway + " - " + self.payment_account
 
 	def validate(self):
 		self.currency = frappe.db.get_value("Account", self.payment_account, "account_currency")
