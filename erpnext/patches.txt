@@ -367,3 +367,4 @@ erpnext.patches.v13_0.remove_old_hr_domains
 erpnext.patches.v13_0.release_1_8
 erpnext.patches.v13_0.release_1_9
 erpnext.patches.v13_0.naming_series_subs
+erpnext.patches.v13_0.naming_series_subs_2
