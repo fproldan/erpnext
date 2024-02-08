@@ -1,11 +1,13 @@
 {
  "actions": [],
- "autoname": "ACC-SUB-.YYYY.-.#####",
+ "allow_import": 1,
+ "autoname": "naming_series:",
  "creation": "2017-07-18 17:50:43.967266",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "naming_series",
   "party_type",
   "party",
   "cb_1",
@@ -260,12 +262,21 @@
    "fieldname": "submit_invoice",
    "fieldtype": "Check",
    "label": "Submit Invoice Automatically"
+  },
+  {
+   "bold": 1,
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "no_copy": 1,
+   "options": "ACC-SUB-.YYYY.-.#####",
+   "print_hide": 1,
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "allow_import": 1,
- "modified": "2021-05-14 21:01:48.651678",
+ "modified": "2024-02-02 08:55:18.487209",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Subscription",
