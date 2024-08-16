@@ -88,7 +88,12 @@ def _get_party_details(party=None, account=None, party_type="Customer", company=
 		party_details["sales_team"] = [{
 			"sales_person": d.sales_person,
 			"allocated_percentage": d.allocated_percentage or None
-		} for d in party.get("sales_team")]
+		} for d in party.get("sales_team")] + [
+			{
+				"sales_person":d,
+				"allocated_percentage":  100
+			} for d in frappe.get_all("Sales Person", {"user": frappe.session.user}, pluck="name")
+		]
 
 	# supplier tax withholding category
 	if party_type == "Supplier" and party:
