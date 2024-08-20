@@ -17,6 +17,7 @@
   "enabled",
   "cb0",
   "employee",
+  "user",
   "department",
   "lft",
   "rgt",
@@ -139,13 +140,20 @@
    "oldfieldname": "target_details",
    "oldfieldtype": "Table",
    "options": "Target Detail"
+  },
+  {
+   "description": "Esto autoasignar\u00e1 al vendedor en las transacci\u00f3nes",
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "label": "User",
+   "options": "User"
   }
  ],
  "icon": "icon-user",
  "idx": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2021-05-13 21:02:44.461588",
+ "modified": "2024-08-16 10:34:56.363159",
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Sales Person",
