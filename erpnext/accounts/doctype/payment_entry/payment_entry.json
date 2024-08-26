@@ -78,6 +78,14 @@
   "cost_center",
   "dimension_col_break",
   "project",
+  "sales_team_section_break",
+  "sales_partner",
+  "column_break_74",
+  "amount_eligible_for_commission",
+  "commission_rate",
+  "total_commission",
+  "sales_team_section",
+  "sales_team",
   "section_break_12",
   "status",
   "custom_remarks",
@@ -473,7 +481,6 @@
   {
    "fieldname": "project",
    "fieldtype": "Link",
-   "hidden": 0,
    "label": "Project",
    "options": "Project",
    "print_hide": 1
@@ -708,12 +715,64 @@
    "label": "Received Amount After Tax (Company Currency)",
    "options": "Company:company:default_currency",
    "read_only": 1
+  },
+  {
+   "collapsible": 1,
+   "collapsible_depends_on": "sales_partner",
+   "fieldname": "sales_team_section_break",
+   "fieldtype": "Section Break",
+   "label": "Commission",
+   "options": "fa fa-group",
+   "print_hide": 1
+  },
+  {
+   "fieldname": "sales_partner",
+   "fieldtype": "Link",
+   "label": "Sales Partner",
+   "options": "Sales Partner",
+   "print_hide": 1
+  },
+  {
+   "fieldname": "column_break_74",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "amount_eligible_for_commission",
+   "fieldtype": "Currency",
+   "label": "Amount Eligible for Commission",
+   "read_only": 1
+  },
+  {
+   "fieldname": "commission_rate",
+   "fieldtype": "Float",
+   "label": "Commission Rate (%)",
+   "print_hide": 1
+  },
+  {
+   "fieldname": "total_commission",
+   "fieldtype": "Currency",
+   "label": "Total Commission",
+   "options": "Company:company:default_currency",
+   "print_hide": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "sales_team_section",
+   "fieldtype": "Section Break",
+   "label": "Sales Team",
+   "print_hide": 1
+  },
+  {
+   "fieldname": "sales_team",
+   "fieldtype": "Table",
+   "label": "Sales Contributions and Incentives",
+   "options": "Sales Team"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-08-06 08:57:45.018591",
+ "modified": "2024-08-26 09:05:33.083703",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Payment Entry",
@@ -752,12 +811,13 @@
    "write": 1
   },
   {
+   "export": 1,
    "read": 1,
    "report": 1,
-   "export": 1,
    "role": "Usuario Contador"
   }
  ],
+ "route": "app/doctype/Payment%20Entry",
  "show_name_in_global_search": 1,
  "sort_field": "modified",
  "sort_order": "DESC",

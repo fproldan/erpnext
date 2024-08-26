@@ -159,6 +159,9 @@ frappe.ui.form.on('Payment Entry', {
 				filters: filters
 			};
 		});
+
+		frm.add_fetch("sales_partner", "commission_rate", "commission_rate");
+		frm.add_fetch("sales_person", "commission_rate", "commission_rate");
 	},
 
 	refresh: function(frm) {
@@ -166,6 +169,7 @@ frappe.ui.form.on('Payment Entry', {
 		frm.events.hide_unhide_fields(frm);
 		frm.events.set_dynamic_labels(frm);
 		frm.events.show_general_ledger(frm);
+		frm.events.calculate_commission(frm);
 	},
 
 	validate_company: (frm) => {
@@ -578,6 +582,7 @@ frappe.ui.form.on('Payment Entry', {
 		frm.set_value("base_paid_amount", flt(frm.doc.paid_amount) * flt(frm.doc.source_exchange_rate));
 		frm.trigger("reset_received_amount");
 		frm.events.hide_unhide_fields(frm);
+		frm.events.calculate_commission(frm);
 	},
 
 	received_amount: function(frm) {
@@ -1331,8 +1336,105 @@ frappe.ui.form.on('Payment Entry', {
 
 		return current_tax_amount;
 	},
+	/**
+	COMMISSION
+	**/
+	commission_rate: function(frm) {
+		frm.events.calculate_commission(frm);
+	},
+	calculate_commission: function(frm) {
+		if (!frm.fields_dict.commission_rate) return;
+
+		if (frm.doc.commission_rate > 100) {
+			frm.set_value("commission_rate", 100);
+			frappe.throw(`${__(frappe.meta.get_label(
+				this.frm.doc.doctype, "commission_rate", frm.doc.name
+			))} ${__("cannot be greater than 100")}`);
+		}
+
+		// frm.doc.amount_eligible_for_commission = frm.doc.items.reduce(
+		// 	(sum, item) => item.grant_commission ? sum + item.base_net_amount : sum, 0
+		// )
+
+		frm.doc.amount_eligible_for_commission = frm.doc.paid_amount
+
+		frm.doc.total_commission = flt(
+			frm.doc.amount_eligible_for_commission * frm.doc.commission_rate / 100.0,
+			precision("total_commission")
+		);
+
+		refresh_field(["amount_eligible_for_commission", "total_commission"]);
+	},
+	total_commission: function(frm) {
+		frappe.model.round_floats_in(frm.doc, ["amount_eligible_for_commission", "total_commission"]);
+
+		const { amount_eligible_for_commission } = frm.doc;
+		if (!amount_eligible_for_commission) return;
+
+		frm.set_value(
+			"commission_rate", flt(
+				frm.doc.total_commission * 100.0 / amount_eligible_for_commission
+			)
+		);
+	},
+	calculate_contribution: function(frm) {
+		$.each(frm.doc.doctype.sales_team || [], function(i, sales_person) {
+			frappe.model.round_floats_in(sales_person);
+			if (!sales_person.allocated_percentage) return;
+
+			sales_person.allocated_amount = flt(
+				frm.doc.amount_eligible_for_commission
+				* sales_person.allocated_percentage
+				/ 100.0,
+				precision("allocated_amount", sales_person)
+			);
+		});
+	},
+	calculate_incentive: function(frm, row) {
+		if (row.allocated_amount) {
+			row.incentives = flt(row.allocated_amount * row.commission_rate / 100.0, precision("incentives", row));
+		}
+
+		// var total_incentives = 0.0;
+		// $.each(frm.doc["items"] || [], function(i, item) {
+		// 	if (item.grant_commission) {
+		// 		total_incentives += flt(item.importe_comision);
+		// 	}
+		// });
+
+		var total_incentives = frm.doc.paid_amount
+
+		if (total_incentives) {
+			row.incentives = flt((row.allocated_percentage * flt(total_incentives, precision("incentives", row))) / 100);
+		}
+	},
 });
 
+frappe.ui.form.on('Sales Team', {
+	allocated_percentage: function(frm, cdt, cdn) {
+		var sales_person = frappe.get_doc(cdt, cdn);
+		if(sales_person.allocated_percentage) {
+
+			sales_person.allocated_percentage = flt(sales_person.allocated_percentage,
+				precision("allocated_percentage", sales_person));
+
+			sales_person.allocated_amount = flt(frm.doc.amount_eligible_for_commission *
+				sales_person.allocated_percentage / 100.0,
+				precision("allocated_amount", sales_person));
+				refresh_field(["allocated_amount"], sales_person);
+
+			frm.events.calculate_incentive(frm, sales_person);
+			refresh_field(["allocated_percentage", "allocated_amount", "commission_rate","incentives"], sales_person.name,
+				sales_person.parentfield);
+		}
+	},
+	sales_person: function(frm, cdt, cdn) {
+		var row = frappe.get_doc(cdt, cdn);
+		frm.events.calculate_incentive(frm, row);
+		refresh_field("incentives", row.name,row.parentfield);
+	},
+
+})
 
 frappe.ui.form.on('Payment Entry Reference', {
 	reference_doctype: function(frm, cdt, cdn) {
