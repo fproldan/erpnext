@@ -367,13 +367,12 @@ class Subscription(Document):
 			invoice.customer = self.party
 			invoice.territory = frappe.db.get_value('Customer', self.party, 'territory')
 
-			# MiPyme
 			if self.punto_de_venta and self.secuencia:
-				MIPYME = ['201', '206', '211']
+				invoice.naming_series = self.secuencia
 				punto_de_venta = frappe.get_doc('Punto de Venta', self.punto_de_venta)
 				tipo_de_comprobante = punto_de_venta.get_tipo_comprobante_for_secuence(self.secuencia)
 				tipo_comprobante_afip = tipo_de_comprobante.codigo
-				if tipo_comprobante_afip in MIPYME:
+				if tipo_comprobante_afip in ['201', '206', '211']:  # MIPYME
 					subscription_settings = frappe.get_single('Subscription Settings')
 					invoice.opcion_de_transmision = subscription_settings.opcion_de_transmision
 		else:
