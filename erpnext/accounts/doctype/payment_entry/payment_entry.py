@@ -991,6 +991,9 @@ class PaymentEntry(AccountsController):
 		if self.get('taxes'):
 			self.paid_amount_after_tax = self.get('taxes')[-1].base_total
 
+		self.calculate_commission()
+		self.calculate_contribution()
+
 	def get_current_tax_amount(self, tax):
 		tax_rate = tax.rate
 
@@ -1035,6 +1038,47 @@ class PaymentEntry(AccountsController):
 			current_tax_fraction *= -1.0
 
 		return current_tax_fraction
+	
+	def calculate_commission(self):
+		if not self.meta.get_field("commission_rate"):
+			return
+
+		self.round_floats_in(
+			self, ("amount_eligible_for_commission", "commission_rate")
+		)
+
+		if not (0 <= self.commission_rate <= 100.0):
+			throw("{} {}".format(_(self.meta.get_label("commission_rate")), _("must be between 0 and 100"),))
+
+		self.amount_eligible_for_commission = self.paid_amount
+
+		self.total_commission = flt(
+			self.amount_eligible_for_commission * self.commission_rate / 100.0,
+			self.precision("total_commission")
+		)
+	
+	def calculate_contribution(self):
+		if not self.meta.get_field("sales_team"):
+			return
+
+		total = 0.0
+		sales_team = self.get("sales_team")
+		for sales_person in sales_team:
+			self.round_floats_in(sales_person)
+
+			sales_person.allocated_amount = flt(
+				self.amount_eligible_for_commission * sales_person.allocated_percentage / 100.0,
+				self.precision("allocated_amount", sales_person))
+
+			if sales_person.commission_rate:
+				sales_person.incentives = flt(
+					sales_person.allocated_amount * flt(sales_person.commission_rate) / 100.0,
+					self.precision("incentives", sales_person))
+
+			total += sales_person.allocated_percentage
+
+		if sales_team and total != 100.0:
+			throw(_("Total allocated percentage for sales team should be 100"))
 
 def validate_inclusive_tax(tax, doc):
 	def _on_previous_row_error(row_range):

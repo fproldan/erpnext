@@ -1352,10 +1352,6 @@ frappe.ui.form.on('Payment Entry', {
 			))} ${__("cannot be greater than 100")}`);
 		}
 
-		// frm.doc.amount_eligible_for_commission = frm.doc.items.reduce(
-		// 	(sum, item) => item.grant_commission ? sum + item.base_net_amount : sum, 0
-		// )
-
 		frm.doc.amount_eligible_for_commission = frm.doc.paid_amount
 
 		frm.doc.total_commission = flt(
@@ -1394,13 +1390,6 @@ frappe.ui.form.on('Payment Entry', {
 		if (row.allocated_amount) {
 			row.incentives = flt(row.allocated_amount * row.commission_rate / 100.0, precision("incentives", row));
 		}
-
-		// var total_incentives = 0.0;
-		// $.each(frm.doc["items"] || [], function(i, item) {
-		// 	if (item.grant_commission) {
-		// 		total_incentives += flt(item.importe_comision);
-		// 	}
-		// });
 
 		var total_incentives = frm.doc.paid_amount
 
