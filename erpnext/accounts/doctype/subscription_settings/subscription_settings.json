@@ -7,7 +7,8 @@
  "field_order": [
   "grace_period",
   "cancel_after_grace",
-  "prorate"
+  "prorate",
+  "opcion_de_transmision"
  ],
  "fields": [
   {
@@ -28,11 +29,17 @@
    "fieldname": "prorate",
    "fieldtype": "Check",
    "label": "Prorate"
+  },
+  {
+   "fieldname": "opcion_de_transmision",
+   "fieldtype": "Select",
+   "label": "Opci\u00f3n de Transmisi\u00f3n Predeterminada",
+   "options": "\nTransferencia al sistema de circulaci\u00f3n abierta\nAgente de dep\u00f3sito colectivo"
   }
  ],
  "issingle": 1,
  "links": [],
- "modified": "2021-05-14 20:01:49.069747",
+ "modified": "2024-08-30 08:37:35.967594",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Subscription Settings",
