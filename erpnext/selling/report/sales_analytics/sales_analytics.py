@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 import frappe
 from frappe import _, scrub
-from frappe.utils import add_days, add_to_date, flt, getdate
+from frappe.utils import add_days, add_to_date, flt, getdate, cint
 from six import iteritems
 
 from erpnext.accounts.utils import get_fiscal_year
@@ -441,7 +441,7 @@ class Analytics(object):
 
 		for d in self.group_entries:
 			if d.parent:
-				self.depth_map.setdefault(d.name, self.depth_map.get(d.parent) + 1)
+				self.depth_map.setdefault(d.name, cint(self.depth_map.get(d.parent)) + 1)
 			else:
 				self.depth_map.setdefault(d.name, 0)
 
