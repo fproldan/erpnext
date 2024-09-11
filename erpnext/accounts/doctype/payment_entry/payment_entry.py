@@ -1346,13 +1346,23 @@ def get_party_details(company, party_type, party, date, cost_center=None):
 	if party_type in ["Customer", "Supplier"]:
 		bank_account = get_party_bank_account(party_type, party)
 
+	sales_team = []
+	if party_type=="Customer":
+		sales_team = []
+		for d in frappe.get_all("Sales Person", {"user": frappe.session.user}, pluck="name"):
+			sales_team.append({
+				"sales_person": d,
+				"allocated_percentage": 100,
+			})
+
 	return {
 		"party_account": party_account,
 		"party_name": party_name,
 		"party_account_currency": account_currency,
 		"party_balance": party_balance,
 		"account_balance": account_balance,
-		"bank_account": bank_account
+		"bank_account": bank_account,
+		"sales_team": sales_team,
 	}
 
 

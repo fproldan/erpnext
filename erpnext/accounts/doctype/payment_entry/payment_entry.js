@@ -371,6 +371,22 @@ frappe.ui.form.on('Payment Entry', {
 							() => frm.set_value("party_balance", r.message.party_balance),
 							() => frm.set_value("party_name", r.message.party_name),
 							() => frm.clear_table("references"),
+							() => {
+								frm.clear_table("sales_team");
+								r.message.sales_team.forEach((data) => {
+									let new_row = frm.add_child('sales_team'); 
+									new_row.sales_person = data.sales_person;
+									new_row.allocated_percentage = data.allocated_percentage;
+									frappe.db.get_value('Sales Person', data.sales_person, 'commission_rate')
+									.then(r => {
+										let commission_rate = r.message.commission_rate || 0;
+										new_row.commission_rate = commission_rate;
+										frm.refresh_field('sales_team');
+									});
+								});
+								
+								frm.refresh_field('sales_team');
+							},
 							() => frm.events.hide_unhide_fields(frm),
 							() => frm.events.set_dynamic_labels(frm),
 							() => {
