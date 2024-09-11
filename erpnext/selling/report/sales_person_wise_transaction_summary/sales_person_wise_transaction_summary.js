@@ -13,7 +13,7 @@ frappe.query_reports["Sales Person-wise Transaction Summary"] = {
 			fieldname: "doc_type",
 			label: __("Document Type"),
 			fieldtype: "Select",
-			options: "Sales Order\nDelivery Note\nSales Invoice",
+			options: "Sales Order\nDelivery Note\nSales Invoice\nPayment Entry",
 			default: "Sales Order"
 		},
 		{
@@ -41,12 +41,14 @@ frappe.query_reports["Sales Person-wise Transaction Summary"] = {
 			label: __("Item Group"),
 			fieldtype: "Link",
 			options: "Item Group",
+			"depends_on": "eval: doc.doc_type != 'Payment Entry'",
 		},
 		{
 			fieldname:"brand",
 			label: __("Brand"),
 			fieldtype: "Link",
 			options: "Brand",
+			"depends_on": "eval: doc.doc_type != 'Payment Entry'",
 		},
 		{
 			fieldname:"customer",
@@ -59,12 +61,14 @@ frappe.query_reports["Sales Person-wise Transaction Summary"] = {
 			label: __("Territory"),
 			fieldtype: "Link",
 			options: "Territory",
+			"depends_on": "eval: doc.doc_type != 'Payment Entry'",
 		},
 		{
 			fieldname:"show_return_entries",
 			label: __("Show Return Entries"),
 			fieldtype: "Check",
 			default: 0,
+			"depends_on": "eval: doc.doc_type != 'Payment Entry'",
 		},
 	]
 }
