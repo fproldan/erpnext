@@ -118,7 +118,7 @@
    "fieldname": "commission_based_on",
    "fieldtype": "Select",
    "label": "Commission Based on",
-   "options": "Sales Order\nSales Invoice"
+   "options": "Sales Order\nSales Invoice\nPayment Entry"
   },
   {
    "fieldname": "total_contribution",
@@ -228,7 +228,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-06-16 11:21:34.018262",
+ "modified": "2024-09-02 09:54:05.798824",
  "modified_by": "Administrator",
  "module": "Payroll",
  "name": "Sales Commission",
