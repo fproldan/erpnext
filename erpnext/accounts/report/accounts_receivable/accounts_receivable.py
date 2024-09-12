@@ -69,6 +69,10 @@ class ReceivablePayableReport(object):
 			self.previous_party=''
 			self.total_row_map = {}
 			self.skip_total_row = 1
+		elif self.filters.get('group_by_family'):
+			self.previous_family=''
+			self.total_family_row_map = {}
+			self.skip_total_row = 1
 
 	def get_data(self):
 		self.get_gl_entries()
@@ -130,9 +134,13 @@ class ReceivablePayableReport(object):
 
 			if self.filters.get('group_by_party'):
 				self.init_subtotal_row(gle.party)
+			elif self.filters.get('group_by_family'):
+				self.init_subtotal_family_row(familia)
 
 		if self.filters.get('group_by_party'):
 			self.init_subtotal_row('Total')
+		elif self.filters.get('group_by_family'):
+			self.init_subtotal_family_row('Total')
 
 	def get_invoices(self, gle):
 		if gle.voucher_type in ('Sales Invoice', 'Purchase Invoice'):
@@ -152,6 +160,16 @@ class ReceivablePayableReport(object):
 
 			for field in self.get_currency_fields():
 				self.total_row_map[party][field] = 0.0
+	
+	def init_subtotal_family_row(self, familia):
+		if not self.total_family_row_map.get(familia):
+			self.total_family_row_map.setdefault(familia, {
+				'familia': familia,
+				'bold': 1
+			})
+
+			for field in self.get_currency_fields():
+				self.total_family_row_map[familia][field] = 0.0
 
 	def get_currency_fields(self):
 		return ['invoiced', 'paid', 'credit_note', 'outstanding', 'range1', 'range2', 'range3', 'range4', 'range5']
@@ -194,6 +212,12 @@ class ReceivablePayableReport(object):
 
 		for field in self.get_currency_fields():
 			total_row[field] += row.get(field, 0.0)
+	
+	def update_sub_total_family_row(self, row, familia):
+		total_row = self.total_family_row_map.get(familia)
+
+		for field in self.get_currency_fields():
+			total_row[field] += row.get(field, 0.0)
 
 	def append_subtotal_row(self, party):
 		sub_total_row = self.total_row_map.get(party)
@@ -202,6 +226,14 @@ class ReceivablePayableReport(object):
 			self.data.append(sub_total_row)
 			self.data.append({})
 			self.update_sub_total_row(sub_total_row, 'Total')
+		
+	def append_subtotal_family_row(self, familia):
+		sub_total_row = self.total_family_row_map.get(familia)
+
+		if sub_total_row:
+			self.data.append(sub_total_row)
+			self.data.append({})
+			self.update_sub_total_family_row(sub_total_row, 'Total')
 
 	def get_voucher_balance(self, gle):
 		if self.filters.get("sales_person"):
@@ -306,6 +338,10 @@ class ReceivablePayableReport(object):
 			self.append_subtotal_row(self.previous_party)
 			if self.data:
 				self.data.append(self.total_row_map.get('Total'))
+		elif self.filters.get('group_by_family'):
+			self.append_subtotal_family_row(self.previous_family)
+			if self.data:
+				self.data.append(self.total_family_row_map.get('Total'))
 
 	def append_row(self, row):
 		self.allocate_future_payments(row)
@@ -318,6 +354,11 @@ class ReceivablePayableReport(object):
 			if self.previous_party and (self.previous_party != row.party):
 				self.append_subtotal_row(self.previous_party)
 			self.previous_party = row.party
+		elif self.filters.get('group_by_family'):
+			self.update_sub_total_family_row(row, row.familia)
+			if self.previous_family and (self.previous_family != row.familia):
+				self.append_subtotal_family_row(self.previous_family)
+			self.previous_family = row.familia
 
 		self.data.append(row)
 
@@ -652,7 +693,7 @@ class ReceivablePayableReport(object):
 			doc_currency_fields = "debit_in_account_currency, credit_in_account_currency"
 
 		remarks = ", remarks" if self.filters.get("show_remarks") else ""
-
+		
 		self.gl_entries = frappe.db.sql("""
 			select
 				name, posting_date, account, party_type, party, voucher_type, voucher_no, cost_center,
@@ -711,6 +752,8 @@ class ReceivablePayableReport(object):
 
 	def get_order_by_condition(self):
 		if self.filters.get('group_by_party'):
+			return "order by party, posting_date"
+		elif self.filters.get('group_by_family'):
 			return "order by party, posting_date"
 		else:
 			return "order by posting_date, party"

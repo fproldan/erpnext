@@ -6,7 +6,26 @@ if (frappe.boot.single_types.includes("Persat Settings")) {
 		"fieldname": "familia",
 		"label": __("Familia"),
 		"fieldtype": "Link",
-		"options": "Customer"
+		"options": "Customer",
+		get_query: () => {
+			return {
+				filters: {
+					'es_familia': 1
+				}
+			};
+		}
+	}
+	var group_by_family = {
+		"fieldname": "group_by_family",
+		"label": __("Agrupar por Familia"),
+		"fieldtype": "Check",
+		get_query: () => {
+			return {
+				filters: {
+					'es_familia': 1
+				}
+			};
+		}
 	}
 } else {
 	var family = {
@@ -14,6 +33,12 @@ if (frappe.boot.single_types.includes("Persat Settings")) {
 		"label": __("Familia"),
 		"fieldtype": "Link",
 		"options": "Customer",
+		"hidden": 1
+	}
+	var group_by_family = {
+		"fieldname": "group_by_family",
+		"label": __("Agrupar por Familia"),
+		"fieldtype": "Check",
 		"hidden": 1
 	}
 }
@@ -153,6 +178,7 @@ frappe.query_reports["Accounts Receivable"] = {
 			"label": __("Group By Customer"),
 			"fieldtype": "Check"
 		},
+		group_by_family,
 		{
 			"fieldname": "based_on_payment_terms",
 			"label": __("Based On Payment Terms"),
