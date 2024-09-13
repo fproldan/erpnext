@@ -110,6 +110,8 @@ class ReceivablePayableReport(object):
 			else:
 				familia = None
 
+			if self.filters.get('group_by_family') and not familia:
+				continue
 			# get the balance object for voucher_type
 			key = (gle.voucher_type, gle.voucher_no, gle.party)
 			if not key in self.voucher_balance:
