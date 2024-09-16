@@ -310,6 +310,8 @@ class ReceivablePayableReport(object):
 					conversion_rate = get_exchange_rate("USD", vourcher_data[currency_field], nowdate(), exchange_type)
 					row.outstanding_original_currency = flt((row.outstanding / conversion_rate), self.currency_precision)
 
+			row['voucher_type'] = _(row['voucher_type'])
+
 			if frappe.get_hooks('accounts_receivable_usd_column') and row.outstanding == 0.0:
 				row.outstanding_original_currency = 0
 				
