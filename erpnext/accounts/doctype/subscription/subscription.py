@@ -457,6 +457,10 @@ class Subscription(Document):
 
 		items = []
 		party = self.party
+
+		doctype = "Sales Invoice"  if self.party_type == "Customer" else "Purchase Invoice"
+		company = self.company
+		
 		for plan in plans:
 			plan_doc = frappe.get_doc('Subscription Plan', plan.plan)
 
@@ -471,10 +475,12 @@ class Subscription(Document):
 
 			if not prorate:
 				item = {'item_code': item_code, 'qty': plan.qty, 'rate': get_plan_rate(plan.plan, plan.qty, party,
-					self.current_invoice_start, self.current_invoice_end), 'cost_center': plan_doc.cost_center}
+					self.current_invoice_start, self.current_invoice_end, 1, doctype, company), 'cost_center': plan_doc.cost_center}
 			else:
 				item = {'item_code': item_code, 'qty': plan.qty, 'rate': get_plan_rate(plan.plan, plan.qty, party,
-					self.current_invoice_start, self.current_invoice_end, prorate_factor), 'cost_center': plan_doc.cost_center}
+					self.current_invoice_start, self.current_invoice_end, prorate_factor, doctype, company), 'cost_center': plan_doc.cost_center}
+
+
 
 			if deferred:
 				item.update({
