@@ -142,6 +142,9 @@
 					{% } %}
 					{% if(!filters.show_future_payments) { %}
 						<th style="width: 20%">{%= (filters.customer || filters.supplier) ? __("Remarks"): __("Party") %}</th>
+						{% if(report.report_name === "Accounts Receivable" && frappe.boot.single_types.includes("Persat Settings")) { %}
+							<th style="width: 20%">Familia</th>
+						{% } %}
 					{% } %}
 					<th style="width: 10%; text-align: right">{%= __("Invoiced Amount") %}</th>
 					{% if(!filters.show_future_payments) { %}
@@ -202,6 +205,10 @@
 							{% } %}
 							</div>
 						</td>
+						{% } %}
+
+						{% if(report.report_name === "Accounts Receivable" && frappe.boot.single_types.includes("Persat Settings")) { %}
+							<td>{%= data[i]["familia"] %}</td>
 						{% } %}
 
 						<td style="text-align: right">
