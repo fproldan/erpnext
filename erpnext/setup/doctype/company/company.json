@@ -48,6 +48,7 @@
   "exchange_gain_loss_account",
   "unrealized_exchange_gain_loss_account",
   "unrealized_profit_loss_account",
+  "payment_account_sales_commission",
   "column_break0",
   "allow_account_creation_against_child_company",
   "default_payable_account",
@@ -59,6 +60,7 @@
   "default_payroll_payable_account",
   "default_expense_claim_payable_account",
   "default_discount_account",
+  "sales_commission_expense_account",
   "section_break_22",
   "cost_center",
   "column_break_26",
@@ -735,6 +737,18 @@
    "fieldtype": "Link",
    "label": "Repair and Maintenance Account",
    "options": "Account"
+  },
+  {
+   "fieldname": "payment_account_sales_commission",
+   "fieldtype": "Link",
+   "label": "Cuenta de Pago Comisi\u00f3n Vendedores",
+   "options": "Account"
+  },
+  {
+   "fieldname": "sales_commission_expense_account",
+   "fieldtype": "Link",
+   "label": "Cuenta de Gastos Comisi\u00f3n Vendedores",
+   "options": "Account"
   }
  ],
  "icon": "fa fa-building",
@@ -742,7 +756,7 @@
  "image_field": "company_logo",
  "is_tree": 1,
  "links": [],
- "modified": "2021-05-17 17:51:08.187233",
+ "modified": "2024-09-23 13:49:45.617464",
  "modified_by": "Administrator",
  "module": "Setup",
  "name": "Company",
@@ -807,12 +821,13 @@
    "select": 1
   },
   {
+   "export": 1,
    "read": 1,
    "report": 1,
-   "export": 1,
    "role": "Usuario Contador"
   }
  ],
+ "route": "app/doctype/Company",
  "show_name_in_global_search": 1,
  "sort_field": "modified",
  "sort_order": "ASC",

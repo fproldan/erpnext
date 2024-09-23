@@ -233,7 +233,9 @@ erpnext.company.setup_queries = function(frm) {
 		["expenses_included_in_asset_valuation", {"account_type": "Expenses Included In Asset Valuation"}],
 		["capital_work_in_progress_account", {"account_type": "Capital Work in Progress"}],
 		["asset_received_but_not_billed", {"account_type": "Asset Received But Not Billed"}],
-		["unrealized_profit_loss_account", {"root_type": ["in", ["Liability", "Asset"]]}]
+		["unrealized_profit_loss_account", {"root_type": ["in", ["Liability", "Asset"]]}],
+		["payment_account_sales_commission", {"account_type": "Payable"}],
+		["sales_commission_expense_account", {"account_type": "Expense Account"}],
 	], function(i, v) {
 		erpnext.company.set_custom_query(frm, v);
 	});
