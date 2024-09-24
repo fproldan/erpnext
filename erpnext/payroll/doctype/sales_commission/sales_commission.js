@@ -2,6 +2,9 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Sales Commission', {
+	onload: function(frm) {
+		frm.ignore_doctypes_on_cancel_all = ['Payment Entry'];
+	},
 	setup: function(frm) {
 		frm.set_query("commission_based_on", function() {
 			return {

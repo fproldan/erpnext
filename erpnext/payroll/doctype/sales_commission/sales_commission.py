@@ -30,9 +30,12 @@ class SalesCommission(Document):
 	def on_submit(self):
 		self.validate_amount()
 		self.db_set("status", "Unpaid")
+	
+	def on_cancel(self):
+		self.ignore_linked_doctypes = ('GL Entry',)
 
 	@frappe.whitelist()
-	def add_contributions(self):
+	def add_contributions(self, process_sales_commission):
 		self.set("contributions", [])
 		filter_date = "transaction_date" if self.commission_based_on == "Sales Order" else "posting_date"
 		customer_field = "customer" if self.commission_based_on != "Payment Entry" else "party"
@@ -53,6 +56,7 @@ class SalesCommission(Document):
 						"contribution_amount": record["allocated_amount"],
 						"commission_rate": record["commission_rate"],
 						"commission_amount": record["incentives"],
+						"process_sales_commission": process_sales_commission,
 					}
 					self.append("contributions", contribution)
 		self.calculate_total_contribution_and_total_commission_amount()

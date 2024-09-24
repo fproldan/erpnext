@@ -88,7 +88,7 @@ class ProcessSalesCommission(Document):
 			doc.to_date = self.to_date
 			doc.pay_via_salary = self.pay_via_salary
 			doc.process_sales_commission_reference = self.name
-			doc.add_contributions()
+			doc.add_contributions(self.name)
 			doc.insert()
 			if not frappe.db.get_single_value("Selling Settings", "approval_required_for_sales_commission_payout"):
 				doc.reload()
