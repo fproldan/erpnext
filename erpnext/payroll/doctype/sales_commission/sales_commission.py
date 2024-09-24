@@ -1,10 +1,11 @@
 # Copyright (c) 2021, Frappe Technologies Pvt. Ltd. and contributors
 # For license information, please see license.txt
-
+import json
 import frappe
 from frappe import _
 from frappe.model.document import Document
 from frappe.utils import get_link_to_form
+from erpnext.accounts.general_ledger import make_gl_entries
 
 
 class SalesCommission(Document):
@@ -29,10 +30,70 @@ class SalesCommission(Document):
 
 	def on_submit(self):
 		self.validate_amount()
+		self.make_gl_entries()
 		self.db_set("status", "Unpaid")
 	
 	def on_cancel(self):
 		self.ignore_linked_doctypes = ('GL Entry',)
+		self.make_gl_entries(cancel=1)
+	
+	def add_party_gl_entries(self, gl_entries):
+		return
+		if self.party_account:
+			if self.payment_type=="Receive":
+				against_account = self.paid_to
+			else:
+				against_account = self.paid_from
+
+			party_gl_dict = self.get_gl_dict({
+				"account": self.party_account,
+				"party_type": self.party_type,
+				"party": self.party,
+				"against": against_account,
+				"account_currency": self.party_account_currency,
+				"cost_center": self.cost_center
+			}, item=self)
+
+			dr_or_cr = "credit" if erpnext.get_party_account_type(self.party_type) == 'Receivable' else "debit"
+
+			for d in self.get("references"):
+				cost_center = self.cost_center
+				if d.reference_doctype == "Sales Invoice" and not cost_center:
+					cost_center = frappe.db.get_value(d.reference_doctype, d.reference_name, "cost_center")
+				gle = party_gl_dict.copy()
+				gle.update({
+					"against_voucher_type": d.reference_doctype,
+					"against_voucher": d.reference_name,
+					"cost_center": cost_center
+				})
+
+				allocated_amount_in_company_currency = flt(flt(d.allocated_amount) * flt(d.exchange_rate),
+					self.precision("paid_amount"))
+
+				gle.update({
+					dr_or_cr + "_in_account_currency": d.allocated_amount,
+					dr_or_cr: allocated_amount_in_company_currency
+				})
+
+				gl_entries.append(gle)
+
+			if self.unallocated_amount:
+				exchange_rate = self.get_exchange_rate()
+				base_unallocated_amount = (self.unallocated_amount * exchange_rate)
+
+				gle = party_gl_dict.copy()
+
+				gle.update({
+					dr_or_cr + "_in_account_currency": self.unallocated_amount,
+					dr_or_cr: base_unallocated_amount
+				})
+
+				gl_entries.append(gle)
+	
+	def make_gl_entries(self, cancel=0):
+		gl_entries = []
+		self.add_party_gl_entries(gl_entries)
+		make_gl_entries(gl_entries, cancel=cancel)
 
 	@frappe.whitelist()
 	def add_contributions(self, process_sales_commission):
@@ -166,3 +227,19 @@ def add_record(record, sales_person):
 			if frappe.db.get_value("Sales Commission", {"name": contributions["parent"]}, fieldname=["sales_person"]) == sales_person:
 				return False
 	return True
+
+
+@frappe.whitelist()
+def payout_entries(names, mode_of_payment=None, reference_no=None, reference_date=None):
+	if not frappe.has_permission("Sales Commission", "write"):
+		frappe.throw(_("Not permitted"), frappe.PermissionError)
+
+	names = json.loads(names)
+	for name in names:
+		sales_commission = frappe.get_doc("Sales Commission", name)
+		if sales_commission.docstatus != 1 or sales_commission.status == 'Paid':
+			continue
+
+		sales_commission.payout_entry(mode_of_payment, reference_no, reference_date)
+
+	frappe.local.message_log = []
