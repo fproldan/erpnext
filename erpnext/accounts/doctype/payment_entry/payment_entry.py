@@ -101,6 +101,7 @@ class PaymentEntry(AccountsController):
 		self.ignore_linked_doctypes = ('GL Entry', 'Stock Ledger Entry', 'Sales Commission')
 		self.make_gl_entries(cancel=1)
 		self.update_expense_claim()
+		self.update_sales_commission()
 		self.update_outstanding_amounts()
 		self.update_advance_paid()
 		self.update_donation(cancel=1)
@@ -882,6 +883,12 @@ class PaymentEntry(AccountsController):
 						update_reimbursed_amount(doc, -1 * d.allocated_amount)
 					else:
 						update_reimbursed_amount(doc, d.allocated_amount)
+	
+	def update_sales_commission(self):
+		if self.payment_type in ("Pay") and self.party:
+			for d in self.get("references"):
+				if d.reference_doctype=="Sales Commission" and d.reference_name:
+					frappe.db.set_value("Sales Commission", d.reference_name, "status", "Unpaid")
 
 	def update_donation(self, cancel=0):
 		if self.payment_type == "Receive" and self.party_type == "Donor" and self.party:
