@@ -16,6 +16,11 @@
   "status",
   "company",
   "pay_via_salary",
+  "section_break_11",
+  "commission_against",
+  "omit_sales_person_transactions",
+  "column_break_14",
+  "filtro",
   "section_break_10",
   "from_date",
   "to_date",
@@ -223,12 +228,41 @@
    "fieldname": "get_contributions",
    "fieldtype": "Button",
    "label": "Get Contributions"
+  },
+  {
+   "fieldname": "section_break_11",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "description": "Si selecciona esta opci\u00f3n, los c\u00e1lculos de comisiones omitir\u00e1n las asignaciones del vendedor incluidas en las transacciones",
+   "fieldname": "omit_sales_person_transactions",
+   "fieldtype": "Check",
+   "label": "Omitir Transacciones del Vendedor"
+  },
+  {
+   "depends_on": "eval:doc.omit_sales_person_transactions == 1;",
+   "fieldname": "commission_against",
+   "fieldtype": "Link",
+   "label": "Comisionar Sobre",
+   "options": "DocType"
+  },
+  {
+   "depends_on": "eval:doc.omit_sales_person_transactions == 1;",
+   "fieldname": "filtro",
+   "fieldtype": "Dynamic Link",
+   "label": "Filtro",
+   "options": "commission_against"
+  },
+  {
+   "fieldname": "column_break_14",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-02 09:54:05.798824",
+ "modified": "2024-09-30 13:48:21.649556",
  "modified_by": "Administrator",
  "module": "Payroll",
  "name": "Sales Commission",
@@ -281,6 +315,7 @@
   }
  ],
  "restrict_to_domain": "Vendedores y Socios",
+ "route": "app/doctype/Sales%20Commission",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1
