@@ -274,6 +274,16 @@ class Subscription(Document):
 		self.validate_end_date()
 		self.validate_to_follow_calendar_months()
 		self.cost_center = erpnext.get_default_cost_center(self.get('company'))
+		self.validate_plans_price_lists()
+
+	def validate_plans_price_lists(self):
+		if len(self.plans) <= 1:
+			return
+		
+		price_list = [frappe.get_value("Subscription Plan", plan.plan, 'price_list') for plan in self.plans]
+		price_list = list(set(list(filter(lambda x: x is not None, price_list))))
+		if len(price_list) > 1:
+			frappe.throw(_("Solo se pueden tener Planes con la misma Lista de Precio en una Suscripción."))
 
 	def validate_trial_period(self):
 		"""
@@ -341,14 +351,13 @@ class Subscription(Document):
 		invoice = frappe.new_doc(doctype)
 		invoice.subscription = self.name
 
-		# Si solo tiene un plan aplicamos esa lista de precios a la factura
-		if len(self.plans) == 1:
-			price_list = frappe.get_value("Subscription Plan", self.plans[0].plan, 'price_list')
-			if price_list:
-				if doctype == "Sales Invoice":
-					invoice.selling_price_list = price_list
-				else:
-					invoice.buying_price_list = price_list
+		# Aplicamos esa lista de precios a la factura
+		price_list = frappe.get_value("Subscription Plan", self.plans[0].plan, 'price_list')
+		if price_list:
+			if doctype == "Sales Invoice":
+				invoice.selling_price_list = price_list
+			else:
+				invoice.buying_price_list = price_list
 
 		# For backward compatibility
 		# Earlier subscription didn't had any company field
