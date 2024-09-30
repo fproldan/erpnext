@@ -235,7 +235,7 @@ erpnext.company.setup_queries = function(frm) {
 		["asset_received_but_not_billed", {"account_type": "Asset Received But Not Billed"}],
 		["unrealized_profit_loss_account", {"root_type": ["in", ["Liability", "Asset"]]}],
 		["payment_account_sales_commission", {"account_type": "Payable"}],
-		["sales_commission_expense_account", {"account_type": "Expense Account"}],
+		["sales_commission_expense_account", {"root_type": "Expense"}],
 	], function(i, v) {
 		erpnext.company.set_custom_query(frm, v);
 	});

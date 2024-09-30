@@ -2,13 +2,15 @@
 # For license information, please see license.txt
 import json
 import frappe
+import erpnext
 from frappe import _
-from frappe.model.document import Document
 from frappe.utils import get_link_to_form
 from erpnext.accounts.general_ledger import make_gl_entries
+from erpnext.controllers.accounts_controller import (
+	AccountsController,
+)
 
-
-class SalesCommission(Document):
+class SalesCommission(AccountsController):
 	def validate(self):
 		self.validate_from_to_dates()
 
@@ -37,63 +39,47 @@ class SalesCommission(Document):
 		self.ignore_linked_doctypes = ('GL Entry',)
 		self.make_gl_entries(cancel=1)
 	
-	def add_party_gl_entries(self, gl_entries):
-		return
-		if self.party_account:
-			if self.payment_type=="Receive":
-				against_account = self.paid_to
-			else:
-				against_account = self.paid_from
+	def make_gl_entries(self, cancel=False):
+		gl_entries = self.get_gl_entries()
+		make_gl_entries(gl_entries, cancel)
 
-			party_gl_dict = self.get_gl_dict({
-				"account": self.party_account,
-				"party_type": self.party_type,
-				"party": self.party,
-				"against": against_account,
-				"account_currency": self.party_account_currency,
-				"cost_center": self.cost_center
-			}, item=self)
+	def get_gl_entries(self):
+		gl_entry = []
 
-			dr_or_cr = "credit" if erpnext.get_party_account_type(self.party_type) == 'Receivable' else "debit"
+		sales_commission_expense_account = frappe.get_value("Company", self.company, "sales_commission_expense_account") # DEBIT
+		payment_account_sales_commission = frappe.get_value("Company", self.company, "payment_account_sales_commission") # CREDIT
 
-			for d in self.get("references"):
-				cost_center = self.cost_center
-				if d.reference_doctype == "Sales Invoice" and not cost_center:
-					cost_center = frappe.db.get_value(d.reference_doctype, d.reference_name, "cost_center")
-				gle = party_gl_dict.copy()
-				gle.update({
-					"against_voucher_type": d.reference_doctype,
-					"against_voucher": d.reference_name,
-					"cost_center": cost_center
-				})
+		if not sales_commission_expense_account or not payment_account_sales_commission:
+			frappe.throw(_("Debe configurar la Cuenta de Pago Comisión Vendedores y la Cuenta de Gastos Comisión Vendedores en la Compañia."))
 
-				allocated_amount_in_company_currency = flt(flt(d.allocated_amount) * flt(d.exchange_rate),
-					self.precision("paid_amount"))
+		gl_entry.append(
+			self.get_gl_dict({
+				"posting_date": self.creation.date(),
+				"account": payment_account_sales_commission,
+				"credit": self.total_commission_amount,
+				"credit_in_account_currency": self.total_commission_amount,
+				"against": self.employee,
+				"party_type": "Employee",
+				"party": self.employee,
+				"against_voucher_type": self.doctype,
+				"against_voucher": self.name,
+				"cost_center": erpnext.get_default_cost_center(self.company)
+			})
+		)
 
-				gle.update({
-					dr_or_cr + "_in_account_currency": d.allocated_amount,
-					dr_or_cr: allocated_amount_in_company_currency
-				})
-
-				gl_entries.append(gle)
-
-			if self.unallocated_amount:
-				exchange_rate = self.get_exchange_rate()
-				base_unallocated_amount = (self.unallocated_amount * exchange_rate)
-
-				gle = party_gl_dict.copy()
-
-				gle.update({
-					dr_or_cr + "_in_account_currency": self.unallocated_amount,
-					dr_or_cr: base_unallocated_amount
-				})
-
-				gl_entries.append(gle)
-	
-	def make_gl_entries(self, cancel=0):
-		gl_entries = []
-		self.add_party_gl_entries(gl_entries)
-		make_gl_entries(gl_entries, cancel=cancel)
+		gl_entry.append(
+			self.get_gl_dict({
+				"posting_date": self.creation.date(),
+				"account": sales_commission_expense_account,
+				"debit":  self.total_commission_amount,
+				"debit_in_account_currency": self.total_commission_amount,
+				"against": self.employee,
+				"against_voucher_type": self.doctype,
+				"against_voucher": self.name,
+				"cost_center": erpnext.get_default_cost_center(self.company)
+			})
+		)
+		return gl_entry
 
 	@frappe.whitelist()
 	def add_contributions(self, process_sales_commission):
