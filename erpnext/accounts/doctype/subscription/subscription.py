@@ -489,7 +489,8 @@ class Subscription(Document):
 				item = {'item_code': item_code, 'qty': plan.qty, 'rate': get_plan_rate(plan.plan, plan.qty, party,
 					self.current_invoice_start, self.current_invoice_end, prorate_factor, doctype, company), 'cost_center': plan_doc.cost_center}
 
-			item["subscription_plan"] = plan_doc.name
+			if doctype == "Sales Invoice":
+				item["subscription_plan"] = plan_doc.name
 
 			if deferred:
 				item.update({
