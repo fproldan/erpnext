@@ -20,7 +20,7 @@
   "commission_against",
   "omit_sales_person_transactions",
   "column_break_14",
-  "filtro",
+  "commission_against_filter",
   "section_break_10",
   "from_date",
   "to_date",
@@ -245,24 +245,25 @@
    "fieldname": "commission_against",
    "fieldtype": "Link",
    "label": "Comisionar Sobre",
+   "mandatory_depends_on": "eval:doc.omit_sales_person_transactions == 1;",
    "options": "DocType"
-  },
-  {
-   "depends_on": "eval:doc.omit_sales_person_transactions == 1;",
-   "fieldname": "filtro",
-   "fieldtype": "Dynamic Link",
-   "label": "Filtro",
-   "options": "commission_against"
   },
   {
    "fieldname": "column_break_14",
    "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.omit_sales_person_transactions == 1;",
+   "fieldname": "commission_against_filter",
+   "fieldtype": "Dynamic Link",
+   "label": "Filtro",
+   "options": "commission_against"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-30 13:48:21.649556",
+ "modified": "2024-09-30 14:33:15.176817",
  "modified_by": "Administrator",
  "module": "Payroll",
  "name": "Sales Commission",
