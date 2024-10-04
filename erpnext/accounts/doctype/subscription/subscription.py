@@ -489,13 +489,14 @@ class Subscription(Document):
 				item = {'item_code': item_code, 'qty': plan.qty, 'rate': get_plan_rate(plan.plan, plan.qty, party,
 					self.current_invoice_start, self.current_invoice_end, prorate_factor, doctype, company), 'cost_center': plan_doc.cost_center}
 
-
+			if doctype == "Sales Invoice":
+				item["subscription_plan"] = plan_doc.name
 
 			if deferred:
 				item.update({
 					deferred_field: deferred,
 					'service_start_date': self.current_invoice_start,
-					'service_end_date': self.current_invoice_end
+					'service_end_date': self.current_invoice_end,
 				})
 
 			accounting_dimensions = get_accounting_dimensions()
