@@ -274,6 +274,16 @@ class Subscription(Document):
 		self.validate_end_date()
 		self.validate_to_follow_calendar_months()
 		self.cost_center = erpnext.get_default_cost_center(self.get('company'))
+		self.validate_plans_price_lists()
+
+	def validate_plans_price_lists(self):
+		if len(self.plans) <= 1:
+			return
+		
+		price_list = [frappe.get_value("Subscription Plan", plan.plan, 'price_list') for plan in self.plans]
+		price_list = list(set(list(filter(lambda x: x is not None, price_list))))
+		if len(price_list) > 1:
+			frappe.throw(_("Solo se pueden tener Planes con la misma Lista de Precio en una Suscripción."))
 
 	def validate_trial_period(self):
 		"""
@@ -341,14 +351,13 @@ class Subscription(Document):
 		invoice = frappe.new_doc(doctype)
 		invoice.subscription = self.name
 
-		# Si solo tiene un plan aplicamos esa lista de precios a la factura
-		if len(self.plans) == 1:
-			price_list = frappe.get_value("Subscription Plan", self.plans[0].plan, 'price_list')
-			if price_list:
-				if doctype == "Sales Invoice":
-					invoice.selling_price_list = price_list
-				else:
-					invoice.buying_price_list = price_list
+		# Aplicamos esa lista de precios a la factura
+		price_list = frappe.get_value("Subscription Plan", self.plans[0].plan, 'price_list')
+		if price_list:
+			if doctype == "Sales Invoice":
+				invoice.selling_price_list = price_list
+			else:
+				invoice.buying_price_list = price_list
 
 		# For backward compatibility
 		# Earlier subscription didn't had any company field
@@ -457,6 +466,10 @@ class Subscription(Document):
 
 		items = []
 		party = self.party
+
+		doctype = "Sales Invoice"  if self.party_type == "Customer" else "Purchase Invoice"
+		company = self.company
+		
 		for plan in plans:
 			plan_doc = frappe.get_doc('Subscription Plan', plan.plan)
 
@@ -471,16 +484,19 @@ class Subscription(Document):
 
 			if not prorate:
 				item = {'item_code': item_code, 'qty': plan.qty, 'rate': get_plan_rate(plan.plan, plan.qty, party,
-					self.current_invoice_start, self.current_invoice_end), 'cost_center': plan_doc.cost_center}
+					self.current_invoice_start, self.current_invoice_end, 1, doctype, company), 'cost_center': plan_doc.cost_center}
 			else:
 				item = {'item_code': item_code, 'qty': plan.qty, 'rate': get_plan_rate(plan.plan, plan.qty, party,
-					self.current_invoice_start, self.current_invoice_end, prorate_factor), 'cost_center': plan_doc.cost_center}
+					self.current_invoice_start, self.current_invoice_end, prorate_factor, doctype, company), 'cost_center': plan_doc.cost_center}
+
+			if doctype == "Sales Invoice":
+				item["subscription_plan"] = plan_doc.name
 
 			if deferred:
 				item.update({
 					deferred_field: deferred,
 					'service_start_date': self.current_invoice_start,
-					'service_end_date': self.current_invoice_end
+					'service_end_date': self.current_invoice_end,
 				})
 
 			accounting_dimensions = get_accounting_dimensions()
