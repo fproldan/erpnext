@@ -698,19 +698,38 @@ class ReceivablePayableReport(object):
 
 		remarks = ", remarks" if self.filters.get("show_remarks") else ""
 		
-		self.gl_entries = frappe.db.sql("""
+		if self.filters.get('group_by_family'):
+			self.gl_entries = frappe.db.sql("""
 			select
-				name, posting_date, account, party_type, party, voucher_type, voucher_no, cost_center,
-				against_voucher_type, against_voucher, account_currency, {0}, {1} {remarks}
+				gl.name, posting_date, account, party_type, party, voucher_type, voucher_no, cost_center,
+				against_voucher_type, against_voucher, account_currency, c.familia, {0}, {1} {remarks}
 			from
-				`tabGL Entry`
+				`tabGL Entry` AS gl
+			JOIN 
+				`tabCustomer` AS c on c.name = party
 			where
-				docstatus < 2
+				gl.docstatus < 2
 				and is_cancelled = 0
 				and party_type=%s
 				and (party is not null and party != '')
 				{2} {3} {4}"""
 			.format(select_fields, doc_currency_fields, date_condition, conditions, order_by, remarks=remarks), values, as_dict=True)
+				
+		else:
+			self.gl_entries = frappe.db.sql("""
+				select
+					name, posting_date, account, party_type, party, voucher_type, voucher_no, cost_center,
+					against_voucher_type, against_voucher, account_currency, {0}, {1} {remarks}
+				from
+					`tabGL Entry`
+				where
+					docstatus < 2
+					and is_cancelled = 0
+					and party_type=%s
+					and (party is not null and party != '')
+					{2} {3} {4}"""
+				.format(select_fields, doc_currency_fields, date_condition, conditions, order_by, remarks=remarks), values, as_dict=True)
+
 
 	def get_sales_invoices_or_customers_based_on_sales_person(self):
 		if self.filters.get("sales_person"):
@@ -758,7 +777,7 @@ class ReceivablePayableReport(object):
 		if self.filters.get('group_by_party'):
 			return "order by party, posting_date"
 		elif self.filters.get('group_by_family'):
-			return "order by party, posting_date"
+			return "order by familia, party, posting_date"
 		else:
 			return "order by posting_date, party"
 
