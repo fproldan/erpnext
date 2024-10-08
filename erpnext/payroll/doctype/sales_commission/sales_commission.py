@@ -22,18 +22,17 @@ class SalesCommission(AccountsController):
 		return super().validate_from_to_dates("from_date", "to_date")
 
 	def validate_omit_transaction_duplicates(self):
-		# TODO chequear por solapamiento de fechas
 		if not self.omit_sales_person_transactions:
 			return
 		
 		previous_contibutions = frappe.get_all(
 			"Sales Commission",
-			filters={
-				"sales_person": self.sales_person,
-				"docstatus": 1,
-				"from_date": self.from_date,
-				"to_date": self.to_date,
-			}, 
+			filters=[
+            	['from_date', '<=', self.to_date],
+            	['to_date', '>=', self.from_date],
+				['sales_person', '=', self.sales_person],
+				['docstatus', '=', 1],
+       		],
 			pluck="name"
 		)
 		if previous_contibutions:
