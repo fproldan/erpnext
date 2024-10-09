@@ -154,7 +154,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-05-12 21:01:53.652300",
+ "modified": "2023-09-07 10:27:38.791956",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Leave Encashment",
@@ -218,7 +218,7 @@
    "write": 1
   }
  ],
- "restrict_to_domain": "HR Asistencia, Vacaciones y Rendimiento de Gastos",
+ "restrict_to_domain": "Thrash",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1
