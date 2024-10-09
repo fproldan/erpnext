@@ -36,7 +36,8 @@
   "allow_multiple_items",
   "allow_against_multiple_purchase_orders",
   "hide_tax_id",
-  "approval_required_for_sales_commission_payout"
+  "approval_required_for_sales_commission_payout",
+  "no_copy_conversion_date_from_ov_to_si"
  ],
  "fields": [
   {
@@ -235,6 +236,12 @@
    "in_list_view": 1,
    "label": "Tipo de Documento Predeterminado",
    "options": "Tipo de Documento"
+  },
+  {
+   "default": "0",
+   "fieldname": "no_copy_conversion_date_from_ov_to_si",
+   "fieldtype": "Check",
+   "label": "No usar el valor de cambio de la Orden de Venta al crear una Factura de Venta"
   }
  ],
  "icon": "fa fa-cog",
@@ -242,7 +249,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2021-09-18 23:05:06.139820",
+ "modified": "2023-02-10 13:11:12.234464",
  "modified_by": "Administrator",
  "module": "Selling",
  "name": "Selling Settings",
