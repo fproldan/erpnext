@@ -2,11 +2,21 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Sales Commission', {
+	onload: function(frm) {
+		frm.ignore_doctypes_on_cancel_all = ['Payment Entry'];
+	},
 	setup: function(frm) {
 		frm.set_query("commission_based_on", function() {
 			return {
 				filters: [
 					['name', 'in', ["Sales Order", "Sales Invoice"]]
+				]
+			};
+		});
+		frm.set_query("commission_against", function() {
+			return {
+				filters: [
+					['name', 'in', ["Canal de Venta"]]
 				]
 			};
 		});
@@ -16,13 +26,32 @@ frappe.ui.form.on('Sales Commission', {
 			if (frm.custom_buttons) frm.clear_custom_buttons();
 			frm.events.add_context_buttons(frm);
 		}
+		if(frm.doc.docstatus > 0) {
+			frm.add_custom_button(__('Ledger'), function() {
+				frappe.route_options = {
+					"voucher_no": frm.doc.name,
+					"from_date": moment(frm.doc.creation).format('YYYY-MM-DD'),
+					"to_date": moment(frm.doc.modified).format('YYYY-MM-DD'),
+					"company": frm.doc.company,
+					"group_by": "",
+					"show_cancelled_entries": frm.doc.docstatus === 2
+				};
+				frappe.set_route("query-report", "General Ledger");
+			}, "fa fa-table");
+		}
+		setTimeout(function() {
+            toggleColumns(frm, ['commission_filter'], 'contributions', !frm.doc.omit_sales_person_transactions);
+			toggleColumns(frm, ['order_or_invoice', 'posting_date'], 'contributions', frm.doc.omit_sales_person_transactions);
+        }, 500);
 	},
-
+	omit_sales_person_transactions: function(frm) {
+		toggleColumns(frm, ['commission_filter'], 'contributions', !frm.doc.omit_sales_person_transactions);
+		toggleColumns(frm, ['order_or_invoice', 'posting_date'], 'contributions', frm.doc.omit_sales_person_transactions);
+	},
 	sales_person: function (frm) {
 		frm.clear_table('contributions');
 		frm.refresh();
 	},
-
 	get_contributions: function (frm) {
 		frm.clear_table("contributions");
 		return frappe.call({
@@ -49,8 +78,39 @@ frappe.ui.form.on('Sales Commission', {
 			}
 		}
 	},
-
 });
+
+
+function toggleColumns(frm, fields, table, hidden) {
+	let grid = frm.get_field(table).grid
+
+	for (let field of fields) {
+		grid.fields_map[field].hidden = hidden
+	}
+
+	grid.visible_columns = undefined
+	grid.setup_visible_columns()
+	grid.header_row.wrapper.remove()
+	delete grid.header_row
+	grid.make_head()
+
+	for (let row of grid.grid_rows) {
+		if (row.open_form_button) {
+			row.open_form_button.parent().remove()
+			delete row.open_form_button
+		}
+
+		for (let field in row.columns) {
+			if (row.columns[field] !== undefined) {
+				row.columns[field].remove()
+			}
+		}
+		delete row.columns
+		row.columns = []
+		row.render_row()
+	}
+	frm.get_field(table).refresh()
+}
 
 const create_payment_entry = function (frm) {
 	var d = new frappe.ui.Dialog({

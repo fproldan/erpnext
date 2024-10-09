@@ -32,67 +32,94 @@ class ProcessSalesCommission(Document):
 			fields=["sales_person", "commission_rate", "incentives", "allocated_percentage", "allocated_amount", "parent"])
 		if sales_persons_details:
 			sales_persons = {e['sales_person'] for e in sales_persons_details}
-			sales_persons_list = self.get_sales_persons_list(sales_persons)
-			# sales_persons_details_map = self.map_sales_persons_details(sales_persons_list, sales_persons_details)
-			self.make_sales_commission_document(sales_persons_list, filter_date)
+		sales_persons_list = self.get_sales_persons_list(sales_persons)
+		self.make_sales_commission_document(sales_persons_list, filter_date)
 
 	def get_sales_persons_list(self, sales_persons):
 		sales_persons_list = sales_persons
-		if self.department or self.designation or self.branch:
-			sales_persons_emp = frappe.get_all("Sales Person", filters={"name": ["in", sales_persons]}, fields=["employee"], as_dict=True)['employee']
-			emp_filters = {"name": ["in", sales_persons_emp], "company": self.company}
-			# for field in ["department", "designation", "branch"]:
-			if self.department:
-				emp_filters["department"] = self.department
-			if self.designation:
-				emp_filters["designation"] = self.designation
-			if self.branch:
-				emp_filters["branch"] = self.branch
+		if not any([self.department, self.designation, self.branch]):
+			return sales_persons_list
+		
+		sales_persons_emp = frappe.get_all("Sales Person", filters={"name": ["in", sales_persons]}, fields=["employee"], pluck="employee")
+		emp_filters = {"name": ["in", sales_persons_emp], "company": self.company}
+		if self.department:
+			emp_filters["department"] = self.department
+		if self.designation:
+			emp_filters["designation"] = self.designation
+		if self.branch:
+			emp_filters["branch"] = self.branch
 
-			sales_persons_list = frappe.get_all("Employee", filters=emp_filters, as_dict=True)
-			# for person in sales_persons:
-			# 	emp = frappe.db.get_value("Sales Person", filters={"name": person}, fieldname="employee", as_dict=True)['employee']
-			# 	if emp:
-			# 		employee_details = frappe.db.get_value("Employee", filters={"name": emp}, as_dict=True)
-			# 		if self.company != employee_details["company"]:
-			# 			sales_persons_list.remove(person)
-			# 			continue
-			# 		if self.department and self.department != employee_details["department"]:
-			# 			sales_persons_list.remove(person)
-			# 			continue
-			# 		if self.designation and self.designation != employee_details["designation"]:
-			# 			sales_persons_list.remove(person)
-			# 			continue
-			# 		if self.branch and self.branch != employee_details["branch"]:
-			# 			sales_persons_list.remove(person)
-			# 			continue
+		sales_persons_list = frappe.get_all("Employee", filters=emp_filters)
+		for person in sales_persons:
+			emp = frappe.db.get_value("Sales Person", filters={"name": person}, fieldname="employee")
+			if not emp:
+				continue
+			employee_details = frappe.db.get_value("Employee", filters={"name": emp}, as_dict=True)
+			if self.company != employee_details["company"]:
+				sales_persons_list.remove(person)
+				continue
+			if self.department and self.department != employee_details["department"]:
+				sales_persons_list.remove(person)
+				continue
+			if self.designation and self.designation != employee_details["designation"]:
+				sales_persons_list.remove(person)
+				continue
+			if self.branch and self.branch != employee_details["branch"]:
+				sales_persons_list.remove(person)
+				continue
 
-		return sales_persons_list
+	def map_sales_persons_details(self, sales_persons, sales_persons_details):
+		sales_persons_details_map = {}
+		for person in sales_persons:
+			sales_persons_details_map[person] = []
+			for details in sales_persons_details:
+				if details['sales_person'] == person:
+					sales_persons_details_map[person].append(details)
 
-	# def map_sales_persons_details(self, sales_persons, sales_persons_details):
-	# 	sales_persons_details_map = {}
-	# 	for person in sales_persons:
-	# 		sales_persons_details_map[person] = []
-	# 		for details in sales_persons_details:
-	# 			if details['sales_person'] == person:
-	# 				sales_persons_details_map[person].append(details)
-
-	# 	return sales_persons_details_map
+		return sales_persons_details_map
 
 	def make_sales_commission_document(self, sales_persons_details_map, filter_date):
 		for record in sales_persons_details_map:
-			doc = doc = frappe.new_doc("Sales Commission")
+			doc = frappe.new_doc("Sales Commission")
 			doc.sales_person = record
 			doc.commission_based_on = self.commission_based_on
 			doc.from_date = self.from_date
 			doc.to_date = self.to_date
 			doc.pay_via_salary = self.pay_via_salary
 			doc.process_sales_commission_reference = self.name
-			doc.add_contributions()
+			doc.omit_sales_person_transactions = self.omit_sales_person_transactions
+			doc.commission_against = self.commission_against
+			doc.commission_against_filter = self.commission_against_filter
+			doc.add_contributions(self.name)
 			doc.insert()
+			
+			if self.submit_sales_commission:
+				try:
+					doc.submit()
+				except Exception:
+					frappe.log_error(title=f"Error al validar Comision De Ventas", message=frappe.get_traceback())
+			
 			if not frappe.db.get_single_value("Selling Settings", "approval_required_for_sales_commission_payout"):
 				doc.reload()
 				if self.pay_via_salary and doc.employee:
 					if frappe.db.exists('Salary Structure Assignment', {'employee': doc.employee}):
 						doc.submit()
 						doc.payout_entry()
+
+	@frappe.whitelist()
+	def get_sales_persons(self):
+		employee_filters = {"company": self.company}
+		if self.department:
+			employee_filters["department"] = self.department
+		if self.designation:
+			employee_filters["designation"] = self.designation
+		if self.branch:
+			employee_filters["branch"] = self.branch
+
+		employees = frappe.get_all("Employee", filters=employee_filters, pluck="name")
+		for sales_person in frappe.get_all(
+			"Sales Person",
+			filters=[["employee", "in", employees]],
+			fields="name as sales_person"
+		):
+			self.append("sales_persons", sales_person)

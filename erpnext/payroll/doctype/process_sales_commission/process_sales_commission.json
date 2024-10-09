@@ -11,11 +11,19 @@
   "column_break_3",
   "designation",
   "branch",
+  "sales_persons_break",
+  "sales_persons",
+  "comisionar_sobre_section",
+  "commission_against",
+  "omit_sales_person_transactions",
+  "column_break__9",
+  "commission_against_filter",
   "section_break_6",
   "from_date",
   "to_date",
   "column_break_9",
   "commission_based_on",
+  "submit_sales_commission",
   "pay_via_salary",
   "amended_from"
  ],
@@ -31,7 +39,6 @@
   {
    "fieldname": "department",
    "fieldtype": "Link",
-   "hidden": 1,
    "label": "Department",
    "options": "Department"
   },
@@ -42,14 +49,12 @@
   {
    "fieldname": "designation",
    "fieldtype": "Link",
-   "hidden": 1,
    "label": "Designation",
    "options": "Designation"
   },
   {
    "fieldname": "branch",
    "fieldtype": "Link",
-   "hidden": 1,
    "label": "Branch",
    "options": "Branch"
   },
@@ -94,12 +99,59 @@
    "options": "Process Sales Commission",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fieldname": "comisionar_sobre_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval:doc.omit_sales_person_transactions == 1;",
+   "fieldname": "commission_against",
+   "fieldtype": "Link",
+   "label": "Comisionar Sobre",
+   "mandatory_depends_on": "eval:doc.omit_sales_person_transactions == 1;",
+   "options": "DocType"
+  },
+  {
+   "default": "0",
+   "description": "Si selecciona esta opci\u00f3n, los c\u00e1lculos de comisiones omitir\u00e1n las asignaciones del vendedor incluidas en las transacciones",
+   "fieldname": "omit_sales_person_transactions",
+   "fieldtype": "Check",
+   "label": "Omitir Transacciones del Vendedor"
+  },
+  {
+   "fieldname": "column_break__9",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.omit_sales_person_transactions == 1;",
+   "fieldname": "commission_against_filter",
+   "fieldtype": "Dynamic Link",
+   "label": "Filtro",
+   "options": "commission_against"
+  },
+  {
+   "default": "0",
+   "fieldname": "submit_sales_commission",
+   "fieldtype": "Check",
+   "label": "Validar Comisiones de Ventas"
+  },
+  {
+   "fieldname": "sales_persons_break",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "sales_persons",
+   "fieldtype": "Table",
+   "label": "Vendedores",
+   "options": "Process Sales Commission Sales Person",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-02 09:57:58.062144",
+ "modified": "2024-10-09 17:30:15.732976",
  "modified_by": "Administrator",
  "module": "Payroll",
  "name": "Process Sales Commission",
@@ -146,6 +198,7 @@
   }
  ],
  "restrict_to_domain": "Vendedores y Socios",
+ "route": "app/doctype/Process%20Sales%20Commission",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1
