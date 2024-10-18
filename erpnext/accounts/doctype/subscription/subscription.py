@@ -491,6 +491,7 @@ class Subscription(Document):
 
 			if doctype == "Sales Invoice":
 				item["subscription_plan"] = plan_doc.name
+				item["subscription_plan_name"] = plan_doc.name
 
 			if deferred:
 				item.update({
