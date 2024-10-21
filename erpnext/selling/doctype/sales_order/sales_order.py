@@ -671,6 +671,12 @@ def make_sales_invoice(source_name, target_doc=None, ignore_permissions=False):
 			if cost_center:
 				target.cost_center = cost_center
 
+	no_copy_conversion_date_from_ov_to_si = cint(frappe.db.get_single_value('Selling Settings', 'no_copy_conversion_date_from_ov_to_si'))
+	if no_copy_conversion_date_from_ov_to_si:
+		field_no_map = ["payment_terms_template", "conversion_rate"]
+	else:
+		field_no_map = ["payment_terms_template"]
+
 	doclist = get_mapped_doc("Sales Order", source_name, {
 		"Sales Order": {
 			"doctype": "Sales Invoice",
@@ -678,7 +684,7 @@ def make_sales_invoice(source_name, target_doc=None, ignore_permissions=False):
 				"party_account_currency": "party_account_currency",
 				"payment_terms_template": "payment_terms_template"
 			},
-			"field_no_map": ["payment_terms_template"],
+			"field_no_map": field_no_map,
 			"validation": {
 				"docstatus": ["=", 1]
 			}
