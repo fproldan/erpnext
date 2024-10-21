@@ -152,7 +152,7 @@ frappe.ui.form.on('Employee Advance', {
 	employee: function(frm) {
 		if (frm.doc.employee) {
 			frappe.run_serially([
-				() => frm.trigger('get_employee_currency'),
+				// () => frm.trigger('get_employee_currency'),
 				() => frm.trigger('get_pending_amount')
 			]);
 		}

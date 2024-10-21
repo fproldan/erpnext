@@ -160,6 +160,7 @@
   {
    "fieldname": "sb1",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "options": "Simple"
   },
   {
@@ -199,6 +200,7 @@
   {
    "fieldname": "total_amount_reimbursed",
    "fieldtype": "Currency",
+   "hidden": 1,
    "in_list_view": 1,
    "label": "Total Amount Reimbursed",
    "no_copy": 1,
@@ -351,6 +353,7 @@
   {
    "fieldname": "grand_total",
    "fieldtype": "Currency",
+   "hidden": 1,
    "in_list_view": 1,
    "label": "Grand Total",
    "options": "Company:company:default_currency",
@@ -379,12 +382,11 @@
  "idx": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-11-23 16:26:57.787838",
+ "modified": "2023-09-07 10:35:00.607855",
  "modified_by": "Administrator",
  "module": "HR",
  "name": "Expense Claim",
  "name_case": "Title Case",
- "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {
@@ -442,6 +444,7 @@
   }
  ],
  "restrict_to_domain": "HR Asistencia, Vacaciones y Rendimiento de Gastos",
+ "route": "app/doctype/Expense%20Claim",
  "search_fields": "employee,employee_name",
  "show_name_in_global_search": 1,
  "sort_field": "modified",
