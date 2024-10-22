@@ -97,6 +97,7 @@
   "so_detail",
   "sales_invoice_item",
   "subscription_plan",
+  "subscription_plan_name",
   "column_break_74",
   "delivery_note",
   "dn_detail",
@@ -868,13 +869,20 @@
    "fieldtype": "Link",
    "label": "Subscription Plan",
    "options": "Subscription Plan",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "subscription_plan_name",
+   "fieldtype": "Data",
+   "label": "Nombre del Plan de Suscripci\u00f3n",
    "read_only": 1
   }
  ],
  "idx": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-10-03 16:39:41.672280",
+ "modified": "2024-10-21 09:41:57.759598",
  "modified_by": "Administrator",
  "module": "Accounts",
  "name": "Sales Invoice Item",
