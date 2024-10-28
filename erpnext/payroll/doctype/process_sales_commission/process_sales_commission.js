@@ -37,6 +37,9 @@ frappe.ui.form.on('Process Sales Commission', {
 	},
 	branch: function(frm) {
 		get_sales_persons(frm)
+	},
+	grade: function(frm) {
+		get_sales_persons(frm)
 	}
 });	
 

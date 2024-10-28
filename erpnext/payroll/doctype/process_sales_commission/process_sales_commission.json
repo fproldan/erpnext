@@ -8,6 +8,7 @@
  "field_order": [
   "company",
   "department",
+  "grade",
   "column_break_3",
   "designation",
   "branch",
@@ -146,12 +147,18 @@
    "label": "Vendedores",
    "options": "Process Sales Commission Sales Person",
    "reqd": 1
+  },
+  {
+   "fieldname": "grade",
+   "fieldtype": "Link",
+   "label": "Grado",
+   "options": "Employee Grade"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-10-09 17:30:15.732976",
+ "modified": "2024-10-28 09:35:07.474736",
  "modified_by": "Administrator",
  "module": "Payroll",
  "name": "Process Sales Commission",

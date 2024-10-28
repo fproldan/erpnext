@@ -37,7 +37,7 @@ class ProcessSalesCommission(Document):
 
 	def get_sales_persons_list(self, sales_persons):
 		sales_persons_list = sales_persons
-		if not any([self.department, self.designation, self.branch]):
+		if not any([self.department, self.designation, self.branch, self.grade]):
 			return sales_persons_list
 		
 		sales_persons_emp = frappe.get_all("Sales Person", filters={"name": ["in", sales_persons]}, fields=["employee"], pluck="employee")
@@ -48,6 +48,8 @@ class ProcessSalesCommission(Document):
 			emp_filters["designation"] = self.designation
 		if self.branch:
 			emp_filters["branch"] = self.branch
+		if self.grade:
+			emp_filters["grade"] = self.grade
 
 		sales_persons_list = frappe.get_all("Employee", filters=emp_filters)
 		for person in sales_persons:
@@ -65,6 +67,9 @@ class ProcessSalesCommission(Document):
 				sales_persons_list.remove(person)
 				continue
 			if self.branch and self.branch != employee_details["branch"]:
+				sales_persons_list.remove(person)
+				continue
+			if self.grade and self.grade != employee_details["grade"]:
 				sales_persons_list.remove(person)
 				continue
 
@@ -115,6 +120,8 @@ class ProcessSalesCommission(Document):
 			employee_filters["designation"] = self.designation
 		if self.branch:
 			employee_filters["branch"] = self.branch
+		if self.grade:
+			employee_filters["grade"] = self.grade
 
 		employees = frappe.get_all("Employee", filters=employee_filters, pluck="name")
 		for sales_person in frappe.get_all(
