@@ -20,71 +20,29 @@ class ProcessSalesCommission(Document):
 			frappe.throw(_("Please set {0} in {1}").format(frappe.bold("Salary Component for Sales Commission"), get_link_to_form("Payroll Settings", "Payroll Settings")))
 
 	def on_submit(self):
-		self.process_sales_commission()
+		self.make_sales_commission_document()
 
-	def process_sales_commission(self):
-		filter_date = "transaction_date" if self.commission_based_on == "Sales Order" else "posting_date"
-		records = [entry.name for entry in frappe.db.get_all(
-			self.commission_based_on,
-			filters={"company": self.company, "docstatus": 1, filter_date: ('between', [self.from_date, self.to_date])})]
-		sales_persons_details = frappe.get_all(
-			"Sales Team", filters={"parent": ['in', records]},
-			fields=["sales_person", "commission_rate", "incentives", "allocated_percentage", "allocated_amount", "parent"])
-		if sales_persons_details:
-			sales_persons = {e['sales_person'] for e in sales_persons_details}
-		sales_persons_list = self.get_sales_persons_list(sales_persons)
-		self.make_sales_commission_document(sales_persons_list, filter_date)
-
-	def get_sales_persons_list(self, sales_persons):
-		sales_persons_list = sales_persons
-		if not any([self.department, self.designation, self.branch, self.grade]):
-			return sales_persons_list
-		
-		sales_persons_emp = frappe.get_all("Sales Person", filters={"name": ["in", sales_persons]}, fields=["employee"], pluck="employee")
-		emp_filters = {"name": ["in", sales_persons_emp], "company": self.company}
+	def get_sales_persons_list(self):
+		employee_filters = {"company": self.company}
 		if self.department:
-			emp_filters["department"] = self.department
+			employee_filters["department"] = self.department
 		if self.designation:
-			emp_filters["designation"] = self.designation
+			employee_filters["designation"] = self.designation
 		if self.branch:
-			emp_filters["branch"] = self.branch
+			employee_filters["branch"] = self.branch
 		if self.grade:
-			emp_filters["grade"] = self.grade
+			employee_filters["grade"] = self.grade
 
-		sales_persons_list = frappe.get_all("Employee", filters=emp_filters)
-		for person in sales_persons:
-			emp = frappe.db.get_value("Sales Person", filters={"name": person}, fieldname="employee")
-			if not emp:
-				continue
-			employee_details = frappe.db.get_value("Employee", filters={"name": emp}, as_dict=True)
-			if self.company != employee_details["company"]:
-				sales_persons_list.remove(person)
-				continue
-			if self.department and self.department != employee_details["department"]:
-				sales_persons_list.remove(person)
-				continue
-			if self.designation and self.designation != employee_details["designation"]:
-				sales_persons_list.remove(person)
-				continue
-			if self.branch and self.branch != employee_details["branch"]:
-				sales_persons_list.remove(person)
-				continue
-			if self.grade and self.grade != employee_details["grade"]:
-				sales_persons_list.remove(person)
-				continue
+		employees = frappe.get_all("Employee", filters=employee_filters, pluck="name")
+		return frappe.get_all(
+			"Sales Person",
+			filters=[["employee", "in", employees]],
+			pluck="name"
+		)
 
-	def map_sales_persons_details(self, sales_persons, sales_persons_details):
-		sales_persons_details_map = {}
-		for person in sales_persons:
-			sales_persons_details_map[person] = []
-			for details in sales_persons_details:
-				if details['sales_person'] == person:
-					sales_persons_details_map[person].append(details)
-
-		return sales_persons_details_map
-
-	def make_sales_commission_document(self, sales_persons_details_map, filter_date):
-		for record in sales_persons_details_map:
+	def make_sales_commission_document(self):
+		sales_persons_list = self.get_sales_persons_list()
+		for record in sales_persons_list:
 			doc = frappe.new_doc("Sales Commission")
 			doc.sales_person = record
 			doc.commission_based_on = self.commission_based_on
