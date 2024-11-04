@@ -22,29 +22,10 @@ class ProcessSalesCommission(Document):
 	def on_submit(self):
 		self.make_sales_commission_document()
 
-	def get_sales_persons_list(self):
-		employee_filters = {"company": self.company}
-		if self.department:
-			employee_filters["department"] = self.department
-		if self.designation:
-			employee_filters["designation"] = self.designation
-		if self.branch:
-			employee_filters["branch"] = self.branch
-		if self.grade:
-			employee_filters["grade"] = self.grade
-
-		employees = frappe.get_all("Employee", filters=employee_filters, pluck="name")
-		return frappe.get_all(
-			"Sales Person",
-			filters=[["employee", "in", employees]],
-			pluck="name"
-		)
-
 	def make_sales_commission_document(self):
-		sales_persons_list = self.get_sales_persons_list()
-		for record in sales_persons_list:
+		for sales_persons in self.sales_persons:
 			doc = frappe.new_doc("Sales Commission")
-			doc.sales_person = record
+			doc.sales_person = sales_persons.sales_person
 			doc.commission_based_on = self.commission_based_on
 			doc.from_date = self.from_date
 			doc.to_date = self.to_date

@@ -36,7 +36,7 @@ class SalesCommission(AccountsController):
 			pluck="name"
 		)
 		if previous_contibutions:
-			frappe.throw(_("Este vendedor ya tiene liquidado ventas en el período seleccionado"))
+			frappe.throw(_(f"El vendedor {self.sales_person} ya tiene liquidado ventas en el período seleccionado"))
 
 	def validate_amount(self):
 		if self.total_commission_amount <= 0:
