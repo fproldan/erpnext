@@ -1458,6 +1458,7 @@ def get_reference_details(reference_doctype, reference_name, party_account_curre
 	elif reference_doctype != "Journal Entry":
 		if ref_doc.doctype == "Sales Commission":
 			total_amount = ref_doc.total_commission_amount
+			outstanding_amount = ref_doc.total_commission_amount
 			exchange_rate = 1
 		if ref_doc.doctype == "Expense Claim":
 				total_amount = flt(ref_doc.total_sanctioned_amount) + flt(ref_doc.total_taxes_and_charges)
@@ -1494,7 +1495,7 @@ def get_reference_details(reference_doctype, reference_name, party_account_curre
 		elif reference_doctype == "Gratuity":
 			outstanding_amount = ref_doc.amount - flt(ref_doc.paid_amount)
 		elif reference_doctype == "Sales Commission":
-			outstanding_amount = 0
+			outstanding_amount = ref_doc.total_commission_amount
 		else:
 			outstanding_amount = flt(total_amount) - flt(ref_doc.advance_paid)
 	else:
