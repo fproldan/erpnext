@@ -33,6 +33,7 @@
   "section_break_17",
   "total_contribution",
   "total_commission_amount",
+  "outstanding_amount",
   "remarks",
   "column_break_21",
   "commission_rate",
@@ -258,12 +259,18 @@
    "fieldtype": "Dynamic Link",
    "label": "Filtro",
    "options": "commission_against"
+  },
+  {
+   "fieldname": "outstanding_amount",
+   "fieldtype": "Currency",
+   "label": "Outstanding Amount",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-11-04 08:47:23.231953",
+ "modified": "2024-11-04 11:23:05.322965",
  "modified_by": "Administrator",
  "module": "Payroll",
  "name": "Sales Commission",

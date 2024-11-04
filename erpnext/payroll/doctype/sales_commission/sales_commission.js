@@ -72,9 +72,12 @@ frappe.ui.form.on('Sales Commission', {
 					create_additional_salary(frm);
 				}).addClass("btn-primary");
 			} else {
-				frm.add_custom_button(__("Create Payment Entry"), function () {
-					create_payment_entry(frm);
-				}).addClass("btn-primary");
+				if (frm.doc.status == "Unpaid") {
+					frm.add_custom_button(__("Create Payment Entry"), function () {
+						create_payment_entry(frm);
+					}).addClass("btn-primary");
+				}
+				
 			}
 		}
 	},

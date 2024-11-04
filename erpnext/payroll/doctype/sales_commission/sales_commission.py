@@ -178,6 +178,7 @@ class SalesCommission(AccountsController):
 
 		self.total_contribution = total_contribution
 		self.total_commission_amount = total_commission_amount
+		self.outstanding_amount = total_commission_amount
 
 	@frappe.whitelist()
 	def payout_entry(self, mode_of_payment=None, reference_no=None, reference_date=None):
@@ -241,16 +242,13 @@ class SalesCommission(AccountsController):
 		doc.party = self.employee
 		doc.paid_from = paid_from
 		doc.paid_to = paid_to
-		doc.paid_amount = self.total_commission_amount
-		doc.received_amount = self.total_commission_amount
+		doc.paid_amount = self.outstanding_amount
+		doc.received_amount = self.outstanding_amount
 		doc.source_exchange_rate = 1
 		doc.target_exchange_rate = 1
 		doc.set("references", [])
 		self.add_references(doc)
 		doc.submit()
-		# self.db_set("reference_doctype", "Payment Entry")
-		# self.db_set("reference_name", doc.name)
-		# self.db_set("status", "Paid")
 
 	def add_references(self, doc):
 		reference = {
@@ -258,8 +256,8 @@ class SalesCommission(AccountsController):
 			'reference_name': self.name,
 			'due_date': self.to_date,
 			'total_amount': self.total_commission_amount,
-			'outstanding_amount': self.total_commission_amount,
-			'allocated_amount': self.total_commission_amount,
+			'outstanding_amount': self.outstanding_amount,
+			'allocated_amount': self.outstanding_amount,
 		}
 		doc.append("references", reference)
 

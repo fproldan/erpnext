@@ -889,7 +889,15 @@ class PaymentEntry(AccountsController):
 		if self.payment_type in ("Pay") and self.party:
 			for d in self.get("references"):
 				if d.reference_doctype=="Sales Commission" and d.reference_name:
+					outstanding_amount = frappe.get_value("Sales Commission", d.reference_name, "outstanding_amount")
 					if cancel:
+						outstanding_amount += d.allocated_amount
+					else:
+						outstanding_amount -= d.allocated_amount
+
+					frappe.db.set_value("Sales Commission", d.reference_name, "outstanding_amount", outstanding_amount)
+
+					if outstanding_amount > 0:
 						frappe.db.set_value("Sales Commission", d.reference_name, "status", "Unpaid")
 					else:
 						frappe.db.set_value("Sales Commission", d.reference_name, "status", "Paid")
@@ -1460,7 +1468,7 @@ def get_reference_details(reference_doctype, reference_name, party_account_curre
 	elif reference_doctype != "Journal Entry":
 		if ref_doc.doctype == "Sales Commission":
 			total_amount = ref_doc.total_commission_amount
-			outstanding_amount = ref_doc.total_commission_amount
+			outstanding_amount = ref_doc.get("outstanding_amount")
 			exchange_rate = 1
 		if ref_doc.doctype == "Expense Claim":
 				total_amount = flt(ref_doc.total_sanctioned_amount) + flt(ref_doc.total_taxes_and_charges)
@@ -1497,7 +1505,7 @@ def get_reference_details(reference_doctype, reference_name, party_account_curre
 		elif reference_doctype == "Gratuity":
 			outstanding_amount = ref_doc.amount - flt(ref_doc.paid_amount)
 		elif reference_doctype == "Sales Commission":
-			outstanding_amount = ref_doc.total_commission_amount
+			outstanding_amount = ref_doc.get("outstanding_amount")
 		else:
 			outstanding_amount = flt(total_amount) - flt(ref_doc.advance_paid)
 	else:
