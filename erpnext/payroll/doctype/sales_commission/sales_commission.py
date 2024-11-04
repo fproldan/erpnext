@@ -248,9 +248,9 @@ class SalesCommission(AccountsController):
 		doc.set("references", [])
 		self.add_references(doc)
 		doc.submit()
-		self.db_set("reference_doctype", "Payment Entry")
-		self.db_set("reference_name", doc.name)
-		self.db_set("status", "Paid")
+		# self.db_set("reference_doctype", "Payment Entry")
+		# self.db_set("reference_name", doc.name)
+		# self.db_set("status", "Paid")
 
 	def add_references(self, doc):
 		reference = {

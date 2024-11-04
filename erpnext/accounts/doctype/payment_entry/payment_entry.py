@@ -91,6 +91,7 @@ class PaymentEntry(AccountsController):
 			frappe.throw(_("Difference Amount must be zero"))
 		self.make_gl_entries()
 		self.update_expense_claim()
+		self.update_sales_commission()
 		self.update_outstanding_amounts()
 		self.update_advance_paid()
 		self.update_donation()
@@ -101,7 +102,7 @@ class PaymentEntry(AccountsController):
 		self.ignore_linked_doctypes = ('GL Entry', 'Stock Ledger Entry', 'Sales Commission')
 		self.make_gl_entries(cancel=1)
 		self.update_expense_claim()
-		self.update_sales_commission()
+		self.update_sales_commission(cancel=1)
 		self.update_outstanding_amounts()
 		self.update_advance_paid()
 		self.update_donation(cancel=1)
@@ -884,13 +885,14 @@ class PaymentEntry(AccountsController):
 					else:
 						update_reimbursed_amount(doc, d.allocated_amount)
 	
-	def update_sales_commission(self):
+	def update_sales_commission(self, cancel=0):
 		if self.payment_type in ("Pay") and self.party:
 			for d in self.get("references"):
 				if d.reference_doctype=="Sales Commission" and d.reference_name:
-					frappe.db.set_value("Sales Commission", d.reference_name, "status", "Unpaid")
-					frappe.db.set_value("Sales Commission", d.reference_name, "reference_doctype", "")
-					frappe.db.set_value("Sales Commission", d.reference_name, "reference_name", "")
+					if cancel:
+						frappe.db.set_value("Sales Commission", d.reference_name, "status", "Unpaid")
+					else:
+						frappe.db.set_value("Sales Commission", d.reference_name, "status", "Paid")
 
 	def update_donation(self, cancel=0):
 		if self.payment_type == "Receive" and self.party_type == "Donor" and self.party:
