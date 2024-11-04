@@ -889,6 +889,8 @@ class PaymentEntry(AccountsController):
 			for d in self.get("references"):
 				if d.reference_doctype=="Sales Commission" and d.reference_name:
 					frappe.db.set_value("Sales Commission", d.reference_name, "status", "Unpaid")
+					frappe.db.set_value("Sales Commission", d.reference_name, "reference_doctype", "")
+					frappe.db.set_value("Sales Commission", d.reference_name, "reference_name", "")
 
 	def update_donation(self, cancel=0):
 		if self.payment_type == "Receive" and self.party_type == "Donor" and self.party:
