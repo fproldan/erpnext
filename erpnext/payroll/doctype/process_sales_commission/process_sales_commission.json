@@ -15,9 +15,9 @@
   "sales_persons_break",
   "sales_persons",
   "comisionar_sobre_section",
-  "commission_against",
   "omit_sales_person_transactions",
   "column_break__9",
+  "commission_against",
   "commission_against_filter",
   "section_break_6",
   "from_date",
@@ -115,7 +115,7 @@
   },
   {
    "default": "0",
-   "description": "Si selecciona esta opci\u00f3n, los c\u00e1lculos de comisiones omitir\u00e1n las asignaciones del vendedor incluidas en las transacciones",
+   "description": "Si se tilda esta opci\u00f3n, los c\u00e1lculos de comisiones se realizar\u00e1n sobre todas las transacciones, no solo las asignadas a vendedores",
    "fieldname": "omit_sales_person_transactions",
    "fieldtype": "Check",
    "label": "Omitir Transacciones del Vendedor"
@@ -158,7 +158,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-10-28 09:35:07.474736",
+ "modified": "2024-11-04 10:45:06.940803",
  "modified_by": "Administrator",
  "module": "Payroll",
  "name": "Process Sales Commission",
