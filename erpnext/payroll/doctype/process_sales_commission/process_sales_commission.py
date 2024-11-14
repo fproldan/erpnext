@@ -66,7 +66,7 @@ class ProcessSalesCommission(Document):
 		employees = frappe.get_all("Employee", filters=employee_filters, pluck="name")
 		for sales_person in frappe.get_all(
 			"Sales Person",
-			filters=[["employee", "in", employees]],
+			filters=[["employee", "in", employees], ["enabled", "=", 1]],
 			fields="name as sales_person"
 		):
 			self.append("sales_persons", sales_person)
