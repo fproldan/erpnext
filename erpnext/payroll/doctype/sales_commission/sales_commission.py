@@ -99,7 +99,7 @@ class SalesCommission(AccountsController):
 		return gl_entry
 
 	@frappe.whitelist()
-	def add_contributions(self, process_sales_commission):
+	def add_contributions(self, process_sales_commission=None):
 		self.set("contributions", [])
 		filter_date = "transaction_date" if self.commission_based_on == "Sales Order" else "posting_date"
 		customer_field = "customer" if self.commission_based_on != "Payment Entry" else "party"
@@ -131,7 +131,7 @@ class SalesCommission(AccountsController):
 					"contribution_amount": record["allocated_amount"],
 					"commission_rate": record["commission_rate"],
 					"commission_amount": record["incentives"],
-					"process_sales_commission": process_sales_commission,
+					"process_sales_commission": process_sales_commission or self.process_sales_commission_reference,
 				}
 				self.append("contributions", contribution)
 		else:
