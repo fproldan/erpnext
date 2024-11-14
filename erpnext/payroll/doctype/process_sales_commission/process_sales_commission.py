@@ -36,16 +36,17 @@ class ProcessSalesCommission(Document):
 			doc.commission_against_filter = self.commission_against_filter
 			doc.add_contributions(self.name)
 			doc.insert()
-			
+
 			if self.submit_sales_commission:
 				try:
 					doc.submit()
 				except Exception:
-					frappe.log_error(title=f"Error al validar Comision De Ventas", message=frappe.get_traceback())
-			
+					frappe.db.set_value(doc.doctype, doc.name, "docstatus", 0)
+					frappe.log_error(title="Error al validar Comision De Ventas", message=frappe.get_traceback())
+
 			if not frappe.db.get_single_value("Selling Settings", "approval_required_for_sales_commission_payout"):
-				doc.reload()
 				if self.pay_via_salary and doc.employee:
+					doc.reload()
 					if frappe.db.exists('Salary Structure Assignment', {'employee': doc.employee}):
 						doc.submit()
 						doc.payout_entry()
