@@ -126,7 +126,7 @@ class SalesCommission(AccountsController):
 				record['incentives'] = flt(record['allocated_amount'] * flt(commission_rate) / 100.0, self.precision("total_contribution"))
 				record['allocated_percentage'] = 100
 				contribution = {
-					"commission_filter": record["commission_filter"],
+					"commission_filter": record["commission_filter"] or f"Sin {self.commission_against}",
 					"contribution_percent": record["allocated_percentage"],
 					"contribution_amount": record["allocated_amount"],
 					"commission_rate": record["commission_rate"],
