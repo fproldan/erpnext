@@ -91,6 +91,7 @@ class PaymentEntry(AccountsController):
 			frappe.throw(_("Difference Amount must be zero"))
 		self.make_gl_entries()
 		self.update_expense_claim()
+		self.update_sales_commission()
 		self.update_outstanding_amounts()
 		self.update_advance_paid()
 		self.update_donation()
@@ -98,9 +99,10 @@ class PaymentEntry(AccountsController):
 		self.set_status()
 
 	def on_cancel(self):
-		self.ignore_linked_doctypes = ('GL Entry', 'Stock Ledger Entry')
+		self.ignore_linked_doctypes = ('GL Entry', 'Stock Ledger Entry', 'Sales Commission')
 		self.make_gl_entries(cancel=1)
 		self.update_expense_claim()
+		self.update_sales_commission(cancel=1)
 		self.update_outstanding_amounts()
 		self.update_advance_paid()
 		self.update_donation(cancel=1)
@@ -882,6 +884,23 @@ class PaymentEntry(AccountsController):
 						update_reimbursed_amount(doc, -1 * d.allocated_amount)
 					else:
 						update_reimbursed_amount(doc, d.allocated_amount)
+	
+	def update_sales_commission(self, cancel=0):
+		if self.payment_type in ("Pay") and self.party:
+			for d in self.get("references"):
+				if d.reference_doctype=="Sales Commission" and d.reference_name:
+					outstanding_amount = frappe.get_value("Sales Commission", d.reference_name, "outstanding_amount")
+					if cancel:
+						outstanding_amount += d.allocated_amount
+					else:
+						outstanding_amount -= d.allocated_amount
+
+					frappe.db.set_value("Sales Commission", d.reference_name, "outstanding_amount", outstanding_amount)
+
+					if outstanding_amount > 0:
+						frappe.db.set_value("Sales Commission", d.reference_name, "status", "Unpaid")
+					else:
+						frappe.db.set_value("Sales Commission", d.reference_name, "status", "Paid")
 
 	def update_donation(self, cancel=0):
 		if self.payment_type == "Receive" and self.party_type == "Donor" and self.party:
@@ -1449,6 +1468,7 @@ def get_reference_details(reference_doctype, reference_name, party_account_curre
 	elif reference_doctype != "Journal Entry":
 		if ref_doc.doctype == "Sales Commission":
 			total_amount = ref_doc.total_commission_amount
+			outstanding_amount = ref_doc.get("outstanding_amount")
 			exchange_rate = 1
 		if ref_doc.doctype == "Expense Claim":
 				total_amount = flt(ref_doc.total_sanctioned_amount) + flt(ref_doc.total_taxes_and_charges)
@@ -1485,7 +1505,7 @@ def get_reference_details(reference_doctype, reference_name, party_account_curre
 		elif reference_doctype == "Gratuity":
 			outstanding_amount = ref_doc.amount - flt(ref_doc.paid_amount)
 		elif reference_doctype == "Sales Commission":
-			outstanding_amount = 0
+			outstanding_amount = ref_doc.get("outstanding_amount")
 		else:
 			outstanding_amount = flt(total_amount) - flt(ref_doc.advance_paid)
 	else:
