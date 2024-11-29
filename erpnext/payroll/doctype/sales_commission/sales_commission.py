@@ -35,6 +35,7 @@ class SalesCommission(Document):
 	def add_contributions(self):
 		self.set("contributions", [])
 		filter_date = "transaction_date" if self.commission_based_on == "Sales Order" else "posting_date"
+		customer_field = "customer" if self.commission_based_on != "Payment Entry" else "party"
 		records = [entry.name for entry in frappe.db.get_all(self.commission_based_on, filters={"company": self.company, "docstatus": 1, filter_date: ('between', [self.from_date, self.to_date])})]
 		sales_persons_details = frappe.get_all(
 			"Sales Team", filters={"parent": ['in', records], "sales_person": self.sales_person},
@@ -42,11 +43,11 @@ class SalesCommission(Document):
 		if sales_persons_details:
 			for record in sales_persons_details:
 				if add_record(record, self.sales_person):
-					record_details = frappe.db.get_value(self.commission_based_on, filters={"name": record["parent"]}, fieldname=["customer", filter_date], as_dict=True)
+					record_details = frappe.db.get_value(self.commission_based_on, filters={"name": record["parent"]}, fieldname=[customer_field, filter_date], as_dict=True)
 					contribution = {
 						"document_type": self.commission_based_on,
 						"order_or_invoice": record["parent"],
-						"customer": record_details["customer"],
+						"customer": record_details.get(customer_field),
 						"posting_date": record_details[filter_date],
 						"contribution_percent": record["allocated_percentage"],
 						"contribution_amount": record["allocated_amount"],
