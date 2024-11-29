@@ -16,6 +16,11 @@
   "status",
   "company",
   "pay_via_salary",
+  "section_break_11",
+  "omit_sales_person_transactions",
+  "column_break_14",
+  "commission_against",
+  "commission_against_filter",
   "section_break_10",
   "from_date",
   "to_date",
@@ -28,6 +33,7 @@
   "section_break_17",
   "total_contribution",
   "total_commission_amount",
+  "outstanding_amount",
   "remarks",
   "column_break_21",
   "commission_rate",
@@ -118,7 +124,7 @@
    "fieldname": "commission_based_on",
    "fieldtype": "Select",
    "label": "Commission Based on",
-   "options": "Sales Order\nSales Invoice"
+   "options": "Sales Order\nSales Invoice\nPayment Entry"
   },
   {
    "fieldname": "total_contribution",
@@ -223,12 +229,48 @@
    "fieldname": "get_contributions",
    "fieldtype": "Button",
    "label": "Get Contributions"
+  },
+  {
+   "fieldname": "section_break_11",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "description": "Si se tilda esta opci\u00f3n, los c\u00e1lculos de comisiones se realizar\u00e1n sobre todas las transacciones, no solo las asignadas a vendedores",
+   "fieldname": "omit_sales_person_transactions",
+   "fieldtype": "Check",
+   "label": "Omitir Transacciones del Vendedor"
+  },
+  {
+   "depends_on": "eval:doc.omit_sales_person_transactions == 1;",
+   "fieldname": "commission_against",
+   "fieldtype": "Link",
+   "label": "Comisionar Sobre",
+   "mandatory_depends_on": "eval:doc.omit_sales_person_transactions == 1;",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "column_break_14",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.omit_sales_person_transactions == 1;",
+   "fieldname": "commission_against_filter",
+   "fieldtype": "Dynamic Link",
+   "label": "Filtro",
+   "options": "commission_against"
+  },
+  {
+   "fieldname": "outstanding_amount",
+   "fieldtype": "Currency",
+   "label": "Outstanding Amount",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-06-16 11:21:34.018262",
+ "modified": "2024-11-04 11:23:05.322965",
  "modified_by": "Administrator",
  "module": "Payroll",
  "name": "Sales Commission",
@@ -281,6 +323,7 @@
   }
  ],
  "restrict_to_domain": "Vendedores y Socios",
+ "route": "app/doctype/Sales%20Commission",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1

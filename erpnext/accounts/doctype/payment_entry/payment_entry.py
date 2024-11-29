@@ -91,6 +91,7 @@ class PaymentEntry(AccountsController):
 			frappe.throw(_("Difference Amount must be zero"))
 		self.make_gl_entries()
 		self.update_expense_claim()
+		self.update_sales_commission()
 		self.update_outstanding_amounts()
 		self.update_advance_paid()
 		self.update_donation()
@@ -98,9 +99,10 @@ class PaymentEntry(AccountsController):
 		self.set_status()
 
 	def on_cancel(self):
-		self.ignore_linked_doctypes = ('GL Entry', 'Stock Ledger Entry')
+		self.ignore_linked_doctypes = ('GL Entry', 'Stock Ledger Entry', 'Sales Commission')
 		self.make_gl_entries(cancel=1)
 		self.update_expense_claim()
+		self.update_sales_commission(cancel=1)
 		self.update_outstanding_amounts()
 		self.update_advance_paid()
 		self.update_donation(cancel=1)
@@ -882,6 +884,23 @@ class PaymentEntry(AccountsController):
 						update_reimbursed_amount(doc, -1 * d.allocated_amount)
 					else:
 						update_reimbursed_amount(doc, d.allocated_amount)
+	
+	def update_sales_commission(self, cancel=0):
+		if self.payment_type in ("Pay") and self.party:
+			for d in self.get("references"):
+				if d.reference_doctype=="Sales Commission" and d.reference_name:
+					outstanding_amount = frappe.get_value("Sales Commission", d.reference_name, "outstanding_amount")
+					if cancel:
+						outstanding_amount += d.allocated_amount
+					else:
+						outstanding_amount -= d.allocated_amount
+
+					frappe.db.set_value("Sales Commission", d.reference_name, "outstanding_amount", outstanding_amount)
+
+					if outstanding_amount > 0:
+						frappe.db.set_value("Sales Commission", d.reference_name, "status", "Unpaid")
+					else:
+						frappe.db.set_value("Sales Commission", d.reference_name, "status", "Paid")
 
 	def update_donation(self, cancel=0):
 		if self.payment_type == "Receive" and self.party_type == "Donor" and self.party:
@@ -991,6 +1010,9 @@ class PaymentEntry(AccountsController):
 		if self.get('taxes'):
 			self.paid_amount_after_tax = self.get('taxes')[-1].base_total
 
+		self.calculate_commission()
+		self.calculate_contribution()
+
 	def get_current_tax_amount(self, tax):
 		tax_rate = tax.rate
 
@@ -1035,6 +1057,47 @@ class PaymentEntry(AccountsController):
 			current_tax_fraction *= -1.0
 
 		return current_tax_fraction
+	
+	def calculate_commission(self):
+		if not self.meta.get_field("commission_rate"):
+			return
+
+		self.round_floats_in(
+			self, ("amount_eligible_for_commission", "commission_rate")
+		)
+
+		if not (0 <= self.commission_rate <= 100.0):
+			throw("{} {}".format(_(self.meta.get_label("commission_rate")), _("must be between 0 and 100"),))
+
+		self.amount_eligible_for_commission = self.paid_amount
+
+		self.total_commission = flt(
+			self.amount_eligible_for_commission * self.commission_rate / 100.0,
+			self.precision("total_commission")
+		)
+	
+	def calculate_contribution(self):
+		if not self.meta.get_field("sales_team"):
+			return
+
+		total = 0.0
+		sales_team = self.get("sales_team")
+		for sales_person in sales_team:
+			self.round_floats_in(sales_person)
+
+			sales_person.allocated_amount = flt(
+				self.amount_eligible_for_commission * sales_person.allocated_percentage / 100.0,
+				self.precision("allocated_amount", sales_person))
+
+			if sales_person.commission_rate:
+				sales_person.incentives = flt(
+					sales_person.allocated_amount * flt(sales_person.commission_rate) / 100.0,
+					self.precision("incentives", sales_person))
+
+			total += sales_person.allocated_percentage
+
+		if sales_team and total != 100.0:
+			throw(_("Total allocated percentage for sales team should be 100"))
 
 def validate_inclusive_tax(tax, doc):
 	def _on_previous_row_error(row_range):
@@ -1302,13 +1365,23 @@ def get_party_details(company, party_type, party, date, cost_center=None):
 	if party_type in ["Customer", "Supplier"]:
 		bank_account = get_party_bank_account(party_type, party)
 
+	sales_team = []
+	if party_type=="Customer":
+		sales_team = []
+		for d in frappe.get_all("Sales Person", {"user": frappe.session.user}, pluck="name"):
+			sales_team.append({
+				"sales_person": d,
+				"allocated_percentage": 100,
+			})
+
 	return {
 		"party_account": party_account,
 		"party_name": party_name,
 		"party_account_currency": account_currency,
 		"party_balance": party_balance,
 		"account_balance": account_balance,
-		"bank_account": bank_account
+		"bank_account": bank_account,
+		"sales_team": sales_team,
 	}
 
 
@@ -1395,6 +1468,7 @@ def get_reference_details(reference_doctype, reference_name, party_account_curre
 	elif reference_doctype != "Journal Entry":
 		if ref_doc.doctype == "Sales Commission":
 			total_amount = ref_doc.total_commission_amount
+			outstanding_amount = ref_doc.get("outstanding_amount")
 			exchange_rate = 1
 		if ref_doc.doctype == "Expense Claim":
 				total_amount = flt(ref_doc.total_sanctioned_amount) + flt(ref_doc.total_taxes_and_charges)
@@ -1431,7 +1505,7 @@ def get_reference_details(reference_doctype, reference_name, party_account_curre
 		elif reference_doctype == "Gratuity":
 			outstanding_amount = ref_doc.amount - flt(ref_doc.paid_amount)
 		elif reference_doctype == "Sales Commission":
-			outstanding_amount = 0
+			outstanding_amount = ref_doc.get("outstanding_amount")
 		else:
 			outstanding_amount = flt(total_amount) - flt(ref_doc.advance_paid)
 	else:
