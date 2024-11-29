@@ -8,6 +8,7 @@
  "field_order": [
   "document_type",
   "order_or_invoice",
+  "commission_filter",
   "customer",
   "customer_name",
   "posting_date",
@@ -15,7 +16,8 @@
   "contribution_percent",
   "contribution_amount",
   "commission_rate",
-  "commission_amount"
+  "commission_amount",
+  "process_sales_commission"
  ],
  "fields": [
   {
@@ -84,18 +86,33 @@
    "fieldtype": "Data",
    "label": "Contribution %",
    "read_only": 1
+  },
+  {
+   "fieldname": "process_sales_commission",
+   "fieldtype": "Link",
+   "label": "Process Sales Commission",
+   "options": "Process Sales Commission",
+   "read_only": 1
+  },
+  {
+   "fieldname": "commission_filter",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Filtro",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-09-02 09:57:20.539959",
+ "modified": "2024-09-30 14:13:30.483732",
  "modified_by": "Administrator",
  "module": "Payroll",
  "name": "Contributions",
  "owner": "Administrator",
  "permissions": [],
  "restrict_to_domain": "Vendedores y Socios",
+ "route": "app/doctype/Contributions",
  "sort_field": "modified",
  "sort_order": "DESC",
  "track_changes": 1
