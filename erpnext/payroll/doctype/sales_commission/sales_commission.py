@@ -104,7 +104,7 @@ class SalesCommission(AccountsController):
 		filter_date = "transaction_date" if self.commission_based_on == "Sales Order" else "posting_date"
 		customer_field = "customer" if self.commission_based_on != "Payment Entry" else "party"
 
-    if self.omit_sales_person_transactions:
+		if self.omit_sales_person_transactions:
 			filter_fieldname = self.get_filter_commission_against_field()
 			filter_value = self.commission_against_filter
 			commission_rate = frappe.get_value("Sales Person", self.sales_person, "commission_rate")
