@@ -85,10 +85,21 @@ def _get_party_details(party=None, account=None, party_type="Customer", company=
 
 	# sales team
 	if party_type=="Customer":
-		party_details["sales_team"] = [{
-			"sales_person": d.sales_person,
-			"allocated_percentage": d.allocated_percentage or None
-		} for d in party.get("sales_team")]
+		sales_persons = []
+		party_details["sales_team"] = []
+		for d in party.get("sales_team"):
+			sales_persons.append(d.sales_person)
+			party_details["sales_team"].append({
+				"sales_person": d.sales_person,
+				"allocated_percentage": d.allocated_percentage or None
+			})
+
+		for d in frappe.get_all("Sales Person", {"user": frappe.session.user}, pluck="name"):
+			if d not in sales_persons:
+				party_details["sales_team"].append({
+				"sales_person":d,
+				"allocated_percentage":  100
+			})
 
 	# supplier tax withholding category
 	if party_type == "Supplier" and party:
