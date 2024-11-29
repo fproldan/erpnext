@@ -124,7 +124,7 @@
    "fieldname": "commission_based_on",
    "fieldtype": "Select",
    "label": "Commission Based on",
-   "options": "Sales Order\nSales Invoice"
+   "options": "Sales Order\nSales Invoice\nPayment Entry"
   },
   {
    "fieldname": "total_contribution",
