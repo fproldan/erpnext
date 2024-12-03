@@ -78,6 +78,7 @@ def get_rate_as_at(date, from_currency, to_currency):
 		__exchange_rates['{0}-{1}@{2}'.format(from_currency, to_currency, date)] = rate
 	return rate
 
+
 def convert_to_presentation_currency(gl_entries, currency_info, company):
 	"""
 	Take a list of GL Entries and change the 'debit' and 'credit' values to currencies
@@ -96,11 +97,11 @@ def convert_to_presentation_currency(gl_entries, currency_info, company):
 		debit_in_account_currency = flt(entry['debit_in_account_currency'])
 		credit_in_account_currency = flt(entry['credit_in_account_currency'])
 		account_currency = entry['account_currency']
-		against_voucher_type = entry['against_voucher_type']
-		voucher_type = entry['voucher_type']
-		against_voucher = entry['against_voucher']
-		voucher_no = entry['voucher_no']
-		posting_date = entry['posting_date']
+		against_voucher_type = entry.get('against_voucher_type')
+		voucher_type = entry.get('voucher_type')
+		against_voucher = entry.get('against_voucher')
+		voucher_no = entry.get('voucher_no')
+		posting_date = entry.get('posting_date')
 	
 		if account_currency == presentation_currency:
 			if entry.get('debit'):
@@ -109,21 +110,26 @@ def convert_to_presentation_currency(gl_entries, currency_info, company):
 			if entry.get('credit'):
 				entry['credit'] = credit_in_account_currency
 		else:
-			conversion_rate = None
-			voucher_currency = None
-			if voucher_type and frappe.get_meta(voucher_type).get_field('conversion_rate') and frappe.get_meta(voucher_type).get_field('currency'):
-				conversion_rate = frappe.db.get_value(voucher_type, voucher_no, 'conversion_rate')
-				voucher_currency = frappe.db.get_value(voucher_type, voucher_no, 'currency')
-			if against_voucher_type and frappe.get_meta(against_voucher_type).get_field('conversion_rate') and frappe.get_meta(against_voucher_type).get_field('currency'):
-				conversion_rate = frappe.db.get_value(against_voucher_type, against_voucher, 'conversion_rate')
-				voucher_currency = frappe.db.get_value(against_voucher_type, against_voucher, 'currency')
-			
-			if conversion_rate and conversion_rate != 1 and voucher_currency == presentation_currency:
-				converted_debit_value = convert_with_rate(debit, conversion_rate)
-				converted_credit_value = convert_with_rate(credit, conversion_rate)
+			if not voucher_type and not against_voucher_type:
+				date = currency_info['report_date']
+				converted_debit_value = convert(debit, presentation_currency, company_currency, date)
+				converted_credit_value = convert(credit, presentation_currency, company_currency, date)
 			else:
-				converted_debit_value = convert(debit, presentation_currency, company_currency, posting_date)
-				converted_credit_value = convert(credit, presentation_currency, company_currency, posting_date)
+				conversion_rate = None
+				voucher_currency = None
+				if voucher_type and frappe.get_meta(voucher_type).get_field('conversion_rate') and frappe.get_meta(voucher_type).get_field('currency'):
+					conversion_rate = frappe.db.get_value(voucher_type, voucher_no, 'conversion_rate')
+					voucher_currency = frappe.db.get_value(voucher_type, voucher_no, 'currency')
+				if against_voucher_type and frappe.get_meta(against_voucher_type).get_field('conversion_rate') and frappe.get_meta(against_voucher_type).get_field('currency'):
+					conversion_rate = frappe.db.get_value(against_voucher_type, against_voucher, 'conversion_rate')
+					voucher_currency = frappe.db.get_value(against_voucher_type, against_voucher, 'currency')
+				
+				if conversion_rate and conversion_rate != 1 and voucher_currency == presentation_currency:
+					converted_debit_value = convert_with_rate(debit, conversion_rate)
+					converted_credit_value = convert_with_rate(credit, conversion_rate)
+				else:
+					converted_debit_value = convert(debit, presentation_currency, company_currency, posting_date)
+					converted_credit_value = convert(credit, presentation_currency, company_currency, posting_date)
 
 			if entry.get('debit'):
 				entry['debit'] = converted_debit_value
