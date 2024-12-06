@@ -95,10 +95,19 @@ def get_data(filters):
 	return data
 
 def get_opening_balances(filters):
+	from erpnext.accounts.report.utils import convert, get_currency
 	balance_sheet_opening = get_rootwise_opening_balances(filters, "Balance Sheet")
 	pl_opening = get_rootwise_opening_balances(filters, "Profit and Loss")
 
 	balance_sheet_opening.update(pl_opening)
+
+	currency_filters = get_currency(filters)
+
+	if filters and filters.get('presentation_currency'):
+		for k, v in balance_sheet_opening.items():
+			v["opening_debit"] = convert(flt(v["opening_debit"]), currency_filters.get("presentation_currency"), currency_filters.get("company_currency"),  currency_filters.get("report_date"))
+			v["opening_credit"] = convert(flt(v["opening_credit"]), currency_filters.get("presentation_currency"), currency_filters.get("company_currency"),  currency_filters.get("report_date"))
+
 	return balance_sheet_opening
 
 
