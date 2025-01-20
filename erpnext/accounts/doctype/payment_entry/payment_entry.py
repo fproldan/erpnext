@@ -1506,6 +1506,18 @@ def get_reference_details(reference_doctype, reference_name, party_account_curre
 			outstanding_amount = ref_doc.amount - flt(ref_doc.paid_amount)
 		elif reference_doctype == "Sales Commission":
 			outstanding_amount = ref_doc.get("outstanding_amount")
+		elif reference_doctype == "Sales Order":
+			advance_paid = frappe.db.sql(
+				"""
+				SELECT SUM(allocated_amount) 
+				FROM `tabPayment Entry Reference` 
+				WHERE reference_doctype = 'Sales Order' 
+				AND reference_name = %s
+				AND docstatus = 1
+				""",
+				(reference_name,),
+			)[0][0] or 0.0
+			outstanding_amount = flt(total_amount) - flt(advance_paid)
 		else:
 			outstanding_amount = flt(total_amount) - flt(ref_doc.advance_paid)
 	else:
