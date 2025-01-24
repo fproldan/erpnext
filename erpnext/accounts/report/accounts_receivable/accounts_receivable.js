@@ -236,6 +236,9 @@ frappe.query_reports["Accounts Receivable"] = {
 			value = value.bold();
 
 		}
+		if (column.fieldname == "voucher_type") {
+			value = __(value);
+		}
 		return value;
 	},
 
