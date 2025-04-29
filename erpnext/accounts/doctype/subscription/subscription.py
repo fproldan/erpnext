@@ -375,6 +375,8 @@ class Subscription(Document):
 		if doctype == 'Sales Invoice':
 			invoice.customer = self.party
 			invoice.territory = frappe.db.get_value('Customer', self.party, 'territory')
+			if self.condicion_de_venta:
+				invoice.condicion_de_venta = self.condicion_de_venta
 
 			if self.punto_de_venta and self.secuencia:
 				punto_de_venta = frappe.get_doc('Punto de Venta', self.punto_de_venta)
