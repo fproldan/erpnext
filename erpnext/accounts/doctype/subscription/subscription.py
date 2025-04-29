@@ -709,9 +709,11 @@ def process_all():
 	"""
 	Task to updates the status of all `Subscription` apart from those that are cancelled
 	"""
+	import time
 	subscriptions = get_all_subscriptions()
 	for subscription in subscriptions:
 		process(subscription)
+		time.sleep(1)
 
 
 def get_all_subscriptions():
