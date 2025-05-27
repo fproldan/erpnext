@@ -738,11 +738,10 @@ def process(data):
 		subscription.process()
 		frappe.db.commit()
 	except frappe.ValidationError:
-		print("PASO POR ERROR")
 		frappe.db.rollback()
 		frappe.db.begin()
 		if not subscription.submit_invoice:
-			frappe.log_error(frappe.get_traceback())
+			frappe.log_error(title=f"Error al procesar la Suscripción {subscription.name}", message=frappe.get_traceback())
 			subscription.run_trigger("error")
 			frappe.db.commit()
 		else:
@@ -755,6 +754,7 @@ def process(data):
 				if not asignar_cae:
 					frappe.db.rollback()
 					frappe.db.begin()
+					frappe.log_error(title=f"Error al procesar la Suscripción {subscription.name}", message=frappe.get_traceback())
 					subscription.run_trigger("error")
 					frappe.db.commit()
 				else:
@@ -768,39 +768,42 @@ def process(data):
 			except frappe.ValidationError:
 				frappe.db.rollback()
 				frappe.db.begin()
-				frappe.log_error(frappe.get_traceback())
+				frappe.log_error(title=f"Error al procesar la Suscripción {subscription.name}", message=frappe.get_traceback())
 				subscription.run_trigger("error")
 				frappe.db.commit()
 
 
 def debe_asignar_cae(comprobante):
-	"""
-	TODO
-	- Ver que sean de suscripcion
-	- Asociar a la suscripcion luego de validar
-	"""
 	from erpnext_argentina.facturacion import consultar_comprobante_afip
 	doc = frappe.get_doc("Sales Invoice", comprobante)
 	datos = consultar_comprobante_afip(comprobante, True)
 	
-	tiene_que_validar = True
+	if frappe.db.exists("Sales Invoice", {"cae": datos["CAE"]}):
+		return False
+
+	serie = doc.naming_series.replace(".########", "")
+	current_nro = frappe.db.sql(f"SELECT current FROM tabSeries where name='{serie}'", as_dict=True)[0]["current"]
+	if current_nro + 1 != int(datos["CbteNro"]):
+		return False
+
 	tax_id = frappe.db.get_value("Customer", doc.customer, "tax_id")
 	if tax_id and tax_id != datos["nro_doc"]:
-		tiene_que_validar = False
+		return False
 	
 	if str(doc.net_total) != datos["ImpNeto"] or str(doc.grand_total) != datos["ImpTotal"]:
-		tiene_que_validar = False
+		return False
 	
 	punto_de_venta = frappe.get_doc("Punto de Venta", doc.punto_de_venta)
 
 	if punto_de_venta.numero != datos["PuntoVenta"]:
-		tiene_que_validar = False
+		return False
 	
 	tipo_de_comprobante = punto_de_venta.get_tipo_comprobante_for_secuence(doc.naming_series)
 	if tipo_de_comprobante.codigo != datos["tipo_cbte"]:
-		tiene_que_validar = False
+		return False
 
-	return tiene_que_validar
+	return True
+
 
 def asignar_cae_a_factura(comprobante):
 	from erpnext_argentina.facturacion import asignar_cae
