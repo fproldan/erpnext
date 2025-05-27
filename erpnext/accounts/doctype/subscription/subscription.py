@@ -837,5 +837,41 @@ def get_subscription_updates(name):
 	"""
 	Use this to get the latest state of the given `Subscription`
 	"""
-	subscription = frappe.get_doc('Subscription', name)
-	subscription.process()
+	try:
+		subscription = frappe.get_doc('Subscription', name)
+		subscription.process()
+		frappe.db.commit()
+	except frappe.ValidationError:
+		frappe.db.rollback()
+		frappe.db.begin()
+		if not subscription.submit_invoice:
+			frappe.log_error(title=f"Error al procesar la Suscripción {subscription.name}", message=frappe.get_traceback())
+			subscription.run_trigger("error")
+			frappe.db.commit()
+		else:
+			try:
+				subscription.submit_invoice = False
+				subscription.save()
+				subscription = frappe.get_doc("Subscription", subscription.name)
+				invoice = subscription.process()
+				asignar_cae = debe_asignar_cae(invoice.name)
+				if not asignar_cae:
+					frappe.db.rollback()
+					frappe.db.begin()
+					frappe.log_error(title=f"Error al procesar la Suscripción {subscription.name}", message=frappe.get_traceback())
+					subscription.run_trigger("error")
+					frappe.db.commit()
+				else:
+					new_invoice_name = asignar_cae_a_factura(invoice.name)
+					for inv in subscription.invoices:
+						if inv.invoice == invoice.name:
+							inv.invoice = new_invoice_name
+					subscription.submit_invoice = True
+					subscription.save()
+					frappe.db.commit()
+			except frappe.ValidationError:
+				frappe.db.rollback()
+				frappe.db.begin()
+				frappe.log_error(title=f"Error al procesar la Suscripción {subscription.name}", message=frappe.get_traceback())
+				subscription.run_trigger("error")
+				frappe.db.commit()
