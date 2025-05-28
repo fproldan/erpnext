@@ -56,7 +56,7 @@ def get_sales_payment_data(filters):
     data = []
     for payment_entry in get_payment_entries(filters):
         data.append({
-            'date': payment_entry.creation,
+            'date': payment_entry.posting_date,
             'owner': payment_entry.owner,
             'name': payment_entry.name,
             'payment_mode': payment_entry.mode_of_payment,
@@ -70,9 +70,9 @@ def get_sales_payment_data(filters):
 def get_conditions(filters):
     conditions = "1=1"
     if filters.get("from_date"):
-        conditions += " and a.creation >= %(from_date)s"
+        conditions += " and a.posting_date >= %(from_date)s"
     if filters.get("to_date"):
-        conditions += " and a.creation <= %(to_date)s"
+        conditions += " and a.posting_date <= %(to_date)s"
     if filters.get("company"):
         conditions += " and a.company=%(company)s "
     mode_of_payment = filters.get("mode_of_payment", None) or [mp["name"] for mp in frappe.get_all("Mode of Payment", {"company": filters.get("company")}, "name")]
@@ -88,7 +88,7 @@ def get_payment_entries(filters):
         SELECT *
         FROM
             (
-                SELECT a.name, a.creation, a.owner, a.paid_amount, a.reference_no, a.mode_of_payment, 1 AS signo
+                SELECT a.name, a.posting_date, a.owner, a.paid_amount, a.reference_no, a.mode_of_payment, 1 AS signo
                 FROM `tabPayment Entry` a
                 WHERE a.docstatus = 1
                 AND {conditions}
@@ -96,11 +96,11 @@ def get_payment_entries(filters):
 
                 UNION
 
-                SELECT a.name, a.creation, a.owner, a.paid_amount, a.reference_no, a.mode_of_payment, -1 AS signo
+                SELECT a.name, a.posting_date, a.owner, a.paid_amount, a.reference_no, a.mode_of_payment, -1 AS signo
                 FROM `tabPayment Entry` a
                 WHERE a.docstatus = 1
                 AND {conditions}
                 AND a.paid_from in {accounts}
             ) results
-        ORDER BY creation
+        ORDER BY posting_date
     """.format(conditions=conditions, accounts=accounts), filters, as_dict=1)
