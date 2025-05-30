@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2018, Frappe Technologies Pvt. Ltd. and contributors
 # For license information, please see license.txt
-
+import time
 import frappe
 from frappe import _
 from frappe.model.document import Document
@@ -521,14 +521,16 @@ class Subscription(Document):
 		1. `process_for_active`
 		2. `process_for_past_due`
 		"""
+		invoice = None
 		if self.status == 'Active':
-			self.process_for_active()
+			invoice = self.process_for_active()
 		elif self.status in ['Past Due Date', 'Unpaid']:
-			self.process_for_past_due_date()
+			invoice = self.process_for_past_due_date()
 
 		self.set_subscription_status()
 
 		self.save()
+		return invoice
 
 	def is_postpaid_to_invoice(self):
 		return getdate() > getdate(self.current_invoice_end) or \
@@ -563,17 +565,19 @@ class Subscription(Document):
 		2. Change the `Subscription` status to 'Past Due Date'
 		3. Change the `Subscription` status to 'Cancelled'
 		"""
+		invoice = None
 		if not self.is_current_invoice_generated(self.current_invoice_start, self.current_invoice_end) \
 			and (self.is_postpaid_to_invoice() or self.is_prepaid_to_invoice()):
 
 			prorate = frappe.db.get_single_value('Subscription Settings', 'prorate')
-			self.generate_invoice(prorate)
+			invoice = self.generate_invoice(prorate)
 
 		if getdate() > getdate(self.current_invoice_end) and self.is_prepaid_to_invoice():
 			self.update_subscription_period(add_days(self.current_invoice_end, 1))
 
 		if self.cancel_at_period_end and getdate() > getdate(self.current_invoice_end):
 			self.cancel_subscription_at_period_end()
+		return invoice
 
 	def cancel_subscription_at_period_end(self):
 		"""
@@ -595,6 +599,7 @@ class Subscription(Document):
 		2. Change the `Subscription` status to 'Cancelled'
 		3. Change the `Subscription` status to 'Unpaid'
 		"""
+		invoice = None
 		current_invoice = self.get_current_invoice()
 		if not current_invoice:
 			if current_invoice is None:
@@ -613,10 +618,11 @@ class Subscription(Document):
 				and (self.is_postpaid_to_invoice() or self.is_prepaid_to_invoice()):
 
 				prorate = frappe.db.get_single_value('Subscription Settings', 'prorate')
-				self.generate_invoice(prorate)
+				invoice = self.generate_invoice(prorate)
 
 			if getdate() > getdate(self.current_invoice_end):
 				self.update_subscription_period(add_days(self.current_invoice_end, 1))
+		return invoice
 
 	@staticmethod
 	def is_paid(invoice):
@@ -725,18 +731,86 @@ def process(data):
 	"""
 	Checks a `Subscription` and updates it status as necessary
 	"""
-	if data:
-		try:
-			subscription = frappe.get_doc('Subscription', data['name'])
-			subscription.process()
-			frappe.db.commit()
-		except frappe.ValidationError:
-			frappe.db.rollback()
-			frappe.db.begin()
-			frappe.log_error(frappe.get_traceback())
+	if not data:
+		return
+	try:
+		subscription = frappe.get_doc('Subscription', data['name'])
+		subscription.process()
+		frappe.db.commit()
+	except frappe.ValidationError:
+		frappe.db.rollback()
+		frappe.db.begin()
+		if not subscription.submit_invoice:
+			frappe.log_error(title=f"Error al procesar la Suscripción {subscription.name}", message=frappe.get_traceback())
 			subscription.run_trigger("error")
 			frappe.db.commit()
+		else:
+			try:
+				subscription.submit_invoice = False
+				subscription.save()
+				subscription = frappe.get_doc("Subscription", subscription.name)
+				invoice = subscription.process()
+				asignar_cae = debe_asignar_cae(invoice.name)
+				if not asignar_cae:
+					frappe.db.rollback()
+					frappe.db.begin()
+					frappe.log_error(title=f"Error al procesar la Suscripción {subscription.name}", message=frappe.get_traceback())
+					subscription.run_trigger("error")
+					frappe.db.commit()
+				else:
+					new_invoice_name = asignar_cae_a_factura(invoice.name)
+					for inv in subscription.invoices:
+						if inv.invoice == invoice.name:
+							inv.invoice = new_invoice_name
+					subscription.submit_invoice = True
+					subscription.save()
+					frappe.db.commit()
+			except frappe.ValidationError:
+				frappe.db.rollback()
+				frappe.db.begin()
+				frappe.log_error(title=f"Error al procesar la Suscripción {subscription.name}", message=frappe.get_traceback())
+				subscription.run_trigger("error")
+				frappe.db.commit()
 
+
+def debe_asignar_cae(comprobante):
+	from erpnext_argentina.facturacion import consultar_comprobante_afip
+	doc = frappe.get_doc("Sales Invoice", comprobante)
+	datos = consultar_comprobante_afip(comprobante, True)
+	
+	if frappe.db.exists("Sales Invoice", {"cae": datos["CAE"]}):
+		return False
+
+	serie = doc.naming_series.replace(".########", "")
+	current_nro = frappe.db.sql(f"SELECT current FROM tabSeries where name='{serie}'", as_dict=True)[0]["current"]
+	if current_nro + 1 != int(datos["CbteNro"]):
+		return False
+
+	tax_id = frappe.db.get_value("Customer", doc.customer, "tax_id")
+	if tax_id and tax_id != datos["nro_doc"]:
+		return False
+	
+	if str(doc.net_total) != datos["ImpNeto"] or str(doc.grand_total) != datos["ImpTotal"]:
+		return False
+	
+	punto_de_venta = frappe.get_doc("Punto de Venta", doc.punto_de_venta)
+
+	if punto_de_venta.numero != datos["PuntoVenta"]:
+		return False
+	
+	tipo_de_comprobante = punto_de_venta.get_tipo_comprobante_for_secuence(doc.naming_series)
+	if tipo_de_comprobante.codigo != datos["tipo_cbte"]:
+		return False
+
+	return True
+
+
+def asignar_cae_a_factura(comprobante):
+	from erpnext_argentina.facturacion import asignar_cae
+	response = asignar_cae(comprobante)
+	if response.get("name"):
+		return response.get("name")
+	return
 
 @frappe.whitelist()
 def cancel_subscription(name):
@@ -763,5 +837,41 @@ def get_subscription_updates(name):
 	"""
 	Use this to get the latest state of the given `Subscription`
 	"""
-	subscription = frappe.get_doc('Subscription', name)
-	subscription.process()
+	try:
+		subscription = frappe.get_doc('Subscription', name)
+		subscription.process()
+		frappe.db.commit()
+	except frappe.ValidationError:
+		frappe.db.rollback()
+		frappe.db.begin()
+		if not subscription.submit_invoice:
+			frappe.log_error(title=f"Error al procesar la Suscripción {subscription.name}", message=frappe.get_traceback())
+			subscription.run_trigger("error")
+			frappe.db.commit()
+		else:
+			try:
+				subscription.submit_invoice = False
+				subscription.save()
+				subscription = frappe.get_doc("Subscription", subscription.name)
+				invoice = subscription.process()
+				asignar_cae = debe_asignar_cae(invoice.name)
+				if not asignar_cae:
+					frappe.db.rollback()
+					frappe.db.begin()
+					frappe.log_error(title=f"Error al procesar la Suscripción {subscription.name}", message=frappe.get_traceback())
+					subscription.run_trigger("error")
+					frappe.db.commit()
+				else:
+					new_invoice_name = asignar_cae_a_factura(invoice.name)
+					for inv in subscription.invoices:
+						if inv.invoice == invoice.name:
+							inv.invoice = new_invoice_name
+					subscription.submit_invoice = True
+					subscription.save()
+					frappe.db.commit()
+			except frappe.ValidationError:
+				frappe.db.rollback()
+				frappe.db.begin()
+				frappe.log_error(title=f"Error al procesar la Suscripción {subscription.name}", message=frappe.get_traceback())
+				subscription.run_trigger("error")
+				frappe.db.commit()
