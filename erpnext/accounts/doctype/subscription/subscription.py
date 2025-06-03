@@ -795,7 +795,7 @@ def debe_asignar_cae(comprobante):
 	
 	punto_de_venta = frappe.get_doc("Punto de Venta", doc.punto_de_venta)
 
-	if punto_de_venta.numero != datos["PuntoVenta"]:
+	if int(punto_de_venta.numero) != int(datos["PuntoVenta"]):
 		return False
 	
 	tipo_de_comprobante = punto_de_venta.get_tipo_comprobante_for_secuence(doc.naming_series)
