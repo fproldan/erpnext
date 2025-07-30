@@ -492,8 +492,14 @@ def get_result_as_list(data, filters):
 		d['balance'] = balance
 
 		d['account_currency'] = filters.account_currency
-		d['bill_no'] = inv_details.get(d.get('against_voucher'), '')
-
+		print(d.get('against_voucher'))
+		if d.get('against_voucher'):
+			bill_no = []
+			for against in d.get('against_voucher').split(','):
+				against = against.strip()
+				if against and against in inv_details:
+					bill_no.append(inv_details[against])
+			d['bill_no'] = ', '.join(bill_no) if bill_no else ''
 	return data
 
 def get_supplier_invoice_details():
