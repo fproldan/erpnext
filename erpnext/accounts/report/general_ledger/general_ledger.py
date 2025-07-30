@@ -492,7 +492,7 @@ def get_result_as_list(data, filters):
 		d['balance'] = balance
 
 		d['account_currency'] = filters.account_currency
-		print(d.get('against_voucher'))
+
 		if d.get('against_voucher'):
 			bill_no = []
 			for against in d.get('against_voucher').split(','):
