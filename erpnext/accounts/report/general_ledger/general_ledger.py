@@ -500,6 +500,8 @@ def get_result_as_list(data, filters):
 				if against and against in inv_details:
 					bill_no.append(inv_details[against])
 			d['bill_no'] = ', '.join(bill_no) if bill_no else ''
+		else:
+			d['bill_no'] = ''
 	return data
 
 def get_supplier_invoice_details():
