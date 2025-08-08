@@ -622,6 +622,7 @@ def make_address(args, is_primary_address=1):
 		'address_line2': args.get('address_line2'),
 		'city': args.get('city'),
 		'state': args.get('state'),
+		'jurisdiccion': args.get('jurisdiccion'),
 		'pincode': args.get('pincode'),
 		'country': args.get('country'),
 		'links': [{
