@@ -274,7 +274,7 @@ def get_columns(group_wise_columns, filters):
 				"width": 100,
 			},
 			"gross_profit_percent": {
-				"label": _("Gross Profit Percent"),
+				"label": _("Beneficio Bruto %"),
 				"fieldname": "gross_profit_%",
 				"fieldtype": "Percent",
 				"width": 100,
