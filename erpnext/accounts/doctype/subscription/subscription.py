@@ -771,6 +771,16 @@ def process(data):
 				frappe.log_error(title=f"Error al procesar la Suscripción {subscription.name}", message=frappe.get_traceback())
 				subscription.run_trigger("error")
 				frappe.db.commit()
+	except Exception:
+		frappe.db.rollback()
+		frappe.db.begin()
+		frappe.log_error(title=f"Error al procesar la Suscripción {data.get('name')}", message=frappe.get_traceback())
+		try:
+			subscription = frappe.get_doc('Subscription', data['name'])
+			subscription.run_trigger("error")
+		except Exception:
+			pass
+		frappe.db.commit()
 
 
 def debe_asignar_cae(comprobante):
@@ -875,3 +885,13 @@ def get_subscription_updates(name):
 				frappe.log_error(title=f"Error al procesar la Suscripción {subscription.name}", message=frappe.get_traceback())
 				subscription.run_trigger("error")
 				frappe.db.commit()
+	except Exception:
+		frappe.db.rollback()
+		frappe.db.begin()
+		frappe.log_error(title=f"Error al procesar la Suscripción {name}", message=frappe.get_traceback())
+		try:
+			subscription = frappe.get_doc('Subscription', name)
+			subscription.run_trigger("error")
+		except Exception:
+			pass
+		frappe.db.commit()
