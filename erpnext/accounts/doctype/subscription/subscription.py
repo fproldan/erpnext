@@ -713,11 +713,26 @@ def get_prorata_factor(period_end, period_start, is_prepaid):
 
 def process_all():
 	"""
-	Task to updates the status of all `Subscription` apart from those that are cancelled
+	Task to updates the status of all `Subscription` apart from those that are cancelled.
+	Subscriptions are split into batches and each batch is enqueued as a separate background job.
 	"""
+	from frappe.utils import create_batch
 	subscriptions = get_all_subscriptions()
-	for subscription in subscriptions:
-		process(subscription)
+	for subscription in create_batch(subscriptions, 200):
+		frappe.enqueue(
+			'erpnext.accounts.doctype.subscription.subscription.process_batch',
+			batch=subscription,
+			queue='long',
+			enqueue_after_commit=True,
+		)
+
+
+def process_batch(batch):
+	"""
+	Process a batch of subscriptions sequentially.
+	"""
+	for data in batch:
+		process(data)
 
 
 def get_all_subscriptions():
