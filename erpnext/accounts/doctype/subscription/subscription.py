@@ -723,7 +723,6 @@ def process_all():
 			'erpnext.accounts.doctype.subscription.subscription.process_batch',
 			batch=subscription,
 			queue='long',
-			enqueue_after_commit=True,
 		)
 
 
