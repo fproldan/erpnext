@@ -859,7 +859,21 @@ def get_last_purchase_details(item_code, doc_name=None, conversion_rate=1.0):
 		purchase_date = purchase_receipt_date
 
 	else:
-		return frappe._dict()
+		last_purchase_invoice = frappe.db.sql("""\
+		select pi.name, pi.posting_date, pi.posting_time, pi.conversion_rate,
+			pi_item.conversion_factor, pi_item.base_price_list_rate, pi_item.discount_percentage,
+			pi_item.base_rate, pi_item.base_net_rate
+		from `tabPurchase Invoice` pi, `tabPurchase Invoice Item` pi_item
+		where pi.docstatus = 1 and pi_item.item_code = %s and pi.name != %s and
+			pi.name = pi_item.parent
+		order by pi.posting_date desc, pi.posting_time desc, pi.name desc
+		limit 1""", (item_code, cstr(doc_name)), as_dict=1)
+
+		if last_purchase_invoice:
+			last_purchase = last_purchase_invoice[0]
+			purchase_date = getdate(last_purchase.posting_date)
+		else:
+			return frappe._dict()
 
 	conversion_factor = flt(last_purchase.conversion_factor)
 	out = frappe._dict({
