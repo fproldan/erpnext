@@ -369,7 +369,7 @@ class Subscription(Document):
 		invoice.set_posting_time = 1
 		invoice.posting_date = self.current_invoice_start if self.generate_invoice_at_period_start \
 			else self.current_invoice_end
-
+		invoice.fecha_de_emision = invoice.posting_date
 		invoice.cost_center = self.cost_center
 
 		if doctype == 'Sales Invoice':
