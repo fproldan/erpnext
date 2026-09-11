@@ -34,6 +34,10 @@ erpnext.accounts.SalesInvoiceController = erpnext.selling.SellingController.exte
 	onload: function() {
 		var me = this;
 		this._super();
+		// DIAMOERP: Preserve Sales Order payment terms when refreshing the mapped customer.
+		if (this.frm.doc.__onload && this.frm.doc.__onload.load_after_mapping) {
+			this.mapped_customer = this.frm.doc.customer;
+		}
 
 		this.frm.ignore_doctypes_on_cancel_all = ['POS Invoice', 'Timesheet', 'POS Invoice Merge Log', 'POS Closing Entry'];
 		if(!this.frm.doc.__islocal && !this.frm.doc.customer && this.frm.doc.debit_to) {
@@ -278,6 +282,11 @@ erpnext.accounts.SalesInvoiceController = erpnext.selling.SellingController.exte
 		}
 		var me = this;
 		if(this.frm.updating_party_details) return;
+		var fetch_payment_terms_template = !(
+			this.frm.doc.__onload &&
+			this.frm.doc.__onload.load_after_mapping &&
+			this.frm.doc.customer === this.mapped_customer
+		);
 		erpnext.utils.get_party_details(this.frm,
 			"erpnext.accounts.party.get_party_details", {
 				posting_date: this.frm.doc.posting_date,
@@ -285,7 +294,8 @@ erpnext.accounts.SalesInvoiceController = erpnext.selling.SellingController.exte
 				party_type: "Customer",
 				account: this.frm.doc.debit_to,
 				price_list: this.frm.doc.selling_price_list,
-				pos_profile: pos_profile
+				pos_profile: pos_profile,
+				fetch_payment_terms_template: fetch_payment_terms_template
 			}, function() {
 				me.apply_pricing_rule();
 			});
